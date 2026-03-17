@@ -1,42 +1,40 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { ideas } from "./data/ideas";
+
 export default function Home() {
+  const [search, setSearch] = useState("");
+
+  const filteredIdeas = ideas.filter((idea) =>
+    idea.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <main className="p-10 max-w-5xl mx-auto">
-      <section className="mb-10">
-        <h1 className="text-4xl font-bold">
-          Find the Best Business Ideas in Uganda 🇺🇬
-        </h1>
-        <p className="mt-4 text-lg text-gray-600">
-          Discover profitable business ideas based on your budget, skills, and goals.
-        </p>
-      </section>
+    <main className="p-6">
+      <h1 className="text-3xl font-bold">
+        Find the Best Business Ideas in Uganda 🇺🇬
+      </h1>
 
-      <section className="mb-10">
-        <input
-          type="text"
-          placeholder="Search business ideas (e.g. farming, small capital...)"
-          className="w-full p-4 border rounded-lg"
-        />
-      </section>
+      <input
+        type="text"
+        placeholder="Search business ideas..."
+        className="border p-3 mt-4 w-full"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Featured Ideas</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-5 border rounded-lg">
-            <h3 className="text-xl font-bold">Liquid Soap Business</h3>
-            <p className="text-gray-600 mt-2">
-              Start with low capital and supply homes, schools, and offices.
-            </p>
-          </div>
-
-          <div className="p-5 border rounded-lg">
-            <h3 className="text-xl font-bold">Poultry Farming</h3>
-            <p className="text-gray-600 mt-2">
-              High demand business with strong long-term profits.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div className="mt-6 space-y-4">
+        {filteredIdeas.map((idea) => (
+          <Link key={idea.slug} href={`/ideas/${idea.slug}`}>
+            <div className="border p-4 rounded cursor-pointer hover:bg-gray-50">
+              <h2 className="font-bold">{idea.title}</h2>
+              <p>{idea.desc}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
