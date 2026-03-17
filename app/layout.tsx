@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Discover practical business ideas in Uganda you can start with low capital. Includes poultry, liquid soap, chapati, pig farming and more with step-by-step guides.",
  verification: {
-  google: "Y9d7o39Src2xSuPnkQs3a1SKd71MvXphThEY83L6-gl",
+  google: "Y9d7o39Src2xSuPnkQs3a1SKd71MvXphThEY83L6",
 },
     keywords: [
     "business ideas Uganda",
