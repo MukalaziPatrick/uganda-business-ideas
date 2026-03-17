@@ -99,6 +99,22 @@ export default function Home() {
   Trusted by aspiring entrepreneurs across Uganda 🇺🇬
 </p>
 
+<div className="mt-6 flex gap-3">
+  <a
+    href="#ideas"
+    className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-green-800 shadow hover:bg-green-100"
+  >
+    Explore Ideas
+  </a>
+
+  <a
+    href="#filters"
+    className="rounded-full border border-white px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
+  >
+    Filter by Budget
+  </a>
+</div>
+
               <div className="mt-8">
                 <input
                   type="text"
