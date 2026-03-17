@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-100 text-slate-900">
       <section className="mx-auto max-w-7xl px-6 py-6 md:px-8 md:py-8">
-        <header className="mb-6 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+        <header className="mb-6 px-2 py-2">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-green-800 text-sm font-bold text-white shadow-sm">
@@ -62,24 +62,24 @@ export default function Home() {
               </div>
             </div>
 
-            <nav className="flex flex-wrap gap-3 text-sm font-medium text-slate-600">
-              <a href="#ideas" className="rounded-full px-4 py-2 hover:bg-slate-100">
+            <nav className="flex flex-wrap gap-2 text-sm font-medium text-slate-600 md:gap-3">
+              <a href="#ideas" className="rounded-full px-3 py-1.5 md:px-4 md:py-2 hover:bg-slate-100">
                 Explore Ideas
               </a>
-              <a href="#filters" className="rounded-full px-4 py-2 hover:bg-slate-100">
+              <a href="#filters" className="rounded-full px-3 py-1.5 md:px-4 md:py-2 hover:bg-slate-100">
                 Filters
               </a>
-              <Link href="/about" className="rounded-full px-4 py-2 hover:bg-slate-100">
+              <Link href="/about" className="rounded-full px-3 py-1.5 md:px-4 md:py-2 hover:bg-slate-100">
                 About
               </Link>
-              <Link href="/contact" className="rounded-full px-4 py-2 hover:bg-slate-100">
+              <Link href="/contact" className="rounded-full px-3 py-1.5 md:px-4 md:py-2 hover:bg-slate-100">
                 Contact
               </Link>
             </nav>
           </div>
         </header>
 
-        <div className="overflow-hidden rounded-[32px] bg-gradient-to-br from-green-950 via-green-900 to-emerald-700 shadow-xl">
+        <div className="mt-4 overflow-hidden rounded-[32px] bg-gradient-to-br from-green-950 via-green-900 to-emerald-700 shadow-xl">
           <div className="grid gap-10 px-6 py-10 md:px-10 md:py-14 lg:grid-cols-[1.4fr_0.8fr] lg:items-end">
             <div className="max-w-3xl">
               <p className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1 text-sm font-medium text-green-100 backdrop-blur-sm">
@@ -95,6 +95,9 @@ export default function Home() {
                 Filter by category and budget, then open a detailed guide for
                 each idea.
               </p>
+              <p className="mt-4 text-sm text-green-100/80">
+  Trusted by aspiring entrepreneurs across Uganda 🇺🇬
+</p>
 
               <div className="mt-8">
                 <input
@@ -126,6 +129,81 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+<section className="mt-10">
+  <div className="mb-5 flex items-end justify-between gap-4">
+    <div>
+      <h2 className="text-2xl font-bold text-slate-900 md:text-3xl">
+        Featured Ideas
+      </h2>
+      <p className="mt-1 text-sm text-slate-500">
+        Start with some of the most practical and beginner-friendly opportunities.
+      </p>
+    </div>
+  </div>
+
+  <div className="grid gap-6 md:grid-cols-3">
+    <Link href="/ideas/poultry-farming">
+      <div className="group h-full rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl">
+        <span className="inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-800">
+          Agriculture
+        </span>
+        <h3 className="mt-5 text-xl font-bold text-slate-900 group-hover:text-green-800">
+          Poultry Farming
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-slate-600">
+          A strong demand business with repeat buyers and long-term income potential.
+        </p>
+        <p className="mt-4 text-sm font-medium text-slate-500">
+          Budget: UGX 500,000 - 3,000,000
+        </p>
+        <div className="mt-6 border-t border-slate-100 pt-4 text-sm font-semibold text-green-700">
+          View guide →
+        </div>
+      </div>
+    </Link>
+
+    <Link href="/ideas/mobile-money-business">
+      <div className="group h-full rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl">
+        <span className="inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-800">
+          Services
+        </span>
+        <h3 className="mt-5 text-xl font-bold text-slate-900 group-hover:text-green-800">
+          Mobile Money Business
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-slate-600">
+          A reliable daily-cash business in busy trading centers and marketplaces.
+        </p>
+        <p className="mt-4 text-sm font-medium text-slate-500">
+          Budget: UGX 500,000 - 2,000,000
+        </p>
+        <div className="mt-6 border-t border-slate-100 pt-4 text-sm font-semibold text-green-700">
+          View guide →
+        </div>
+      </div>
+    </Link>
+
+    <Link href="/ideas/chapati-business">
+      <div className="group h-full rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl">
+        <span className="inline-flex rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-800">
+          Food
+        </span>
+        <h3 className="mt-5 text-xl font-bold text-slate-900 group-hover:text-green-800">
+          Chapati Business
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-slate-600">
+          A fast-moving business with strong daily cash flow in busy locations.
+        </p>
+        <p className="mt-4 text-sm font-medium text-slate-500">
+          Budget: UGX 200,000 - 800,000
+        </p>
+        <div className="mt-6 border-t border-slate-100 pt-4 text-sm font-semibold text-green-700">
+          View guide →
+        </div>
+      </div>
+    </Link>
+  </div>
+</section>
 
 <section className="mt-10 grid gap-6 md:grid-cols-3">
   <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
