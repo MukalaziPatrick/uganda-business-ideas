@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Best Business Ideas in Uganda (2026) | Start with Low Capital",
   description:
     "Discover practical business ideas in Uganda you can start with low capital. Includes poultry, liquid soap, chapati, pig farming and more with step-by-step guides.",
