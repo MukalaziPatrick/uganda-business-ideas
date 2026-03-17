@@ -3,24 +3,15 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const idea = ideas.find((item) => item.slug === slug);
 
-  if (!idea) {
-    return {
-      title: "Business Idea Not Found",
-      description: "The requested business idea could not be found.",
-    };
-  }
+export async function generateMetadata({ params }: any) {
+  const idea = ideas.find((i) => i.slug === params.slug);
+
+  if (!idea) return {};
 
   return {
-    title: `${idea.title} in Uganda`,
-    description: `${idea.desc} Startup capital: ${idea.capital}. Skills needed: ${idea.skills}.`,
+    title: `${idea.title} in Uganda | Cost, Steps & Profit`,
+    description: `${idea.desc} Learn startup capital, steps, risks, and profit potential in Uganda.`,
   };
 }
 

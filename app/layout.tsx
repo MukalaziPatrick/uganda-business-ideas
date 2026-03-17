@@ -1,10 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Best Business Ideas in Uganda",
+export const metadata = {
+  title: "Best Business Ideas in Uganda (2026) | Start with Low Capital",
   description:
-    "Discover profitable business ideas in Uganda based on your budget, skills, and goals.",
+    "Discover practical business ideas in Uganda you can start with low capital. Includes poultry, liquid soap, chapati, pig farming and more with step-by-step guides.",
+  keywords: [
+    "business ideas Uganda",
+    "small business Uganda",
+    "start business Uganda",
+    "low capital business Uganda",
+    "how to start business Uganda",
+  ],
+  openGraph: {
+    title: "Best Business Ideas in Uganda",
+    description:
+      "Explore real business ideas in Uganda with guides, capital requirements, and steps.",
+    url: "https://uganda-business-ideas.vercel.app",
+    siteName: "Uganda Business Ideas",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
