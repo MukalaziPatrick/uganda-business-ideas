@@ -4,8 +4,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Best Business Ideas in Uganda (2026) | Start with Low Capital",
   description:
-    "Discover practical business ideas in Uganda you can start with low capital. Includes poultry, liquid soap, chapati, pig farming and more with step-by-step guides.",
-    keywords: [
+    "Discover practical business ideas in Uganda you can start with low capital.",
+  keywords: [
     "business ideas Uganda",
     "small business Uganda",
     "start business Uganda",
@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     siteName: "Uganda Business Ideas",
     type: "website",
   },
+  verification: {
+    google: "Y9d7o39Src2xSuPnkQs3a1SKd71MvXphThEY83L6",
+  },
 };
 
 export default function RootLayout({
@@ -29,10 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-  <head>
-    <meta name="google-site-verification" content="Y9d7o39Src2xSuPnkQs3a1SKd71MvXphThEY83L6-gI" />
-  </head>
-  <body>{children}</body>
-</html>
+      <body>{children}</body>
+    </html>
   );
 }

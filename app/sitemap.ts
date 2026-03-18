@@ -21,7 +21,7 @@ import { ideas } from "./data/ideas";
 // ── Your website's base URL ───────────────────────────────────────────────────
 // Replace this with your actual domain before going live.
 // Do NOT include a trailing slash.
-const BASE_URL = "https://ugandabusinessideas.com";
+const BASE_URL = "https://uganda-business-ideas.vercel.app";
 
 // ── Sitemap function ──────────────────────────────────────────────────────────
 // Next.js calls this function at build time and uses the returned array
