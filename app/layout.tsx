@@ -29,7 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
-    </html>
+  <head>
+    <meta name="google-site-verification" content="Y9d7o39Src2xSuPnkQs3a1SKd71MvXphThEY83L6-gI" />
+  </head>
+  <body>{children}</body>
+</html>
   );
 }
