@@ -1,23 +1,12 @@
 // app/HomeClient.tsx
-//
-// This is the interactive homepage component.
-// It uses useState so it must be a client component.
-// SEO metadata lives in page.tsx (the server component wrapper).
-
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { ideas } from "./data/ideas";
-
-// ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
-// Radius  : rounded-2xl (cards), rounded-3xl (panels), rounded-full (badges)
-// Shadows : shadow-sm (rest), hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.18)]
-// Gaps    : mt-12 / sm:mt-16 / md:mt-20
-// Eyebrow : text-[10.5px] font-bold uppercase tracking-[0.14em]
-// H2      : text-2xl sm:text-3xl font-black tracking-tight
-// Body    : text-[14px] leading-relaxed text-slate-600
-// ─────────────────────────────────────────────────────────────────────────────
+import { stories } from "./data/stories";
+import { formatUGX, guides } from "./data/guides";
+import AIAssistant from "../components/AIAssistant";
 
 export default function HomeClient() {
   const [search, setSearch]                     = useState("");
@@ -25,21 +14,24 @@ export default function HomeClient() {
   const [selectedBudget, setSelectedBudget]     = useState("All");
   const [mobileMenuOpen, setMobileMenuOpen]     = useState(false);
 
-  const categories    = ["All", "Agriculture", "Food", "Services", "Retail"];
-  const budgetOptions = ["All", "Under 500k", "500k - 2M", "Above 2M"];
+  const categories = ["All", "Agriculture", "Digital", "Food", "Services", "Retail"];
 
-  const categoryConfig: Record<string, { color: string; icon: string; accent: string }> = {
-    Agriculture: { color: "bg-emerald-50 text-emerald-700 border-emerald-200", icon: "🌱", accent: "emerald" },
-    Food:        { color: "bg-amber-50  text-amber-700  border-amber-200",     icon: "🍽️", accent: "amber"   },
-    Services:    { color: "bg-sky-50    text-sky-700    border-sky-200",       icon: "💼", accent: "sky"     },
-    Retail:      { color: "bg-violet-50 text-violet-700 border-violet-200",    icon: "🛒", accent: "violet"  },
+  const budgetOptions = ["All", "Under 200k", "200k – 500k", "500k – 2M", "2M+"];
+
+  const categoryConfig: Record<string, { color: string; icon: string }> = {
+    Agriculture: { color: "bg-emerald-50 text-emerald-700 border-emerald-200", icon: "🌱" },
+    Digital:     { color: "bg-indigo-50  text-indigo-700  border-indigo-200",  icon: "💻" },
+    Food:        { color: "bg-amber-50  text-amber-700  border-amber-200",     icon: "🍽️" },
+    Services:    { color: "bg-sky-50    text-sky-700    border-sky-200",       icon: "💼" },
+    Retail:      { color: "bg-violet-50 text-violet-700 border-violet-200",    icon: "🛒" },
   };
 
-  function getBudgetCategory(capital: string) {
+  function getBudgetCategory(capital: string): string {
     const min = parseInt(capital.replace(/,/g, "").match(/\d+/)?.[0] ?? "0", 10);
-    if (min < 500_000)    return "Under 500k";
-    if (min <= 2_000_000) return "500k - 2M";
-    return "Above 2M";
+    if (min < 200_000)    return "Under 200k";
+    if (min < 500_000)    return "200k – 500k";
+    if (min <= 2_000_000) return "500k – 2M";
+    return "2M+";
   }
 
   const filteredIdeas = ideas.filter((idea) => {
@@ -60,6 +52,14 @@ export default function HomeClient() {
   const hasActiveFilters =
     search !== "" || selectedCategory !== "All" || selectedBudget !== "All";
 
+  // ── Pick 4 stories to show in the teaser (one per category) ─────────────
+  const featuredStories = [
+    stories.find((s) => s.categories.includes("Agriculture")),
+    stories.find((s) => s.categories.includes("Food")),
+    stories.find((s) => s.categories.includes("Services")),
+    stories.find((s) => s.categories.includes("Retail")),
+  ].filter(Boolean) as typeof stories;
+
   // ── Shared class tokens ───────────────────────────────────────────────────
   const filterActive = "border-green-600 bg-green-600 text-white shadow-md shadow-green-200";
   const filterIdle   = "border-slate-200 bg-slate-50 text-slate-600 hover:border-green-300 hover:bg-green-50 hover:text-green-700";
@@ -67,7 +67,6 @@ export default function HomeClient() {
   const sectionH2    = "mt-2 text-2xl font-black leading-snug tracking-tight text-slate-900 sm:text-3xl";
   const sectionLead  = "mt-2 text-[14.5px] leading-relaxed text-slate-500";
 
-  // ── Card shared tokens ────────────────────────────────────────────────────
   const ideaCardBase = [
     "relative flex h-full flex-col overflow-hidden",
     "rounded-3xl border border-slate-200 bg-white",
@@ -83,6 +82,47 @@ export default function HomeClient() {
     "transition-all duration-200 group-hover:w-1",
   ].join(" ");
 
+  const budgetTiles = [
+    {
+      label:  "Under 200k",
+      icon:   "🌱",
+      desc:   "Start with very little — perfect if you are just beginning.",
+      idle:   "border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-300 text-emerald-800",
+      active: "border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-200",
+    },
+    {
+      label:  "200k – 500k",
+      icon:   "💼",
+      desc:   "Small investment, real business — a popular starting range.",
+      idle:   "border-sky-200 bg-sky-50 hover:bg-sky-100 hover:border-sky-300 text-sky-800",
+      active: "border-sky-600 bg-sky-600 text-white shadow-md shadow-sky-200",
+    },
+    {
+      label:  "500k – 2M",
+      icon:   "📈",
+      desc:   "Mid-range ideas with stronger earning potential.",
+      idle:   "border-violet-200 bg-violet-50 hover:bg-violet-100 hover:border-violet-300 text-violet-800",
+      active: "border-violet-600 bg-violet-600 text-white shadow-md shadow-violet-200",
+    },
+    {
+      label:  "2M+",
+      icon:   "🏆",
+      desc:   "Larger setups with the highest profit potential.",
+      idle:   "border-amber-200 bg-amber-50 hover:bg-amber-100 hover:border-amber-300 text-amber-800",
+      active: "border-amber-500 bg-amber-500 text-white shadow-md shadow-amber-200",
+    },
+  ];
+
+  const categoryTiles = [
+    { label: "Agriculture", icon: "🌱", style: "bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300" },
+    { label: "Digital",     icon: "💻", style: "bg-indigo-50  border-indigo-200  text-indigo-700  hover:bg-indigo-100  hover:border-indigo-300"  },
+    { label: "Food",        icon: "🍽️", style: "bg-amber-50   border-amber-200   text-amber-700   hover:bg-amber-100   hover:border-amber-300"   },
+    { label: "Services",    icon: "💼", style: "bg-sky-50     border-sky-200     text-sky-700     hover:bg-sky-100     hover:border-sky-300"     },
+    { label: "Retail",      icon: "🛒", style: "bg-violet-50  border-violet-200  text-violet-700  hover:bg-violet-100  hover:border-violet-300"  },
+  ];
+
+  const guideTeasers = guides.slice(0, 3);
+
   return (
     <main className="min-h-screen bg-[#f5f7fa] text-slate-900 antialiased">
 
@@ -90,31 +130,30 @@ export default function HomeClient() {
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 md:px-10">
 
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="group flex items-center gap-2.5">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-emerald-500 text-[10px] font-black text-white shadow-md shadow-green-200 transition-shadow group-hover:shadow-lg group-hover:shadow-green-300">
               UBI
             </div>
-            <span className="text-[15px] font-semibold tracking-tight text-slate-800">
-              Uganda Business Ideas
-            </span>
+            <span className="text-[15px] font-semibold tracking-tight text-slate-800">Uganda Business Ideas</span>
             <span className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-400 md:inline-flex">
               🇺🇬 Uganda · 2026
             </span>
           </Link>
 
           <nav className="hidden items-center gap-0.5 text-[13px] font-medium text-slate-500 md:flex">
-            <a href="#ideas"   className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Ideas</a>
-            <a href="#filters" className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Filter</a>
-            <Link href="/about"   className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">About</Link>
-            <Link href="/contact" className="ml-2 rounded-xl bg-green-600 px-4 py-2 text-[13px] font-semibold text-white shadow-sm shadow-green-200 transition-all hover:bg-green-700 hover:shadow-md active:scale-95">
-              Contact
+            <a href="#ideas"    className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Ideas</a>
+            <a href="#filters"  className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Filter</a>
+            <a href="#categories" className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Categories</a>
+            <Link href="/blog" className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Blog</Link>
+            <Link href="/guides" className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Guides</Link>
+            <Link href="/advertise" className="rounded-lg px-3 py-1.5 transition-colors hover:bg-slate-100 hover:text-slate-900">Advertise</Link>
+            <Link href="/start" className="ml-2 rounded-xl bg-green-600 px-4 py-2 text-[13px] font-semibold text-white shadow-sm shadow-green-200 transition-all hover:bg-green-700 hover:shadow-md active:scale-95">
+              Start
             </Link>
           </nav>
 
           <div className="flex items-center gap-2 md:hidden">
-            <Link href="/contact" className="rounded-xl bg-green-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-all active:scale-95">
-              Contact
-            </Link>
+            <Link href="/start" className="rounded-xl bg-green-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-all active:scale-95">Start</Link>
             <button
               onClick={() => setMobileMenuOpen((o) => !o)}
               aria-label="Toggle menu"
@@ -133,8 +172,11 @@ export default function HomeClient() {
             <nav className="flex flex-col gap-1 text-[15px] font-medium text-slate-700">
               <a href="#ideas"   onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">💡 Ideas</a>
               <a href="#filters" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">🎯 Filter by Budget</a>
-              <Link href="/about"   onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">ℹ️ About</Link>
-              <Link href="/contact" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">✉️ Contact</Link>
+              <a href="#categories" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">🧭 Categories</a>
+              <Link href="/blog" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">📝 Blog</Link>
+              <Link href="/guides" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">📋 Guides</Link>
+              <Link href="/advertise" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">📣 Advertise</Link>
+              <Link href="/start" onClick={closeMobileMenu} className="rounded-xl px-4 py-3 transition hover:bg-slate-50">✅ Start</Link>
             </nav>
           </div>
         )}
@@ -142,7 +184,6 @@ export default function HomeClient() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a]">
-        {/* Decorative blobs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -right-32 -top-32 h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-3xl" />
           <div className="absolute -bottom-20 -left-10 h-80 w-80 rounded-full bg-green-400/8 blur-3xl" />
@@ -152,15 +193,12 @@ export default function HomeClient() {
         <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-10 md:py-24 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-[1fr_380px] lg:items-center lg:gap-16">
 
-            {/* Left col */}
             <div>
-              {/* eyebrow badge */}
               <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 backdrop-blur-sm">
                 <span className="text-sm">🇺🇬</span>
                 <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-green-200">Uganda · 2026 · Free Guides</span>
               </div>
 
-              {/* headline */}
               <h1 className="mt-5 text-4xl font-black leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[58px]">
                 Find a business
                 <br />
@@ -169,55 +207,25 @@ export default function HomeClient() {
                 </span>
               </h1>
 
-              {/* value proposition */}
               <p className="mt-5 max-w-lg text-[15.5px] leading-relaxed text-green-100/70">
                 Practical, Uganda-focused business ideas with real startup costs in UGX,
                 honest risks, and step-by-step guides — written for complete beginners.
               </p>
 
-              {/* search bar */}
-              <div className="mt-7 flex items-center gap-3 rounded-2xl bg-white/10 p-2 ring-1 ring-white/20 backdrop-blur-sm transition-all focus-within:ring-2 focus-within:ring-emerald-400 sm:mt-8 sm:max-w-md">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                  <svg className="h-4 w-4 text-white/60" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search business ideas…"
-                  className="flex-1 bg-transparent py-1 text-sm text-white placeholder-white/40 outline-none"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                {search && (
-                  <button
-                    onClick={() => setSearch("")}
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/50 hover:bg-white/20 hover:text-white"
-                    aria-label="Clear search"
-                  >✕</button>
-                )}
-              </div>
-
-              {/* CTA row */}
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#ideas"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-black text-green-800 shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
-                >
-                  Browse All Ideas
+              <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
+                <a href="#filters"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-black text-green-800 shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0">
+                  Search Ideas
                   <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                   </svg>
                 </a>
-                <a
-                  href="#filters"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 active:scale-95"
-                >
-                  Filter by Budget
-                </a>
+                <Link href="/start"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 active:scale-95">
+                  Get help starting
+                </Link>
               </div>
 
-              {/* Micro trust strip */}
               <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-5">
                 {[
                   { icon: "✅", label: "100% Free" },
@@ -226,28 +234,17 @@ export default function HomeClient() {
                   { icon: "🔒", label: "No sign-up needed" },
                 ].map((t) => (
                   <span key={t.label} className="flex items-center gap-1.5 text-[12.5px] text-green-200/60">
-                    <span>{t.icon}</span>
-                    {t.label}
+                    <span>{t.icon}</span>{t.label}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Right col — stat cards */}
+            {/* Right: stat cards + category chips */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-1">
               {[
-                {
-                  label: "Business Ideas",
-                  value: ideas.length,
-                  note:  "Across agriculture, food, services & retail",
-                  icon:  "💡",
-                },
-                {
-                  label: "Matching Now",
-                  value: filteredIdeas.length,
-                  note:  "Ideas matching your current filters",
-                  icon:  "🎯",
-                },
+                { label: "Business Ideas",   value: ideas.length,          note: "Across agriculture, digital, food, services & retail",     icon: "💡" },
+                { label: "Ugandan Founders", value: stories.length + "+",  note: "Real people who started businesses like these",   icon: "🌟" },
               ].map((s) => (
                 <div key={s.label} className="rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur-md sm:p-6">
                   <div className="flex items-center justify-between">
@@ -258,22 +255,15 @@ export default function HomeClient() {
                   <p className="mt-1.5 text-xs leading-relaxed text-green-100/50">{s.note}</p>
                 </div>
               ))}
-
-              {/* Category quick-jump chips */}
               <div className="col-span-2 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-md lg:col-span-1">
                 <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-emerald-300">Browse by category</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {["Agriculture 🌱", "Food 🍽️", "Services 💼", "Retail 🛒"].map((cat) => {
+                  {["Agriculture 🌱", "Digital 💻", "Food 🍽️", "Services 💼", "Retail 🛒"].map((cat) => {
                     const label = cat.split(" ")[0];
                     return (
-                      <button
-                        key={label}
-                        onClick={() => {
-                          setSelectedCategory(label);
-                          document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[12px] font-semibold text-white transition-all hover:bg-white/20 active:scale-95"
-                      >
+                      <button key={label}
+                        onClick={() => { setSelectedCategory(label); document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }); }}
+                        className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[12px] font-semibold text-white transition-all hover:bg-white/20 active:scale-95">
                         {cat}
                       </button>
                     );
@@ -284,49 +274,241 @@ export default function HomeClient() {
           </div>
         </div>
 
-        {/* Fade to page bg */}
         <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-[#f5f7fa] to-transparent" />
       </section>
 
       {/* ── MAIN CONTENT ─────────────────────────────────────────────────────── */}
-      <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-12 md:px-10 md:pb-24 md:pt-16">
+      <div className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-10 md:pb-24">
+
+        {/* ── SEARCH AND FILTER ─────────────────────────────────────────────── */}
+        <section id="filters" className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="mb-6 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className={eyebrow}>Find your fit</p>
+              <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+                Search and filter business ideas
+              </h2>
+              <p className="mt-1 text-[14px] text-slate-500">
+                Search by idea name, then narrow by startup budget or category.
+              </p>
+            </div>
+            {hasActiveFilters && (
+              <button
+                onClick={clearAllFilters}
+                className="shrink-0 self-start rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-[12.5px] font-semibold text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 sm:self-auto"
+              >
+                ✕ Clear filters
+              </button>
+            )}
+          </div>
+
+          <div className="mb-6 flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-2 transition-all focus-within:border-green-300 focus-within:bg-white focus-within:ring-4 focus-within:ring-green-100">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="Search poultry, soap, digital, food..."
+              className="min-h-[44px] flex-1 bg-transparent text-sm text-slate-800 placeholder-slate-400 outline-none"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {search && (
+              <button onClick={() => setSearch("")} aria-label="Clear search"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-slate-400 shadow-sm hover:text-slate-600">
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {budgetTiles.map((tile) => {
+              const isActive = selectedBudget === tile.label;
+              const count = ideas.filter(
+                (idea) => getBudgetCategory(idea.capital) === tile.label
+              ).length;
+
+              return (
+                <button
+                  key={tile.label}
+                  onClick={() => {
+                    setSelectedBudget(tile.label);
+                    document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className={`flex flex-col gap-3 rounded-2xl border p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 sm:p-5 ${isActive ? tile.active : tile.idle}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl">{tile.icon}</span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                      isActive ? "bg-white/25 text-white" : "border border-slate-200 bg-white/80 text-slate-500"
+                    }`}>
+                      {count} idea{count !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[15px] font-black leading-tight">
+                      {tile.label}
+                      <span className={`ml-1 text-[11px] font-semibold ${isActive ? "text-white/70" : "opacity-50"}`}>UGX</span>
+                    </p>
+                    <p className={`mt-1 hidden text-[12px] leading-relaxed sm:block ${isActive ? "text-white/75" : "opacity-60"}`}>
+                      {tile.desc}
+                    </p>
+                  </div>
+                  {isActive && (
+                    <div className="flex items-center gap-1 text-[11.5px] font-bold text-white/90">
+                      <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                      Showing results below
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── CATEGORIES ────────────────────────────────────────────────────── */}
+        <section id="categories" className="mt-8">
+          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className={eyebrow}>Browse by category</p>
+              <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
+                Choose the type of business you want
+              </h2>
+            </div>
+            <a href="#ideas" className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 sm:block">
+              View matching ideas →
+            </a>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-5">
+            {categoryTiles.map((cat) => (
+              <button key={cat.label}
+                onClick={() => { setSelectedCategory(cat.label); document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }); }}
+                className={`flex min-h-[64px] items-center gap-2.5 rounded-2xl border p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 sm:gap-3 sm:p-5 ${cat.style}`}>
+                <span className="text-xl sm:text-2xl">{cat.icon}</span>
+                <span className="text-[13px] font-bold sm:text-[14px]">{cat.label}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* ── GUIDE TEASER ─────────────────────────────────────────────────── */}
+        <section id="guides" className="mt-12 sm:mt-16">
+          <div className="mb-6 flex items-end justify-between sm:mb-8">
+            <div>
+              <p className={eyebrow}>Focused starter guides</p>
+              <h2 className={sectionH2}>Go deeper before you spend money</h2>
+              <p className={sectionLead}>
+                Paid PDF guides for people who want a clearer first-week plan before starting.
+              </p>
+            </div>
+            <Link href="/guides" className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 sm:block">
+              View all guides →
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+            {guideTeasers.map((guide) => (
+              <Link key={guide.id} href={`/guides/${guide.slug}`} className="group block">
+                <div className={`${ideaCardBase} p-5 sm:p-6`}>
+                  <div className={accentBar} />
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="rounded-full bg-green-50 px-3 py-1 text-[11px] font-bold text-green-700 ring-1 ring-green-100">
+                      {formatUGX(guide.priceUGX)}
+                    </span>
+                    <span className="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-amber-700 ring-1 ring-amber-100">
+                      Manual Mobile Money
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-[17px] font-black leading-snug text-slate-900 transition-colors group-hover:text-green-700">
+                    {guide.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-slate-600">
+                    {guide.summary}
+                  </p>
+                  <span className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full border border-green-200 px-3.5 py-1.5 text-[12px] font-bold text-green-700 transition-all duration-200 group-hover:border-green-600 group-hover:bg-green-600 group-hover:text-white">
+                    Preview guide →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ── ADVERTISE TEASER ──────────────────────────────────────────────── */}
+        <section id="advertise" className="mt-10 sm:mt-14">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-8 shadow-sm sm:px-8 sm:py-10">
+            <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-green-500 via-emerald-400 to-green-600" />
+            <div className="relative grid gap-6 md:grid-cols-[1fr_280px] md:items-center">
+              <div>
+                <p className={eyebrow}>Supplier listings</p>
+                <h2 className="mt-2 text-2xl font-black leading-snug tracking-tight text-slate-900 sm:text-3xl">
+                  Sell to people already researching what to start.
+                </h2>
+                <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-slate-500">
+                  If you provide inputs, equipment, training, or startup support, UBI can place your verified offer beside relevant idea pages.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {["Agro inputs", "Equipment sellers", "Training providers", "Wholesale suppliers"].map((item) => (
+                    <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[12px] font-semibold text-slate-600">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <Link href="/advertise"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-green-200 transition-all hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg active:translate-y-0">
+                Advertise on UBI
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── START CTA ─────────────────────────────────────────────────────── */}
+        <section className="mt-10 sm:mt-14">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] px-6 py-10 shadow-2xl sm:px-10 sm:py-12">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-400/10 blur-2xl" />
+            <div className="relative flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-emerald-300">Start with help</p>
+                <h2 className="mt-2 text-2xl font-black leading-snug tracking-tight text-white sm:text-3xl">
+                  Tell UBI your budget, location, and business interest.
+                </h2>
+                <p className="mt-3 text-[14.5px] leading-relaxed text-green-100/70">
+                  Use the start form when you want a more personal next step after browsing ideas, guides, and supplier options.
+                </p>
+              </div>
+              <Link href="/start"
+                className="inline-flex w-full min-h-[50px] items-center justify-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-black text-green-800 shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 sm:w-auto">
+                Start my business plan
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-        <section className="grid gap-3 sm:gap-4 md:grid-cols-3">
+        <section className="mt-8 grid gap-3 sm:gap-4 md:grid-cols-3">
           {[
-            {
-              num:   "01",
-              icon:  "💡",
-              title: "Browse Ideas",
-              body:  "Explore practical business opportunities written for Ugandan beginners — easy to compare and understand.",
-            },
-            {
-              num:   "02",
-              icon:  "🎯",
-              title: "Filter by Budget",
-              body:  "Set your available capital and instantly see only the businesses you can realistically start.",
-            },
-            {
-              num:   "03",
-              icon:  "📋",
-              title: "Read the Full Guide",
-              body:  "Each idea has startup steps, real costs, risks, best locations, and profit potential — all in one page.",
-            },
+            { num: "01", icon: "💡", title: "Browse Ideas",        body: "Explore practical business opportunities written for Ugandan beginners — easy to compare and understand." },
+            { num: "02", icon: "🎯", title: "Filter by Budget",    body: "Set your available capital and instantly see only the businesses you can realistically start."           },
+            { num: "03", icon: "📋", title: "Read the Full Guide", body: "Each idea has startup steps, real costs, risks, best locations, and profit potential — all in one page."  },
           ].map((item) => (
-            <div
-              key={item.num}
-              className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-green-200 hover:shadow-md sm:p-6"
-            >
+            <div key={item.num} className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-green-200 hover:shadow-md sm:p-6">
               <div className="absolute inset-y-0 left-0 w-0 rounded-l-2xl bg-green-500 transition-all duration-200 group-hover:w-[3px]" />
               <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-green-50 text-lg transition-colors group-hover:bg-green-100">
-                  {item.icon}
-                </span>
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-green-50 text-lg transition-colors group-hover:bg-green-100">{item.icon}</span>
                 <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-300">{item.num}</span>
               </div>
-              <h3 className="mt-4 text-[15px] font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-green-700">
-                {item.title}
-              </h3>
+              <h3 className="mt-4 text-[15px] font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-green-700">{item.title}</h3>
               <p className="mt-1.5 text-[13.5px] leading-relaxed text-slate-600">{item.body}</p>
             </div>
           ))}
@@ -340,77 +522,37 @@ export default function HomeClient() {
               <h2 className={sectionH2}>Featured Ideas</h2>
               <p className={sectionLead}>High-demand businesses with reliable income potential across Uganda.</p>
             </div>
-            <a
-              href="#ideas"
-              className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 sm:block"
-            >
+            <a href="#ideas" className="hidden shrink-0 rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 sm:block">
               View all →
             </a>
           </div>
 
           <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
             {[
-              {
-                href:     "/ideas/poultry-farming",
-                category: "Agriculture",
-                emoji:    "🐔",
-                title:    "Poultry Farming",
-                desc:     "Strong daily demand with repeat buyers and reliable long-term income potential.",
-                budget:   "UGX 500,000 – 3,000,000",
-                tag:      "High demand",
-                tagColor: "bg-emerald-50 text-emerald-700 ring-emerald-100",
-              },
-              {
-                href:     "/ideas/mobile-money-business",
-                category: "Services",
-                emoji:    "📱",
-                title:    "Mobile Money Business",
-                desc:     "Daily cash flow business in busy trading centres and high-traffic marketplaces.",
-                budget:   "UGX 500,000 – 2,000,000",
-                tag:      "Daily income",
-                tagColor: "bg-sky-50 text-sky-700 ring-sky-100",
-              },
-              {
-                href:     "/ideas/chapati-business",
-                category: "Food",
-                emoji:    "🫓",
-                title:    "Chapati Business",
-                desc:     "Fast-moving street food with consistent revenue in high-traffic areas.",
-                budget:   "UGX 200,000 – 800,000",
-                tag:      "Low capital",
-                tagColor: "bg-amber-50 text-amber-700 ring-amber-100",
-              },
+              { href: "/ideas/poultry-farming",      category: "Agriculture", emoji: "🐔", title: "Poultry Farming",       desc: "Strong daily demand with repeat buyers and reliable long-term income potential.",  budget: "UGX 500,000 – 3,000,000", tag: "High demand",  tagColor: "bg-emerald-50 text-emerald-700 ring-emerald-100" },
+              { href: "/ideas/mobile-money-business", category: "Services",    emoji: "📱", title: "Mobile Money Business", desc: "Daily cash flow business in busy trading centres and high-traffic marketplaces.",   budget: "UGX 1,000,000 – 5,000,000", tag: "Daily income", tagColor: "bg-sky-50 text-sky-700 ring-sky-100"           },
+              { href: "/ideas/chapati-business",      category: "Food",        emoji: "🫓", title: "Chapati Business",      desc: "Fast-moving street food with consistent revenue in high-traffic areas.",            budget: "UGX 200,000 – 1,000,000",  tag: "Low capital",  tagColor: "bg-amber-50 text-amber-700 ring-amber-100"      },
             ].map((card) => {
               const cfg = categoryConfig[card.category];
               return (
                 <Link key={card.href} href={card.href} className="group block">
                   <div className={`${ideaCardBase} p-5 sm:p-6`}>
                     <div className={accentBar} />
-
-                    {/* Top row: category + tag */}
                     <div className="flex items-center justify-between gap-2">
                       <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold ${cfg?.color ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
                         {cfg?.icon} {card.category}
                       </span>
-                      <span className={`rounded-full px-3 py-1 text-[11px] font-bold ring-1 ${card.tagColor}`}>
-                        {card.tag}
-                      </span>
+                      <span className={`rounded-full px-3 py-1 text-[11px] font-bold ring-1 ${card.tagColor}`}>{card.tag}</span>
                     </div>
-
-                    {/* Icon + title */}
                     <div className="mt-5 flex items-start gap-4">
-                      <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-slate-50 text-3xl shadow-inner transition-colors duration-200 group-hover:bg-green-50">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-50 text-3xl shadow-inner transition-colors duration-200 group-hover:bg-green-50">
                         {card.emoji}
                       </div>
                       <h3 className="mt-1 text-[17px] font-bold leading-snug tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-green-700">
                         {card.title}
                       </h3>
                     </div>
-
-                    {/* Description */}
                     <p className="mt-3 flex-1 text-[13.5px] leading-relaxed text-slate-600">{card.desc}</p>
-
-                    {/* Footer */}
                     <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
                       <p className="text-xs font-medium text-slate-400">{card.budget}</p>
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 px-3.5 py-1.5 text-[12px] font-bold text-green-700 transition-all duration-200 group-hover:border-green-600 group-hover:bg-green-600 group-hover:text-white">
@@ -427,53 +569,122 @@ export default function HomeClient() {
           </div>
         </section>
 
+        {/* ── SUCCESS STORIES TEASER ────────────────────────────────────────── */}
+        {/*
+          Shows 4 stories (one per category) — a teaser only.
+          Full stories with YouTube videos live on each idea detail page.
+          To add a video to a story: open app/data/stories.ts,
+          find the matching story, and add:  youtubeId: "YOUR_VIDEO_ID"
+        */}
+        <AIAssistant />
+        <section id="stories" className="mt-12 sm:mt-16 md:mt-20">
+          <div className="mb-6 flex items-end justify-between sm:mb-8">
+            <div>
+              <p className={eyebrow}>Real people · Real results</p>
+              <h2 className={sectionH2}>Success Stories</h2>
+              <p className={sectionLead}>
+                Ugandans who started these exact businesses — in their own words.
+              </p>
+            </div>
+            <span className="hidden shrink-0 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-slate-500 shadow-sm sm:block">
+              {stories.length} stories total
+            </span>
+          </div>
+
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {featuredStories.map((story) => {
+              const idea = ideas.find((i) => story.ideaSlugs.includes(i.slug));
+              const cfg  = categoryConfig[story.categories[0]];
+              return (
+                <Link
+                  key={story.id}
+                  href={idea ? `/ideas/${idea.slug}#stories` : "#stories"}
+                  className="group block"
+                >
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 group-hover:-translate-y-1.5 group-hover:border-green-200 group-hover:shadow-[0_8px_30px_-4px_rgba(22,163,74,0.18)] sm:p-6">
+
+                    {/* Category badge */}
+                    <span className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold ${cfg?.color ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
+                      {cfg?.icon} {story.categories[0]}
+                    </span>
+
+                    {/* Quote */}
+                    <div className="mt-4 flex-1">
+                      <svg className="mb-2 h-5 w-5 text-slate-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                      </svg>
+                      <p className="text-[13.5px] italic leading-relaxed text-slate-700">
+                        &ldquo;{story.quote.length > 120 ? story.quote.slice(0, 120) + "…" : story.quote}&rdquo;
+                      </p>
+                    </div>
+
+                    {/* Person */}
+                    <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-4">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100 text-lg">
+                        {story.avatarEmoji}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-[13px] font-bold text-slate-900">{story.name}</p>
+                        <p className="truncate text-[11.5px] text-slate-400">{story.location}</p>
+                      </div>
+                    </div>
+
+                    {/* Result chip */}
+                    <div className="mt-3 flex items-center justify-between">
+                      <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-100">
+                        {story.result}
+                      </span>
+                      {story.youtubeId && (
+                        <span className="flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-semibold text-red-600 ring-1 ring-red-100">
+                          ▶ Video
+                        </span>
+                      )}
+                    </div>
+
+                    {/* CTA */}
+                    <p className="mt-3 text-[12px] font-semibold text-green-600 transition-colors group-hover:text-green-700">
+                      Read full story on idea page →
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Callout: stories live on idea pages */}
+          <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-green-100 bg-green-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 text-lg">💡</span>
+              <p className="text-[13.5px] leading-relaxed text-green-900">
+                <span className="font-bold">More stories on every idea page.</span>{" "}
+                Open any idea below and scroll to the &ldquo;Success Stories&rdquo; section to read the full story — including video when available.
+              </p>
+            </div>
+            <a href="#ideas"
+              className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-2.5 text-[13px] font-bold text-white shadow-sm transition-all hover:bg-green-700 active:scale-95">
+              Browse Ideas →
+            </a>
+          </div>
+        </section>
+
         {/* ── TRUST SECTION ─────────────────────────────────────────────────── */}
         <section className="mt-12 sm:mt-16 md:mt-20">
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white sm:rounded-3xl">
-            {/* Header */}
             <div className="border-b border-slate-100 px-6 py-5 sm:px-8">
               <p className={eyebrow}>Why people trust this platform</p>
-              <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">
-                Built for beginners. Built for Uganda.
-              </h2>
+              <h2 className="mt-1 text-xl font-black tracking-tight text-slate-900 sm:text-2xl">Built for beginners. Built for Uganda.</h2>
             </div>
-
-            {/* 4-column trust grid */}
             <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 md:grid-cols-4 md:divide-y-0">
               {[
-                {
-                  icon: "🇺🇬",
-                  label: "Uganda-focused",
-                  body:  "Every idea is chosen for the Ugandan market — not copied from other countries.",
-                  stat:  `${ideas.length} local ideas`,
-                },
-                {
-                  icon: "📖",
-                  label: "Beginner-friendly",
-                  body:  "No experience needed. Every guide explains what to do from scratch.",
-                  stat:  "Zero jargon",
-                },
-                {
-                  icon: "💰",
-                  label: "Real UGX costs",
-                  body:  "Honest startup figures in Ugandan shillings — what you actually need.",
-                  stat:  "No hidden fees",
-                },
-                {
-                  icon: "📋",
-                  label: "Practical guides",
-                  body:  "Step-by-step actions, realistic risks, best locations, and profit potential.",
-                  stat:  "Free forever",
-                },
+                { icon: "🇺🇬", label: "Uganda-focused",   body: "Every idea is chosen for the Ugandan market — not copied from other countries.",    stat: `${ideas.length} local ideas` },
+                { icon: "📖", label: "Beginner-friendly", body: "No experience needed. Every guide explains what to do from scratch.",                 stat: "Zero jargon"                },
+                { icon: "💰", label: "Real UGX costs",    body: "Honest startup figures in Ugandan shillings — what you actually need.",              stat: "No hidden fees"              },
+                { icon: "🌟", label: "Real stories",       body: "Ugandans who started these businesses share what worked — and what did not.",        stat: `${stories.length}+ stories`  },
               ].map((item, i) => (
                 <div key={i} className="flex flex-col gap-3 p-6 sm:p-7">
                   <div className="flex items-center justify-between">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 text-xl">
-                      {item.icon}
-                    </span>
-                    <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-400 border border-slate-200">
-                      {item.stat}
-                    </span>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 text-xl">{item.icon}</span>
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-bold text-slate-400">{item.stat}</span>
                   </div>
                   <div>
                     <p className="text-[14px] font-bold leading-snug text-slate-900">{item.label}</p>
@@ -482,15 +693,8 @@ export default function HomeClient() {
                 </div>
               ))}
             </div>
-
-            {/* Bottom reassurance bar */}
             <div className="flex flex-wrap items-center gap-5 border-t border-slate-100 bg-slate-50/60 px-6 py-4 sm:px-8">
-              {[
-                "✅ 100% Free",
-                "🔒 No account needed",
-                "📱 Works on mobile",
-                "🇺🇬 Updated for 2026",
-              ].map((item) => (
+              {["✅ 100% Free", "🔒 No account needed", "📱 Works on mobile", "🇺🇬 Updated for 2026"].map((item) => (
                 <span key={item} className="text-[12.5px] font-medium text-slate-500">{item}</span>
               ))}
             </div>
@@ -498,7 +702,7 @@ export default function HomeClient() {
         </section>
 
         {/* ── FILTERS ───────────────────────────────────────────────────────── */}
-        <section id="filters" className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:mt-16 sm:rounded-3xl sm:p-8 md:mt-20 md:p-10">
+        <section id="advanced-filters" className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:mt-16 sm:rounded-3xl sm:p-8 md:mt-20 md:p-10">
           <div className="flex items-start justify-between gap-4 sm:items-center">
             <div>
               <p className={eyebrow}>Narrow down</p>
@@ -539,7 +743,7 @@ export default function HomeClient() {
               )}
               {selectedBudget !== "All" && (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
-                  {selectedBudget}
+                  {selectedBudget} UGX
                   <button onClick={() => setSelectedBudget("All")} className="text-slate-400 hover:text-slate-600" aria-label="Remove budget filter">✕</button>
                 </span>
               )}
@@ -551,11 +755,8 @@ export default function HomeClient() {
               <p className="mb-3 text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-400">Category</p>
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`min-h-[44px] rounded-xl border px-4 py-2 text-[13px] font-semibold transition-all active:scale-95 sm:min-h-0 sm:px-5 sm:py-2.5 ${selectedCategory === cat ? filterActive : filterIdle}`}
-                  >
+                  <button key={cat} onClick={() => setSelectedCategory(cat)}
+                    className={`min-h-[44px] rounded-xl border px-4 py-2 text-[13px] font-semibold transition-all active:scale-95 sm:min-h-0 sm:px-5 sm:py-2.5 ${selectedCategory === cat ? filterActive : filterIdle}`}>
                     {cat !== "All" && <span className="mr-1">{categoryConfig[cat]?.icon}</span>}{cat}
                   </button>
                 ))}
@@ -565,11 +766,8 @@ export default function HomeClient() {
               <p className="mb-3 text-[10.5px] font-bold uppercase tracking-[0.14em] text-slate-400">Budget (UGX)</p>
               <div className="flex flex-wrap gap-2">
                 {budgetOptions.map((budget) => (
-                  <button
-                    key={budget}
-                    onClick={() => setSelectedBudget(budget)}
-                    className={`min-h-[44px] rounded-xl border px-4 py-2 text-[13px] font-semibold transition-all active:scale-95 sm:min-h-0 sm:px-5 sm:py-2.5 ${selectedBudget === budget ? filterActive : filterIdle}`}
-                  >
+                  <button key={budget} onClick={() => setSelectedBudget(budget)}
+                    className={`min-h-[44px] rounded-xl border px-4 py-2 text-[13px] font-semibold transition-all active:scale-95 sm:min-h-0 sm:px-5 sm:py-2.5 ${selectedBudget === budget ? filterActive : filterIdle}`}>
                     {budget}
                   </button>
                 ))}
@@ -584,9 +782,12 @@ export default function HomeClient() {
             <div>
               <p className={eyebrow}>Browse all</p>
               <h2 className={sectionH2}>Business Ideas</h2>
-              <p className={sectionLead}>Opportunities for different budgets, skills, and locations across Uganda.</p>
+              <p className={sectionLead}>
+                {selectedBudget !== "All"
+                  ? `Showing ${filteredIdeas.length} idea${filteredIdeas.length !== 1 ? "s" : ""} in the ${selectedBudget} UGX range.`
+                  : "Opportunities for different budgets, skills, and locations across Uganda."}
+              </p>
             </div>
-            {/* Live result count */}
             <div className="shrink-0 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-center shadow-sm sm:px-5 sm:py-3">
               <p className="text-xl font-black text-slate-900 sm:text-2xl">{filteredIdeas.length}</p>
               <p className="text-[10.5px] font-semibold text-slate-400">result{filteredIdeas.length !== 1 ? "s" : ""}</p>
@@ -597,13 +798,9 @@ export default function HomeClient() {
             <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white px-6 py-16 text-center sm:py-24">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-2xl sm:h-16 sm:w-16 sm:text-3xl">🔍</div>
               <p className="mt-4 text-base font-bold text-slate-700">No ideas found</p>
-              <p className="mt-1.5 max-w-xs text-[13.5px] leading-relaxed text-slate-400">
-                Try adjusting your search or clearing the active filters.
-              </p>
-              <button
-                onClick={clearAllFilters}
-                className="mt-5 min-h-[44px] rounded-xl bg-green-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-700 active:scale-95"
-              >
+              <p className="mt-1.5 max-w-xs text-[13.5px] leading-relaxed text-slate-400">Try adjusting your search or clearing the active filters.</p>
+              <button onClick={clearAllFilters}
+                className="mt-5 min-h-[44px] rounded-xl bg-green-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-green-700 active:scale-95">
                 Reset all filters
               </button>
             </div>
@@ -611,12 +808,14 @@ export default function HomeClient() {
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
               {filteredIdeas.map((idea) => {
                 const cfg = categoryConfig[idea.category];
+                // Count stories for this idea
+                const storyCount = stories.filter(
+                  (s) => s.ideaSlugs.includes(idea.slug) || s.categories.some((c) => c === idea.category)
+                ).length;
                 return (
                   <Link key={idea.slug} href={`/ideas/${idea.slug}`} className="group block">
                     <div className={`${ideaCardBase} p-5 sm:p-6`}>
                       <div className={accentBar} />
-
-                      {/* Category + capital */}
                       <div className="flex items-start justify-between gap-2">
                         <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold ${cfg?.color ?? "bg-slate-100 text-slate-600 border-slate-200"}`}>
                           {cfg?.icon} {idea.category}
@@ -625,23 +824,24 @@ export default function HomeClient() {
                           {idea.capital}
                         </span>
                       </div>
-
-                      {/* Title */}
                       <h3 className="mt-4 text-[16px] font-bold leading-snug tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-green-700 sm:mt-5">
                         {idea.title}
                       </h3>
-
-                      {/* Description */}
                       <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-slate-600">{idea.desc}</p>
-
-                      {/* Card footer CTA */}
                       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 sm:mt-5">
-                        <span className="flex items-center gap-1 text-[11px] font-medium text-slate-400">
-                          <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75m-7.5 6h12A2.25 2.25 0 0021 18.75V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V19.5"/>
-                          </svg>
-                          Full guide inside
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <span className="flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                            <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75m-7.5 6h12A2.25 2.25 0 0021 18.75V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V19.5"/>
+                            </svg>
+                            Guide inside
+                          </span>
+                          {storyCount > 0 && (
+                            <span className="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                              🌟 {storyCount} {storyCount === 1 ? "story" : "stories"}
+                            </span>
+                          )}
+                        </div>
                         <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 px-3.5 py-1.5 text-[12px] font-bold text-green-700 transition-all duration-200 group-hover:border-green-600 group-hover:bg-green-600 group-hover:text-white">
                           Open guide
                           <svg className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -662,17 +862,15 @@ export default function HomeClient() {
           <div className="relative">
             <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-emerald-400/10 blur-2xl" />
             <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-emerald-400">Why this platform</p>
-            <h2 className="mt-3 text-xl font-black leading-snug tracking-tight text-white sm:text-2xl md:text-3xl">
-              Built for Ugandan entrepreneurs
-            </h2>
+            <h2 className="mt-3 text-xl font-black leading-snug tracking-tight text-white sm:text-2xl md:text-3xl">Built for Ugandan entrepreneurs</h2>
             <p className="mt-2 text-[14.5px] leading-relaxed text-green-100/65 sm:max-w-xl">
               Everything you need to find, understand, and confidently start a business that fits your situation.
             </p>
             <div className="mt-7 grid gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3">
               {[
-                { icon: "✅", title: "Practical",  body: "Written for beginners — every idea explains exactly what it takes to get started in Uganda." },
-                { icon: "📍", title: "Local",      body: "Focused on real Ugandan markets and opportunities people can start with limited capital."   },
-                { icon: "📊", title: "Transparent", body: "Startup costs, risks, steps, and profit potential — everything visible in one place, for free." },
+                { icon: "✅", title: "Practical",   body: "Written for beginners — every idea explains exactly what it takes to get started in Uganda." },
+                { icon: "📍", title: "Local",       body: "Focused on real Ugandan markets and opportunities people can start with limited capital."    },
+                { icon: "🌟", title: "Real Stories", body: "Hear directly from Ugandans who have started these exact businesses — including what worked." },
               ].map((item) => (
                 <div key={item.title} className="rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur-sm transition-all hover:bg-white/15 sm:p-6">
                   <span className="text-2xl">{item.icon}</span>
@@ -685,21 +883,11 @@ export default function HomeClient() {
         </section>
 
         {/* ── CATEGORY STRIP ────────────────────────────────────────────────── */}
-        <section className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-4">
-          {[
-            { label: "Agriculture", icon: "🌱", style: "bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300" },
-            { label: "Food",        icon: "🍽️", style: "bg-amber-50   border-amber-200   text-amber-700   hover:bg-amber-100   hover:border-amber-300"   },
-            { label: "Services",    icon: "💼", style: "bg-sky-50     border-sky-200     text-sky-700     hover:bg-sky-100     hover:border-sky-300"     },
-            { label: "Retail",      icon: "🛒", style: "bg-violet-50  border-violet-200  text-violet-700  hover:bg-violet-100  hover:border-violet-300"  },
-          ].map((cat) => (
-            <button
-              key={cat.label}
-              onClick={() => {
-                setSelectedCategory(cat.label);
-                document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className={`flex min-h-[56px] items-center gap-2.5 rounded-2xl border p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 sm:gap-3 sm:p-5 ${cat.style}`}
-            >
+        <section className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-5">
+          {categoryTiles.map((cat) => (
+            <button key={cat.label}
+              onClick={() => { setSelectedCategory(cat.label); document.getElementById("ideas")?.scrollIntoView({ behavior: "smooth" }); }}
+              className={`flex min-h-[56px] items-center gap-2.5 rounded-2xl border p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 sm:gap-3 sm:p-5 ${cat.style}`}>
               <span className="text-xl sm:text-2xl">{cat.icon}</span>
               <span className="text-[13px] font-bold sm:text-[14px]">{cat.label}</span>
             </button>
@@ -709,57 +897,42 @@ export default function HomeClient() {
         {/* ── BOTTOM CTA ────────────────────────────────────────────────────── */}
         <section className="mt-10 sm:mt-14">
           <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-10 shadow-sm sm:px-10 sm:py-14">
-            {/* Accent bar top */}
             <div className="absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-gradient-to-r from-green-500 via-emerald-400 to-green-600" />
-            {/* Soft background circle */}
             <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-green-50 opacity-70" />
-
             <div className="relative flex flex-col items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
-
-              {/* Text side */}
               <div className="max-w-xl">
                 <p className={eyebrow}>Start today — it&apos;s free</p>
                 <h2 className="mt-2 text-2xl font-black leading-snug tracking-tight text-slate-900 sm:text-3xl">
-                  Your next business idea
-                  <br className="hidden sm:block" /> is waiting.
+                  Ready to choose your next step?
                 </h2>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-slate-500">
-                  Browse {ideas.length} practical ideas built for Uganda. Filter by your budget,
-                  pick a category, and open a full step-by-step guide — all free, no sign-up needed.
+                  Share your budget, location, timeline, and business interest so UBI can point you toward a practical starting path.
                 </p>
-
                 <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                   {[
                     { icon: "🇺🇬", label: "Uganda-focused" },
                     { icon: "📋",  label: "Step-by-step guides" },
                     { icon: "💰",  label: "Real UGX costs" },
-                    { icon: "🔒",  label: "No sign-up" },
+                    { icon: "🌟",  label: `${stories.length}+ real stories` },
                   ].map((item) => (
                     <span key={item.label} className="flex items-center gap-1.5 text-[13px] text-slate-500">
-                      <span>{item.icon}</span>
-                      {item.label}
+                      <span>{item.icon}</span>{item.label}
                     </span>
                   ))}
                 </div>
               </div>
-
-              {/* Button side */}
               <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-[210px]">
-                <a
-                  href="#ideas"
-                  className="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-green-200 transition-all hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg hover:shadow-green-200 active:translate-y-0"
-                >
-                  Browse All Ideas
+                <Link href="/start"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3.5 text-sm font-black text-white shadow-md shadow-green-200 transition-all hover:-translate-y-0.5 hover:bg-green-700 hover:shadow-lg active:translate-y-0">
+                  Start my plan
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
-                </a>
-                <a
-                  href="#filters"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:border-green-200 hover:bg-green-50 hover:text-green-700 active:scale-95"
-                >
-                  Filter by Budget
-                </a>
+                </Link>
+                <Link href="/guides"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-6 py-3.5 text-sm font-semibold text-slate-700 transition-all hover:border-green-200 hover:bg-green-50 hover:text-green-700 active:scale-95">
+                  📋 View paid guides
+                </Link>
               </div>
             </div>
           </div>
@@ -769,27 +942,23 @@ export default function HomeClient() {
         <footer className="mt-10 rounded-2xl border border-slate-200 bg-white px-5 py-6 shadow-sm sm:mt-14 sm:rounded-3xl sm:px-8 sm:py-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-emerald-500 text-[10px] font-black text-white shadow-md shadow-green-200">
-                UBI
-              </div>
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-emerald-500 text-[10px] font-black text-white shadow-md shadow-green-200">UBI</div>
               <div>
                 <p className="text-[14px] font-semibold text-slate-800">Uganda Business Ideas</p>
-                <p className="text-xs leading-relaxed text-slate-400">
-                  Uganda&apos;s beginner-friendly business guide · Updated 2026
-                </p>
+                <p className="text-xs leading-relaxed text-slate-400">Uganda&apos;s beginner-friendly business guide · Updated 2026</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-medium text-slate-500">
               <Link href="/about"   className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">About</Link>
               <Link href="/contact" className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Contact</Link>
+              <Link href="/blog"    className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Blog</Link>
               <a href="#ideas"      className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Ideas</a>
+              <a href="#stories"    className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Stories</a>
               <a href="#filters"    className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Filter</a>
             </div>
           </div>
           <div className="mt-5 flex flex-col gap-1 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs leading-relaxed text-slate-400">
-              © 2026 Uganda Business Ideas. Built to help Ugandans start smarter. 🇺🇬
-            </p>
+            <p className="text-xs leading-relaxed text-slate-400">© 2026 Uganda Business Ideas. Built to help Ugandans start smarter. 🇺🇬</p>
             <p className="text-xs text-slate-300">Free · No sign-up · Beginner-friendly</p>
           </div>
         </footer>

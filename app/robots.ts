@@ -17,11 +17,12 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 // ── Your website's base URL ───────────────────────────────────────────────────
 // Must match the BASE_URL you set in app/sitemap.ts exactly.
 // Do NOT include a trailing slash.
-const BASE_URL = "https://ugandabusinessideas.com";
+const BASE_URL = SITE_URL;
 
 // ── Robots function ───────────────────────────────────────────────────────────
 // Next.js calls this function at build time and uses the returned object

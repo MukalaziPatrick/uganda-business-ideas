@@ -1,8 +1,16 @@
 // cspell:ignore Fertilisers NARO Agro Owino Balikuddembe Kikuubo Jumia Jiji KCCA didn
-import { ideas } from "../../data/ideas";
+import { formatCapital, getIdeaBySlug, ideas } from "../../data/ideas";
+import { stories } from "../../data/stories";
+import { resources } from "../../data/resources";
+import { suppliers as supplierListings } from "../../data/suppliers";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import AnalyticsLink from "@/components/AnalyticsLink";
+import SupplierCard from "@/components/SupplierCard";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+import { SITE_URL } from "@/lib/site";
+import { buildIdeaHelpMessage } from "@/lib/whatsapp";
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 export async function generateMetadata({
@@ -11,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const idea = ideas.find((i) => i.slug === slug);
+  const idea = getIdeaBySlug(slug);
 
   if (!idea) {
     return {
@@ -23,7 +31,16 @@ export async function generateMetadata({
   return {
     title: `${idea.title} in Uganda | Cost, Steps & Profit`,
     description: `${idea.desc} Learn startup capital, steps, risks, and profit potential in Uganda.`,
+    alternates: {
+      canonical: `${SITE_URL}/ideas/${idea.slug}`,
+    },
   };
+}
+
+export function generateStaticParams() {
+  return ideas.map((idea) => ({
+    slug: idea.slug,
+  }));
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -47,6 +64,11 @@ const supplierMap: Record<string, { name: string; type: string; tip: string }[]>
     { name: "Online (Jumia / Jiji Uganda)", type: "Electronics & Supplies", tip: "Read seller reviews and request a warranty in writing before buying." },
     { name: "Chinese Wholesale Importers", type: "Bulk Supplies",    tip: "Pool orders with other small business owners to hit minimum quantities." },
   ],
+  Digital: [
+    { name: "Computer Training Centres", type: "Skills & Setup", tip: "Ask for practical examples and avoid paying for vague promises." },
+    { name: "Printing and Cyber Shops", type: "Digital Services", tip: "Compare turnaround time, file handling, and support before choosing a provider." },
+    { name: "Freelance Tech Providers", type: "Online Tools", tip: "Start with a small test job before paying for a larger package." },
+  ],
   Retail: [
     { name: "Kikuubo Trading Centre",   type: "Wholesale Stock",    tip: "Walk the whole street before buying — identical goods can differ by 30% in price." },
     { name: "Industrial Area Factories", type: "Direct Manufacture", tip: "Buying direct removes the middleman and increases your margin." },
@@ -60,6 +82,15 @@ const defaultSuppliers = [
   { name: "Online (Jumia / Jiji Uganda)", type: "Electronics & Tools", tip: "Check seller ratings and request warranties before transferring any money." },
 ];
 
+// ─── Resource type colours ────────────────────────────────────────────────────
+const resourceTypeStyle: Record<string, { badge: string; dot: string }> = {
+  Government: { badge: "bg-blue-50 text-blue-700 border-blue-100",     dot: "bg-blue-500"   },
+  Training:   { badge: "bg-violet-50 text-violet-700 border-violet-100", dot: "bg-violet-500" },
+  Finance:    { badge: "bg-emerald-50 text-emerald-700 border-emerald-100", dot: "bg-emerald-500" },
+  Market:     { badge: "bg-amber-50 text-amber-700 border-amber-100",   dot: "bg-amber-500"  },
+  Community:  { badge: "bg-sky-50 text-sky-700 border-sky-100",         dot: "bg-sky-500"    },
+};
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function IdeaPage({
   params,
@@ -67,10 +98,11 @@ export default async function IdeaPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const idea = ideas.find((item) => item.slug === slug);
+  const idea = getIdeaBySlug(slug);
   if (!idea) notFound();
 
   const categoryConfig: Record<string, { color: string; bg: string; icon: string; accent: string }> = {
+    Digital:     { color: "text-indigo-700",  bg: "bg-indigo-50  border-indigo-200",  icon: "💻", accent: "indigo"  },
     Agriculture: { color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", icon: "🌱", accent: "emerald" },
     Food:        { color: "text-amber-700",   bg: "bg-amber-50   border-amber-200",   icon: "🍽️", accent: "amber"   },
     Services:    { color: "text-sky-700",     bg: "bg-sky-50     border-sky-200",     icon: "💼", accent: "sky"     },
@@ -84,6 +116,25 @@ export default async function IdeaPage({
   };
 
   const suppliers = supplierMap[idea.category] ?? defaultSuppliers;
+
+  // ── Stories for this idea: exact slug match OR same category ─────────────
+  const ideaStories = stories.filter(
+    (s) =>
+      s.ideaSlugs.includes(idea.slug) ||
+      s.categories.some((c) => c === idea.category)
+  );
+
+  // ── Resources for this idea: exact category match OR "All" ───────────────
+  const ideaResources = resources.filter(
+    (r) => r.categories.includes("All") || r.categories.includes(idea.category)
+  );
+
+  const relevantSupplierListings = supplierListings.filter(
+    (supplier) =>
+      supplier.ideaSlugs.includes(idea.slug) ||
+      supplier.category === idea.category ||
+      supplier.category === "General"
+  );
 
   // ── Shared design tokens ──────────────────────────────────────────────────
   const card        = "rounded-2xl border border-slate-200 bg-white shadow-sm";
@@ -125,14 +176,11 @@ export default async function IdeaPage({
 
         {/* ── HERO ──────────────────────────────────────────────────────────── */}
         <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] shadow-2xl shadow-green-950/40">
-          {/* decorative orbs */}
           <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-green-300/8 blur-2xl" />
           <div className="pointer-events-none absolute right-1/3 top-0 h-px w-1/2 bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
 
-          {/* content */}
           <div className="relative px-6 py-10 sm:px-10 sm:py-14 md:px-14 md:py-16">
-            {/* badges row */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-200">
                 {cfg.icon} {idea.category}
@@ -141,24 +189,26 @@ export default async function IdeaPage({
                 ✓ Beginner-friendly
               </span>
               <span className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[11px] font-semibold text-green-200/80">
-                {idea.capital}
+                {formatCapital(idea.capital)}
               </span>
+              {ideaStories.length > 0 && (
+                <span className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[11px] font-semibold text-yellow-200/90">
+                  🌟 {ideaStories.length} success {ideaStories.length === 1 ? "story" : "stories"}
+                </span>
+              )}
             </div>
 
-            {/* headline */}
             <h1 className="mt-5 max-w-3xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl md:text-[56px]">
               {idea.title}
             </h1>
 
-            {/* description */}
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-green-100/70 sm:text-[17px]">
               {idea.desc}
             </p>
 
-            {/* stat chips */}
             <div className="mt-8 flex flex-wrap gap-3">
               {[
-                { label: "Capital needed", value: idea.capital,        icon: "💰" },
+                { label: "Capital needed", value: formatCapital(idea.capital),        icon: "💰" },
                 { label: "Category",       value: idea.category,       icon: "🏷️" },
                 { label: "Best for",       value: idea.bestFor?.split(" ").slice(0, 5).join(" ") + "…", icon: "🎯" },
               ].map((stat) => (
@@ -172,18 +222,19 @@ export default async function IdeaPage({
               ))}
             </div>
 
-            {/* CTA buttons inside hero */}
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#how-to-start"
-                className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-green-800 shadow-md shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-              >
+              <a href="#how-to-start"
+                className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-green-800 shadow-md shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
                 🚀 How to Start
               </a>
-              <a
-                href="#suppliers"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95"
-              >
+              {ideaStories.length > 0 && (
+                <a href="#stories"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95">
+                  🌟 Success Stories
+                </a>
+              )}
+              <a href="#suppliers"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95">
                 📦 Where to Buy
               </a>
             </div>
@@ -193,21 +244,20 @@ export default async function IdeaPage({
         {/* ── QUICK PROGRESS BAR (page navigation) ─────────────────────────── */}
         <nav className="mt-4 hidden gap-1.5 overflow-x-auto sm:flex">
           {[
-            { label: "Best For",    href: "#best-for"     },
-            { label: "Costs",       href: "#costs"        },
-            { label: "How to Start",href: "#how-to-start" },
-            { label: "Locations",   href: "#locations"    },
-            { label: "Suppliers",   href: "#suppliers"    },
-            { label: "Risks",       href: "#risks"        },
-            { label: "Profit",      href: "#profit"       },
-            { label: "Tips",        href: "#tips"         },
-            { label: "FAQ",         href: "#faq"          },
+            { label: "Best For",     href: "#best-for"     },
+            { label: "Costs",        href: "#costs"        },
+            { label: "How to Start", href: "#how-to-start" },
+            { label: "Locations",    href: "#locations"    },
+            { label: "Suppliers",    href: "#suppliers"    },
+            { label: "Risks",        href: "#risks"        },
+            { label: "Profit",       href: "#profit"       },
+            { label: "Tips",         href: "#tips"         },
+            ...(ideaStories.length > 0 ? [{ label: "Stories", href: "#stories" }] : []),
+            { label: "Resources",    href: "#resources"    },
+            { label: "FAQ",          href: "#faq"          },
           ].map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-slate-500 shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700"
-            >
+            <a key={n.href} href={n.href}
+              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-slate-500 shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700">
               {n.label}
             </a>
           ))}
@@ -215,8 +265,6 @@ export default async function IdeaPage({
 
         {/* ── 1. CONTEXT ROW: Best For + Skills ───────────────────────────── */}
         <div id="best-for" className="mt-6 grid gap-4 sm:grid-cols-2">
-
-          {/* Best For */}
           <div className={`${card} p-6`}>
             <div className="mb-4 flex items-center gap-3 border-b border-slate-100 pb-4">
               <div className={`${iconWrap} bg-sky-50`}>🎯</div>
@@ -228,7 +276,6 @@ export default async function IdeaPage({
             <p className={body}>{idea.bestFor}</p>
           </div>
 
-          {/* Skills */}
           <div className={`${card} p-6`}>
             <div className="mb-4 flex items-center gap-3 border-b border-slate-100 pb-4">
               <div className={`${iconWrap} bg-violet-50`}>🛠️</div>
@@ -263,9 +310,9 @@ export default async function IdeaPage({
 
             <div className="grid divide-y divide-slate-100 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
               {[
-                { tier: "Minimum Start",      icon: "🟢", emoji: "Starter",    desc: "Bare minimum to test this idea before committing more funds.",          note: "Best for first-timers with limited savings.",      bar: "w-1/3",  bg: "bg-emerald-50/70" },
-                { tier: "Comfortable Budget", icon: "🟡", emoji: "Recommended", desc: "Gives you proper tools, stock, and a small financial buffer.",          note: "Recommended for most beginners starting out.",     bar: "w-2/3",  bg: "bg-amber-50/70"   },
-                { tier: "Growth Setup",       icon: "🔵", emoji: "Scale",       desc: "Larger scale with better equipment and higher earning potential.",       note: "Best if you have savings or family support.",      bar: "w-full", bg: "bg-sky-50/70"     },
+                { tier: "Minimum Start",      icon: "🟢", emoji: "Starter",     desc: "Bare minimum to test this idea before committing more funds.",        note: "Best for first-timers with limited savings.",    bar: "w-1/3",  bg: "bg-emerald-50/70" },
+                { tier: "Comfortable Budget", icon: "🟡", emoji: "Recommended", desc: "Gives you proper tools, stock, and a small financial buffer.",        note: "Recommended for most beginners starting out.",   bar: "w-2/3",  bg: "bg-amber-50/70"   },
+                { tier: "Growth Setup",       icon: "🔵", emoji: "Scale",        desc: "Larger scale with better equipment and higher earning potential.",    note: "Best if you have savings or family support.",    bar: "w-full", bg: "bg-sky-50/70"     },
               ].map((item) => (
                 <div key={item.tier} className={`flex flex-col gap-4 px-6 py-6 sm:px-7 ${item.bg}`}>
                   <div className="flex items-center justify-between">
@@ -276,7 +323,6 @@ export default async function IdeaPage({
                     <p className="text-[13.5px] font-bold text-slate-800">{item.tier}</p>
                     <p className={`mt-1.5 ${body}`}>{item.desc}</p>
                   </div>
-                  {/* progress bar */}
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200/60">
                     <div className={`h-full ${item.bar} rounded-full bg-gradient-to-r from-green-400 to-emerald-500`} />
                   </div>
@@ -285,7 +331,6 @@ export default async function IdeaPage({
               ))}
             </div>
 
-            {/* capital banner */}
             <div className="flex items-center gap-3 border-t border-slate-100 bg-gradient-to-r from-emerald-50 to-green-50 px-6 py-4 sm:px-8">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100">
                 <svg className="h-4 w-4 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -294,7 +339,7 @@ export default async function IdeaPage({
               </div>
               <p className="text-[13.5px] text-slate-600">
                 <span className="font-bold text-slate-900">Total capital range:</span>{" "}
-                {idea.capital} — exact costs depend on your location and choices.
+                {formatCapital(idea.capital)} — exact costs depend on your location and choices.
               </p>
             </div>
           </div>
@@ -332,16 +377,13 @@ export default async function IdeaPage({
                 ))}
               </ol>
 
-              {/* action prompt */}
               <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-green-100 bg-gradient-to-r from-green-50 to-emerald-50 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-[14px] font-bold text-green-900">Ready to take the first step?</p>
                   <p className="mt-0.5 text-[13px] text-green-700/70">Start small, learn fast, and grow steadily.</p>
                 </div>
-                <a
-                  href="#suppliers"
-                  className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-2.5 text-[13px] font-bold text-white shadow-md shadow-green-300 transition-all hover:bg-green-700 hover:-translate-y-0.5 active:translate-y-0"
-                >
+                <a href="#suppliers"
+                  className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-2.5 text-[13px] font-bold text-white shadow-md shadow-green-300 transition-all hover:bg-green-700 hover:-translate-y-0.5 active:translate-y-0">
                   Find Suppliers →
                 </a>
               </div>
@@ -385,7 +427,6 @@ export default async function IdeaPage({
             <div className="divide-y divide-slate-100">
               {suppliers.map((s, i) => (
                 <div key={i} className="flex items-start gap-4 px-6 py-5 sm:px-8 hover:bg-slate-50/60 transition-colors">
-                  {/* index bubble */}
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-50 border border-indigo-100 text-[12px] font-black text-indigo-600">
                     {i + 1}
                   </div>
@@ -403,25 +444,44 @@ export default async function IdeaPage({
               ))}
             </div>
 
-            {/* contact supplier CTA */}
+            {relevantSupplierListings.length > 0 && (
+              <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-6 sm:px-8">
+                <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className={`${eyebrow} text-green-600`}>Supplier listings</p>
+                    <h3 className="mt-1 text-[15px] font-bold text-slate-900">
+                      Businesses to verify before buying
+                    </h3>
+                  </div>
+                  <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-bold text-amber-700">
+                    Placeholder contacts
+                  </span>
+                </div>
+                <div className="grid gap-3">
+                  {relevantSupplierListings.map((supplier) => (
+                    <SupplierCard
+                      key={supplier.id}
+                      supplier={supplier}
+                      ideaTitle={idea.title}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col gap-3 border-t border-slate-100 bg-indigo-50/50 px-6 py-5 sm:flex-row sm:items-center sm:px-8">
               <div className="flex-1">
                 <p className="text-[13.5px] font-bold text-indigo-900">Need help finding a trusted supplier?</p>
                 <p className="mt-0.5 text-[12.5px] text-indigo-600/70">Ask in local business WhatsApp groups or visit the nearest KCCA Business Hub.</p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <a
-                  href="https://wa.me/?text=I'm%20looking%20for%20a%20supplier%20for%20my%20new%20business"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <WhatsAppCTA
+                  label="Ask on WhatsApp"
+                  message={buildIdeaHelpMessage(idea.title, formatCapital(idea.capital))}
                   className="inline-flex items-center gap-1.5 rounded-xl border border-indigo-200 bg-white px-4 py-2 text-[12.5px] font-bold text-indigo-700 shadow-sm transition-all hover:bg-indigo-50 active:scale-95"
-                >
-                  💬 Ask on WhatsApp
-                </a>
-                <a
-                  href="tel:0800100006"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-[12.5px] font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-95"
-                >
+                />
+                <a href="tel:0800100006"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-[12.5px] font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-95">
                   📞 KCCA Helpline
                 </a>
               </div>
@@ -468,7 +528,6 @@ export default async function IdeaPage({
             <div className="px-6 py-6 sm:px-8">
               <p className="text-[14.5px] leading-relaxed text-slate-700">{idea.profit}</p>
 
-              {/* earnings transparency note */}
               <div className="mt-5 flex gap-3 rounded-xl border border-emerald-200/70 bg-white/60 px-4 py-4">
                 <span className="text-lg">📌</span>
                 <p className="text-[13px] leading-relaxed text-emerald-800">
@@ -476,12 +535,11 @@ export default async function IdeaPage({
                 </p>
               </div>
 
-              {/* profit indicators */}
               <div className="mt-5 grid grid-cols-3 gap-3">
                 {[
-                  { label: "Month 1–2",  note: "Learning & setup",   pct: "20%" },
-                  { label: "Month 3–4",  note: "Growing customers",  pct: "55%" },
-                  { label: "Month 5+",   note: "Steady income",      pct: "85%" },
+                  { label: "Month 1–2", note: "Learning & setup",  pct: "20%" },
+                  { label: "Month 3–4", note: "Growing customers", pct: "55%" },
+                  { label: "Month 5+",  note: "Steady income",     pct: "85%" },
                 ].map((p) => (
                   <div key={p.label} className="rounded-xl border border-emerald-100 bg-white/70 p-3 text-center">
                     <p className="text-[19px] font-black text-emerald-700">{p.pct}</p>
@@ -517,13 +575,114 @@ export default async function IdeaPage({
           </div>
         </section>
 
-        {/* ── 9. STRONG CTA SECTION ───────────────────────────────────────── */}
+        {/* ── 9. SUCCESS STORIES ──────────────────────────────────────────── */}
+        {ideaStories.length > 0 && (
+          <section id="stories" className="mt-6">
+            <div className={`${card} overflow-hidden`}>
+              <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:px-8">
+                <div className={`${iconWrap} bg-yellow-50`}>🌟</div>
+                <div>
+                  <p className={`${eyebrow} text-yellow-600`}>Real people · Real results</p>
+                  <h2 className="text-[15px] font-bold text-slate-900">Success Stories</h2>
+                </div>
+                <span className="ml-auto rounded-full bg-yellow-50 border border-yellow-100 px-2.5 py-1 text-[11px] font-bold text-yellow-700">
+                  {ideaStories.length} {ideaStories.length === 1 ? "story" : "stories"}
+                </span>
+              </div>
+
+              <div className="divide-y divide-slate-100">
+                {ideaStories.map((story) => (
+                  <div key={story.id} className="px-6 py-6 sm:px-8">
+
+                    {/* YouTube embed — only shown when youtubeId is set */}
+                    {story.youtubeId && (
+                      <div className="mb-5 overflow-hidden rounded-2xl border border-slate-200 bg-black">
+                        <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+                          <iframe
+                            className="absolute inset-0 h-full w-full"
+                            src={`https://www.youtube.com/embed/${story.youtubeId}`}
+                            title={`${story.name} — ${story.business}`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* No video yet — placeholder */}
+                    {!story.youtubeId && (
+                      <div className="mb-5 flex items-center gap-4 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-slate-400">
+                          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M12 18.75H4.5a2.25 2.25 0 01-2.25-2.25V9m12.841 9.091L16.5 19.5m-1.409-1.409c.407-.407.659-.97.659-1.591v-9a2.25 2.25 0 00-2.25-2.25h-9c-.621 0-1.184.252-1.591.659m12.182 12.182L2.909 5.909M1.5 4.5l1.409 1.409" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-[13px] font-semibold text-slate-600">Video coming soon</p>
+                          <p className="text-[12px] text-slate-400">
+                            To add a video: open <code className="rounded bg-slate-100 px-1">app/data/stories.ts</code>, find story <code className="rounded bg-slate-100 px-1">{story.id}</code>, and add <code className="rounded bg-slate-100 px-1">youtubeId: &quot;YOUR_VIDEO_ID&quot;</code>
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Quote */}
+                    <div className="relative rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white px-5 py-5">
+                      <svg className="mb-3 h-6 w-6 text-slate-200" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                      </svg>
+                      <p className="text-[14.5px] italic leading-relaxed text-slate-700">
+                        &ldquo;{story.quote}&rdquo;
+                      </p>
+                    </div>
+
+                    {/* Person info */}
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100 text-2xl">
+                          {story.avatarEmoji}
+                        </div>
+                        <div>
+                          <p className="text-[14px] font-bold text-slate-900">{story.name}</p>
+                          <p className="text-[12.5px] text-slate-400">{story.location} · {story.timeframe}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11.5px] font-semibold text-slate-600">
+                          {story.business}
+                        </span>
+                        <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11.5px] font-bold text-emerald-700 ring-1 ring-emerald-100">
+                          📈 {story.result}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Add your story CTA */}
+              <div className="flex flex-col gap-3 border-t border-slate-100 bg-gradient-to-r from-yellow-50 to-amber-50 px-6 py-5 sm:flex-row sm:items-center sm:px-8">
+                <div className="flex-1">
+                  <p className="text-[13.5px] font-bold text-amber-900">Have a story like this?</p>
+                  <p className="mt-0.5 text-[12.5px] text-amber-700/70">
+                    Your experience could help thousands of other Ugandans start with confidence.
+                  </p>
+                </div>
+                <Link href="/contact"
+                  className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2 text-[12.5px] font-bold text-white shadow-sm transition-all hover:bg-amber-600 active:scale-95">
+                  Share Your Story →
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── 10. STRONG CTA ──────────────────────────────────────────────── */}
         <section className="mt-8">
           <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] shadow-2xl shadow-green-950/30">
             <div className="relative px-6 py-10 sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/10 blur-2xl" />
 
-              {/* label */}
               <p className={`${eyebrow} text-emerald-400`}>You&apos;re one step away</p>
               <h2 className="mt-2 text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl">
                 Ready to launch your<br className="hidden sm:block" /> {idea.title}?
@@ -532,29 +691,32 @@ export default async function IdeaPage({
                 Thousands of Ugandans have started businesses just like this one. The only difference between those who succeeded and those who didn&apos;t? They started.
               </p>
 
-              {/* action buttons */}
               <div className="mt-7 flex flex-wrap gap-3">
-                <a
-                  href="#how-to-start"
-                  className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-[13.5px] font-black text-green-800 shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
-                >
+                <a href="#how-to-start"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-[13.5px] font-black text-green-800 shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0">
                   🚀 Start Now — Step 1
                 </a>
-                <a
-                  href="#suppliers"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-[13.5px] font-bold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95"
-                >
+                <AnalyticsLink
+                  href={`/start?interest=${encodeURIComponent(idea.title)}`}
+                  eventName="idea_start_cta_click"
+                  eventProperties={{
+                    idea_slug: idea.slug,
+                    idea_category: idea.category,
+                    source: "idea_detail",
+                  }}
+                  className="inline-flex items-center gap-2 rounded-xl bg-green-500 px-6 py-3 text-[13.5px] font-black text-white shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:bg-green-400 hover:shadow-xl active:translate-y-0">
+                  I want to start this business
+                </AnalyticsLink>
+                <a href="#suppliers"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-[13.5px] font-bold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-95">
                   📦 Contact Supplier
                 </a>
-                <Link
-                  href="/"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-transparent px-6 py-3 text-[13.5px] font-bold text-green-200/80 transition-all hover:text-white active:scale-95"
-                >
+                <Link href="/"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-transparent px-6 py-3 text-[13.5px] font-bold text-green-200/80 transition-all hover:text-white active:scale-95">
                   Browse more ideas →
                 </Link>
               </div>
 
-              {/* trust strip */}
               <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-white/10 pt-6">
                 {["Free guide", "No sign-up needed", "🇺🇬 Made for Uganda"].map((t) => (
                   <span key={t} className="flex items-center gap-1.5 text-[12px] font-semibold text-emerald-300/70">
@@ -569,12 +731,62 @@ export default async function IdeaPage({
           </div>
         </section>
 
-        {/* ── 10. FAQ ─────────────────────────────────────────────────────── */}
+        {/* ── 11. CURATED RESOURCES ───────────────────────────────────────── */}
+        <section id="resources" className="mt-6">
+          <div className={`${card} overflow-hidden`}>
+            <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:px-8">
+              <div className={`${iconWrap} bg-blue-50`}>🔗</div>
+              <div>
+                <p className={`${eyebrow} text-blue-500`}>Official & trusted links</p>
+                <h2 className="text-[15px] font-bold text-slate-900">Useful Resources</h2>
+              </div>
+              <span className="ml-auto rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-600">
+                {ideaResources.length} links
+              </span>
+            </div>
+
+            <div className="divide-y divide-slate-100">
+              {ideaResources.map((r, i) => {
+                const style = resourceTypeStyle[r.type] ?? { badge: "bg-slate-100 text-slate-600 border-slate-200", dot: "bg-slate-400" };
+                return (
+                  <a key={i} href={r.url} target="_blank" rel="noopener noreferrer"
+                    className="flex items-start gap-4 px-6 py-5 sm:px-8 transition-colors hover:bg-slate-50/60 group">
+                    {/* Index bubble */}
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 border border-blue-100 text-[12px] font-black text-blue-600">
+                      {i + 1}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-[14px] font-bold text-slate-900 transition-colors group-hover:text-blue-700">{r.title}</p>
+                        <span className={`rounded-full border px-2 py-0.5 text-[10.5px] font-semibold ${style.badge}`}>{r.type}</span>
+                        {r.free && (
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10.5px] font-bold text-emerald-700 ring-1 ring-emerald-100">Free</span>
+                        )}
+                      </div>
+                      <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{r.desc}</p>
+                    </div>
+                    <svg className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                    </svg>
+                  </a>
+                );
+              })}
+            </div>
+
+            <div className="border-t border-slate-100 bg-blue-50/40 px-6 py-4 sm:px-8">
+              <p className="text-[12.5px] text-slate-500">
+                <span className="font-semibold text-slate-700">Always verify:</span> Check that websites are genuine before entering personal information or making payments. Look for official .go.ug domains for government services.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 12. FAQ ─────────────────────────────────────────────────────── */}
         {(() => {
           const faqs = [
             {
               q: `How much does it cost to start a ${idea.title} in Uganda?`,
-              a: `The estimated startup capital for ${idea.title} in Uganda is ${idea.capital}. The exact amount depends on your location, scale, and setup choices. Starting small and growing is a common approach for beginners.`,
+              a: `The estimated startup capital for ${idea.title} in Uganda is ${formatCapital(idea.capital)}. The exact amount depends on your location, scale, and setup choices. Starting small and growing is a common approach for beginners.`,
             },
             {
               q: `Is ${idea.title} a good business for beginners in Uganda?`,

@@ -1,13 +1,69 @@
-export const ideas = [
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 1. LIQUID SOAP
-  // ─────────────────────────────────────────────────────────────────────────────
+// app/data/ideas.ts
+export type Category =
+  | "Agriculture"
+  | "Digital"
+  | "Food"
+  | "Retail"
+  | "Services";
+
+export type BudgetBand =
+  | "under_200k"
+  | "under_500k"
+  | "500k_2m"
+  | "above_2m"
+  | "review";
+
+export type AudienceSegment =
+  | "beginners"
+  | "diaspora"
+  | "farmers"
+  | "students"
+  | "women"
+  | "youth";
+
+export type IdeaScoring = {
+  startupEase?: number;
+  incomeSpeed?: number;
+  riskLevel?: number;
+  supplierDemand?: number;
+};
+
+export type IdeaSeo = {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  lastReviewed?: string;
+};
+
+export interface Idea {
+  slug: string;
+  title: string;
+  category: Category;
+  capital: string;
+  desc: string;
+  skills: string[];
+  bestFor: string;
+  location: string;
+  steps: string[];
+  risks: string[];
+  profit: string;
+  tips: string[];
+  budgetBand?: BudgetBand;
+  audience?: AudienceSegment[];
+  seo?: IdeaSeo;
+  scoring?: IdeaScoring;
+  relatedIdeaSlugs?: string[];
+}
+
+export const ideas: Idea[] = [
+
+  // ─── 1. LIQUID SOAP ────────────────────────────────────────────────────────
   {
     slug: "liquid-soap-business",
     title: "Liquid Soap Business",
     category: "Services",
     capital: "UGX 100,000 – 500,000",
-    desc: "Make and sell liquid soap to homes, schools, offices, and small shops. This is one of Uganda's most beginner-friendly businesses — you can start from your home kitchen with as little as UGX 100,000 and grow into bulk supply as demand builds.",
+    desc: "Make and sell liquid soap to homes, schools, offices, and small shops. One of Uganda's most beginner-friendly businesses — start from your home kitchen with as little as UGX 100,000 and grow into bulk supply as demand builds.",
     skills: [
       "Basic soap mixing — following a simple formula with the right measurements",
       "Safe chemical handling — knowing which chemicals to use and how to store them",
@@ -44,9 +100,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 2. POULTRY FARMING
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 2. POULTRY FARMING ────────────────────────────────────────────────────
   {
     slug: "poultry-farming",
     title: "Poultry Farming",
@@ -89,9 +143,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 3. PIG FARMING
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 3. PIG FARMING ────────────────────────────────────────────────────────
   {
     slug: "pig-farming",
     title: "Pig Farming",
@@ -134,9 +186,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 4. MOBILE MONEY BUSINESS
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 4. MOBILE MONEY ───────────────────────────────────────────────────────
   {
     slug: "mobile-money-business",
     title: "Mobile Money Business",
@@ -179,15 +229,13 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 5. CHAPATI STAND
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 5. CHAPATI STAND ──────────────────────────────────────────────────────
   {
     slug: "chapati-business",
     title: "Chapati Stand",
     category: "Food",
     capital: "UGX 200,000 – 1,000,000",
-    desc: "Sell freshly made chapati from a roadside or market stand and earn daily cash income. Chapati is one of Uganda's most popular street foods — demand is highest in the morning and evening near schools, taxi stages, and markets, making it a fast-moving, repeat-sale business.",
+    desc: "Sell freshly made chapati from a roadside or market stand and earn daily cash income. Chapati is one of Uganda's most popular street foods — demand is highest in the morning and evening near schools, taxi stages, and markets.",
     skills: [
       "Making consistent, soft, well-cooked chapati — the same quality every single day",
       "Speed — customers at taxi stages and school gates will not wait more than 5 minutes",
@@ -197,12 +245,12 @@ export const ideas = [
     bestFor:
       "People who want a daily-cash business and are comfortable working in a busy, outdoor environment. Good for people who already know how to cook, women running a household business, and anyone who wants to start with less than UGX 300,000 and earn the same day they open.",
     location:
-      "Busy spots with foot traffic at meal times: near school gates, taxi stages, markets, construction sites, and trading centres. Evening sales near churches, bars, and entertainment spots also do well. The key is being where hungry people already pass — not bringing people to you.",
+      "Busy spots with foot traffic at meal times: near school gates, taxi stages, markets, construction sites, and trading centres. Evening sales near churches, bars, and entertainment spots also do well. The key is being where hungry people already pass.",
     steps: [
       "Choose your location and confirm there is real demand. Stand there for 30 minutes during morning rush (7–9 AM) and count how many people pass and buy food.",
       "Buy your equipment: a charcoal or gas stove, a flat frying pan (tawa), a rolling pin, a mixing bowl, a table with a cover, and a small cash box. Budget UGX 100,000–250,000.",
       "Buy your first day's ingredients: wheat flour, cooking oil, salt, and water. A 5 kg bag of flour (UGX 15,000–18,000) makes roughly 50 chapatis.",
-      "Price your chapati: one chapati sells for UGX 500–1,000. With eggs or beans added, charge UGX 1,500–2,500 per serving. Test what price your customers accept.",
+      "Price your chapati: one chapati sells for UGX 500–1,000. With eggs or beans added, charge UGX 1,500–2,500 per serving.",
       "Open early — 7 AM is ideal for the school and work commute rush. Prepare your dough the night before to save time in the morning.",
       "Track daily: how many chapatis you made, how many you sold, what your ingredients cost, and what cash remains. Do this every day without fail.",
       "After 2 weeks, adjust: if you consistently sell out, make more. If you have leftover stock, reduce quantities or change your selling spot.",
@@ -215,7 +263,7 @@ export const ideas = [
       "Low foot traffic: if your location does not bring enough customers, your sales will never cover costs. Be ready to move.",
     ],
     profit:
-      "Each chapati costs roughly UGX 200–300 to make (flour + oil + charcoal/gas). Selling at UGX 700–1,000, your gross profit per chapati is UGX 400–700. Selling 80 chapatis per day gives you a gross profit of UGX 32,000–56,000. After deducting daily charcoal, transport, and small costs, net daily profit is UGX 20,000–40,000 — or UGX 600,000–1,200,000 per month for a consistent seller.",
+      "Each chapati costs roughly UGX 200–300 to make (flour + oil + charcoal/gas). Selling at UGX 700–1,000, your gross profit per chapati is UGX 400–700. Selling 80 chapatis per day gives a gross profit of UGX 32,000–56,000. After deducting daily charcoal, transport, and small costs, net daily profit is UGX 20,000–40,000 — or UGX 600,000–1,200,000 per month for a consistent seller.",
     tips: [
       "The rolex (chapati + egg) is Uganda's most popular street food combination — learn to make it quickly and cleanly to attract the biggest crowd.",
       "Buy flour and oil in bulk (25 kg bags) once you know your daily sales — the per-kilo cost drops significantly.",
@@ -224,9 +272,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 6. SALON BUSINESS
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 6. SALON BUSINESS ─────────────────────────────────────────────────────
   {
     slug: "salon-business",
     title: "Salon Business",
@@ -240,27 +286,27 @@ export const ideas = [
       "Basic product knowledge — knowing which products suit different hair types",
     ],
     bestFor:
-      "People who enjoy working with people, have some experience with hair (even from doing family and friends' hair), and want a business where customers return automatically every few weeks. Works well for women, school leavers with vocational training, and people who have rented a small space in a busy trading centre.",
+      "People who enjoy working with people, have some experience with hair, and want a business where customers return automatically every few weeks. Works well for women, school leavers with vocational training, and people who have rented a small space in a busy trading centre.",
     location:
-      "Busy residential areas, university hostels, trading centres, and near markets. The best salon locations have high foot traffic from women — near secondary schools and universities on weekends is particularly profitable. Avoid very remote areas where potential clients are too spread out.",
+      "Busy residential areas, university hostels, trading centres, and near markets. The best salon locations have high foot traffic from women — near secondary schools and universities on weekends is particularly profitable.",
     steps: [
       "Decide your core services based on your skills. Start with 3–5 services you can do confidently rather than offering everything and doing it poorly.",
       "Find a small shop or room to rent. A 3×4 metre space is enough for a 2-chair starter salon. Budget UGX 150,000–300,000 per month for rent in a busy area.",
       "Buy your starter equipment: 2 salon chairs (UGX 80,000–150,000 each), a mirror, a styling counter, a hood dryer (optional at start), scissors, combs, clips, and a wash basin. Total starter equipment: UGX 400,000–1,000,000.",
       "Stock your starter products: hair relaxer, oil sheen, leave-in conditioner, edge control, and braiding spray. Buy small quantities first — UGX 100,000–200,000.",
-      "Set your price list. Sample prices: Simple plait — UGX 5,000–10,000. Box braids — UGX 20,000–50,000. Relaxer — UGX 15,000–30,000. Wash and style — UGX 10,000–20,000.",
+      "Set your price list. Simple plait — UGX 5,000–10,000. Box braids — UGX 20,000–50,000. Relaxer — UGX 15,000–30,000. Wash and style — UGX 10,000–20,000.",
       "Announce your opening to friends, neighbours, and on your WhatsApp status. Offer a 20–30% opening discount for your first 2 weeks to attract your first clients.",
       "Keep a client notebook with each person's name, phone number, service done, and date. Follow up with a reminder message 3–4 weeks later.",
       "Hire an assistant when you are fully booked — pay them a daily rate or a percentage of services rather than a fixed salary at first.",
     ],
     risks: [
       "Low skill quality will cause clients never to return — be honest about what you can do well and do not attempt services you have not practised.",
-      "Bad customer service or a poor atmosphere (loud arguments, dirty floor, long waits with no explanation) will drive clients away permanently.",
+      "Bad customer service or a poor atmosphere (loud arguments, dirty floor, long waits) will drive clients away permanently.",
       "Equipment breakdowns (dryer, clippers) with no spare means losing clients for the day — budget for basic backup items.",
       "Competition from nearby salons is strong — differentiate by being cleaner, faster, friendlier, or specialising in a specific hair type.",
     ],
     profit:
-      "A busy 2-chair salon doing 8–12 clients per day at an average service of UGX 20,000 earns UGX 160,000–240,000 per day in revenue. After product costs (30%), rent (10–15%), and miscellaneous, monthly net profit ranges from UGX 1,500,000–3,500,000. Even a quieter salon with 4–5 clients per day can earn UGX 600,000–1,200,000 monthly — enough to cover rent and a steady personal income.",
+      "A busy 2-chair salon doing 8–12 clients per day at an average service of UGX 20,000 earns UGX 160,000–240,000 per day in revenue. After product costs (30%), rent (10–15%), and miscellaneous, monthly net profit ranges from UGX 1,500,000–3,500,000. Even a quieter salon with 4–5 clients per day can earn UGX 600,000–1,200,000 monthly.",
     tips: [
       "Specialise in one signature service — for example, flawless box braids or long-lasting relaxers — and become known for it in your area.",
       "A clean, well-organised, nicely decorated salon attracts and keeps higher-paying clients. Invest in a few inexpensive wall decorations.",
@@ -269,9 +315,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 7. FRUIT SELLING
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 7. FRUIT SELLING ──────────────────────────────────────────────────────
   {
     slug: "fruit-selling",
     title: "Fruit Selling",
@@ -285,17 +329,17 @@ export const ideas = [
       "Customer service — building loyal buyers who come back to you specifically",
     ],
     bestFor:
-      "Anyone who wants to start trading with very little capital and no formal skills. Especially good for school leavers, young people starting out, and people who want a business they can run alone from a simple display. You need energy, an eye for fresh produce, and the discipline to check and rotate your stock daily.",
+      "Anyone who wants to start trading with very little capital and no formal skills. Especially good for school leavers, young people starting out, and people who want a business they can run alone from a simple display.",
     location:
-      "Roadside spots near busy roads and junctions, outside school gates, near hospital entrances, taxi stages, and inside busy markets. Wealthier residential areas (Kololo, Muyenga, Ntinda, Nakasero in Kampala) tend to accept higher prices and buy more consistently. Markets like Nakasero and Owino have high volume but more competition.",
+      "Roadside spots near busy roads and junctions, outside school gates, near hospital entrances, taxi stages, and inside busy markets. Wealthier residential areas (Kololo, Muyenga, Ntinda, Nakasero in Kampala) tend to accept higher prices and buy more consistently.",
     steps: [
       "Visit your local wholesale fruit market (Owino in Kampala, or your nearest large market) early in the morning — 6–7 AM — to see what is available and at what price.",
-      "Choose 3–5 fruits to start with. Best sellers in Uganda: matooke (for roadside), mangoes, jackfruit, watermelons, pineapples, oranges, and passion fruits. Pick what is in season and cheapest.",
+      "Choose 3–5 fruits to start with. Best sellers in Uganda: mangoes, jackfruit, watermelons, pineapples, oranges, and passion fruits. Pick what is in season and cheapest.",
       "Buy a small test stock — UGX 50,000–100,000 worth — on your first day. Do not over-invest until you know your daily sales volume.",
-      "Arrange your display neatly. Use a table, mat, or wooden crate with fruit arranged to look fresh and abundant. A good display attracts more buyers than the fruit itself sometimes.",
-      "Price per piece and per small heap. Pineapples: UGX 2,000–5,000 each. Oranges: 3 for UGX 1,000 or UGX 500 each. Mangoes: UGX 500–1,500 each depending on season.",
+      "Arrange your display neatly. Use a table, mat, or wooden crate with fruit arranged to look fresh and abundant.",
+      "Price per piece and per small heap. Pineapples: UGX 2,000–5,000 each. Oranges: 3 for UGX 1,000. Mangoes: UGX 500–1,500 each depending on season.",
       "Check your stock in the afternoon — remove any fruit starting to bruise or overripen. Discount these rather than letting them become waste.",
-      "Count your cash at the end of every day. Subtract what you spent on stock. The difference is your gross profit. Subtract transport and any small expenses to find your net profit.",
+      "Count your cash at the end of every day. Subtract what you spent on stock to find your gross profit. Subtract transport and small expenses for net profit.",
       "Once you understand your daily sales, start buying in slightly larger volumes to get better wholesale prices.",
     ],
     risks: [
@@ -314,9 +358,7 @@ export const ideas = [
     ],
   },
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 8. ANIMAL FEED SUPPLY BUSINESS
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── 8. ANIMAL FEED SUPPLY ─────────────────────────────────────────────────
   {
     slug: "animal-feed-supply-business",
     title: "Animal Feed Supply Business",
@@ -332,7 +374,7 @@ export const ideas = [
     bestFor:
       "People who live in or near farming communities and want a business that serves repeat customers without needing to produce anything themselves. Good for people with a small store or room to store feed, a bicycle or boda for delivery, and the patience to build relationships with farmers over time.",
     location:
-      "Trading centres near farming areas, rural towns, or any location with active poultry, pig, or dairy farming nearby. High-potential areas include: Wakiso, Mukono, Masaka, Mbarara, Mbale, Gulu, and towns within 30 km of Kampala where peri-urban farming is common.",
+      "Trading centres near farming areas, rural towns, or any location with active poultry, pig, or dairy farming nearby. High-potential areas include Wakiso, Mukono, Masaka, Mbarara, Mbale, Gulu, and towns within 30 km of Kampala where peri-urban farming is common.",
     steps: [
       "Survey your area: visit 10–20 nearby farmers and ask what feed they use, where they currently buy it, how often they restock, and if they would buy from a local supplier if prices are competitive.",
       "Identify 2–3 feed wholesalers or manufacturers. Options include Ugachick, Luweero Industries, Quality Feeds Uganda, and larger agro-vet distributors in Kampala's Industrial Area.",
@@ -340,7 +382,7 @@ export const ideas = [
       "Rent or prepare a clean, dry storage space. Feed spoils quickly if exposed to moisture or direct sunlight. Budget UGX 50,000–150,000/month for a basic store room.",
       "Buy your first stock. Suggested starter inventory: 5 bags each of chick mash, grower mash, and one other common feed in your area — total budget UGX 400,000–800,000.",
       "Visit farmers directly to introduce yourself and your prices. Offer to deliver on their schedule. Let them try one bag before committing to a larger order.",
-      "Set your selling price: aim for UGX 1,500–3,000 margin per bag above your buying price. Example: buy a 50 kg bag of chick mash at UGX 95,000 and sell at UGX 97,000–98,000.",
+      "Set your selling price: aim for UGX 1,500–3,000 margin per bag above your buying price.",
       "Track every bag purchased and sold. Restock before you run out — running out of stock means losing a customer to your competitor.",
     ],
     risks: [
@@ -350,7 +392,7 @@ export const ideas = [
       "Farmers buying directly from the wholesaler: build loyalty by offering services your wholesaler does not — delivery, advice, small credit for trusted customers.",
     ],
     profit:
-      "At a margin of UGX 2,000 per 50 kg bag, selling 50 bags per week gives a gross profit of UGX 100,000 per week — about UGX 400,000 per month. Scaling to 150–200 bags per week (common for an established local supplier) brings monthly gross profit to UGX 1,200,000–1,600,000. Transport and rent reduce this by 20–30%, leaving a net monthly income of UGX 800,000–1,200,000 for a well-run operation.",
+      "At a margin of UGX 2,000 per 50 kg bag, selling 50 bags per week gives a gross profit of UGX 100,000 per week — about UGX 400,000 per month. Scaling to 150–200 bags per week brings monthly gross profit to UGX 1,200,000–1,600,000. Transport and rent reduce this by 20–30%, leaving a net monthly income of UGX 800,000–1,200,000 for a well-run operation.",
     tips: [
       "Offer free delivery within 5 km for orders of 5+ bags — most competitors make farmers come and collect. This alone can win you loyal customers.",
       "Keep a simple delivery record book. Write the farmer's name, village, what they ordered, what they paid, and any balance owed.",
@@ -358,4 +400,1152 @@ export const ideas = [
       "Consider stocking complementary products: vaccines, de-wormers, and vitamin supplements. These sell to the same customers and add extra income per visit.",
     ],
   },
+
+  // ─── 9. FRESH JUICE (NEW) ──────────────────────────────────────────────────
+  {
+    slug: "fresh-juice-business",
+    title: "Fresh Juice Business",
+    category: "Food",
+    capital: "UGX 300,000 – 1,500,000",
+    desc: "Blend and sell fresh fruit juices at a stall near schools, gyms, offices, or busy markets. Uganda's tropical climate creates year-round demand for cold, freshly made juice — and with a single blender and local fruits, you can start the same day you buy your equipment.",
+    skills: [
+      "Fruit selection and quality assessment — choosing ripe, fresh fruit that gives the best taste and value",
+      "Basic blending and hygiene — keeping your equipment spotlessly clean to produce consistently good juice",
+      "Fast, friendly customer service — people at lunch or after a workout want their drink quickly",
+      "Simple costing — knowing your cost per cup so you never undersell",
+    ],
+    bestFor:
+      "People who enjoy working with food and customers, and want a daily-cash business they can operate from a small stall or kiosk. Especially good near schools, gyms, hospitals, and offices where people want a healthy, refreshing drink. No formal training needed — just clean hands, good fruit quality, and consistency.",
+    location:
+      "High-foot-traffic spots where people want a quick, healthy drink: near secondary schools and universities, outside gyms and sports grounds, near hospital and clinic waiting areas, inside or at the edge of busy markets, and near office buildings at lunchtime. Strong spots in Kampala include near Makerere University, Garden City, and busy outdoor markets.",
+    steps: [
+      "Choose your location and visit it at peak times (7–9 AM, 12–2 PM, 5–7 PM). Count how many people pass and observe existing drink vendors to estimate demand.",
+      "Buy your starter equipment: a commercial blender (UGX 120,000–250,000), a table, plastic cups or reusable cups with lids, a cooler box for ice, and a small power extension if electricity is available.",
+      "Source your fruits from the nearest wholesale market. Best sellers: passion fruit, watermelon, pineapple, mango, and grenadilla. Buy fresh stock daily or every two days maximum.",
+      "Make a test batch before opening day. Blend each fruit type, taste for sweetness and texture, and decide whether to add ginger, honey, or lime for extra flavour.",
+      "Set your prices. A 300ml cup: UGX 1,500–2,500. A 500ml cup: UGX 2,500–4,000. A blended combo (e.g. passion + ginger): UGX 3,000–5,000.",
+      "Open during the highest-traffic hours first. Breakfast rush (7–9 AM) and lunch hour (12–2 PM) are the most profitable periods.",
+      "Keep your station visibly clean at all times. Rinse the blender between each order, wipe your table, and store cut fruit in a covered container with ice.",
+      "Track daily: how many cups you sold, what you spent on fruit, and your net cash. Re-invest in a second blender or a proper kiosk once you reach consistent daily profit.",
+    ],
+    risks: [
+      "Fruit spoilage: buying too much ripe fruit that you cannot sell in one day is your biggest source of loss. Buy small quantities and restock daily.",
+      "Equipment breakdown: if your only blender breaks, you lose a full day of income. Budget for a backup blender or repair fund once you are profitable.",
+      "Power cuts: if your location has unreliable electricity, you need a generator or must stick to fruits that can be squeezed manually (oranges, passion fruit).",
+      "Competition: juice stalls are common near schools and markets. Compete by being cleaner, faster, offering unique combinations, or using genuinely fresh fruit instead of juice powder.",
+    ],
+    profit:
+      "A cup of juice costs approximately UGX 800–1,200 to make (fruit + ice + cup). Selling at UGX 2,000–3,500, your gross profit per cup is UGX 800–2,000. Selling 40–60 cups per day gives a gross profit of UGX 40,000–80,000. After electricity, ice, transport, and cup costs, net daily profit is UGX 25,000–55,000 — or UGX 750,000–1,650,000 per month for a consistent, well-located seller.",
+    tips: [
+      "Offer 1–2 signature combinations that no one else nearby sells — for example, watermelon + ginger + lime — and make it your brand.",
+      "Use real fresh fruit, never powder concentrates. Customers can taste the difference and will not return if you use powder.",
+      "Partner with a nearby gym or school canteen to supply them a fixed number of cups per day — steady income without relying only on walk-in customers.",
+      "A clean, professional-looking stall with a printed menu makes a huge difference in attracting first-time customers.",
+    ],
+  },
+
+  // ─── 10. TAILORING (NEW) ───────────────────────────────────────────────────
+  {
+    slug: "tailoring-business",
+    title: "Tailoring Business",
+    category: "Services",
+    capital: "UGX 600,000 – 3,000,000",
+    desc: "Sew and sell custom clothing — school uniforms, wedding garments, casual wear, and alterations — from your own shop or home studio. Tailoring is one of Uganda's most sustainable skills-based businesses, with demand that peaks every school term and around major celebrations.",
+    skills: [
+      "Sewing and garment construction — accurate cutting, straight stitching, and clean finishing",
+      "Measurements and fitting — taking accurate body measurements and adjusting for a good fit",
+      "Customer management — understanding what clients want and delivering on time without fail",
+      "Fabric knowledge — choosing the right fabric for each garment type and customer budget",
+    ],
+    bestFor:
+      "People who already know how to sew, or are willing to invest time in learning basic sewing skills first. Works well for women with a sewing machine at home, people near schools or offices, and entrepreneurs who want a business that grows through word-of-mouth and referrals. Patience and attention to detail are more important than high capital.",
+    location:
+      "Near secondary schools, churches, and wedding venues for uniforms and formal wear. Residential trading centres with women customers are strong markets for everyday wear and alterations. Kampala areas like Kisenyi, Wandegeya, and Bugolobi are well known for tailoring. In upcountry towns, a single good tailor near a market can serve the whole area.",
+    steps: [
+      "Choose your focus: school uniforms, wedding and event wear, casual wear, or alterations. Starting with a specialisation builds your reputation faster than trying to do everything.",
+      "Buy or use an existing sewing machine. A good second-hand Singer or Brother machine costs UGX 250,000–500,000. A new one is UGX 600,000–1,200,000. Add a cutting table, iron, and measuring tools.",
+      "Set up your workspace — at home or in a rented room. A small 2×3 metre space is enough to start. Ensure good lighting and power access.",
+      "Make 3–5 sample garments to show potential customers. Photograph them clearly on a white wall or mannequin and share on your WhatsApp status.",
+      "Set your prices. School uniform set: UGX 15,000–35,000. Simple dress or shirt: UGX 20,000–50,000. Suit or wedding outfit: UGX 80,000–200,000. Alterations: UGX 5,000–15,000.",
+      "Approach nearby schools directly — meet the headteacher or bursar and offer to supply school uniforms at a competitive price.",
+      "Ask every satisfied customer to refer a friend or take your number. Word-of-mouth is how most tailors in Uganda build a loyal client base.",
+      "Hire a second sewer when you are fully booked during peak periods (back-to-school, Christmas, Easter, graduation season). Pay per piece rather than a fixed salary at first.",
+    ],
+    risks: [
+      "Missing delivery deadlines is the fastest way to lose customers and damage your reputation. Never promise a date you cannot meet.",
+      "Fabric buying mistakes — cutting the wrong size or using inferior fabric — can make a garment unwearable and cost you a replacement. Always double-check measurements before cutting.",
+      "Seasonal income: demand spikes before school terms and celebrations, but can be very slow in between. Manage cash carefully during slow months.",
+      "Cheap competitors: many tailors undercut on price but deliver poor quality. Never compete on price alone — compete on accuracy, speed, and reliability.",
+    ],
+    profit:
+      "A school uniform set (shirt + shorts or skirt) takes 1.5–2 hours to make and sells for UGX 20,000–35,000. Fabric cost: UGX 8,000–12,000. Gross profit per set: UGX 10,000–23,000. Making 4–6 uniforms per day generates a gross profit of UGX 40,000–80,000. Monthly net income for a busy tailor: UGX 1,000,000–2,500,000. During back-to-school season (August/January), monthly income can reach UGX 3,000,000–5,000,000 with bulk uniform orders.",
+    tips: [
+      "Back-to-school season is your biggest opportunity — start taking uniform orders 6 weeks before term begins and prepare fabric in advance.",
+      "Keep a client measurement book. When a customer returns, you already have their measurements — this saves time and impresses them.",
+      "Invest in a good iron and ironing board — the finishing of a garment determines whether it looks handmade or professional.",
+      "Offer a simple alteration service even if your main work is custom sewing. Alterations are quick, always in demand, and bring customers into your shop regularly.",
+    ],
+  },
+
+  // ─── 11. MITUMBA (NEW) ─────────────────────────────────────────────────────
+  {
+    slug: "mitumba-clothes-business",
+    title: "Mitumba (Second-hand Clothes)",
+    category: "Retail",
+    capital: "UGX 200,000 – 1,500,000",
+    desc: "Buy second-hand imported clothing in bulk bales and resell individual pieces for profit. Mitumba is one of Uganda's most accessible and high-margin retail businesses — a single bale costing UGX 150,000–400,000 can contain 50–100 pieces that sell for UGX 3,000–15,000 each.",
+    skills: [
+      "Bale sorting and grading — identifying Grade A, B, and C pieces and pricing them correctly",
+      "Customer negotiation — understanding how to hold your price while still making a sale",
+      "Display and merchandising — laying out clothes to attract buyers and create a sense of abundance",
+      "Stock rotation — moving older stock with discounts before buying a new bale",
+    ],
+    bestFor:
+      "People who are good at spotting quality items, enjoy interacting with many customers, and can handle a busy, competitive market environment. Works well for market vendors, young entrepreneurs with limited capital, and people who want a flexible business they can run from a table, suitcase, or market stall. No formal skills required — just an eye for quality and a friendly presence.",
+    location:
+      "Weekly open-air markets are the best starting point. Markets like Owino (Kampala), Nakasero, Kalerwe, and upcountry weekly markets (Masaka, Mbarara, Mbale, Jinja, Gulu) have strong mitumba demand. Choose a spot near women's clothing sections of the market. University areas are also strong for youth clothing.",
+    steps: [
+      "Visit a mitumba wholesale market (Owino or Industrial Area in Kampala) and observe how bales are sold, what types of bales exist, and typical wholesale prices.",
+      "Start with a mixed clothing bale. Budget UGX 150,000–300,000. Common bale types: women's tops, children's wear, men's trousers, and mixed assortment.",
+      "Open the bale and sort every piece by quality: Grade A (very good — price high), Grade B (good condition — price medium), Grade C (worn but sellable — sell cheap or bundle).",
+      "Wash and iron Grade A and B items before selling — clean, pressed mitumba sells faster and at better prices.",
+      "Set up your display at a market or roadside stall. Hang items visibly or spread on a table. Group by type (tops, trousers, dresses) to make it easy for customers to browse.",
+      "Price clearly: Grade A UGX 8,000–20,000. Grade B UGX 3,000–8,000. Grade C UGX 1,000–3,000 (or sell in bundles).",
+      "Track your spend per bale and total revenue from each bale. This tells you which bale types give the best profit margin.",
+      "After 3–5 successful bales, start buying 2–3 bales at a time for a volume discount and to increase your daily stock variety.",
+    ],
+    risks: [
+      "A bad bale with too many Grade C items can give you very low returns — always buy from a seller you have tested before, and inspect the first few items before committing.",
+      "Slow sales days (especially in rain or during a slow market week) can leave you stuck with items that depreciate over time. Always clear old stock before opening new bales.",
+      "Competition in mitumba markets is fierce. Your differentiation is your selection, display quality, and personality — not your prices.",
+      "Theft is common in busy markets. Keep your valuable Grade A items within arm's reach and consider a lockable storage arrangement at the market.",
+    ],
+    profit:
+      "A typical 50 kg mitumba bale costing UGX 200,000 contains approximately 70–100 pieces. Selling Grade A (20 pieces at UGX 10,000) = UGX 200,000. Grade B (40 pieces at UGX 4,000) = UGX 160,000. Grade C (20 pieces at UGX 1,500) = UGX 30,000. Total revenue per bale: UGX 390,000 on UGX 200,000 cost = profit of UGX 190,000. Selling 3 bales per week = monthly profit of roughly UGX 2,000,000–2,500,000 at scale.",
+    tips: [
+      "Specialise in one clothing type — for example, only children's wear or only women's dresses — so buyers know exactly what to find at your stall.",
+      "The way you display your clothes is as important as the clothes themselves. Hang the best pieces prominently so they catch attention from far.",
+      "Never open a new bale until the current one is mostly sold — this keeps your cash flowing and prevents you from over-investing in stock.",
+      "Build a relationship with 1–2 trusted bale suppliers so you get first access to good stock and are protected from deliberately damaged bales.",
+    ],
+  },
+
+  // ─── 12. BODA BODA (NEW) ───────────────────────────────────────────────────
+  {
+    slug: "boda-boda-business",
+    title: "Boda Boda Business",
+    category: "Services",
+    capital: "UGX 2,500,000 – 8,000,000",
+    desc: "Operate a motorcycle taxi (boda boda) and earn daily income from passenger trips. Boda boda is Uganda's most common form of daily transport in both cities and rural areas — a well-maintained bike in a good location earns consistent income from morning to night.",
+    skills: [
+      "Safe motorcycle riding — defensive riding in high-traffic areas and knowledge of traffic rules",
+      "Route knowledge — knowing the fastest, safest routes between key locations in your area",
+      "Customer service — being polite, punctual, and building a base of regular clients",
+      "Basic motorcycle maintenance — checking oil, tyre pressure, and chain before every working day",
+    ],
+    bestFor:
+      "People who can ride a motorcycle safely and are willing to commit to full working days. Works for anyone who already owns a bike or can secure financing. Both owner-operators (riding yourself) and bike owners who hire a rider on a commission split are common models. You need a valid driving permit, patience with traffic, and the discipline to manage your daily income carefully.",
+    location:
+      "Busy trading centres, near taxi stages, hospitals, markets, university campuses, and residential areas. The best boda boda stages in Kampala are near major roundabouts, hospital entrances, and market exits. In upcountry towns, a boda near the central market or bus stage typically earns more per hour than one parked far from the main activity.",
+    steps: [
+      "Get a valid motorcycle driving permit from UNRA if you do not already have one. This is a legal requirement and protects you from fines that eat into your daily income.",
+      "Buy a motorcycle. New (Honda, Bajaj, Yamaha): UGX 4,500,000–8,000,000. Second-hand (well-maintained): UGX 2,500,000–4,500,000. Inspect carefully before buying second-hand or bring a mechanic.",
+      "Register with a local boda boda stage or SACCO. This gives you a legal operating base, access to group insurance, and a regular parking spot.",
+      "Get third-party insurance (required by law) and consider comprehensive motorcycle insurance for a new or financed bike.",
+      "Set daily targets. A serious full-day rider does 30–50 trips per day at UGX 1,000–5,000 per trip depending on distance.",
+      "Track fuel costs daily — fuel is your biggest running cost. A typical 125cc bike consumes 2–3 litres per day at UGX 5,500/litre = roughly UGX 11,000–16,500 per day.",
+      "Build a base of regular customers. Daily commuters, office workers, and shopkeepers who need deliveries are your most reliable income source. Save their numbers and be available when they call.",
+      "Service your bike every 3–4 months (oil change, brake check, chain adjustment). Mechanical breakdown costs you income and repair money at the same time.",
+    ],
+    risks: [
+      "Road accidents are the biggest risk. Always wear a helmet, obey traffic laws, and never ride under the influence of alcohol. One accident can cost your bike, your income, and your health.",
+      "Police fines and impoundment: operating without a permit, insurance, or at an unregistered stage leads to fines and lost working days. Keep all documents on you at all times.",
+      "Motorcycle theft: always park at a known, secured stage and install an anti-theft lock. A stolen bike means losing your entire capital investment.",
+      "Fuel price increases can reduce your profit margin significantly. When prices rise, adjust your stage fares accordingly.",
+    ],
+    profit:
+      "A full-day rider doing 35 trips at an average of UGX 2,500 earns UGX 87,500 per day in revenue. After fuel (UGX 13,000), stage fees (UGX 1,000–2,000), and small costs, net daily income is UGX 70,000–80,000. Monthly net income: UGX 1,800,000–2,400,000. Riders who own their bike (no loan repayments) and have a loyal base of regular customers reach UGX 2,000,000–3,000,000 monthly.",
+    tips: [
+      "A clean, well-maintained bike signals professionalism and attracts customers who will pay slightly more and return to you specifically.",
+      "Don't spend all your daily income — put at least UGX 5,000–10,000 aside every day for maintenance and emergency funds.",
+      "If you hire your bike to a rider, agree on a clear daily target (e.g. they keep everything above UGX 50,000 and bring you UGX 50,000). Check the bike condition every week.",
+      "Build a list of 10–15 regular customers who call you directly. These regulars are more valuable than random stage trips because they are predictable income.",
+    ],
+  },
+
+  // ─── 13. WATER VENDING (NEW) ───────────────────────────────────────────────
+  {
+    slug: "water-vending-business",
+    title: "Water Vending Business",
+    category: "Services",
+    capital: "UGX 500,000 – 3,000,000",
+    desc: "Sell clean, treated drinking water to homes, offices, shops, and schools that lack reliable tap access. Uganda's urban and peri-urban areas have millions of people who buy water daily — it is a consistent, repeat-purchase business with loyal customers who need you every single day.",
+    skills: [
+      "Water quality awareness — understanding what clean, safe drinking water means and how to maintain your source",
+      "Customer management — regular customers who collect daily are the foundation of your income",
+      "Simple equipment handling — maintaining your pump, storage tank, and dispensing point",
+      "Cash tracking — recording every jerrycan or container sold to know your daily income",
+    ],
+    bestFor:
+      "People in areas with limited clean water access where residents already buy water regularly. Works well in dense urban settlements, peri-urban areas, and small towns where NWSC pipes have not yet reached. You need access to a reliable water source (NWSC connection, borehole, or water tanker supply) and a secure storage point.",
+    location:
+      "Dense residential areas without reliable piped water access. High-potential areas in and around Kampala: Bwaise, Nansana, Kireka, Namasuba, Ntinda outskirts, and Mukono. Upcountry towns with poor NWSC coverage: Iganga, Masindi, Moroto, and Arua.",
+    steps: [
+      "Survey your area: ask 20–30 households where they currently get water and what they pay per jerrycan. This tells you the market price and whether there is genuine unmet demand.",
+      "Identify your water source. Options: connect to an NWSC supply point (cheapest running cost), drill a borehole (high capital, UGX 5,000,000–15,000,000), or buy in bulk from a water tanker daily.",
+      "Buy storage equipment: one or two 1,000–5,000 litre water storage tanks (UGX 200,000–600,000 each) and a dispensing pump or tap.",
+      "Secure a small space for your kiosk — even a corner of an existing structure is enough. You need electricity or a hand pump for dispensing.",
+      "Set your prices. Typical Uganda prices: 20-litre jerrycan UGX 200–500. In areas with very limited access, prices can reach UGX 500–1,000 per jerrycan.",
+      "Spread the word in your neighbourhood — door-to-door for the first week. Offer the first week at a small discount to attract trial customers.",
+      "Keep your kiosk clean and well-lit. Visible cleanliness makes customers trust your water is safe.",
+      "Once established, offer delivery for 5+ jerrycans to offices, schools, and households. Charge UGX 500–1,000 extra per delivery trip.",
+    ],
+    risks: [
+      "Your water source failing (NWSC disconnection, pump breakdown, borehole dry season issues) means zero income and angry customers. Always have a backup supply plan.",
+      "Water quality complaints: if customers believe your water is unsafe, they will stop coming immediately and tell everyone. Test your water regularly and maintain a clean dispensing area.",
+      "Competition from other water vendors: in areas with multiple vendors, price wars can erode margins. Compete on convenience, reliability, and clean presentation.",
+      "Capital cost for a borehole is very high (UGX 5M+) — if starting small, use an NWSC tap connection or tanker supply until you have enough capital and certainty about the location.",
+    ],
+    profit:
+      "A kiosk selling 200 jerrycans per day at UGX 300 each earns UGX 60,000 per day. After NWSC water costs (approximately UGX 10,000–15,000/day), electricity, and rent, net daily profit is UGX 35,000–50,000. Monthly net income: UGX 1,000,000–1,500,000 for a consistent kiosk in a busy residential area. Higher-traffic locations or those that add delivery can reach UGX 2,000,000+ monthly.",
+    tips: [
+      "Consistency is everything in water vending — customers who rely on you daily will switch to another vendor if you are closed or have empty tanks more than once.",
+      "Keep a simple tally book at your dispensing point. Every jerrycan sold gets a mark. Count at the end of the day to verify your cash.",
+      "Offer monthly prepaid packages to loyal customers (e.g. pay for 30 jerrycans upfront and get 2 free) — this gives you predictable cash flow and locks in regulars.",
+      "Install a NWSC water meter to monitor your daily consumption and detect leaks early — undetected leaks cost money every day they go unfixed.",
+    ],
+  },
+  {
+    slug: "tomato-farming-uganda",
+    title: "Tomato Farming",
+    category: "Agriculture",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Grow tomatoes on a small plot and sell to local markets, restaurants, and traders. Tomatoes move quickly in Uganda, but prices change a lot by season, so planning and market timing matter.",
+    skills: ["Nursery preparation", "Pest and disease control", "Irrigation planning", "Market price tracking"],
+    bestFor: "Farmers, rural youth, and peri-urban growers with access to land, water, and regular market buyers.",
+    location: "Works best in fertile areas with access to water and market roads, including Wakiso, Mukono, Masaka, Mbarara, Mbale, and other farming districts near town markets.",
+    steps: ["Choose a well-drained plot near water.", "Prepare a nursery and buy quality seed.", "Transplant seedlings with spacing and mulch.", "Spray and inspect regularly for pests and disease.", "Line up traders before harvest so produce does not spoil."],
+    risks: ["Tomato prices can fall sharply during peak harvest season.", "Pests and fungal diseases can damage the crop quickly.", "Poor transport can cause losses after harvest."],
+    profit: "A careful small plot can make a few hundred thousand shillings per season after costs, but profit depends heavily on yield, market price, spray costs, and timing.",
+    tips: ["Start with a small plot before scaling.", "Stagger planting dates to avoid selling everything at once.", "Track every input cost so you know your real margin."],
+    budgetBand: "500k_2m",
+    audience: ["farmers", "youth", "beginners"],
+    seo: {
+      title: "How to Start Tomato Farming in Uganda",
+      description: "Startup costs, risks, steps, and market tips for small-scale tomato farming in Uganda.",
+      keywords: ["tomato farming Uganda", "small scale farming Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 3 },
+    relatedIdeaSlugs: ["vegetable-kitchen-gardening-uganda", "produce-trading-uganda", "agro-input-shop-uganda"],
+  },
+  {
+    slug: "vegetable-kitchen-gardening-uganda",
+    title: "Vegetable and Kitchen Gardening",
+    category: "Agriculture",
+    capital: "UGX 100,000 - 500,000",
+    desc: "Grow vegetables such as sukuma wiki, dodo, onions, spinach, herbs, or small tomatoes in a backyard, sacks, containers, or a small rented plot.",
+    skills: ["Seedbed preparation", "Watering discipline", "Simple pest control", "Local selling"],
+    bestFor: "Urban and peri-urban households, women, students, and beginners who want to test farming with limited land.",
+    location: "Good in residential areas, trading centres, and peri-urban communities where neighbours, restaurants, and market vendors buy fresh vegetables.",
+    steps: ["Choose crops people nearby already buy.", "Prepare sacks, beds, or containers with good soil.", "Buy seed or seedlings from an agro-input shop.", "Water consistently and remove weeds.", "Sell in bunches to neighbours, stalls, and small restaurants."],
+    risks: ["Dry spells can reduce yield if water is not available.", "Small gardens can be damaged by pests or animals.", "Sales may be slow if many people nearby grow the same crop."],
+    profit: "A small garden may bring modest weekly cash rather than large profit. It can reduce household food costs and create extra income when managed consistently.",
+    tips: ["Choose fast-growing vegetables first.", "Sell freshness and convenience to nearby buyers.", "Use compost to reduce fertilizer costs."],
+    budgetBand: "under_500k",
+    audience: ["women", "students", "beginners", "youth"],
+    seo: {
+      title: "Kitchen Gardening Business in Uganda",
+      description: "How to start a small vegetable garden in Uganda with low capital.",
+      keywords: ["kitchen gardening Uganda", "vegetable business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 3, riskLevel: 2, supplierDemand: 2 },
+    relatedIdeaSlugs: ["tomato-farming-uganda", "produce-trading-uganda", "fruit-selling"],
+  },
+  {
+    slug: "matooke-farming-uganda",
+    title: "Matooke Farming",
+    category: "Agriculture",
+    capital: "UGX 2,000,000+",
+    desc: "Plant banana for matooke production and sell bunches to traders, restaurants, and households. It is a longer-term farming idea for people with land.",
+    skills: ["Land preparation", "Seedling selection", "Mulching", "Long-term crop management"],
+    bestFor: "Land owners in high-rainfall areas who can wait several months before harvest.",
+    location: "Best in banana-growing areas such as western and central Uganda where rainfall, soil, and trader networks support matooke production.",
+    steps: ["Assess soil and water availability.", "Buy clean banana suckers from a trusted source.", "Plant with enough spacing and mulch well.", "Weed and manage pests regularly.", "Build relationships with produce traders before harvest."],
+    risks: ["Banana diseases can reduce production.", "The business needs patience before income starts.", "Transport costs can reduce profit if the farm is far from buyers."],
+    profit: "Returns are long-term and depend on acreage, bunch size, farm care, and market prices. A small well-kept plot can provide periodic income after establishment.",
+    tips: ["Start with clean planting material.", "Intercrop carefully while bananas mature.", "Keep records by season, not only by month."],
+    budgetBand: "above_2m",
+    audience: ["farmers", "diaspora"],
+    seo: {
+      title: "Matooke Farming in Uganda",
+      description: "Startup requirements, risks, and steps for starting matooke farming in Uganda.",
+      keywords: ["matooke farming Uganda", "banana farming Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 1, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["produce-trading-uganda", "tomato-farming-uganda", "vegetable-kitchen-gardening-uganda"],
+  },
+  {
+    slug: "maize-millet-rice-cultivation-uganda",
+    title: "Maize, Millet, or Rice Cultivation",
+    category: "Agriculture",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Grow staple crops on leased or owned land and sell grain after harvest. These crops are common in Uganda and can work when land, labour, and storage are managed carefully.",
+    skills: ["Season planning", "Land preparation", "Harvest handling", "Grain storage"],
+    bestFor: "Rural farmers and households with land access or the ability to lease a small commercial plot.",
+    location: "Works in crop-suitable regions across Uganda, depending on rainfall, soil, and local demand for the selected grain.",
+    steps: ["Choose one crop that suits your area.", "Budget for land preparation, seed, labour, and post-harvest handling.", "Plant with the season and weed on time.", "Dry grain properly after harvest.", "Compare prices before selling immediately."],
+    risks: ["Weather can affect yield.", "Poor drying causes post-harvest losses.", "Selling immediately after harvest can mean lower prices."],
+    profit: "Profit varies by acreage and yield. Small farmers should treat early seasons as learning cycles and avoid borrowing heavily before understanding local costs.",
+    tips: ["Use quality seed.", "Plan storage before harvest.", "Track labour costs because they can quietly reduce margin."],
+    budgetBand: "500k_2m",
+    audience: ["farmers", "youth"],
+    seo: {
+      title: "Maize, Millet, and Rice Farming in Uganda",
+      description: "How to start small commercial staple crop farming in Uganda.",
+      keywords: ["maize farming Uganda", "rice farming Uganda", "millet farming Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
+    relatedIdeaSlugs: ["produce-trading-uganda", "groundnut-or-soybean-farming-uganda", "agro-input-shop-uganda"],
+  },
+  {
+    slug: "goat-farming-uganda",
+    title: "Goat Farming",
+    category: "Agriculture",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Raise goats for meat and breeding stock. Goats are hardy animals and can be a practical livestock business for rural households with grazing space.",
+    skills: ["Animal feeding", "Shelter hygiene", "Basic disease recognition", "Breeding management"],
+    bestFor: "Rural households, farmers, and youth with access to land, forage, and time to care for animals.",
+    location: "Good in rural and peri-urban areas with grazing, clean water, and access to livestock buyers or butcheries.",
+    steps: ["Build a dry raised shelter.", "Buy healthy starter goats from a trusted farmer.", "Provide forage, water, and mineral supplements.", "Deworm and monitor health.", "Sell mature goats to traders, butchers, or households during demand periods."],
+    risks: ["Disease and parasites can reduce growth.", "Theft is a real risk if animals are not secured.", "Slow growth means income is not immediate."],
+    profit: "Goat farming can build value over time, but returns depend on survival, breeding, feed availability, and selling price. It is usually a medium-term income source.",
+    tips: ["Start with a few animals.", "Keep breeding records.", "Do not mix new animals without observing them first."],
+    budgetBand: "500k_2m",
+    audience: ["farmers", "youth", "beginners"],
+    seo: {
+      title: "Goat Farming Business in Uganda",
+      description: "Costs, steps, risks, and tips for starting goat farming in Uganda.",
+      keywords: ["goat farming Uganda", "livestock business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["pig-farming", "rabbit-farming-uganda", "poultry-farming"],
+  },
+  {
+    slug: "rabbit-farming-uganda",
+    title: "Rabbit Farming",
+    category: "Agriculture",
+    capital: "UGX 200,000 - 1,000,000",
+    desc: "Raise rabbits for meat, breeding stock, or manure. It needs less space than many livestock businesses but requires clean housing and reliable buyers.",
+    skills: ["Cage management", "Feeding routines", "Breeding records", "Buyer development"],
+    bestFor: "Youth, students, and households with limited space who can care for animals consistently.",
+    location: "Works in homes or small farms near urban and peri-urban buyers, restaurants, farmer groups, or rabbit meat customers.",
+    steps: ["Build clean raised cages.", "Buy healthy breeding stock.", "Learn feeding and breeding basics.", "Keep cages dry and clean.", "Find buyers before increasing numbers."],
+    risks: ["The market can be smaller than chicken or pork.", "Poor hygiene can cause disease.", "Overbreeding without buyers ties up feed and space."],
+    profit: "Rabbit farming can bring modest income when buyers are confirmed. It is safer to start small and prove demand before scaling.",
+    tips: ["Do not rely on promised buyers only.", "Separate sick animals quickly.", "Use manure for gardens or sell it locally."],
+    budgetBand: "under_500k",
+    audience: ["students", "youth", "beginners"],
+    seo: {
+      title: "Rabbit Farming in Uganda",
+      description: "Beginner guide to starting rabbit farming in Uganda with limited space.",
+      keywords: ["rabbit farming Uganda", "low capital livestock Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
+    relatedIdeaSlugs: ["goat-farming-uganda", "poultry-farming", "vegetable-kitchen-gardening-uganda"],
+  },
+  {
+    slug: "groundnut-or-soybean-farming-uganda",
+    title: "Groundnut or Soybean Farming",
+    category: "Agriculture",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Grow groundnuts or soybeans for grain sales, food processors, animal feed, or small value addition. These crops can work well when seed and post-harvest handling are managed carefully.",
+    skills: ["Seed selection", "Weeding", "Drying and storage", "Market negotiation"],
+    bestFor: "Farmers in suitable regions who want crop options with food and processing demand.",
+    location: "Works in areas with appropriate soils and rainfall, especially where traders and processors buy legumes.",
+    steps: ["Choose the crop that performs well locally.", "Buy quality seed.", "Prepare land and plant on time.", "Weed early and monitor pests.", "Dry properly and compare buyer prices."],
+    risks: ["Poor drying can cause mould.", "Market prices vary after harvest.", "Low-quality seed reduces yield."],
+    profit: "Returns vary by acreage and market price. Good drying, storage, and timing can improve margins compared with rushed sales.",
+    tips: ["Ask local farmers which varieties perform best.", "Avoid selling wet grain.", "Explore small value addition only after proving supply."],
+    budgetBand: "500k_2m",
+    audience: ["farmers", "youth"],
+    seo: {
+      title: "Groundnut and Soybean Farming in Uganda",
+      description: "Startup guide for groundnut or soybean farming in Uganda.",
+      keywords: ["groundnut farming Uganda", "soybean farming Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
+    relatedIdeaSlugs: ["maize-millet-rice-cultivation-uganda", "small-scale-food-processing-uganda", "animal-feed-supply-business"],
+  },
+  {
+    slug: "produce-trading-uganda",
+    title: "Produce Trading",
+    category: "Agriculture",
+    capital: "UGX 300,000 - 1,500,000",
+    desc: "Buy produce from farmers and sell to town markets, restaurants, shops, or wholesalers. It can start small but requires honesty, transport planning, and price discipline.",
+    skills: ["Price checking", "Negotiation", "Quality grading", "Transport coordination"],
+    bestFor: "Youth and traders with access to farming areas, market information, and reliable transport.",
+    location: "Good between farming villages and busy town markets such as Kampala, Jinja, Mbarara, Gulu, Mbale, and district trading centres.",
+    steps: ["Pick one produce type first.", "Compare farm-gate and town prices.", "Start with small loads.", "Inspect quality before buying.", "Sell quickly to reduce spoilage."],
+    risks: ["Perishable goods can spoil before sale.", "Prices can change between buying and selling.", "Transport delays can reduce quality."],
+    profit: "Margins can be modest per unit but repeated trips can build income. Profit depends on buying price, transport cost, spoilage, and buyer reliability.",
+    tips: ["Specialise before expanding.", "Use cash records for every trip.", "Build farmer and buyer relationships."],
+    budgetBand: "under_500k",
+    audience: ["youth", "farmers", "beginners"],
+    seo: {
+      title: "Produce Trading Business in Uganda",
+      description: "How to start buying farm produce and selling in Ugandan town markets.",
+      keywords: ["produce trading Uganda", "agribusiness Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["tomato-farming-uganda", "fruit-selling", "maize-millet-rice-cultivation-uganda"],
+  },
+  {
+    slug: "agro-input-shop-uganda",
+    title: "Agro-input Shop",
+    category: "Agriculture",
+    capital: "UGX 2,000,000+",
+    desc: "Sell seeds, fertilizers, pesticides, veterinary drugs, tools, or farm supplies to local farmers. It is a stock-heavy business that depends on trust and correct product advice.",
+    skills: ["Stock management", "Farmer customer service", "Basic agronomy knowledge", "Supplier negotiation"],
+    bestFor: "People in trading centres near active farming communities who can manage stock and customer trust.",
+    location: "Best near farming communities, produce markets, veterinary activity, or trading centres where farmers already buy inputs.",
+    steps: ["Study farmer demand in the area.", "Choose a focused stock list.", "Source from licensed distributors.", "Keep products stored safely.", "Record sales and expiry dates carefully."],
+    risks: ["Expired or fake inputs can destroy trust.", "Some products may require licensing.", "Slow-moving stock ties up capital."],
+    profit: "Agro-input shops can earn steady margins from repeat customers, but profits depend on stock turnover, season timing, and avoiding expired products.",
+    tips: ["Do not stock products you cannot explain.", "Track expiry dates weekly.", "Build relationships with extension workers and farmer groups."],
+    budgetBand: "above_2m",
+    audience: ["farmers", "diaspora"],
+    seo: {
+      title: "How to Start an Agro-input Shop in Uganda",
+      description: "Costs, risks, and steps for starting a farm input shop in Uganda.",
+      keywords: ["agro input shop Uganda", "farm supplies business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 5 },
+    relatedIdeaSlugs: ["animal-feed-supply-business", "poultry-farming", "tomato-farming-uganda"],
+  },
+  {
+    slug: "local-food-takeaway-uganda",
+    title: "Local Food Takeaway",
+    category: "Food",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Cook and sell local meals such as rice, beans, posho, matooke, meat, or g-nut sauce as takeaway portions for workers, students, and nearby households.",
+    skills: ["Consistent cooking", "Food hygiene", "Portion control", "Daily cash tracking"],
+    bestFor: "Women, youth, and experienced home cooks near offices, schools, stages, or busy residential areas.",
+    location: "Best near workplaces, taxi stages, schools, construction sites, and trading centres with daily lunch demand.",
+    steps: ["Choose a simple menu.", "Price portions after calculating ingredient costs.", "Start with lunch demand before adding many meals.", "Keep the serving area clean.", "Ask regular customers what time and portions they prefer."],
+    risks: ["Food can spoil if demand is overestimated.", "Ingredient prices change often.", "Poor hygiene can quickly damage reputation."],
+    profit: "A small takeaway can earn daily cash when portions and waste are controlled. Net profit depends on volume, rent, fuel, and ingredient prices.",
+    tips: ["Cook less on the first days and learn demand.", "Keep portions consistent.", "Separate business cash from household money."],
+    budgetBand: "500k_2m",
+    audience: ["women", "youth", "beginners"],
+    seo: {
+      title: "Local Food Takeaway Business in Uganda",
+      description: "Start a local food takeaway in Uganda with cautious cost and profit planning.",
+      keywords: ["food takeaway Uganda", "local food business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 5, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["chapati-business", "street-tea-and-breakfast-kiosk-uganda", "small-restaurant-kibanda-specializing-in-one-niche-uganda"],
+  },
+  {
+    slug: "home-bakery-uganda",
+    title: "Home Bakery",
+    category: "Food",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Bake cakes, mandazi, bread, buns, or snacks from home and sell through orders, nearby shops, schools, churches, and WhatsApp status.",
+    skills: ["Baking consistency", "Pricing", "Packaging", "Order management"],
+    bestFor: "Home-based entrepreneurs, women, students, and people who can learn recipes and deliver on time.",
+    location: "Works from home in towns and trading centres where customers can order for birthdays, school snacks, meetings, and church events.",
+    steps: ["Choose one or two products first.", "Test recipes with small batches.", "Calculate ingredient, fuel, and packaging costs.", "Post clear photos on WhatsApp.", "Take deposits for custom cake orders."],
+    risks: ["Failed batches waste ingredients.", "Late delivery loses customers.", "Underpricing can make busy days unprofitable."],
+    profit: "A home bakery can earn small but repeat income from orders. Profit depends on accurate costing, consistent quality, and reliable delivery.",
+    tips: ["Start with products you can make consistently.", "Always price packaging and fuel.", "Keep sample photos of your best work."],
+    budgetBand: "500k_2m",
+    audience: ["women", "students", "youth"],
+    seo: {
+      title: "Home Bakery Business in Uganda",
+      description: "How to start a home bakery in Uganda with cakes, mandazi, bread, or snacks.",
+      keywords: ["home bakery Uganda", "cake business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["snack-and-chips-stall-uganda", "local-food-takeaway-uganda", "fresh-juice-business"],
+  },
+  {
+    slug: "snack-and-chips-stall-uganda",
+    title: "Snack and Chips Stall",
+    category: "Food",
+    capital: "UGX 200,000 - 800,000",
+    desc: "Sell chips, samosas, mandazi, chapati chips, or simple fried snacks near schools, stages, markets, or evening foot traffic.",
+    skills: ["Fast food preparation", "Oil safety", "Hygiene", "Customer service"],
+    bestFor: "Youth and food-business beginners who want daily cashflow with a simple menu.",
+    location: "Best near schools, taxi stages, markets, workplaces, and busy evening roadside spots.",
+    steps: ["Choose one high-demand snack.", "Buy basic cooking tools and ingredients.", "Test demand during peak hours.", "Keep oil and serving area clean.", "Add products slowly after demand is proven."],
+    risks: ["Oil and ingredient prices affect margins.", "Slow days can leave unsold food.", "Poor hygiene can stop repeat customers."],
+    profit: "Daily profit can be modest at first and grows with foot traffic. The business works best when waste is low and peak hours are clear.",
+    tips: ["Watch foot traffic before choosing a spot.", "Keep a simple daily sales book.", "Do not cook too much before demand is known."],
+    budgetBand: "under_500k",
+    audience: ["youth", "students", "beginners"],
+    seo: {
+      title: "Snack and Chips Stall Business in Uganda",
+      description: "How to start a small snack or chips stall in Uganda.",
+      keywords: ["chips business Uganda", "snack stall Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 5, riskLevel: 3, supplierDemand: 2 },
+    relatedIdeaSlugs: ["chapati-business", "street-tea-and-breakfast-kiosk-uganda", "home-bakery-uganda"],
+  },
+  {
+    slug: "grilled-meat-and-barbeque-point-uganda",
+    title: "Grilled Meat and Barbeque Point",
+    category: "Food",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Sell grilled meat, chicken, sausage, or muchomo in a busy evening location. Demand can be strong near bars, stages, markets, and events.",
+    skills: ["Meat handling", "Charcoal grilling", "Food hygiene", "Evening sales"],
+    bestFor: "Food entrepreneurs who can work evenings and manage hygiene, supply, and customer flow.",
+    location: "Best near bars, trading centres, sports viewing spots, taxi stages, and event areas with evening customers.",
+    steps: ["Choose a legal and visible spot.", "Find a reliable meat supplier.", "Buy grill, charcoal, utensils, and packaging.", "Start with limited stock.", "Track sales by day and avoid overbuying meat."],
+    risks: ["Unsold meat can spoil.", "Poor meat handling is dangerous.", "Some locations may require permission or local fees."],
+    profit: "Margins can be good on busy nights, but losses happen when stock is overestimated or meat spoils. Profit depends on location and hygiene reputation.",
+    tips: ["Start on weekends to test demand.", "Use clean display and serving tools.", "Do not compromise on meat freshness."],
+    budgetBand: "500k_2m",
+    audience: ["youth", "beginners"],
+    seo: {
+      title: "Muchomo and Barbeque Business in Uganda",
+      description: "Steps, costs, and risks for starting a grilled meat business in Uganda.",
+      keywords: ["muchomo business Uganda", "barbeque business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 4, riskLevel: 4, supplierDemand: 3 },
+    relatedIdeaSlugs: ["local-food-takeaway-uganda", "small-restaurant-kibanda-specializing-in-one-niche-uganda", "chapati-business"],
+  },
+  {
+    slug: "mobile-food-delivery-uganda",
+    title: "Mobile Food Delivery",
+    category: "Food",
+    capital: "UGX 300,000 - 1,000,000",
+    desc: "Prepare lunch packs or simple meals and deliver to offices, shops, students, or regular customers using a boda partner or your own transport.",
+    skills: ["Meal planning", "Delivery coordination", "WhatsApp marketing", "Time management"],
+    bestFor: "Youth, home cooks, and small food operators near offices, campuses, or busy trading centres.",
+    location: "Best near office clusters, campuses, markets, salons, shops, and workplaces where people order lunch repeatedly.",
+    steps: ["Pick one delivery area.", "Create a simple daily menu.", "Take orders by WhatsApp before cooking.", "Use clear pickup or delivery times.", "Collect feedback and adjust portions."],
+    risks: ["Late delivery loses trust.", "Food can spoil or arrive cold.", "Transport costs can eat profit."],
+    profit: "Income depends on repeat customers and delivery efficiency. It is safer to start with pre-orders instead of cooking blindly.",
+    tips: ["Use pre-orders and deposits for larger meals.", "Limit delivery radius at first.", "Keep packaging simple but clean."],
+    budgetBand: "under_500k",
+    audience: ["youth", "women", "beginners"],
+    seo: {
+      title: "Mobile Food Delivery Business in Uganda",
+      description: "How to start office lunch or local food delivery in Uganda.",
+      keywords: ["food delivery business Uganda", "office lunch Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 2 },
+    relatedIdeaSlugs: ["local-food-takeaway-uganda", "chapati-business", "fresh-juice-business"],
+  },
+  {
+    slug: "small-restaurant-kibanda-specializing-in-one-niche-uganda",
+    title: "Small Restaurant or Kibanda",
+    category: "Food",
+    capital: "UGX 2,000,000+",
+    desc: "Run a small eating place focused on a niche such as katogo, luwombo, beans and rice, or a reliable lunch menu for workers.",
+    skills: ["Cooking management", "Staff supervision", "Stock control", "Customer service"],
+    bestFor: "Experienced cooks and food operators ready for rent, permits, daily stock, and consistent service.",
+    location: "Best in busy trading centres, near offices, schools, markets, hospitals, or transport stages.",
+    steps: ["Choose a niche menu.", "Find a high-foot-traffic location.", "Budget for rent, seating, utensils, and stock.", "Hire carefully if needed.", "Track daily costs and waste."],
+    risks: ["Rent can be high.", "Food waste reduces profit.", "Poor service or hygiene can quickly lose customers."],
+    profit: "A small restaurant can earn steady daily income when location and cost control are strong. Net profit depends on rent, staff, waste, and repeat customers.",
+    tips: ["Do not start with too many menu items.", "Visit the area at lunch and evening before renting.", "Keep portions and taste consistent."],
+    budgetBand: "above_2m",
+    audience: ["women", "youth"],
+    seo: {
+      title: "Small Restaurant Business in Uganda",
+      description: "How to start a small restaurant or kibanda in Uganda.",
+      keywords: ["small restaurant Uganda", "kibanda business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 4, riskLevel: 4, supplierDemand: 4 },
+    relatedIdeaSlugs: ["local-food-takeaway-uganda", "grilled-meat-and-barbeque-point-uganda", "chapati-business"],
+  },
+  {
+    slug: "street-tea-and-breakfast-kiosk-uganda",
+    title: "Street Tea and Breakfast Kiosk",
+    category: "Food",
+    capital: "UGX 150,000 - 600,000",
+    desc: "Sell tea, chapati, boiled eggs, mandazi, or simple breakfast items to early workers, students, boda riders, and market vendors.",
+    skills: ["Early morning routine", "Simple cooking", "Hygiene", "Fast service"],
+    bestFor: "Youth and women who can start early and serve repeat morning customers.",
+    location: "Best near taxi stages, markets, schools, construction sites, and worker routes with early traffic.",
+    steps: ["Observe morning foot traffic.", "Choose a simple menu.", "Buy a kettle, stove, cups, and starter ingredients.", "Open consistently at the same time.", "Add items based on customer requests."],
+    risks: ["Rain can reduce traffic.", "Inconsistent opening loses regulars.", "Small margins require good cost control."],
+    profit: "This can create daily cashflow, but profit per item is small. Consistent repeat customers and low waste make the difference.",
+    tips: ["Open before customers arrive.", "Keep tea hot and area clean.", "Track sugar, milk, charcoal, and flour costs."],
+    budgetBand: "under_500k",
+    audience: ["women", "youth", "beginners"],
+    seo: {
+      title: "Street Tea and Breakfast Kiosk in Uganda",
+      description: "Start a low-capital tea and breakfast kiosk in Uganda.",
+      keywords: ["tea kiosk Uganda", "breakfast business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 5, riskLevel: 2, supplierDemand: 2 },
+    relatedIdeaSlugs: ["chapati-business", "snack-and-chips-stall-uganda", "local-food-takeaway-uganda"],
+  },
+  {
+    slug: "small-scale-food-processing-uganda",
+    title: "Small-scale Food Processing",
+    category: "Food",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Process foods such as peanut butter, flour, dried fruit, juice concentrates, or packaged snacks using local raw materials.",
+    skills: ["Food hygiene", "Packaging", "Basic production records", "Market testing"],
+    bestFor: "Farmers, youth, and home-based producers in areas with access to raw materials and buyers.",
+    location: "Good near crop-growing areas, town markets, schools, shops, and small supermarkets that can test packaged products.",
+    steps: ["Choose one product with clear demand.", "Test a small batch.", "Calculate raw material and packaging costs.", "Label clearly and keep production clean.", "Sell first through local shops and WhatsApp."],
+    risks: ["Poor packaging reduces trust.", "Food safety issues can harm customers.", "Certification may be required for larger retail channels."],
+    profit: "Small batches can earn modest margins. Scaling depends on quality, repeat buyers, packaging costs, and compliance requirements.",
+    tips: ["Start with direct customers before shops.", "Keep batch records.", "Do not make health claims you cannot prove."],
+    budgetBand: "500k_2m",
+    audience: ["women", "farmers", "youth"],
+    seo: {
+      title: "Small Food Processing Business in Uganda",
+      description: "How to start small-scale food processing in Uganda with cautious planning.",
+      keywords: ["food processing Uganda", "peanut butter business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 4 },
+    relatedIdeaSlugs: ["groundnut-or-soybean-farming-uganda", "fresh-juice-business", "home-bakery-uganda"],
+  },
+  {
+    slug: "phone-accessories-and-small-electronics-shop-uganda",
+    title: "Phone Accessories and Small Electronics Shop",
+    category: "Retail",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Sell chargers, earphones, phone covers, screen protectors, memory cards, bulbs, and small electronics in a busy trading area.",
+    skills: ["Stock selection", "Customer service", "Basic product testing", "Price negotiation"],
+    bestFor: "Youth and retail beginners in busy centres with phone users and steady foot traffic.",
+    location: "Best near taxi parks, universities, markets, repair shops, and trading centres with high daily movement.",
+    steps: ["Survey fast-moving accessories.", "Start with small mixed stock.", "Test products before selling where possible.", "Display clearly.", "Track which items sell fastest."],
+    risks: ["Low-quality products cause returns.", "Trendy stock can become slow-moving.", "Competition can push prices down."],
+    profit: "Margins vary by item. Profit comes from fast turnover, avoiding dead stock, and building customer trust.",
+    tips: ["Start with essentials like chargers and screen protectors.", "Keep receipts from suppliers.", "Do not overstock expensive gadgets early."],
+    budgetBand: "500k_2m",
+    audience: ["youth", "students", "beginners"],
+    seo: {
+      title: "Phone Accessories Business in Uganda",
+      description: "How to start a phone accessories and small electronics shop in Uganda.",
+      keywords: ["phone accessories business Uganda", "electronics shop Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
+    relatedIdeaSlugs: ["mobile-money-business", "stationery-and-printing-kiosk-uganda", "online-store-uganda"],
+  },
+  {
+    slug: "cosmetics-and-beauty-products-mini-shop-uganda",
+    title: "Cosmetics and Beauty Products Mini Shop",
+    category: "Retail",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Sell cosmetics, hair products, skincare items, wigs, nails, and beauty supplies to salon customers and local residents.",
+    skills: ["Beauty product knowledge", "Stock control", "Customer trust", "Supplier comparison"],
+    bestFor: "Women, youth, salon owners, and retail beginners in areas with steady beauty product demand.",
+    location: "Best near salons, markets, hostels, busy residential areas, and trading centres with women customers.",
+    steps: ["List fast-moving products in your area.", "Buy small quantities first.", "Avoid unknown products with safety concerns.", "Display products neatly.", "Offer honest guidance to keep repeat customers."],
+    risks: ["Fake or expired products can harm customers and trust.", "Some items move slowly.", "Competition is common in busy areas."],
+    profit: "A mini shop can earn steady margins when fast-moving products are chosen carefully. Profit depends on turnover and avoiding dead stock.",
+    tips: ["Start with products people request often.", "Check expiry dates.", "Pair with salon relationships for referrals."],
+    budgetBand: "500k_2m",
+    audience: ["women", "youth", "beginners"],
+    seo: {
+      title: "Cosmetics Shop Business in Uganda",
+      description: "How to start a small cosmetics and beauty products shop in Uganda.",
+      keywords: ["cosmetics business Uganda", "beauty products shop Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
+    relatedIdeaSlugs: ["salon-business", "online-store-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+  },
+  {
+    slug: "motorcycle-spare-parts-shop-uganda",
+    title: "Motorcycle Spare Parts Shop",
+    category: "Retail",
+    capital: "UGX 2,000,000+",
+    desc: "Sell boda boda spare parts such as tyres, tubes, brake pads, chains, oil, bulbs, and service items near busy motorcycle activity.",
+    skills: ["Parts knowledge", "Stock management", "Mechanic relationships", "Supplier negotiation"],
+    bestFor: "People near boda stages, garages, and trading centres who understand motorcycle parts or can learn from mechanics.",
+    location: "Best near boda boda stages, repair garages, busy roads, and trading centres with many motorcycles.",
+    steps: ["Study the common bike models in your area.", "List fast-moving parts.", "Source from trusted wholesalers.", "Build relationships with mechanics.", "Track stock and avoid fake parts."],
+    risks: ["Fake parts damage reputation.", "Capital can get tied in slow-moving items.", "Theft risk is high for valuable stock."],
+    profit: "Spare parts can be profitable with repeat mechanic customers, but stock choice and authenticity strongly affect returns.",
+    tips: ["Start with fast-moving service parts.", "Label stock clearly.", "Give mechanics reliable treatment."],
+    budgetBand: "above_2m",
+    audience: ["youth", "diaspora"],
+    seo: {
+      title: "Motorcycle Spare Parts Business in Uganda",
+      description: "Costs and steps for starting a boda boda spare parts shop in Uganda.",
+      keywords: ["motorcycle spare parts Uganda", "boda boda parts business"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 4, riskLevel: 3, supplierDemand: 5 },
+    relatedIdeaSlugs: ["boda-boda-business", "motorcycle-repair-garage-uganda", "general-merchandise-duka-uganda"],
+  },
+  {
+    slug: "small-hardware-construction-materials-outlet-uganda",
+    title: "Small Hardware and Construction Materials Outlet",
+    category: "Retail",
+    capital: "UGX 2,000,000+",
+    desc: "Sell nails, cement, paint, plumbing items, electrical fittings, tools, and small construction materials in a growing trading centre.",
+    skills: ["Stock control", "Product knowledge", "Customer quotation", "Supplier negotiation"],
+    bestFor: "Entrepreneurs in growing towns, construction corridors, and residential expansion areas.",
+    location: "Best near construction activity, new housing areas, trading centres, and roads with building material demand.",
+    steps: ["Survey builders and households.", "Start with fast-moving small hardware.", "Source from wholesalers.", "Keep stock secure.", "Offer clear pricing and receipts."],
+    risks: ["High capital is needed for broad stock.", "Some items move slowly.", "Price changes can affect replacement cost."],
+    profit: "Hardware margins vary by item. Profit depends on stock turnover, location, and serving repeat builders or households.",
+    tips: ["Start narrow and expand based on demand.", "Track stock daily.", "Keep valuable tools locked."],
+    budgetBand: "above_2m",
+    audience: ["diaspora", "youth"],
+    seo: {
+      title: "Hardware Business in Uganda",
+      description: "How to start a small hardware or construction materials shop in Uganda.",
+      keywords: ["hardware business Uganda", "construction materials Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 5 },
+    relatedIdeaSlugs: ["welding-and-metal-fabrication-uganda", "general-merchandise-duka-uganda", "motorcycle-spare-parts-shop-uganda"],
+  },
+  {
+    slug: "stationery-and-printing-kiosk-uganda",
+    title: "Stationery and Printing Kiosk",
+    category: "Retail",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Offer photocopying, printing, scanning, laminating, passport photos, and stationery sales near schools, offices, or public service points.",
+    skills: ["Basic computer use", "Printer maintenance", "Customer service", "File handling"],
+    bestFor: "Youth and tech-comfortable entrepreneurs near schools, universities, offices, or government service points.",
+    location: "Best near schools, universities, courts, clinics, district offices, and busy trading centres.",
+    steps: ["Choose a location with document demand.", "Buy a reliable printer or copier.", "Stock basic stationery.", "Price services clearly.", "Keep backup power or nearby alternatives in mind."],
+    risks: ["Machines break down.", "Ink and toner costs can reduce margins.", "Power interruptions affect service."],
+    profit: "Small daily transactions can add up when location is strong. Profit depends on machine uptime, consumable costs, and foot traffic.",
+    tips: ["Learn basic printer maintenance.", "Keep paper and toner records.", "Add online form assistance if demand exists."],
+    budgetBand: "500k_2m",
+    audience: ["students", "youth", "beginners"],
+    seo: {
+      title: "Stationery and Printing Kiosk in Uganda",
+      description: "How to start a photocopy, printing, and stationery kiosk in Uganda.",
+      keywords: ["printing business Uganda", "stationery shop Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["basic-it-training-small-cyber-caf-uganda", "phone-accessories-and-small-electronics-shop-uganda", "tuition-holiday-coaching-and-skills-training-uganda"],
+  },
+  {
+    slug: "general-merchandise-duka-uganda",
+    title: "General Merchandise Duka",
+    category: "Retail",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Run a small shop selling daily essentials such as sugar, soap, salt, cooking oil, airtime, snacks, and household goods.",
+    skills: ["Stock control", "Customer service", "Cash discipline", "Supplier comparison"],
+    bestFor: "Families and beginners in residential areas or trading centres with daily household demand.",
+    location: "Best in residential communities, villages, trading centres, and areas where households need nearby essentials.",
+    steps: ["Survey what households buy daily.", "Start with fast-moving essentials.", "Keep prices visible.", "Record credit carefully or avoid it early.", "Restock based on actual sales."],
+    risks: ["Customer credit can damage cashflow.", "Slow stock ties up capital.", "Competition can reduce margins."],
+    profit: "A duka usually earns small margins on many repeat sales. Profit depends on turnover, rent, theft control, and avoiding uncontrolled credit.",
+    tips: ["Avoid giving too much credit.", "Keep a daily stock book.", "Focus on items people buy every day."],
+    budgetBand: "500k_2m",
+    audience: ["women", "beginners", "youth"],
+    seo: {
+      title: "General Merchandise Shop Business in Uganda",
+      description: "How to start a small duka or general merchandise shop in Uganda.",
+      keywords: ["duka business Uganda", "general merchandise shop Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
+    relatedIdeaSlugs: ["mobile-money-business", "phone-accessories-and-small-electronics-shop-uganda", "water-vending-business"],
+  },
+  {
+    slug: "barber-shop-uganda",
+    title: "Barber Shop",
+    category: "Services",
+    capital: "UGX 300,000 - 1,500,000",
+    desc: "Offer haircuts, shaving, beard shaping, and basic grooming services in a small room, container, or shared salon space.",
+    skills: ["Hair cutting", "Tool hygiene", "Customer service", "Style consistency"],
+    bestFor: "Youth with barbering skills or beginners willing to train before opening.",
+    location: "Best near trading centres, hostels, boda stages, schools, and residential areas with regular male customers.",
+    steps: ["Learn or improve barbering skills.", "Buy clippers, mirror, chair, disinfectant, and power backup if possible.", "Choose a visible small space.", "Offer clean and consistent service.", "Use WhatsApp and referrals to keep customers returning."],
+    risks: ["Bad haircuts lose customers fast.", "Power cuts affect service.", "Poor hygiene can spread infections."],
+    profit: "A small barber shop can earn daily cash from repeat customers. Net income depends on rent, electricity, skill, and customer loyalty.",
+    tips: ["Keep tools clean.", "Offer a consistent price list.", "Build regular customers by remembering their preferred style."],
+    budgetBand: "under_500k",
+    audience: ["youth", "students", "beginners"],
+    seo: {
+      title: "Barber Shop Business in Uganda",
+      description: "Costs, tools, and steps for starting a barber shop in Uganda.",
+      keywords: ["barber shop Uganda", "barber business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 5, riskLevel: 2, supplierDemand: 3 },
+    relatedIdeaSlugs: ["salon-business", "cosmetics-and-beauty-products-mini-shop-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+  },
+  {
+    slug: "cleaning-services-uganda",
+    title: "Cleaning Services",
+    category: "Services",
+    capital: "UGX 200,000 - 1,500,000",
+    desc: "Offer cleaning for homes, offices, shops, churches, events, or post-construction spaces using basic tools and reliable labour.",
+    skills: ["Cleaning standards", "Client communication", "Time management", "Team supervision"],
+    bestFor: "Organised youth, women, and small teams that can deliver reliable service and build trust.",
+    location: "Best in towns, estates, office areas, churches, event venues, and growing residential communities.",
+    steps: ["Choose home, office, or event cleaning first.", "Buy basic tools and detergents.", "Create a simple price list.", "Start with referrals and WhatsApp marketing.", "Arrive on time and document before-after results."],
+    risks: ["Clients may delay payment.", "Damaged property can create disputes.", "Unreliable workers hurt reputation."],
+    profit: "Cleaning can start small and grow through repeat contracts. Profit depends on labour control, transport, detergents, and reliable payment.",
+    tips: ["Take photos of completed work with permission.", "Use written agreements for larger jobs.", "Start cash-on-completion where possible."],
+    budgetBand: "under_500k",
+    audience: ["women", "youth", "beginners"],
+    seo: {
+      title: "Cleaning Services Business in Uganda",
+      description: "How to start a home, office, or event cleaning business in Uganda.",
+      keywords: ["cleaning business Uganda", "cleaning services Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 4, riskLevel: 2, supplierDemand: 3 },
+    relatedIdeaSlugs: ["liquid-soap-business", "mobile-car-wash-and-detailing-uganda", "event-planning-and-decoration-uganda"],
+  },
+  {
+    slug: "event-planning-and-decoration-uganda",
+    title: "Event Planning and Decoration",
+    category: "Services",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Plan and decorate small events such as birthdays, introductions, baby showers, graduations, church events, and community functions.",
+    skills: ["Decoration design", "Budgeting", "Supplier coordination", "Client communication"],
+    bestFor: "Creative youth and women who can organise details and work well under event pressure.",
+    location: "Works in towns, churches, schools, and residential areas where families host regular ceremonies and celebrations.",
+    steps: ["Start with one event type.", "Build a small decor kit.", "Partner with chairs, tents, cake, and photo providers.", "Photograph every setup.", "Take deposits before buying materials."],
+    risks: ["Clients can change requirements late.", "Rain and transport delays affect setup.", "Buying too much decor early ties up capital."],
+    profit: "Small events can bring project-based income. Profit depends on pricing, reuse of decor items, transport, and supplier costs.",
+    tips: ["Use deposits.", "Keep a checklist for each event.", "Rent expensive items before buying them."],
+    budgetBand: "500k_2m",
+    audience: ["women", "youth"],
+    seo: {
+      title: "Event Planning and Decoration Business in Uganda",
+      description: "How to start a small event planning and decoration business in Uganda.",
+      keywords: ["event planning Uganda", "decoration business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 3, supplierDemand: 4 },
+    relatedIdeaSlugs: ["photography-and-videography-uganda", "home-bakery-uganda", "cleaning-services-uganda"],
+  },
+  {
+    slug: "photography-and-videography-uganda",
+    title: "Photography and Videography",
+    category: "Services",
+    capital: "UGX 2,000,000+",
+    desc: "Offer photo and video services for events, portraits, products, graduations, introductions, weddings, and business content.",
+    skills: ["Camera operation", "Editing", "Client handling", "File delivery"],
+    bestFor: "Tech-savvy youth and creatives willing to learn equipment, editing, and client service.",
+    location: "Works in towns, campuses, churches, event venues, and business areas where people need photos or content.",
+    steps: ["Learn basics before buying expensive gear.", "Start with portraits or small events.", "Build a portfolio.", "Set clear delivery timelines.", "Back up files immediately after shoots."],
+    risks: ["Equipment is expensive and can be stolen.", "Missed event moments cannot be repeated.", "Late delivery damages reputation."],
+    profit: "Income can be good per event, but equipment, transport, editing time, and marketing costs must be included in pricing.",
+    tips: ["Rent gear before buying everything.", "Use written booking terms.", "Back up every job in two places."],
+    budgetBand: "above_2m",
+    audience: ["youth", "students"],
+    seo: {
+      title: "Photography and Videography Business in Uganda",
+      description: "How to start event photography or videography services in Uganda.",
+      keywords: ["photography business Uganda", "videography Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["event-planning-and-decoration-uganda", "social-media-marketing-and-content-services-for-smes-uganda", "freelance-graphic-design-and-branding-uganda"],
+  },
+  {
+    slug: "motorcycle-repair-garage-uganda",
+    title: "Motorcycle Repair Garage",
+    category: "Services",
+    capital: "UGX 300,000 - 1,500,000",
+    desc: "Repair and service boda bodas by offering oil changes, tyre repairs, brake work, chain adjustments, and minor mechanical fixes.",
+    skills: ["Motorcycle mechanics", "Tool handling", "Parts diagnosis", "Customer trust"],
+    bestFor: "Skilled mechanics and youth trained in motorcycle repair near active boda stages.",
+    location: "Best near boda stages, busy roads, markets, and trading centres with many motorcycles.",
+    steps: ["Gain practical mechanic skills first.", "Buy essential tools.", "Choose a spot near riders.", "Stock fast-moving service items slowly.", "Build trust through honest diagnosis."],
+    risks: ["Wrong repairs can create disputes.", "Tool theft is common.", "Credit from riders can hurt cashflow."],
+    profit: "A small garage can earn daily service income. Profit depends on skill, location, tool security, and repeat riders.",
+    tips: ["Be honest about what you can repair.", "Keep tools locked.", "Work with a trusted spare parts source."],
+    budgetBand: "under_500k",
+    audience: ["youth", "beginners"],
+    seo: {
+      title: "Motorcycle Repair Garage in Uganda",
+      description: "How to start a boda boda repair and service garage in Uganda.",
+      keywords: ["motorcycle repair Uganda", "boda boda garage Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 5, riskLevel: 3, supplierDemand: 4 },
+    relatedIdeaSlugs: ["boda-boda-business", "motorcycle-spare-parts-shop-uganda", "mobile-car-wash-and-detailing-uganda"],
+  },
+  {
+    slug: "mobile-car-wash-and-detailing-uganda",
+    title: "Mobile Car Wash and Detailing",
+    category: "Services",
+    capital: "UGX 300,000 - 1,500,000",
+    desc: "Wash and clean cars at homes, offices, parking yards, or roadside spots using portable equipment and reliable service.",
+    skills: ["Vehicle cleaning", "Customer scheduling", "Water management", "Detailing basics"],
+    bestFor: "Youth near offices, apartments, churches, and affluent neighbourhoods with car owners.",
+    location: "Best near offices, apartment blocks, parking yards, churches, car yards, and busy residential areas.",
+    steps: ["Start with basic washing tools.", "Find locations with parked cars.", "Offer scheduled cleaning.", "Use clean cloths and proper detergents.", "Ask satisfied clients for referrals."],
+    risks: ["Water access can be difficult.", "Damaging a car creates costly disputes.", "Rainy days reduce demand."],
+    profit: "Daily profit depends on number of cars, transport, water, detergents, and repeat clients. Detail services can raise income when skills improve.",
+    tips: ["Start with known clients.", "Be careful with interiors and electronics.", "Offer weekly packages to offices or apartments."],
+    budgetBand: "under_500k",
+    audience: ["youth", "beginners"],
+    seo: {
+      title: "Mobile Car Wash Business in Uganda",
+      description: "How to start a mobile car wash and detailing business in Uganda.",
+      keywords: ["car wash business Uganda", "mobile car wash Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["cleaning-services-uganda", "motorcycle-repair-garage-uganda", "liquid-soap-business"],
+  },
+  {
+    slug: "welding-and-metal-fabrication-uganda",
+    title: "Welding and Metal Fabrication",
+    category: "Services",
+    capital: "UGX 2,000,000+",
+    desc: "Make or repair metal doors, windows, gates, grills, stands, beds, and other fabricated items for homes and businesses.",
+    skills: ["Welding", "Measurement", "Metal cutting", "Job costing"],
+    bestFor: "Vocationally trained youth, artisans, and hands-on entrepreneurs with technical skill.",
+    location: "Best near construction areas, trading centres, hardware shops, and growing residential communities.",
+    steps: ["Get practical welding training.", "Buy or access welding equipment.", "Start with repairs and small jobs.", "Quote materials and labour separately.", "Photograph completed work for referrals."],
+    risks: ["Equipment is costly.", "Poor measurements cause losses.", "Safety risks are high without protective gear."],
+    profit: "Project income can be strong, but profit depends on accurate costing, material prices, workmanship, and payment discipline.",
+    tips: ["Use deposits for material purchases.", "Wear protective gear.", "Measure twice before cutting."],
+    budgetBand: "above_2m",
+    audience: ["youth", "diaspora"],
+    seo: {
+      title: "Welding and Metal Fabrication Business in Uganda",
+      description: "How to start welding and metal fabrication services in Uganda.",
+      keywords: ["welding business Uganda", "metal fabrication Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 4, supplierDemand: 4 },
+    relatedIdeaSlugs: ["small-hardware-construction-materials-outlet-uganda", "motorcycle-repair-garage-uganda", "event-planning-and-decoration-uganda"],
+  },
+  {
+    slug: "daycare-creche-and-babysitting-service-uganda",
+    title: "Daycare, Creche, and Babysitting Service",
+    category: "Services",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Care for young children during working hours or short periods for parents in busy residential and urban communities.",
+    skills: ["Childcare", "Safety routines", "Parent communication", "Clean space management"],
+    bestFor: "Women and trusted caregivers in residential areas where parents need reliable childcare.",
+    location: "Best in urban residential areas, near markets, offices, schools, hospitals, and communities with working parents.",
+    steps: ["Understand local childcare expectations.", "Prepare a safe clean room or space.", "Set clear hours and fees.", "Start with a few children.", "Communicate daily with parents."],
+    risks: ["Child safety responsibility is high.", "Trust takes time to build.", "Local permissions or standards may apply."],
+    profit: "Income depends on number of children, fees, food costs, helpers, and rent. Start small and focus on safety before scaling.",
+    tips: ["Keep emergency contacts for every child.", "Do not accept more children than you can safely supervise.", "Maintain cleanliness and clear parent rules."],
+    budgetBand: "500k_2m",
+    audience: ["women", "beginners"],
+    seo: {
+      title: "Daycare Business in Uganda",
+      description: "How to start a small daycare, creche, or babysitting service in Uganda.",
+      keywords: ["daycare business Uganda", "babysitting service Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 2 },
+    relatedIdeaSlugs: ["tuition-holiday-coaching-and-skills-training-uganda", "local-food-takeaway-uganda", "cleaning-services-uganda"],
+  },
+  {
+    slug: "tuition-holiday-coaching-and-skills-training-uganda",
+    title: "Tuition, Holiday Coaching, and Skills Training",
+    category: "Services",
+    capital: "UGX 100,000 - 500,000",
+    desc: "Teach school subjects, computer basics, reading, crafts, music, or practical skills during weekends, evenings, or holidays.",
+    skills: ["Teaching", "Lesson planning", "Parent communication", "Student management"],
+    bestFor: "Teachers, graduates, skilled youth, and students who can teach clearly and responsibly.",
+    location: "Works near schools, churches, community halls, homes, and trading centres where parents want extra learning support.",
+    steps: ["Choose one subject or skill.", "Prepare a simple programme.", "Find a safe teaching space.", "Advertise to parents and schools.", "Track attendance and progress."],
+    risks: ["Parents expect visible progress.", "Unclear fees can cause disputes.", "Poor supervision can damage trust."],
+    profit: "Tuition income depends on student numbers, fees, space costs, and consistency. It can start with very low capital if trust is strong.",
+    tips: ["Start with a small group.", "Use simple progress updates.", "Avoid promising exam results you cannot guarantee."],
+    budgetBand: "under_500k",
+    audience: ["students", "youth", "beginners"],
+    seo: {
+      title: "Tuition and Holiday Coaching Business in Uganda",
+      description: "How to start tuition, coaching, or skills training services in Uganda.",
+      keywords: ["tuition business Uganda", "holiday coaching Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 4, riskLevel: 2, supplierDemand: 2 },
+    relatedIdeaSlugs: ["stationery-and-printing-kiosk-uganda", "daycare-creche-and-babysitting-service-uganda", "basic-it-training-small-cyber-caf-uganda"],
+  },
+  {
+    slug: "online-store-uganda",
+    title: "Online Store",
+    category: "Digital",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Sell products through WhatsApp, Facebook, Instagram, TikTok, Jumia, Jiji, or a simple website without starting with a full physical shop.",
+    skills: ["Product photography", "Online selling", "Customer replies", "Delivery coordination"],
+    bestFor: "Youth and small traders comfortable with phones, social media, and customer communication.",
+    location: "Works from home or a small stock point in towns with delivery options and online buyer activity.",
+    steps: ["Choose a focused product category.", "Take clear photos.", "Post consistently on social media.", "Set delivery and payment rules.", "Track orders and customer complaints."],
+    risks: ["Scams and fake orders waste time.", "Delivery issues affect trust.", "Unsold stock ties up capital."],
+    profit: "An online store can start lean, but profit depends on product margin, marketing consistency, delivery cost, and trust.",
+    tips: ["Start with products you understand.", "Use cash-on-delivery carefully.", "Keep proof of orders and payments."],
+    budgetBand: "500k_2m",
+    audience: ["youth", "students", "women"],
+    seo: {
+      title: "Online Store Business in Uganda",
+      description: "How to start selling products online in Uganda using social media or marketplaces.",
+      keywords: ["online store Uganda", "sell online Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["phone-accessories-and-small-electronics-shop-uganda", "cosmetics-and-beauty-products-mini-shop-uganda", "mitumba-clothes-business"],
+  },
+  {
+    slug: "social-media-marketing-and-content-services-for-smes-uganda",
+    title: "Social Media Marketing for SMEs",
+    category: "Digital",
+    capital: "UGX 100,000 - 500,000",
+    desc: "Help small businesses create posts, short videos, WhatsApp status content, Facebook pages, and simple online promotions.",
+    skills: ["Content creation", "Copywriting", "Basic design", "Client reporting"],
+    bestFor: "Youth who understand Facebook, TikTok, Instagram, WhatsApp, and local customer behaviour.",
+    location: "Works in any town with small businesses that need online visibility, including salons, restaurants, shops, clinics, and schools.",
+    steps: ["Build sample posts for a real business type.", "Offer a simple monthly package.", "Start with businesses you can visit physically.", "Track leads or engagement.", "Collect testimonials."],
+    risks: ["Clients may expect instant sales.", "Poor posting consistency reduces value.", "Underpricing can make the work exhausting."],
+    profit: "Income is service-based and depends on monthly clients. Start with a few clients and clear deliverables before scaling.",
+    tips: ["Show before-after examples.", "Use simple reporting.", "Avoid promising viral results."],
+    budgetBand: "under_500k",
+    audience: ["youth", "students", "beginners"],
+    seo: {
+      title: "Social Media Marketing Business in Uganda",
+      description: "How to offer social media and content services to small businesses in Uganda.",
+      keywords: ["social media marketing Uganda", "content services Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 5, incomeSpeed: 3, riskLevel: 2, supplierDemand: 1 },
+    relatedIdeaSlugs: ["photography-and-videography-uganda", "freelance-graphic-design-and-branding-uganda", "online-store-uganda"],
+  },
+  {
+    slug: "youtube-tiktok-channel-about-ugandan-business-ideas-farming-or-side-hustles-uganda",
+    title: "YouTube or TikTok Channel",
+    category: "Digital",
+    capital: "UGX 100,000 - 1,000,000",
+    desc: "Create videos about Ugandan business ideas, farming, side hustles, markets, prices, or practical skills and grow an audience over time.",
+    skills: ["Video planning", "Phone filming", "Editing", "Consistency"],
+    bestFor: "Confident creators, students, farmers, and youth who can publish regularly and learn from audience feedback.",
+    location: "Works anywhere with a smartphone, internet access, and local stories or useful knowledge to share.",
+    steps: ["Choose a clear niche.", "Plan 20 video ideas before starting.", "Film with clear sound and lighting.", "Post consistently.", "Track which topics people watch and ask about."],
+    risks: ["Income is not immediate.", "Consistency is hard.", "Copying content can hurt credibility."],
+    profit: "This is a long-term audience business. Early income is uncertain, but opportunities may come from ads, sponsorships, guides, or services after trust grows.",
+    tips: ["Start with your phone.", "Focus on useful local information.", "Do not expect quick money."],
+    budgetBand: "under_500k",
+    audience: ["youth", "students"],
+    seo: {
+      title: "YouTube and TikTok Channel Business in Uganda",
+      description: "How to start a Uganda-focused business, farming, or side hustle content channel.",
+      keywords: ["YouTube channel Uganda", "TikTok business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 4, incomeSpeed: 1, riskLevel: 2, supplierDemand: 1 },
+    relatedIdeaSlugs: ["social-media-marketing-and-content-services-for-smes-uganda", "photography-and-videography-uganda", "freelance-graphic-design-and-branding-uganda"],
+  },
+  {
+    slug: "freelance-graphic-design-and-branding-uganda",
+    title: "Freelance Graphic Design and Branding",
+    category: "Digital",
+    capital: "UGX 500,000 - 2,000,000",
+    desc: "Design logos, posters, menus, flyers, social media graphics, labels, and simple brand materials for small businesses and events.",
+    skills: ["Graphic design", "Client communication", "Pricing", "File delivery"],
+    bestFor: "Creative youth with a laptop or access to design tools and willingness to build a portfolio.",
+    location: "Works from home, campus, coworking spaces, or anywhere with internet and access to small business clients.",
+    steps: ["Learn one design tool well.", "Create sample designs.", "Offer starter packages to small businesses.", "Collect deposits before work.", "Deliver files clearly and on time."],
+    risks: ["Clients may request many revisions.", "Pirated software can create risk.", "Underpricing leads to burnout."],
+    profit: "Income depends on client volume, pricing, speed, and repeat work. It can start small and grow into monthly retainers.",
+    tips: ["Use clear revision limits.", "Keep a portfolio link.", "Charge at least a deposit before starting."],
+    budgetBand: "500k_2m",
+    audience: ["youth", "students"],
+    seo: {
+      title: "Graphic Design Business in Uganda",
+      description: "How to start freelance graphic design and branding services in Uganda.",
+      keywords: ["graphic design Uganda", "branding business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 2, supplierDemand: 1 },
+    relatedIdeaSlugs: ["social-media-marketing-and-content-services-for-smes-uganda", "photography-and-videography-uganda", "online-store-uganda"],
+  },
+  {
+    slug: "basic-it-training-small-cyber-caf-uganda",
+    title: "Basic IT Training and Small Cyber Cafe",
+    category: "Digital",
+    capital: "UGX 2,000,000+",
+    desc: "Offer computer basics, typing, internet access, printing, online forms, applications, and document support in a town or school area.",
+    skills: ["Computer literacy", "Customer support", "Printer management", "Online form handling"],
+    bestFor: "Tech-inclined youth and entrepreneurs near schools, offices, or communities that need digital services.",
+    location: "Best near schools, universities, district offices, trading centres, and areas where people need online applications or printing.",
+    steps: ["Choose a location with document and internet demand.", "Start with a few computers and a printer.", "Offer basic services before full training.", "Price services clearly.", "Maintain machines and backups."],
+    risks: ["Power and internet outages affect income.", "Equipment repair costs can be high.", "Handling personal documents requires care and privacy."],
+    profit: "Income can come from many small services and training fees. Profit depends on rent, machine uptime, internet cost, and foot traffic.",
+    tips: ["Keep antivirus and backups.", "Protect customer documents.", "Add training only when service demand is stable."],
+    budgetBand: "above_2m",
+    audience: ["youth", "students"],
+    seo: {
+      title: "Cyber Cafe and IT Training Business in Uganda",
+      description: "How to start a small cyber cafe or basic IT training centre in Uganda.",
+      keywords: ["cyber cafe Uganda", "IT training business Uganda"],
+      lastReviewed: "2026-04-30",
+    },
+    scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
+    relatedIdeaSlugs: ["stationery-and-printing-kiosk-uganda", "tuition-holiday-coaching-and-skills-training-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+  },
 ];
+
+export function formatCapital(capital: string) {
+  return capital.replace(/\s+/g, " ").trim();
+}
+
+export function getIdeaBySlug(slug: string) {
+  return ideas.find((idea) => idea.slug === slug);
+}
+
+export function getIdeasByCategory(category: Category) {
+  return ideas.filter((idea) => idea.category === category);
+}
+
+export function getIdeasByAudience(audience: AudienceSegment) {
+  return ideas.filter((idea) => idea.audience?.includes(audience));
+}
+
+export function getRelatedIdeas(slug: string, limit = 3) {
+  const idea = getIdeaBySlug(slug);
+  if (!idea) return [];
+
+  const explicitRelated = idea.relatedIdeaSlugs
+    ?.map((relatedSlug) => getIdeaBySlug(relatedSlug))
+    .filter((item): item is Idea => Boolean(item)) ?? [];
+
+  const relatedByCategory = ideas.filter(
+    (candidate) =>
+      candidate.slug !== slug &&
+      candidate.category === idea.category &&
+      !explicitRelated.some((related) => related.slug === candidate.slug)
+  );
+
+  const relatedByAudience = ideas.filter(
+    (candidate) =>
+      candidate.slug !== slug &&
+      candidate.category !== idea.category &&
+      candidate.audience?.some((segment) => idea.audience?.includes(segment)) &&
+      !explicitRelated.some((related) => related.slug === candidate.slug)
+  );
+
+  return [...explicitRelated, ...relatedByCategory, ...relatedByAudience].slice(
+    0,
+    limit
+  );
+}

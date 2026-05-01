@@ -8,8 +8,8 @@
 "use client";
 
 import { useState } from "react";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
-const WHATSAPP_NUMBER = "256704434457"; // without + sign — required by wa.me
 
 // Pre-filled message the user sees when WhatsApp opens.
 // Keep it short and welcoming.
@@ -19,7 +19,7 @@ const DEFAULT_MESSAGE =
 export default function WhatsAppFloat() {
   const [hovered, setHovered] = useState(false);
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+  const whatsappUrl = buildWhatsAppUrl({ message: DEFAULT_MESSAGE });
 
   return (
     <div className="fixed bottom-6 right-5 z-50 flex flex-col items-end gap-2 sm:bottom-8 sm:right-7">
