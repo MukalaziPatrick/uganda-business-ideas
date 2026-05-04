@@ -1,3 +1,5 @@
+export type LeadStatus = "new" | "contacted" | "qualified" | "not_fit" | "closed";
+
 export type LeadInsert = {
   name: string | null;
   phone: string | null;
@@ -7,6 +9,6 @@ export type LeadInsert = {
   timeline: string | null;
   notes: string | null;
   source: string;
-  status?: "new" | "contacted" | "qualified" | "not_fit" | "closed";
+  status?: LeadStatus;
   assigned_tag?: string | null;
 };

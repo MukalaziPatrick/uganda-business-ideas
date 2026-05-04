@@ -1,9 +1,13 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import type { LeadStatus } from "@/lib/supabase/types";
+import { revalidatePath } from "next/cache";
 
 type LeadRow = {
+  id: string;
   name: string | null;
   phone: string | null;
   business_interest: string | null;
+  status: LeadStatus;
   created_at: string;
 };
 
@@ -20,6 +24,33 @@ function cleanSearchParam(value: string | undefined) {
 
 function cleanPostgrestSearchValue(value: string) {
   return value.replace(/[%,()]/g, "");
+}
+
+function formatLeadStatus(status: LeadStatus) {
+  return status.replace("_", " ");
+}
+
+async function markLeadContacted(formData: FormData) {
+  "use server";
+
+  const id = formData.get("id");
+
+  if (typeof id !== "string" || !id) {
+    return;
+  }
+
+  const supabase = createSupabaseAdminClient();
+
+  if (!supabase) {
+    return;
+  }
+
+  await supabase
+    .from("leads")
+    .update({ status: "contacted", last_contacted_at: new Date().toISOString() })
+    .eq("id", id);
+
+  revalidatePath("/admin/leads");
 }
 
 export default async function AdminLeadsPage({
@@ -51,7 +82,7 @@ export default async function AdminLeadsPage({
 
   let leadsQuery = supabase
     .from("leads")
-    .select("name, phone, business_interest, created_at")
+    .select("id, name, phone, business_interest, status, created_at")
     .order("created_at", { ascending: false });
 
   if (search) {
@@ -108,16 +139,29 @@ export default async function AdminLeadsPage({
             <th>Name</th>
             <th>Phone</th>
             <th>Interest</th>
+            <th>Status</th>
             <th>Created at</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {leads.map((lead) => (
-            <tr key={`${lead.created_at}-${lead.phone || lead.name || "lead"}`}>
+            <tr key={lead.id}>
               <td>{lead.name || ""}</td>
               <td>{lead.phone || ""}</td>
               <td>{lead.business_interest || ""}</td>
+              <td>{formatLeadStatus(lead.status)}</td>
               <td>{lead.created_at}</td>
+              <td>
+                {lead.status === "contacted" ? (
+                  "Contacted"
+                ) : (
+                  <form action={markLeadContacted}>
+                    <input type="hidden" name="id" value={lead.id} />
+                    <button type="submit">Mark contacted</button>
+                  </form>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
