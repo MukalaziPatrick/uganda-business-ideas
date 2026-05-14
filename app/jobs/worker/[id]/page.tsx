@@ -3,10 +3,12 @@ import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 type Worker = {
   id: string; name: string; skill_primary: string; skills_extra: string[] | null;
@@ -21,7 +23,7 @@ type Worker = {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const { data } = await supabase.from("worker_profiles").select("name,skill_primary,district").eq("id", id).single();
+  const { data } = await getSupabase().from("worker_profiles").select("name,skill_primary,district").eq("id", id).single();
   if (!data) return { title: "Worker Profile | Uganda Business Hub" };
   return {
     title: `${data.name} — ${data.skill_primary} in ${data.district} | Uganda Business Hub`,
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function WorkerProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const { data: worker } = await supabase
+  const { data: worker } = await getSupabase()
     .from("worker_profiles")
     .select("*")
     .eq("id", id)
