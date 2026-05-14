@@ -35,6 +35,8 @@ export type IdeaSeo = {
   lastReviewed?: string;
 };
 
+export type Region = "Central" | "Eastern" | "Northern" | "Western";
+
 export interface Idea {
   slug: string;
   title: string;
@@ -53,6 +55,7 @@ export interface Idea {
   seo?: IdeaSeo;
   scoring?: IdeaScoring;
   relatedIdeaSlugs?: string[];
+  regions: Region[];
 }
 
 export const ideas: Idea[] = [
@@ -98,6 +101,7 @@ export const ideas: Idea[] = [
       "Buy chemicals in bulk once you grow — buying more at once lowers your cost per litre significantly.",
       "Keep a simple notebook: write down every batch made, every sale, and every expense. This helps you know if you are actually making a profit.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 2. POULTRY FARMING ────────────────────────────────────────────────────
@@ -141,6 +145,7 @@ export const ideas: Idea[] = [
       "Join a local poultry farmers' group or WhatsApp group. Other farmers will share disease alerts and buyer contacts.",
       "Track every expense per flock so you know exactly what profit you made before reinvesting.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 3. PIG FARMING ────────────────────────────────────────────────────────
@@ -184,6 +189,7 @@ export const ideas: Idea[] = [
       "Build relationships with at least 2–3 buyers before your pigs are ready. Waiting for a buyer after slaughter weight is a mistake.",
       "Join a local pig farmers' group — they share ASF outbreak alerts, buyer contacts, and feed supply tips.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 4. MOBILE MONEY ───────────────────────────────────────────────────────
@@ -227,6 +233,7 @@ export const ideas: Idea[] = [
       "Build a reputation for honesty and speed. Word-of-mouth brings loyal, repeat customers in any community.",
       "Keep a separate phone for transactions — never mix personal and business money or messages on the same device.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 5. CHAPATI STAND ──────────────────────────────────────────────────────
@@ -270,6 +277,7 @@ export const ideas: Idea[] = [
       "Keep your hands and station visibly clean — customers decide to buy or walk away within 3 seconds of seeing your stand.",
       "Build loyalty: remember your regular customers, greet them by name, and give a small extra portion occasionally. Loyal customers recommend you to others.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 6. SALON BUSINESS ─────────────────────────────────────────────────────
@@ -313,6 +321,7 @@ export const ideas: Idea[] = [
       "WhatsApp Business is free — use it to share your work, take appointments, and stay in contact with clients between visits.",
       "Offer a small loyalty reward — for example, every 5th service at a discount — to keep your best clients from going to competitors.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 7. FRUIT SELLING ──────────────────────────────────────────────────────
@@ -356,6 +365,7 @@ export const ideas: Idea[] = [
       "Learn which fruits are in season month by month. Buying in-season gives you better quality at lower cost.",
       "Build a relationship with one or two reliable wholesale suppliers — loyal buyers sometimes get better prices and priority access to quality stock.",
     ],
+    regions: ["Central", "Western"],
   },
 
   // ─── 8. ANIMAL FEED SUPPLY ─────────────────────────────────────────────────
@@ -399,6 +409,7 @@ export const ideas: Idea[] = [
       "Visit your regular customers before they run out of feed — do not wait for them to call you. A farmer who has run out is an angry farmer.",
       "Consider stocking complementary products: vaccines, de-wormers, and vitamin supplements. These sell to the same customers and add extra income per visit.",
     ],
+    regions: ["Central", "Eastern", "Western"],
   },
 
   // ─── 9. FRESH JUICE (NEW) ──────────────────────────────────────────────────
@@ -442,6 +453,7 @@ export const ideas: Idea[] = [
       "Partner with a nearby gym or school canteen to supply them a fixed number of cups per day — steady income without relying only on walk-in customers.",
       "A clean, professional-looking stall with a printed menu makes a huge difference in attracting first-time customers.",
     ],
+    regions: ["Central", "Western"],
   },
 
   // ─── 10. TAILORING (NEW) ───────────────────────────────────────────────────
@@ -485,6 +497,7 @@ export const ideas: Idea[] = [
       "Invest in a good iron and ironing board — the finishing of a garment determines whether it looks handmade or professional.",
       "Offer a simple alteration service even if your main work is custom sewing. Alterations are quick, always in demand, and bring customers into your shop regularly.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 11. MITUMBA (NEW) ─────────────────────────────────────────────────────
@@ -528,6 +541,7 @@ export const ideas: Idea[] = [
       "Never open a new bale until the current one is mostly sold — this keeps your cash flowing and prevents you from over-investing in stock.",
       "Build a relationship with 1–2 trusted bale suppliers so you get first access to good stock and are protected from deliberately damaged bales.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 12. BODA BODA (NEW) ───────────────────────────────────────────────────
@@ -571,6 +585,7 @@ export const ideas: Idea[] = [
       "If you hire your bike to a rider, agree on a clear daily target (e.g. they keep everything above UGX 50,000 and bring you UGX 50,000). Check the bike condition every week.",
       "Build a list of 10–15 regular customers who call you directly. These regulars are more valuable than random stage trips because they are predictable income.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
   // ─── 13. WATER VENDING (NEW) ───────────────────────────────────────────────
@@ -614,6 +629,7 @@ export const ideas: Idea[] = [
       "Offer monthly prepaid packages to loyal customers (e.g. pay for 30 jerrycans upfront and get 2 free) — this gives you predictable cash flow and locks in regulars.",
       "Install a NWSC water meter to monitor your daily consumption and detect leaks early — undetected leaks cost money every day they go unfixed.",
     ],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "tomato-farming-uganda",
@@ -638,6 +654,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 3 },
     relatedIdeaSlugs: ["vegetable-kitchen-gardening-uganda", "produce-trading-uganda", "agro-input-shop-uganda"],
+    regions: ["Eastern", "Northern"],
   },
   {
     slug: "vegetable-kitchen-gardening-uganda",
@@ -662,6 +679,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 3, riskLevel: 2, supplierDemand: 2 },
     relatedIdeaSlugs: ["tomato-farming-uganda", "produce-trading-uganda", "fruit-selling"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "matooke-farming-uganda",
@@ -686,6 +704,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 1, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["produce-trading-uganda", "tomato-farming-uganda", "vegetable-kitchen-gardening-uganda"],
+    regions: ["Central", "Western"],
   },
   {
     slug: "maize-millet-rice-cultivation-uganda",
@@ -710,6 +729,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["produce-trading-uganda", "groundnut-or-soybean-farming-uganda", "agro-input-shop-uganda"],
+    regions: ["Eastern", "Northern"],
   },
   {
     slug: "goat-farming-uganda",
@@ -734,6 +754,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["pig-farming", "rabbit-farming-uganda", "poultry-farming"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "rabbit-farming-uganda",
@@ -758,6 +779,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["goat-farming-uganda", "poultry-farming", "vegetable-kitchen-gardening-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "groundnut-or-soybean-farming-uganda",
@@ -782,6 +804,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["maize-millet-rice-cultivation-uganda", "small-scale-food-processing-uganda", "animal-feed-supply-business"],
+    regions: ["Northern", "Eastern"],
   },
   {
     slug: "produce-trading-uganda",
@@ -806,6 +829,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["tomato-farming-uganda", "fruit-selling", "maize-millet-rice-cultivation-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "agro-input-shop-uganda",
@@ -830,6 +854,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 5 },
     relatedIdeaSlugs: ["animal-feed-supply-business", "poultry-farming", "tomato-farming-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "local-food-takeaway-uganda",
@@ -854,6 +879,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 5, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["chapati-business", "street-tea-and-breakfast-kiosk-uganda", "small-restaurant-kibanda-specializing-in-one-niche-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "home-bakery-uganda",
@@ -878,6 +904,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["snack-and-chips-stall-uganda", "local-food-takeaway-uganda", "fresh-juice-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "snack-and-chips-stall-uganda",
@@ -902,6 +929,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 5, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["chapati-business", "street-tea-and-breakfast-kiosk-uganda", "home-bakery-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "grilled-meat-and-barbeque-point-uganda",
@@ -926,6 +954,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 4, riskLevel: 4, supplierDemand: 3 },
     relatedIdeaSlugs: ["local-food-takeaway-uganda", "small-restaurant-kibanda-specializing-in-one-niche-uganda", "chapati-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "mobile-food-delivery-uganda",
@@ -950,6 +979,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["local-food-takeaway-uganda", "chapati-business", "fresh-juice-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "small-restaurant-kibanda-specializing-in-one-niche-uganda",
@@ -974,6 +1004,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 4, riskLevel: 4, supplierDemand: 4 },
     relatedIdeaSlugs: ["local-food-takeaway-uganda", "grilled-meat-and-barbeque-point-uganda", "chapati-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "street-tea-and-breakfast-kiosk-uganda",
@@ -998,6 +1029,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 5, riskLevel: 2, supplierDemand: 2 },
     relatedIdeaSlugs: ["chapati-business", "snack-and-chips-stall-uganda", "local-food-takeaway-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "small-scale-food-processing-uganda",
@@ -1022,6 +1054,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 4 },
     relatedIdeaSlugs: ["groundnut-or-soybean-farming-uganda", "fresh-juice-business", "home-bakery-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "phone-accessories-and-small-electronics-shop-uganda",
@@ -1046,6 +1079,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
     relatedIdeaSlugs: ["mobile-money-business", "stationery-and-printing-kiosk-uganda", "online-store-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "cosmetics-and-beauty-products-mini-shop-uganda",
@@ -1070,6 +1104,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
     relatedIdeaSlugs: ["salon-business", "online-store-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "motorcycle-spare-parts-shop-uganda",
@@ -1094,6 +1129,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 4, riskLevel: 3, supplierDemand: 5 },
     relatedIdeaSlugs: ["boda-boda-business", "motorcycle-repair-garage-uganda", "general-merchandise-duka-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "small-hardware-construction-materials-outlet-uganda",
@@ -1118,6 +1154,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 5 },
     relatedIdeaSlugs: ["welding-and-metal-fabrication-uganda", "general-merchandise-duka-uganda", "motorcycle-spare-parts-shop-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "stationery-and-printing-kiosk-uganda",
@@ -1142,6 +1179,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["basic-it-training-small-cyber-caf-uganda", "phone-accessories-and-small-electronics-shop-uganda", "tuition-holiday-coaching-and-skills-training-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "general-merchandise-duka-uganda",
@@ -1166,6 +1204,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 4 },
     relatedIdeaSlugs: ["mobile-money-business", "phone-accessories-and-small-electronics-shop-uganda", "water-vending-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "barber-shop-uganda",
@@ -1190,6 +1229,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 5, riskLevel: 2, supplierDemand: 3 },
     relatedIdeaSlugs: ["salon-business", "cosmetics-and-beauty-products-mini-shop-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "cleaning-services-uganda",
@@ -1214,6 +1254,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 4, riskLevel: 2, supplierDemand: 3 },
     relatedIdeaSlugs: ["liquid-soap-business", "mobile-car-wash-and-detailing-uganda", "event-planning-and-decoration-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "event-planning-and-decoration-uganda",
@@ -1238,6 +1279,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 3, supplierDemand: 4 },
     relatedIdeaSlugs: ["photography-and-videography-uganda", "home-bakery-uganda", "cleaning-services-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "photography-and-videography-uganda",
@@ -1262,6 +1304,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["event-planning-and-decoration-uganda", "social-media-marketing-and-content-services-for-smes-uganda", "freelance-graphic-design-and-branding-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "motorcycle-repair-garage-uganda",
@@ -1286,6 +1329,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 5, riskLevel: 3, supplierDemand: 4 },
     relatedIdeaSlugs: ["boda-boda-business", "motorcycle-spare-parts-shop-uganda", "mobile-car-wash-and-detailing-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "mobile-car-wash-and-detailing-uganda",
@@ -1310,6 +1354,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 4, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["cleaning-services-uganda", "motorcycle-repair-garage-uganda", "liquid-soap-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "welding-and-metal-fabrication-uganda",
@@ -1334,6 +1379,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 4, supplierDemand: 4 },
     relatedIdeaSlugs: ["small-hardware-construction-materials-outlet-uganda", "motorcycle-repair-garage-uganda", "event-planning-and-decoration-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "daycare-creche-and-babysitting-service-uganda",
@@ -1358,6 +1404,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 4, supplierDemand: 2 },
     relatedIdeaSlugs: ["tuition-holiday-coaching-and-skills-training-uganda", "local-food-takeaway-uganda", "cleaning-services-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "tuition-holiday-coaching-and-skills-training-uganda",
@@ -1382,6 +1429,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 4, riskLevel: 2, supplierDemand: 2 },
     relatedIdeaSlugs: ["stationery-and-printing-kiosk-uganda", "daycare-creche-and-babysitting-service-uganda", "basic-it-training-small-cyber-caf-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "online-store-uganda",
@@ -1406,6 +1454,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["phone-accessories-and-small-electronics-shop-uganda", "cosmetics-and-beauty-products-mini-shop-uganda", "mitumba-clothes-business"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "social-media-marketing-and-content-services-for-smes-uganda",
@@ -1430,6 +1479,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 5, incomeSpeed: 3, riskLevel: 2, supplierDemand: 1 },
     relatedIdeaSlugs: ["photography-and-videography-uganda", "freelance-graphic-design-and-branding-uganda", "online-store-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "youtube-tiktok-channel-about-ugandan-business-ideas-farming-or-side-hustles-uganda",
@@ -1454,6 +1504,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 4, incomeSpeed: 1, riskLevel: 2, supplierDemand: 1 },
     relatedIdeaSlugs: ["social-media-marketing-and-content-services-for-smes-uganda", "photography-and-videography-uganda", "freelance-graphic-design-and-branding-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "freelance-graphic-design-and-branding-uganda",
@@ -1478,6 +1529,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 3, riskLevel: 2, supplierDemand: 1 },
     relatedIdeaSlugs: ["social-media-marketing-and-content-services-for-smes-uganda", "photography-and-videography-uganda", "online-store-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
   {
     slug: "basic-it-training-small-cyber-caf-uganda",
@@ -1502,6 +1554,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 2, incomeSpeed: 3, riskLevel: 3, supplierDemand: 3 },
     relatedIdeaSlugs: ["stationery-and-printing-kiosk-uganda", "tuition-holiday-coaching-and-skills-training-uganda", "phone-accessories-and-small-electronics-shop-uganda"],
+    regions: ["Central", "Eastern", "Northern", "Western"],
   },
 ];
 
