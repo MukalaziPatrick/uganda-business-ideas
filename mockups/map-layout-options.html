@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uganda Map – Layout Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: #f5f0e8; color: #1C3A2A; padding: 24px; }
+
+  h1 { font-size: 22px; font-weight: 900; color: #1C3A2A; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #777; margin-bottom: 32px; }
+
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #F5C842;
+    background: #1C3A2A; display: inline-block;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 10px;
+  }
+  .option-label {
+    font-size: 18px; font-weight: 900; color: #1C3A2A; margin-bottom: 4px;
+  }
+  .option-desc { font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.5; }
+
+  .options-grid { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+
+  /* ── Mockup card ── */
+  .mockup-card {
+    background: white; border: 2px solid #e0d8cc; border-radius: 16px;
+    overflow: hidden; width: 340px; cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+  .mockup-card:hover { border-color: #1C3A2A; box-shadow: 0 4px 20px rgba(28,58,42,0.12); }
+  .mockup-card.selected { border-color: #F5C842; box-shadow: 0 0 0 3px #F5C842; }
+
+  .card-header {
+    background: #1C3A2A; color: #F5C842;
+    padding: 10px 16px; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-header .badge {
+    background: #F5C842; color: #1C3A2A;
+    font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 99px;
+  }
+  .mockup-body { padding: 16px; }
+
+  /* ── Phone frame ── */
+  .phone {
+    width: 220px; margin: 0 auto;
+    border: 3px solid #1C3A2A; border-radius: 28px;
+    overflow: hidden; background: #f5f0e8;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  }
+  .phone-nav {
+    background: #1C3A2A; color: #F5C842;
+    padding: 8px 12px; font-size: 10px; font-weight: 900;
+    text-align: center; letter-spacing: 0.05em;
+  }
+  .phone-content { padding: 0; }
+
+  /* shared phone section styles */
+  .ph-section { padding: 10px 12px; }
+  .ph-title { font-size: 11px; font-weight: 900; color: #1C3A2A; margin-bottom: 4px; }
+  .ph-sub { font-size: 9px; color: #888; margin-bottom: 8px; line-height: 1.4; }
+
+  /* ── Map SVG placeholder ── */
+  .map-block {
+    background: #e8f0ea; border-radius: 8px;
+    margin-bottom: 8px; position: relative; overflow: hidden;
+  }
+  .map-block svg { display: block; width: 100%; }
+
+  /* ── Filter chips ── */
+  .chips { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+  .chip {
+    font-size: 8px; font-weight: 700; padding: 2px 7px;
+    border-radius: 99px; border: 1px solid #e0d8cc;
+    background: white; color: #1C3A2A;
+  }
+  .chip.active { background: #1C3A2A; color: #F5C842; border-color: #1C3A2A; }
+
+  /* ── Idea mini-cards ── */
+  .idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
+  .idea-mini {
+    background: white; border: 1px solid #e0d8cc;
+    border-radius: 8px; padding: 6px 8px;
+    font-size: 8px; font-weight: 700; color: #1C3A2A;
+    line-height: 1.3;
+  }
+  .idea-mini .cat { font-size: 7px; color: #aaa; font-weight: 600; margin-top: 2px; }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; border-bottom: 1px solid #e0d8cc;
+    background: white;
+  }
+  .tab {
+    flex: 1; text-align: center; padding: 7px 4px;
+    font-size: 9px; font-weight: 700; color: #aaa; cursor: pointer;
+  }
+  .tab.active { color: #1C3A2A; border-bottom: 2px solid #1C3A2A; }
+
+  /* ── Desktop sidebar layout ── */
+  .desktop-frame {
+    border: 2px solid #1C3A2A; border-radius: 10px;
+    overflow: hidden; background: #f5f0e8;
+    width: 100%;
+  }
+  .desktop-nav {
+    background: #1C3A2A; color: #F5C842;
+    padding: 6px 12px; font-size: 10px; font-weight: 900;
+  }
+  .desktop-body { display: flex; min-height: 200px; }
+  .desktop-sidebar {
+    width: 120px; flex-shrink: 0;
+    background: #e8f0ea; border-right: 1px solid #d0e0d4;
+    padding: 10px;
+  }
+  .desktop-main { flex: 1; padding: 10px; }
+  .sidebar-title { font-size: 9px; font-weight: 900; color: #1C3A2A; margin-bottom: 6px; }
+  .region-list { display: flex; flex-direction: column; gap: 4px; }
+  .region-item {
+    font-size: 8px; font-weight: 700; padding: 4px 6px;
+    border-radius: 6px; background: white; border: 1px solid #e0d8cc;
+    color: #1C3A2A; cursor: pointer;
+  }
+  .region-item.active { background: #1C3A2A; color: #F5C842; border-color: #1C3A2A; }
+
+  /* ── Selected indicator ── */
+  .selected-badge {
+    display: none; background: #22c55e; color: white;
+    font-size: 10px; font-weight: 700; padding: 3px 10px;
+    border-radius: 99px; margin-top: 10px; text-align: center;
+  }
+  .mockup-card.selected .selected-badge { display: block; }
+
+  .recommend-tag {
+    font-size: 9px; background: #dcfce7; color: #166534;
+    padding: 2px 7px; border-radius: 99px; font-weight: 700;
+  }
+
+  .pros { font-size: 11px; color: #166534; margin-top: 8px; line-height: 1.6; }
+  .cons { font-size: 11px; color: #991b1b; margin-top: 4px; line-height: 1.6; }
+
+  hr { border: none; border-top: 1px solid #e0d8cc; margin: 8px 0; }
+
+  /* Uganda SVG regions */
+  .region-path { transition: fill 0.15s; cursor: pointer; }
+  .region-path:hover { opacity: 0.8; }
+  .region-central { fill: #2D5A40; }
+  .region-eastern { fill: #3d7a58; }
+  .region-northern { fill: #4d9a6e; }
+  .region-western  { fill: #5db884; }
+  .region-label { font-size: 7px; font-weight: 700; fill: white; text-anchor: middle; pointer-events: none; }
+  .region-active { fill: #F5C842 !important; }
+  .region-active-label { fill: #1C3A2A !important; }
+
+  .district-pill {
+    display: inline-block; background: #1C3A2A; color: #F5C842;
+    font-size: 8px; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+    margin-bottom: 6px;
+  }
+
+  /* Detail level section */
+  .detail-section { margin-top: 40px; }
+  .detail-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+  .detail-card {
+    background: white; border: 2px solid #e0d8cc; border-radius: 16px;
+    padding: 16px; width: 280px; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .detail-card:hover { border-color: #1C3A2A; }
+  .detail-card.selected { border-color: #F5C842; box-shadow: 0 0 0 3px #F5C842; }
+  .detail-card h3 { font-size: 14px; font-weight: 900; color: #1C3A2A; margin-bottom: 4px; }
+  .detail-card p { font-size: 12px; color: #666; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<h1>🇺🇬 Uganda Map — Layout Mockups</h1>
+<p class="subtitle">Click a card to select it. These are interactive mockups showing how the map would look on the /ideas page.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  SECTION 1: PLACEMENT                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-title">Step 1 — Map Placement</div>
+<p class="option-desc">Where should the Uganda map appear on the /ideas page?</p>
+
+<div class="options-grid">
+
+  <!-- ── OPTION A ── -->
+  <div class="mockup-card" id="card-a" onclick="selectCard('a')">
+    <div class="card-header">
+      Option A — Map above filters
+      <span class="badge">⭐ Recommended</span>
+    </div>
+    <div class="mockup-body">
+      <div class="phone">
+        <div class="phone-nav">🇺🇬 Uganda Business Ideas</div>
+        <div class="phone-content">
+
+          <!-- Map -->
+          <div class="ph-section" style="padding-bottom:4px;">
+            <div class="ph-title">Browse by Region</div>
+            <div class="map-block" style="height:110px;">
+              <svg viewBox="0 0 196 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Western -->
+                <polygon class="region-path region-western" points="20,40 70,30 75,90 60,130 20,120"/>
+                <text class="region-label" x="44" y="82">Western</text>
+                <!-- Northern -->
+                <polygon class="region-path region-northern" points="70,10 150,10 155,70 100,75 70,30"/>
+                <text class="region-label" x="108" y="42">Northern</text>
+                <!-- Central (active/highlighted) -->
+                <polygon class="region-path region-central region-active" points="75,90 100,75 155,70 150,130 100,140 60,130"/>
+                <text class="region-label region-active-label" x="108" y="108">Central ✓</text>
+                <!-- Eastern -->
+                <polygon class="region-path region-eastern" points="100,140 150,130 165,160 110,170 80,165"/>
+                <text class="region-label" x="128" y="152">Eastern</text>
+                <!-- Lake Victoria hint -->
+                <ellipse cx="55" cy="158" rx="28" ry="18" fill="#93c5fd" opacity="0.5"/>
+                <text style="font-size:6px;fill:#1e40af;text-anchor:middle" x="55" y="162">L. Victoria</text>
+              </svg>
+            </div>
+            <div class="district-pill">📍 Central Region selected</div>
+          </div>
+
+          <hr/>
+
+          <!-- Filters -->
+          <div class="ph-section" style="padding-top:4px;">
+            <div class="chips">
+              <span class="chip active">All</span>
+              <span class="chip">🌾 Agri</span>
+              <span class="chip">🍽️ Food</span>
+              <span class="chip">🛒 Retail</span>
+            </div>
+            <div class="chips">
+              <span class="chip active">All budgets</span>
+              <span class="chip">&lt;200k</span>
+              <span class="chip">500k–2M</span>
+            </div>
+          </div>
+
+          <hr/>
+
+          <!-- Results -->
+          <div class="ph-section" style="padding-top:4px; padding-bottom:12px;">
+            <div style="font-size:8px;color:#888;margin-bottom:5px;">Showing 12 of 50 ideas · Central</div>
+            <div class="idea-grid">
+              <div class="idea-mini">Bodaboda Delivery<div class="cat">Services · &lt;200k</div></div>
+              <div class="idea-mini">Mobile Money Agent<div class="cat">Digital · &lt;200k</div></div>
+              <div class="idea-mini">Rolex Street Food<div class="cat">Food · &lt;200k</div></div>
+              <div class="idea-mini">Salon/Barbershop<div class="cat">Services · &lt;500k</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="pros">✓ Everything visible at once<br>✓ Works great on mobile<br>✓ Map stays in context with results</p>
+      <p class="cons">✗ Map takes vertical space on scroll</p>
+      <div class="selected-badge">✓ Selected</div>
+    </div>
+  </div>
+
+  <!-- ── OPTION B ── -->
+  <div class="mockup-card" id="card-b" onclick="selectCard('b')">
+    <div class="card-header">
+      Option B — Map View / List View tabs
+    </div>
+    <div class="mockup-body">
+      <div class="phone">
+        <div class="phone-nav">🇺🇬 Uganda Business Ideas</div>
+        <div class="phone-content">
+
+          <div class="tab-bar">
+            <div class="tab">☰ List View</div>
+            <div class="tab active">🗺️ Map View</div>
+          </div>
+
+          <div class="ph-section">
+            <div class="map-block" style="height:140px;">
+              <svg viewBox="0 0 196 180" xmlns="http://www.w3.org/2000/svg">
+                <polygon class="region-path region-western" points="20,40 70,30 75,90 60,130 20,120"/>
+                <text class="region-label" x="44" y="82">Western</text>
+                <polygon class="region-path region-northern" points="70,10 150,10 155,70 100,75 70,30"/>
+                <text class="region-label" x="108" y="42">Northern</text>
+                <polygon class="region-path region-central" points="75,90 100,75 155,70 150,130 100,140 60,130"/>
+                <text class="region-label" x="108" y="108">Central</text>
+                <polygon class="region-path region-eastern" points="100,140 150,130 165,160 110,170 80,165"/>
+                <text class="region-label" x="128" y="152">Eastern</text>
+                <ellipse cx="55" cy="158" rx="28" ry="18" fill="#93c5fd" opacity="0.5"/>
+                <text style="font-size:6px;fill:#1e40af;text-anchor:middle" x="55" y="162">L. Victoria</text>
+              </svg>
+            </div>
+            <div style="font-size:8px;color:#888;text-align:center;margin-top:4px;">👆 Tap a region to see ideas</div>
+          </div>
+
+          <!-- Drawer slides up after tap -->
+          <div style="background:#1C3A2A;padding:8px 12px;border-radius:8px 8px 0 0;margin-top:4px;">
+            <div style="font-size:9px;color:#F5C842;font-weight:700;">Central — 12 ideas</div>
+            <div style="font-size:8px;color:white;opacity:0.6;">Tap to explore ↑</div>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="pros">✓ Full-screen map experience<br>✓ Clean separation of modes</p>
+      <p class="cons">✗ User must switch tabs to see ideas<br>✗ More complex to build</p>
+      <div class="selected-badge">✓ Selected</div>
+    </div>
+  </div>
+
+  <!-- ── OPTION C ── -->
+  <div class="mockup-card" id="card-c" onclick="selectCard('c')">
+    <div class="card-header">
+      Option C — Sidebar (desktop only)
+    </div>
+    <div class="mockup-body">
+      <div class="desktop-frame">
+        <div class="desktop-nav">🇺🇬 Uganda Business Ideas</div>
+        <div class="desktop-body">
+          <div class="desktop-sidebar">
+            <div class="sidebar-title">🗺️ Filter by Region</div>
+            <div class="region-list">
+              <div class="region-item active">📍 Central</div>
+              <div class="region-item">Eastern</div>
+              <div class="region-item">Northern</div>
+              <div class="region-item">Western</div>
+            </div>
+            <div style="margin-top:8px;">
+              <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg" width="100%">
+                <polygon class="region-path region-western" points="10,20 35,15 38,45 30,65 10,60"/>
+                <polygon class="region-path region-northern" points="35,5 75,5 78,35 50,38 35,15"/>
+                <polygon class="region-path region-central region-active" points="38,45 50,38 78,35 75,65 50,70 30,65"/>
+                <polygon class="region-path region-eastern" points="50,70 75,65 83,80 55,85 40,83"/>
+                <ellipse cx="28" cy="79" rx="14" ry="9" fill="#93c5fd" opacity="0.5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="desktop-main">
+            <div class="chips" style="margin-bottom:6px;">
+              <span class="chip active">All</span>
+              <span class="chip">🌾 Agri</span>
+              <span class="chip">🍽️ Food</span>
+            </div>
+            <div style="font-size:8px;color:#888;margin-bottom:5px;">12 ideas in Central</div>
+            <div class="idea-grid">
+              <div class="idea-mini">Bodaboda Delivery<div class="cat">Services</div></div>
+              <div class="idea-mini">Mobile Money<div class="cat">Digital</div></div>
+              <div class="idea-mini">Rolex Food<div class="cat">Food</div></div>
+              <div class="idea-mini">Salon<div class="cat">Services</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:10px;color:#888;margin-top:6px;font-style:italic;">↑ Desktop view. On mobile, sidebar collapses and map is hidden.</p>
+      <p class="pros">✓ Map always visible on desktop<br>✓ Side-by-side comparison</p>
+      <p class="cons">✗ Map hidden on mobile (most users)<br>✗ Narrow sidebar limits map detail</p>
+      <div class="selected-badge">✓ Selected</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  SECTION 2: MAP DETAIL LEVEL                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="detail-section">
+  <div class="section-title">Step 2 — Map Detail Level</div>
+  <p class="option-desc">How granular should the map be?</p>
+
+  <div class="detail-grid">
+    <div class="detail-card" id="detail-regions" onclick="selectDetail('regions')">
+      <h3>4 Regions <span class="recommend-tag">⭐ Recommended</span></h3>
+      <p>Central · Eastern · Northern · Western</p>
+      <p class="pros">✓ Mobile-friendly, easy to tap<br>✓ Every idea maps to a region<br>✓ Simple to tag in data</p>
+      <div class="selected-badge">✓ Selected</div>
+    </div>
+    <div class="detail-card" id="detail-districts" onclick="selectDetail('districts')">
+      <h3>~15 Key Districts</h3>
+      <p>Kampala, Wakiso, Jinja, Gulu, Mbarara, Mbale, Arua, Lira, Fort Portal, Masaka, Soroti, Kabale, Hoima, Tororo, Mukono</p>
+      <p class="pros">✓ More specific<br>✓ Useful for job board too</p>
+      <p class="cons">✗ Harder to tag all 50 ideas<br>✗ Small tap targets on mobile</p>
+      <div class="selected-badge">✓ Selected</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectCard(id) {
+  ['a','b','c'].forEach(x => document.getElementById('card-'+x).classList.remove('selected'));
+  document.getElementById('card-'+id).classList.add('selected');
+}
+function selectDetail(id) {
+  ['regions','districts'].forEach(x => document.getElementById('detail-'+x).classList.remove('selected'));
+  document.getElementById('detail-'+id).classList.add('selected');
+}
+// Default selections
+selectCard('a');
+selectDetail('regions');
+</script>
+</body>
+</html>
