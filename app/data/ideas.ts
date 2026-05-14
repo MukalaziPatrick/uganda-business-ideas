@@ -804,7 +804,7 @@ export const ideas: Idea[] = [
     },
     scoring: { startupEase: 3, incomeSpeed: 2, riskLevel: 3, supplierDemand: 2 },
     relatedIdeaSlugs: ["maize-millet-rice-cultivation-uganda", "small-scale-food-processing-uganda", "animal-feed-supply-business"],
-    regions: ["Northern", "Eastern"],
+    regions: ["Eastern", "Northern"],
   },
   {
     slug: "produce-trading-uganda",
