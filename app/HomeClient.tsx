@@ -137,14 +137,14 @@ export default function HomeClient({
       {/* ── Pillars ── */}
       <div className="bg-white px-4 py-6 max-w-2xl mx-auto">
         <div className="grid grid-cols-3 gap-3">
-          <a
-            href="#ideas"
+          <Link
+            href="/ideas"
             className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
           >
             <div className="text-2xl mb-2">💡</div>
             <p className="font-black text-[#1C3A2A] text-sm mb-1">Business Ideas</p>
             <p className="mt-3 text-xs font-bold text-green-700">Browse →</p>
-          </a>
+          </Link>
           <a
             href="https://uganda-map-topaz.vercel.app/map"
             target="_blank"
