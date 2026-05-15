@@ -7,9 +7,11 @@ export async function POST(request: NextRequest) {
   const password = formData.get("password");
   const next = formData.get("next");
 
-  // Validate next param — only allow relative paths to prevent open redirect
+  // Validate next param — only allow relative paths to prevent open redirect (including protocol-relative //evil.com)
   const redirectTo =
-    typeof next === "string" && next.startsWith("/") ? next : "/admin/leads";
+    typeof next === "string" && next.startsWith("/") && !next.startsWith("//")
+      ? next
+      : "/admin/leads";
 
   if (typeof email !== "string" || typeof password !== "string") {
     return NextResponse.redirect(
@@ -48,16 +50,18 @@ export async function POST(request: NextRequest) {
     secure: process.env.NODE_ENV === "production",
     path: "/",
     sameSite: "lax",
-    maxAge: expires_at ? expires_at - Math.floor(Date.now() / 1000) : 3600,
+    maxAge: expires_at ? Math.max(expires_at - Math.floor(Date.now() / 1000), 60) : 3600,
   });
 
-  response.cookies.set("sb-refresh-token", refresh_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
-  });
+  if (refresh_token) {
+    response.cookies.set("sb-refresh-token", refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+  }
 
   return response;
 }
