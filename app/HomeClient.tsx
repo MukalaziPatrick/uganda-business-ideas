@@ -146,7 +146,7 @@ export default function HomeClient({
             <p className="mt-3 text-xs font-bold text-green-700">Browse →</p>
           </a>
           <a
-            href="https://locateug.vercel.app/map"
+            href="https://uganda-map-topaz.vercel.app/map"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
