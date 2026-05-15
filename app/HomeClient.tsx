@@ -160,25 +160,35 @@ export default function HomeClient({
       </div>
 
       {/* ── Pillars ── */}
-      <div className="bg-white px-4 py-6 grid grid-cols-2 gap-3 max-w-2xl mx-auto">
-        <Link
-          href="/jobs/post"
-          className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
-        >
-          <div className="text-2xl mb-2">💼</div>
-          <p className="font-black text-[#1C3A2A] text-sm mb-1">Post a Job</p>
-          <p className="text-xs text-slate-500 leading-relaxed">Hire skilled workers across Uganda quickly.</p>
-          <p className="mt-3 text-xs font-bold text-[#1C3A2A]">Post Now →</p>
-        </Link>
-        <Link
-          href="/jobs"
-          className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
-        >
-          <div className="text-2xl mb-2">🔍</div>
-          <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Work</p>
-          <p className="text-xs text-slate-500 leading-relaxed">Browse jobs and register your skills.</p>
-          <p className="mt-3 text-xs font-bold text-[#1C3A2A]">Browse Jobs →</p>
-        </Link>
+      <div className="bg-white px-4 py-6 max-w-2xl mx-auto">
+        <div className="grid grid-cols-3 gap-3">
+          <a
+            href="#ideas"
+            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
+          >
+            <div className="text-2xl mb-2">💡</div>
+            <p className="font-black text-[#1C3A2A] text-sm mb-1">Business Ideas</p>
+            <p className="mt-3 text-xs font-bold text-green-700">Browse →</p>
+          </a>
+          <a
+            href="https://locateug.vercel.app/map"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
+          >
+            <div className="text-2xl mb-2">📍</div>
+            <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Businesses</p>
+            <p className="mt-3 text-xs font-bold text-blue-700">Open Map →</p>
+          </a>
+          <Link
+            href="/jobs"
+            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
+          >
+            <div className="text-2xl mb-2">💼</div>
+            <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Jobs</p>
+            <p className="mt-3 text-xs font-bold text-violet-700">Browse Jobs →</p>
+          </Link>
+        </div>
       </div>
 
       {/* ── Featured Ideas ── */}
