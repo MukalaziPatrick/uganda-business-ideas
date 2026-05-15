@@ -4,18 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { ideas } from "./data/ideas";
 
-type Job = {
-  id: string;
-  title: string;
-  skill_category: string;
-  district: string;
-  town: string | null;
-  employer_name: string;
-  pay_amount: number | null;
-  pay_period: string | null;
-  created_at: string;
-};
-
 type Worker = {
   id: string;
   name: string;
@@ -32,17 +20,6 @@ function categoryEmoji(category: string): string {
   return map[category] ?? "💡";
 }
 
-function skillEmoji(skill: string): string {
-  const s = skill.toLowerCase();
-  if (s.includes("driv") || s.includes("transport")) return "🚗";
-  if (s.includes("farm") || s.includes("agri")) return "🌾";
-  if (s.includes("tailor") || s.includes("sew")) return "✂️";
-  if (s.includes("tech") || s.includes("digital")) return "💻";
-  if (s.includes("cook") || s.includes("food")) return "🍳";
-  if (s.includes("build") || s.includes("construct")) return "🏗️";
-  return "💼";
-}
-
 // Top 3 ideas by demand score for homepage teaser
 const featuredIdeas = [...ideas]
   .sort((a, b) => (b.scoring?.incomeSpeed ?? 0) - (a.scoring?.incomeSpeed ?? 0))
@@ -57,11 +34,9 @@ const NAV_LINKS = [
 ];
 
 export default function HomeClient({
-  jobs,
   workers,
   ideasCount,
 }: {
-  jobs: Job[];
   workers: Worker[];
   ideasCount: number;
 }) {
@@ -155,7 +130,7 @@ export default function HomeClient({
           </Link>
         </div>
         <span className="inline-block rounded-full bg-white/10 border border-white/20 text-white/70 text-[11px] px-4 py-1.5">
-          {ideasCount}+ Ideas · {jobs.length > 0 ? `${jobs.length * 10}+` : "Growing"} Jobs · All Uganda Districts
+          {ideasCount}+ Ideas · Growing Jobs · All Uganda Districts
         </span>
       </div>
 
@@ -248,41 +223,6 @@ export default function HomeClient({
         </div>
       </div>
 
-      {/* ── Jobs Teaser ── */}
-      {jobs.length > 0 && (
-        <div className="bg-white px-4 py-6 max-w-2xl mx-auto w-full">
-          <div className="flex items-baseline justify-between mb-4">
-            <h2 className="text-lg font-black text-[#1C3A2A]" style={{ fontFamily: "Georgia, serif" }}>
-              💼 Latest Job Listings
-            </h2>
-            <Link href="/jobs" className="text-xs font-bold text-[#1C3A2A] underline underline-offset-2">
-              See all →
-            </Link>
-          </div>
-          <div className="flex flex-col gap-2">
-            {jobs.slice(0, 3).map(job => (
-              <Link
-                key={job.id}
-                href="/jobs"
-                className="flex items-center gap-3 rounded-xl border border-[#e0d8cc] bg-[#f5f0e8] px-4 py-3 hover:border-[#1C3A2A] transition-colors"
-              >
-                <div className="h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] flex items-center justify-center text-base">
-                  {skillEmoji(job.skill_category)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#1C3A2A] truncate">{job.title}</p>
-                  <p className="text-xs text-slate-500">{[job.town, job.district].filter(Boolean).join(", ")}</p>
-                </div>
-                {job.pay_amount && (
-                  <span className="text-xs font-black text-[#1C3A2A] shrink-0">
-                    UGX {job.pay_amount.toLocaleString()}
-                  </span>
-                )}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* ── Footer ── */}
       <footer className="bg-[#1C3A2A] px-4 py-8 text-center text-white/50 text-xs mt-auto">
