@@ -109,6 +109,11 @@ export default async function AdminLeadsPage({
 
   return (
     <main>
+      <form method="POST" action="/api/auth/logout" style={{ textAlign: "right", marginBottom: 16 }}>
+        <button type="submit" style={{ padding: "6px 14px", cursor: "pointer" }}>
+          Sign out
+        </button>
+      </form>
       <h1>Leads</h1>
       <form method="get">
         <label>
