@@ -27,6 +27,7 @@ const featuredIdeas = [...ideas]
 
 const NAV_LINKS = [
   { href: "/ideas", label: "Ideas" },
+  { href: "/businesses", label: "Businesses" },
   { href: "/jobs", label: "Jobs" },
   { href: "/guides", label: "Guides" },
   { href: "/blog", label: "Blog" },
@@ -41,6 +42,16 @@ export default function HomeClient({
   ideasCount: number;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [bizSearch, setBizSearch] = useState("");
+
+  const handleBizSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (bizSearch.trim()) {
+      window.location.href = `/businesses?q=${encodeURIComponent(bizSearch.trim())}`;
+    } else {
+      window.location.href = "/businesses";
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -145,16 +156,24 @@ export default function HomeClient({
             <p className="font-black text-[#1C3A2A] text-sm mb-1">Business Ideas</p>
             <p className="mt-3 text-xs font-bold text-green-700">Browse →</p>
           </Link>
-          <a
-            href="https://uganda-map-topaz.vercel.app/map"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
-          >
+          <div className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors">
             <div className="text-2xl mb-2">📍</div>
             <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Businesses</p>
-            <p className="mt-3 text-xs font-bold text-blue-700">Open Map →</p>
-          </a>
+            <p className="text-xs text-slate-500 leading-relaxed mb-2">Restaurants, salons & more across Uganda.</p>
+            <form onSubmit={handleBizSearch} className="flex gap-1">
+              <input
+                type="search"
+                value={bizSearch}
+                onChange={e => setBizSearch(e.target.value)}
+                placeholder="e.g. restaurant"
+                className="flex-1 min-w-0 border border-gray-300 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-[#1C3A2A]"
+              />
+              <button type="submit" className="rounded-lg bg-[#1C3A2A] px-2 py-1.5 text-xs font-bold text-[#F5C842]">
+                Go
+              </button>
+            </form>
+            <Link href="/businesses" className="mt-2 block text-xs font-bold text-[#1C3A2A]">Browse all →</Link>
+          </div>
           <Link
             href="/jobs"
             className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
