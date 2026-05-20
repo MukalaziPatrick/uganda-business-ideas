@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { AudienceSegment, BudgetBand, Category, Idea } from "../data/ideas";
+import type { AudienceSegment, BudgetBand, Category, Idea, Region } from "../data/ideas";
+import UgandaRegionMap from "../../components/UgandaRegionMap";
 
 type IdeasDiscoveryClientProps = { ideas: Idea[] };
 
@@ -46,6 +47,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
   const [category, setCategory] = useState<"All" | Category>("All");
   const [budget, setBudget] = useState<"All" | BudgetBand>("All");
   const [sort, setSort] = useState<SortOption>("demandScore");
+  const [region, setRegion] = useState<"All" | Region>("All");
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -54,18 +56,22 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
         const matchSearch = !q || idea.title.toLowerCase().includes(q) || idea.desc.toLowerCase().includes(q);
         const matchCat = category === "All" || idea.category === category;
         const matchBudget = budget === "All" || idea.budgetBand === budget;
-        return matchSearch && matchCat && matchBudget;
+        const matchRegion = region === "All" || idea.regions.includes(region);
+        return matchSearch && matchCat && matchBudget && matchRegion;
       })
       .sort((a, b) => {
         if (sort === "title") return a.title.localeCompare(b.title);
         return getSortScore(b, sort) - getSortScore(a, sort);
       });
-  }, [ideas, search, category, budget, sort]);
+  }, [ideas, search, category, budget, sort, region]);
 
   const [featured, ...rest] = filtered;
 
   return (
     <div>
+      {/* Region map */}
+      <UgandaRegionMap activeRegion={region} onRegionClick={setRegion} />
+
       {/* Search bar */}
       <div className="relative mb-4">
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
@@ -113,7 +119,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
 
       {/* Sort + count */}
       <div className="flex items-center justify-between mb-5 text-xs text-slate-500 font-semibold">
-        <span>Showing {filtered.length} of {ideas.length} ideas</span>
+        <span>Showing {filtered.length} of {ideas.length} ideas{region !== "All" ? ` · ${region} Region` : ""}</span>
         <label className="flex items-center gap-1.5">
           Sort:
           <select
@@ -135,7 +141,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <p className="font-bold text-[#1C3A2A] mb-1">No ideas match your search</p>
           <p className="text-sm text-slate-500">Try clearing a filter or using a broader term.</p>
           <button
-            onClick={() => { setSearch(""); setCategory("All"); setBudget("All"); }}
+            onClick={() => { setSearch(""); setCategory("All"); setBudget("All"); setRegion("All"); }}
             className="mt-4 rounded-xl bg-[#1C3A2A] px-5 py-2 text-sm font-bold text-[#F5C842]"
           >
             Clear filters
