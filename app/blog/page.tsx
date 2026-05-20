@@ -22,7 +22,7 @@ export default function BlogPage() {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <div className="flex flex-wrap gap-2">

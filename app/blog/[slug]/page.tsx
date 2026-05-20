@@ -23,13 +23,13 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Article Not Found | Uganda Business Ideas",
+      title: "Article Not Found | Business Yoo",
       description: "The requested Uganda business article could not be found.",
     };
   }
 
   return {
-    title: `${post.title} | Uganda Business Ideas`,
+    title: `${post.title} | Business Yoo`,
     description: post.description,
     alternates: {
       canonical: `${SITE_URL}/blog/${post.slug}`,
@@ -61,11 +61,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     dateModified: post.updatedAt,
     author: {
       "@type": "Organization",
-      name: "Uganda Business Ideas",
+      name: "Business Yoo",
     },
     publisher: {
       "@type": "Organization",
-      name: "Uganda Business Ideas",
+      name: "Business Yoo",
     },
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
   };
@@ -83,7 +83,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <Link

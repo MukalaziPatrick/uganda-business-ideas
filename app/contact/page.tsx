@@ -12,7 +12,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-green-700">
-                  Uganda Business Ideas
+                  Business Yoo
                 </p>
                 <p className="text-sm text-slate-500">
                   Practical opportunities. Clear guidance. Real starting points.

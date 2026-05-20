@@ -6,7 +6,7 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { buildGuidePurchaseMessage } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
-  title: "Paid Business Guides in Uganda | Uganda Business Ideas",
+  title: "Paid Business Guides in Uganda | Business Yoo",
   description:
     "Buy practical Uganda business startup guides manually through WhatsApp and Mobile Money.",
   alternates: {
@@ -31,7 +31,7 @@ export default function GuidesPage() {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <Link

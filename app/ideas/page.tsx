@@ -5,7 +5,7 @@ import { ideas } from "../data/ideas";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "All Business Ideas in Uganda | Uganda Business Ideas",
+  title: "All Business Ideas in Uganda | Business Yoo",
   description:
     "Search and filter 50 Uganda business ideas by category, budget, audience, demand, startup ease, and supplier potential.",
   alternates: {
@@ -23,7 +23,7 @@ export default function IdeasPage() {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <div className="flex flex-wrap gap-2">

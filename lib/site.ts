@@ -7,4 +7,4 @@ export const WHATSAPP_NUMBER =
 
 export const LEAD_FORM_URL = process.env.NEXT_PUBLIC_LEAD_FORM_URL || "";
 
-export const SITE_NAME = "Uganda Business Ideas";
+export const SITE_NAME = "Business Yoo";

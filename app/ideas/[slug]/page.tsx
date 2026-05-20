@@ -23,7 +23,7 @@ export async function generateMetadata({
 
   if (!idea) {
     return {
-      title: "Business Idea Not Found | Uganda Business Ideas",
+      title: "Business Idea Not Found | Business Yoo",
       description: "The requested business idea could not be found.",
     };
   }
@@ -153,7 +153,7 @@ export default async function IdeaPage({
               UBI
             </div>
             <span className="hidden text-[15px] font-semibold tracking-tight text-slate-800 sm:block">
-              Uganda Business Ideas
+              Business Yoo
             </span>
             <span className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-400 md:inline-flex">
               🇺🇬 Uganda · 2026
@@ -873,7 +873,7 @@ export default async function IdeaPage({
                 UBI
               </div>
               <div>
-                <p className="text-[14px] font-semibold text-slate-800">Uganda Business Ideas</p>
+                <p className="text-[14px] font-semibold text-slate-800">Business Yoo</p>
                 <p className="text-xs text-slate-400">Uganda&apos;s beginner-friendly business guide · Updated 2026</p>
               </div>
             </div>
@@ -884,7 +884,7 @@ export default async function IdeaPage({
             </div>
           </div>
           <div className="mt-5 border-t border-slate-100 pt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-slate-400">© 2026 Uganda Business Ideas. Built to help Ugandans start smarter. 🇺🇬</p>
+            <p className="text-xs text-slate-400">© 2026 Business Yoo. Built to help Ugandans start smarter. 🇺🇬</p>
             <p className="text-xs text-slate-300">Free · No sign-up · Beginner-friendly</p>
           </div>
         </footer>

@@ -10,7 +10,7 @@ import WhatsAppFloat from "../components/WhatsAppFloat";
 
 
 export const metadata: Metadata = {
-  title: "Uganda Business Ideas",
+  title: "Business Yoo",
   description: "Practical business ideas for Ugandan entrepreneurs.",
 };
 

@@ -26,13 +26,13 @@ export async function generateMetadata({
 
   if (!guide) {
     return {
-      title: "Guide Not Found | Uganda Business Ideas",
+      title: "Guide Not Found | Business Yoo",
       description: "The requested business guide could not be found.",
     };
   }
 
   return {
-    title: `${guide.title} | Uganda Business Ideas`,
+    title: `${guide.title} | Business Yoo`,
     description: guide.summary,
     alternates: {
       canonical: `${SITE_URL}/guides/${guide.slug}`,
@@ -58,7 +58,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <Link

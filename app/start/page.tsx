@@ -10,7 +10,7 @@ type StartPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Get Help Starting a Business in Uganda | Uganda Business Ideas",
+  title: "Get Help Starting a Business in Uganda | Business Yoo",
   description:
     "Share your budget, location, timeline, and business interest to get startup help through UBI.",
   alternates: {
@@ -31,7 +31,7 @@ export default async function StartPage({ searchParams }: StartPageProps) {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <Link

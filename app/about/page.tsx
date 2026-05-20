@@ -12,7 +12,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-green-700">
-                  Uganda Business Ideas
+                  Business Yoo
                 </p>
                 <p className="text-sm text-slate-500">
                   Practical opportunities. Clear guidance. Real starting points.
@@ -41,7 +41,7 @@ export default function AboutPage() {
               </h1>
 
               <p className="mt-5 text-base leading-8 text-green-50/90 md:text-lg">
-                Uganda Business Ideas is built to help people discover practical
+                Business Yoo is built to help people discover practical
                 businesses based on budget, skills, and real-world starting
                 conditions. The goal is to make business discovery simpler,
                 clearer, and more useful.

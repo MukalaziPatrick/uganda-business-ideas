@@ -8,7 +8,7 @@ import {
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Advertise on Uganda Business Ideas | Supplier Listings",
+  title: "Advertise on Business Yoo | Supplier Listings",
   description:
     "List your Uganda supplier, training, or business support service where entrepreneurs are looking for startup help.",
   alternates: {
@@ -36,7 +36,7 @@ const verificationSteps = [
 ];
 
 const advertiseMessage =
-  "Hello UBI, I want to list my business on Uganda Business Ideas. Please send me the supplier listing details.";
+  "Hello UBI, I want to list my business on Business Yoo. Please send me the supplier listing details.";
 
 export default function AdvertisePage() {
   return (
@@ -48,7 +48,7 @@ export default function AdvertisePage() {
               UBI
             </div>
             <span className="text-[15px] font-semibold text-slate-800">
-              Uganda Business Ideas
+              Business Yoo
             </span>
           </Link>
           <Link
