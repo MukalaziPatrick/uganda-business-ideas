@@ -59,7 +59,7 @@ export default function HomeClient({
       {/* ── Nav ── */}
       <nav className="sticky top-0 z-20 bg-[#1C3A2A] px-4 py-3 flex items-center justify-between">
         <Link href="/" className="font-black text-[#F5C842] text-base" style={{ fontFamily: "Georgia, serif" }}>
-          🇺🇬 UgandaBiz
+          🇺🇬 Business Yoo
         </Link>
 
         {/* Desktop links */}
@@ -246,7 +246,7 @@ export default function HomeClient({
       {/* ── Footer ── */}
       <footer className="bg-[#1C3A2A] px-4 py-8 text-center text-white/50 text-xs mt-auto">
         <p className="font-black text-[#F5C842] mb-3" style={{ fontFamily: "Georgia, serif" }}>
-          🇺🇬 UgandaBiz
+          🇺🇬 Business Yoo
         </p>
         <div className="flex flex-wrap justify-center gap-4 mb-3 text-white/60 font-semibold">
           {NAV_LINKS.map(l => (
