@@ -9,41 +9,50 @@ type Props = {
   businessCounts?: Partial<Record<UgandaRegion, number>>;
 };
 
-const REGION_COLORS: Record<UgandaRegion, string> = {
-  Central:  "#F5C842",
-  Eastern:  "#3d7a58",
+const FILL: Record<UgandaRegion, string> = {
   Northern: "#4d9a6e",
+  Eastern:  "#3d7a58",
   Western:  "#2D5A40",
-};
-
-const REGION_TEXT_COLORS: Record<UgandaRegion, string> = {
   Central:  "#1C3A2A",
-  Eastern:  "#ffffff",
-  Northern: "#ffffff",
-  Western:  "#ffffff",
+};
+const ACTIVE_FILL   = "#F5C842";
+const ACTIVE_TEXT   = "#1C3A2A";
+const INACTIVE_TEXT = "#e8f5ee";
+
+type RegionDef = {
+  id: UgandaRegion;
+  topPath: string;
+  labelX: number;
+  labelY: number;
 };
 
-const ACTIVE_STROKE = "#1C3A2A";
-const INACTIVE_OPACITY = "0.45";
-
-const REGION_PATHS: Record<UgandaRegion, { d: string; labelX: number; labelY: number }> = {
-  Northern: {
-    d: "M95,32 C110,25 145,20 185,18 L255,17 C295,17 335,19 365,24 C385,27 405,33 418,42 C428,49 432,58 430,68 L425,95 C422,108 415,120 405,130 C395,140 382,148 368,153 L340,162 C320,168 298,172 278,173 L248,174 C228,174 208,172 190,167 L165,159 C148,153 133,144 122,133 C110,121 103,107 100,93 L94,65 C92,53 93,41 95,32 Z",
-    labelX: 262, labelY: 105,
+// Real Uganda region boundaries — geoBoundaries ADM1, projected 200×200 viewBox
+const REGIONS: RegionDef[] = [
+  {
+    id: "Northern",
+    topPath: "M 184.8,100.3 L 191.7,90.6 L 189.1,67.1 L 190.5,64.6 L 173.6,41.8 L 171.4,32.1 L 173.8,26.1 L 164.1,22.9 L 165.0,19.2 L 161.1,19.8 L 162.6,16.8 L 160.1,14.5 L 160.3,10.8 L 155.7,9.8 L 141.0,23.4 L 130.3,22.5 L 126.4,19.7 L 104.5,23.6 L 96.9,28.4 L 97.2,31.3 L 88.9,29.2 L 84.1,21.1 L 74.0,27.1 L 66.3,22.0 L 58.8,23.6 L 51.3,31.6 L 54.6,32.6 L 48.6,46.0 L 52.7,52.5 L 48.0,60.9 L 48.0,66.3 L 50.8,66.1 L 53.3,69.2 L 56.7,67.0 L 66.0,74.0 L 72.1,68.4 L 74.3,64.4 L 72.5,63.3 L 74.5,64.7 L 68.6,71.9 L 78.5,71.5 L 84.6,67.9 L 95.3,72.6 L 99.2,71.6 L 102.3,77.4 L 102.0,84.2 L 93.9,88.2 L 93.5,91.1 L 100.4,90.9 L 111.5,97.9 L 123.3,96.6 L 122.4,91.4 L 127.0,88.5 L 128.1,84.4 L 139.6,75.6 L 139.1,72.1 L 142.8,70.6 L 142.4,68.3 L 149.1,66.4 L 165.2,75.9 L 165.9,93.3 L 179.0,93.4 L 184.7,100.2 Z",
+    labelX: 120,
+    labelY: 50,
   },
-  Eastern: {
-    d: "M340,162 L368,153 C382,148 395,140 405,130 C415,120 422,108 425,95 L430,68 C432,58 442,52 455,58 C468,65 478,80 482,98 L485,130 C486,150 482,175 474,198 L462,228 C450,255 434,278 415,295 C398,310 378,320 357,326 L332,330 C316,332 300,330 286,322 L272,310 C260,298 253,282 252,265 L252,240 C252,222 258,205 268,192 L285,178 C305,170 322,165 340,162 Z",
-    labelX: 385, labelY: 245,
+  {
+    id: "Eastern",
+    topPath: "M 118.1,96.7 L 127.0,126.6 L 131.2,131.0 L 137.8,128.8 L 134.7,132.7 L 140.7,132.7 L 141.6,135.5 L 137.8,135.2 L 140.6,138.6 L 145.5,137.2 L 144.3,134.0 L 149.1,133.9 L 148.2,138.1 L 151.0,136.4 L 152.1,139.7 L 152.2,137.7 L 154.7,138.8 L 161.5,133.0 L 162.8,125.5 L 172.2,118.3 L 175.7,108.9 L 186.3,103.4 L 181.8,95.1 L 176.6,92.7 L 165.9,93.9 L 165.4,77.7 L 149.0,66.4 L 142.3,68.3 L 142.8,70.5 L 139.1,72.1 L 139.6,75.7 L 134.2,78.4 L 122.3,91.3 L 123.0,96.6 L 118.7,96.6 Z",
+    labelX: 158,
+    labelY: 108,
   },
-  Central: {
-    d: "M190,167 L208,172 L228,174 L248,174 L278,173 L298,172 L320,168 L340,162 C322,165 305,170 285,178 L268,192 C258,205 252,222 252,240 L252,265 C253,282 260,298 272,310 L286,322 C300,330 316,332 332,330 L340,338 C325,355 305,368 282,374 L255,378 C232,378 210,370 194,356 L178,340 C165,325 158,306 158,287 L158,260 C158,240 164,222 175,207 L185,190 C187,182 188,175 190,167 Z",
-    labelX: 245, labelY: 278,
+  {
+    id: "Western",
+    topPath: "M 68.6,71.9 L 70.6,82.3 L 65.9,89.8 L 54.9,94.6 L 43.1,111.2 L 39.4,110.9 L 37.8,105.9 L 39.4,105.4 L 35.0,105.6 L 30.6,107.8 L 27.8,115.8 L 22.2,117.0 L 21.9,127.7 L 13.0,141.9 L 13.4,146.7 L 16.9,149.9 L 19.6,149.3 L 17.9,155.1 L 11.9,158.8 L 8.1,182.5 L 8.7,189.0 L 15.7,188.6 L 16.7,186.5 L 19.9,192.1 L 28.0,187.8 L 34.6,178.5 L 44.6,178.7 L 48.4,176.1 L 65.6,176.5 L 63.1,168.4 L 59.5,165.5 L 61.7,159.2 L 56.9,137.8 L 61.3,133.1 L 61.2,128.0 L 64.9,127.2 L 63.7,123.9 L 66.3,120.4 L 69.4,121.4 L 71.1,113.6 L 74.3,111.6 L 66.3,105.2 L 74.5,100.3 L 84.7,100.4 L 93.4,92.9 L 94.0,88.1 L 101.9,84.5 L 102.6,81.5 L 99.9,72.1 L 95.3,72.6 L 87.6,68.0 L 78.5,71.5 L 68.6,71.8 Z",
+    labelX: 40,
+    labelY: 145,
   },
-  Western: {
-    d: "M90,130 L120,140 L160,148 L200,155 L190,167 C188,175 187,182 185,190 L175,207 C164,222 158,240 158,260 L158,287 C158,306 165,325 178,340 L194,356 C178,362 158,362 140,355 L115,342 C92,328 72,308 60,284 L50,258 C42,235 40,208 44,182 L52,155 C60,128 74,105 92,86 L95,32 C93,41 92,53 94,65 L100,93 C103,107 110,121 122,133 Z",
-    labelX: 108, labelY: 272,
+  {
+    id: "Central",
+    topPath: "M 93.6,91.1 L 84.7,100.4 L 74.5,100.3 L 66.3,105.2 L 74.3,111.6 L 71.1,113.6 L 69.4,121.4 L 66.3,120.4 L 63.7,123.9 L 64.9,127.2 L 61.2,128.0 L 61.3,133.1 L 56.9,137.8 L 61.7,159.2 L 59.5,165.5 L 63.1,168.4 L 65.6,176.5 L 83.2,176.5 L 82.7,172.6 L 80.0,171.0 L 84.9,160.6 L 91.8,154.6 L 89.2,150.0 L 87.1,152.7 L 87.7,148.7 L 93.2,147.2 L 91.1,145.6 L 96.9,146.8 L 97.8,142.9 L 99.4,145.5 L 100.7,144.1 L 98.3,142.5 L 103.1,144.5 L 102.3,142.2 L 105.5,140.4 L 105.2,143.7 L 106.8,141.5 L 109.9,142.9 L 109.6,137.9 L 112.8,134.6 L 112.5,138.9 L 115.6,138.8 L 112.7,141.7 L 119.3,140.0 L 120.0,137.9 L 120.7,142.1 L 123.2,141.7 L 127.3,138.4 L 126.3,136.1 L 128.7,137.3 L 129.2,134.5 L 133.4,132.4 L 125.9,125.0 L 125.2,117.5 L 121.9,111.8 L 122.3,105.6 L 118.0,96.7 L 112.0,97.9 L 99.7,90.6 L 93.6,91.1 Z",
+    labelX: 100,
+    labelY: 130,
   },
-};
+];
 
 export default function UgandaBusinessMap({ activeRegion, onRegionClick, businessCounts }: Props) {
   const handleClick = (region: UgandaRegion) => {
@@ -54,73 +63,65 @@ export default function UgandaBusinessMap({ activeRegion, onRegionClick, busines
     <div className="w-full">
       <div className="hidden min-[360px]:block">
         <svg
-          viewBox="0 0 500 520"
+          viewBox="0 0 210 210"
           className="w-full max-w-xs mx-auto block"
           aria-label="Uganda region map filter"
           role="img"
         >
-          <ellipse cx="310" cy="440" rx="72" ry="46"
-            fill="#bee3f8" stroke="#7ec8e3" strokeWidth="1.5"
-            strokeDasharray="5,3" opacity="0.7" />
-          <text x="310" y="444" textAnchor="middle" fontSize="10"
-            fill="#2b6cb0" fontStyle="italic" style={{ fontFamily: "system-ui" }}>
-            Lake Victoria
-          </text>
-
-          {(["Northern", "Eastern", "Central", "Western"] as UgandaRegion[]).map((region) => {
-            const { d, labelX, labelY } = REGION_PATHS[region];
-            const isActive = activeRegion === region;
+          {REGIONS.map(({ id, topPath, labelX, labelY }) => {
+            const isActive = activeRegion === id;
             const isDimmed = activeRegion !== "All" && !isActive;
-            const count = businessCounts?.[region];
+            const count = businessCounts?.[id];
 
             return (
               <g
-                key={region}
-                onClick={() => handleClick(region)}
+                key={id}
+                onClick={() => handleClick(id)}
                 className="cursor-pointer"
                 role="button"
-                aria-label={`${region} region${isActive ? " (selected)" : ""}${count != null ? ` — ${count} businesses` : ""}`}
+                aria-label={`${id} region${isActive ? " (selected)" : ""}${count != null ? ` — ${count} businesses` : ""}`}
                 aria-pressed={isActive}
               >
                 <path
-                  d={d}
-                  fill={REGION_COLORS[region]}
-                  stroke={isActive ? ACTIVE_STROKE : "#ffffff"}
-                  strokeWidth={isActive ? 3 : 2}
-                  opacity={isDimmed ? INACTIVE_OPACITY : 1}
-                  className="transition-opacity duration-150 hover:opacity-80"
+                  d={topPath}
+                  fill={isActive ? ACTIVE_FILL : FILL[id]}
+                  stroke="#ffffff"
+                  strokeWidth="1"
+                  opacity={isDimmed ? 0.4 : 0.95}
+                  className="transition-all duration-150 hover:opacity-100"
                 />
                 <text
-                  x={labelX} y={labelY}
-                  textAnchor="middle" dominantBaseline="middle"
-                  fontSize="14" fontWeight="bold"
-                  fill={REGION_TEXT_COLORS[region]}
+                  x={labelX}
+                  y={labelY}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="8"
+                  fontWeight="bold"
+                  fill={isActive ? ACTIVE_TEXT : INACTIVE_TEXT}
                   opacity={isDimmed ? 0.5 : 1}
                   className="select-none pointer-events-none"
                   style={{ fontFamily: "system-ui, sans-serif" }}
                 >
-                  {region}
+                  {id}
                 </text>
                 {count != null && (
                   <text
-                    x={labelX} y={labelY + 16}
-                    textAnchor="middle" dominantBaseline="middle"
-                    fontSize="10"
-                    fill={REGION_TEXT_COLORS[region]}
-                    opacity={isDimmed ? 0.4 : 0.85}
+                    x={labelX}
+                    y={labelY + 10}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize="6.5"
+                    fill={isActive ? ACTIVE_TEXT : INACTIVE_TEXT}
+                    opacity={isDimmed ? 0.4 : 0.8}
                     className="select-none pointer-events-none"
                     style={{ fontFamily: "system-ui, sans-serif" }}
                   >
-                    {count} businesses
+                    {count} biz
                   </text>
                 )}
               </g>
             );
           })}
-
-          <circle cx="235" cy="248" r="5" fill="#e53e3e" stroke="white" strokeWidth="2" />
-          <text x="248" y="245" fontSize="9" fill="#e53e3e" fontWeight="700"
-            style={{ fontFamily: "system-ui" }}>Kampala</text>
         </svg>
 
         {activeRegion !== "All" && (

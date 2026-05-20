@@ -7,22 +7,15 @@ type Props = {
   onRegionClick: (region: "All" | Region) => void;
 };
 
-const TOP_COLORS: Record<Region, string> = {
+const FILL: Record<Region, string> = {
   Northern: "#4d9a6e",
   Eastern:  "#3d7a58",
   Western:  "#2D5A40",
   Central:  "#1C3A2A",
 };
-const SIDE_COLORS: Record<Region, string> = {
-  Northern: "#1a4a2a",
-  Eastern:  "#1a3a28",
-  Western:  "#0e2a18",
-  Central:  "#0a1f10",
-};
 const ACTIVE_FILL   = "#F5C842";
 const ACTIVE_TEXT   = "#1C3A2A";
-const INACTIVE_TEXT = "#ffffff";
-const SIDE_OFFSET_Y = 6;
+const INACTIVE_TEXT = "#e8f5ee";
 
 type RegionDef = {
   id: Region;
@@ -31,8 +24,7 @@ type RegionDef = {
   labelY: number;
 };
 
-// Real Uganda region paths — generated from geoBoundaries ADM1 GeoJSON (UGA)
-// Projected into a 200×200 viewBox (lon 29.57–35.00, lat -1.48–4.23)
+// Real Uganda region boundaries — geoBoundaries ADM1, projected 200×200 viewBox
 const REGIONS: RegionDef[] = [
   {
     id: "Northern",
@@ -60,12 +52,6 @@ const REGIONS: RegionDef[] = [
   },
 ];
 
-function shiftPathY(path: string, dy: number): string {
-  return path.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g, (_, x, y) =>
-    `${x},${(parseFloat(y) + dy).toFixed(1)}`
-  );
-}
-
 export default function UgandaRegionMap({ activeRegion, onRegionClick }: Props) {
   const handleClick = (region: Region) => {
     onRegionClick(activeRegion === region ? "All" : region);
@@ -80,19 +66,8 @@ export default function UgandaRegionMap({ activeRegion, onRegionClick }: Props) 
           aria-label="Uganda region map filter"
           role="img"
         >
-          <defs>
-            <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="2" dy="5" stdDeviation="3" floodColor="#00000044" />
-            </filter>
-            <filter id="shadow-active" x="-40%" y="-40%" width="180%" height="180%">
-              <feDropShadow dx="0" dy="0" stdDeviation="8" floodColor="#F5C84266" />
-              <feDropShadow dx="2" dy="5" stdDeviation="3" floodColor="#00000044" />
-            </filter>
-          </defs>
-
           {REGIONS.map(({ id, topPath, labelX, labelY }) => {
             const isActive = activeRegion === id;
-            const sidePath = shiftPathY(topPath, SIDE_OFFSET_Y);
             return (
               <g
                 key={id}
@@ -102,14 +77,13 @@ export default function UgandaRegionMap({ activeRegion, onRegionClick }: Props) 
                 aria-label={`Filter by ${id} region${isActive ? " (active)" : ""}`}
                 aria-pressed={isActive}
               >
-                <path d={sidePath} fill={SIDE_COLORS[id]} stroke="none" />
                 <path
                   d={topPath}
-                  fill={isActive ? ACTIVE_FILL : TOP_COLORS[id]}
+                  fill={isActive ? ACTIVE_FILL : FILL[id]}
                   stroke="#ffffff"
-                  strokeWidth="0.8"
-                  filter={isActive ? "url(#shadow-active)" : "url(#shadow)"}
-                  className="transition-opacity duration-150 hover:opacity-85"
+                  strokeWidth="1"
+                  opacity={isActive ? 1 : 0.9}
+                  className="transition-all duration-150 hover:opacity-100"
                 />
                 <text
                   x={labelX}
@@ -141,7 +115,7 @@ export default function UgandaRegionMap({ activeRegion, onRegionClick }: Props) 
         )}
       </div>
 
-      {/* Mobile chip fallback */}
+      {/* Mobile chip fallback for very narrow screens */}
       <div className="flex min-[360px]:hidden gap-2 overflow-x-auto pb-1">
         {(["All", "Central", "Eastern", "Northern", "Western"] as Array<"All" | Region>).map(r => (
           <button
