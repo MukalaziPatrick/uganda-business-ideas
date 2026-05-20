@@ -53,6 +53,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         "/api/",      // API routes — not useful as search results
         "/_next/",    // Next.js internal build files
+        "/admin/",    // Admin pages — should never appear in search results
       ],
     },
 

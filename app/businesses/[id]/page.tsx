@@ -1,9 +1,55 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import type { Business } from "@/lib/supabase/types";
 import { categoryEmoji } from "@/app/data/businesses";
 import ShareButton from "./ShareButton";
+import { SITE_URL } from "@/lib/site";
+
+function makeSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const { data } = await makeSupabase()
+    .from("businesses")
+    .select("name, description, category, district, region")
+    .eq("id", id)
+    .eq("status", "active")
+    .single();
+
+  if (!data) {
+    return { title: "Business Not Found | Business Yoo" };
+  }
+
+  const title = `${data.name} | ${data.category} in ${data.district}, Uganda`;
+  const description = data.description
+    ? `${data.description.slice(0, 140)}…`
+    : `${data.name} — a ${data.category} business in ${data.district}, ${data.region}, Uganda. Find contact details on Business Yoo.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/businesses/${id}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/businesses/${id}`,
+      siteName: "Business Yoo",
+      locale: "en_UG",
+      type: "website",
+    },
+  };
+}
 
 export const revalidate = 60;
 
@@ -25,12 +71,7 @@ export default async function BusinessProfilePage({
 }) {
   const { id } = await params;
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const { data } = await supabase
+  const { data } = await makeSupabase()
     .from("businesses")
     .select("*")
     .eq("id", id)

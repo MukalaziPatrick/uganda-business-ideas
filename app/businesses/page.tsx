@@ -1,8 +1,25 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Metadata } from "next";
 import type { Business } from "@/lib/supabase/types";
 import BusinessesClient from "./BusinessesClient";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Find Local Businesses in Uganda | Business Yoo",
+  description:
+    "Browse and search real businesses across Uganda by region, district, and category. Find contact details, WhatsApp numbers, and more.",
+  alternates: { canonical: `${SITE_URL}/businesses` },
+  openGraph: {
+    title: "Find Local Businesses in Uganda | Business Yoo",
+    description: "Browse and search real businesses across Uganda by region, district, and category.",
+    url: `${SITE_URL}/businesses`,
+    siteName: "Business Yoo",
+    locale: "en_UG",
+    type: "website",
+  },
+};
 
 export default async function BusinessesPage({
   searchParams,

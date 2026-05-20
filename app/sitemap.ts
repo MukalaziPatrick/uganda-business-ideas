@@ -20,6 +20,7 @@ import { blogPosts } from "./data/blogPosts";
 import { ideas } from "./data/ideas";
 import { guides } from "./data/guides";
 import { SITE_URL } from "@/lib/site";
+import { createClient } from "@supabase/supabase-js";
 
 // ── Your website's base URL ───────────────────────────────────────────────────
 // Replace this with your actual domain before going live.
@@ -38,10 +39,25 @@ const BASE_URL = SITE_URL;
 //   priority     — a hint to Google on how important this page is (0.0–1.0)
 //                  Note: Google treats this as advisory, not mandatory.
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+
+  // ── Fetch active business IDs from Supabase ───────────────────────────────
+  let businessIds: string[] = [];
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    const { data } = await supabase
+      .from("businesses")
+      .select("id, updated_at")
+      .eq("status", "active");
+    businessIds = (data ?? []).map((b: { id: string }) => b.id);
+  } catch {
+    // Sitemap still works without business pages if Supabase is unavailable
+  }
 
   // ── Static pages ─────────────────────────────────────────────────────────
-  // These pages always exist and don't change based on data.
   const staticPages: MetadataRoute.Sitemap = [
     {
       url:             `${BASE_URL}/`,
@@ -91,6 +107,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority:        0.7,
     },
+    {
+      url:             `${BASE_URL}/businesses`,
+      lastModified:    new Date(),
+      changeFrequency: "daily",
+      priority:        0.9,
+    },
   ];
 
   // ── Dynamic idea pages ────────────────────────────────────────────────────
@@ -118,7 +140,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:        0.7,
   }));
 
+  // ── Dynamic business profile pages ───────────────────────────────────────
+  const businessPages: MetadataRoute.Sitemap = businessIds.map((id) => ({
+    url:             `${BASE_URL}/businesses/${id}`,
+    lastModified:    new Date(),
+    changeFrequency: "weekly" as const,
+    priority:        0.7,
+  }));
+
   // ── Combine and return ────────────────────────────────────────────────────
-  // Static pages come first, then all idea detail pages.
-  return [...staticPages, ...ideaPages, ...guidePages, ...blogPages];
+  return [...staticPages, ...ideaPages, ...guidePages, ...blogPages, ...businessPages];
 }
