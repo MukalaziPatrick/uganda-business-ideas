@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uganda Business Hub — Homepage Final Design</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: #fff; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #aaa; margin-bottom-32px; }
+  .question { font-size: 14px; color: #aaa; margin-bottom: 24px; margin-top: 8px; }
+
+  .frame-wrap { display: flex; gap: 24px; flex-wrap: wrap; }
+
+  .frame {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    background: #f5f0e8;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid #333;
+  }
+  .frame-label {
+    background: #222;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  /* NAV */
+  nav {
+    background: #1C3A2A;
+    color: #F5C842;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .logo { font-family: Georgia, serif; font-size: 13px; }
+  nav .links { display: flex; gap: 10px; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.7); }
+  nav .hamburger { font-size: 16px; color: #F5C842; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(150deg, #1C3A2A 0%, #2D5A40 60%, #3D6E50 100%);
+    padding: 28px 16px 24px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    color: #F5C842;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .hero h2 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .hero p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-gold { background: #F5C842; color: #1C3A2A; border: none; border-radius: 8px; padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); border-radius: 8px; padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: 14px;
+  }
+
+  /* PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 14px;
+    background: #fff;
+  }
+  .pillar {
+    background: #f5f0e8;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e8e2d6;
+  }
+  .pillar-icon { font-size: 20px; margin-bottom: 6px; }
+  .pillar h3 { font-size: 12px; font-weight: 700; color: #1C3A2A; margin-bottom: 4px; }
+  .pillar p { font-size: 10px; color: #777; line-height: 1.4; margin-bottom: 8px; }
+  .pillar .btn-sm { background: #1C3A2A; color: #F5C842; border: none; border-radius: 6px; padding: 6px 12px; font-size: 10px; font-weight: 700; cursor: pointer; display: inline-block; }
+  .pillar .btn-sm.outline { background: transparent; color: #1C3A2A; border: 1.5px solid #1C3A2A; }
+
+  /* SECTION HEADER */
+  .section-header {
+    background: #fff;
+    padding: 12px 14px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .section-header h3 { font-size: 14px; font-weight: 700; color: #1C3A2A; font-family: Georgia, serif; }
+  .section-header a { font-size: 11px; color: #1C3A2A; text-decoration: underline; }
+
+  /* IDEAS */
+  .ideas-wrap { background: #fff; padding: 0 14px 14px; }
+  .idea-featured {
+    background: linear-gradient(135deg, #1C3A2A, #2D5A40);
+    border-radius: 10px;
+    padding: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .idea-featured-tag {
+    font-size: 9px; font-weight: 700; background: #F5C842; color: #1C3A2A;
+    padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 6px;
+  }
+  .idea-featured h4 { font-family: Georgia, serif; font-size: 15px; font-weight: 800; color: #F5C842; line-height: 1.3; margin-bottom: 4px; }
+  .idea-featured p { font-size: 10px; opacity: 0.8; line-height: 1.5; margin-bottom: 8px; }
+  .idea-featured-footer { display: flex; justify-content: space-between; align-items: center; }
+  .idea-featured-meta { font-size: 10px; opacity: 0.7; }
+  .idea-featured button { background: #F5C842; color: #1C3A2A; border: none; border-radius: 6px; padding: 5px 12px; font-size: 10px; font-weight: 700; }
+  .ideas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .idea-card { background: #f5f0e8; border-radius: 8px; padding: 10px; border: 1px solid #e8e2d6; }
+  .idea-card-emoji { font-size: 18px; margin-bottom: 5px; }
+  .idea-card h4 { font-size: 11px; font-weight: 700; color: #1C3A2A; }
+  .idea-card p { font-size: 9px; color: #888; margin-top: 2px; }
+  .idea-card-footer { display: flex; justify-content: space-between; margin-top: 6px; align-items: center; }
+  .idea-card-cost { font-size: 9px; font-weight: 700; color: #1C3A2A; }
+  .idea-card-tag { font-size: 8px; padding: 2px 6px; border-radius: 8px; background: #e8e2d6; color: #555; }
+
+  /* JOBS TEASER */
+  .jobs-wrap { background: #f5f0e8; padding: 0 14px 14px; }
+  .job-row {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #e8e2d6;
+  }
+  .job-icon { width: 32px; height: 32px; border-radius: 7px; background: linear-gradient(135deg, #1C3A2A, #2D5A40); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .job-body { flex: 1; }
+  .job-body h4 { font-size: 11px; font-weight: 700; color: #1C3A2A; }
+  .job-body p { font-size: 9px; color: #888; margin-top: 1px; }
+  .job-right { text-align: right; }
+  .job-salary { font-size: 11px; font-weight: 700; color: #1C3A2A; }
+  .job-tag { display: inline-block; font-size: 8px; padding: 2px 6px; border-radius: 8px; background: #FFF3CD; color: #856404; margin-top: 2px; }
+
+  /* FOOTER */
+  footer {
+    background: #1C3A2A;
+    color: rgba(255,255,255,0.6);
+    padding: 14px;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  footer .footer-logo { color: #F5C842; font-weight: 700; font-family: Georgia, serif; font-size: 12px; }
+  footer .footer-links { display: flex; gap: 10px; }
+
+  /* MOBILE NAV (for mobile frame) */
+  .mobile-nav-links { display: none; }
+
+  /* annotations */
+  .annotation {
+    position: relative;
+    background: #2a2a2a;
+    border-left: 3px solid #F5C842;
+    padding: 8px 12px;
+    font-size: 11px;
+    color: #ccc;
+    margin: 6px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .annotation strong { color: #F5C842; }
+</style>
+</head>
+<body>
+
+<h1>Uganda Business Hub — Final Homepage Design</h1>
+<p class="question">Does this look right? Review the full homepage layout below, then tell me in the terminal if you want any changes.</p>
+
+<div class="frame-wrap">
+
+  <!-- DESKTOP FRAME -->
+  <div style="flex:2; min-width:340px;">
+    <div class="frame-label">DESKTOP / TABLET VIEW</div>
+    <div class="frame">
+
+      <!-- Nav -->
+      <nav>
+        <span class="logo">🇺🇬 UgandaBiz</span>
+        <span class="links">Ideas · Jobs · Guides · Blog · About</span>
+        <span style="font-size:11px;background:#F5C842;color:#1C3A2A;padding:4px 10px;border-radius:6px;font-weight:700">Post a Job</span>
+      </nav>
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-eyebrow">Uganda's Business Hub</div>
+        <h2>Grow Your Business.<br>Find Your Next Job.</h2>
+        <p>Hundreds of proven business ideas, job listings, and guides — built for every Ugandan.</p>
+        <div class="hero-btns">
+          <button class="btn-gold">Browse Ideas</button>
+          <button class="btn-outline">Find Work</button>
+        </div>
+        <div class="hero-badge">500+ Ideas · 1,200+ Jobs · All Uganda Districts</div>
+      </div>
+
+      <!-- Pillars -->
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-icon">💼</div>
+          <h3>Post a Job</h3>
+          <p>Hire skilled workers across Uganda quickly and easily.</p>
+          <span class="btn-sm">Post Now →</span>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🔍</div>
+          <h3>Find Work</h3>
+          <p>Browse jobs and register your skills to get hired.</p>
+          <span class="btn-sm outline">Browse Jobs →</span>
+        </div>
+      </div>
+
+      <!-- Ideas Section -->
+      <div class="section-header">
+        <h3>💡 Featured Business Ideas</h3>
+        <a href="#">View all 500+ →</a>
+      </div>
+      <div class="ideas-wrap">
+        <div class="idea-featured">
+          <span class="idea-featured-tag">⭐ Editor's Pick</span>
+          <h4>Poultry Farming for<br>Ugandan Markets</h4>
+          <p>High-demand, low startup cost. Chickens sell fast in Kampala, Jinja and Mbarara markets year-round.</p>
+          <div class="idea-featured-footer">
+            <span class="idea-featured-meta">UGX 2M startup · High profit potential</span>
+            <button>Read More</button>
+          </div>
+        </div>
+        <div class="ideas-grid">
+          <div class="idea-card">
+            <div class="idea-card-emoji">🛵</div>
+            <h4>Boda Boda Delivery</h4>
+            <p>Urban logistics, daily income</p>
+            <div class="idea-card-footer">
+              <span class="idea-card-cost">UGX 3M</span>
+              <span class="idea-card-tag">Transport</span>
+            </div>
+          </div>
+          <div class="idea-card">
+            <div class="idea-card-emoji">🌽</div>
+            <h4>Maize Milling</h4>
+            <p>Rural staple, steady demand</p>
+            <div class="idea-card-footer">
+              <span class="idea-card-cost">UGX 5M</span>
+              <span class="idea-card-tag">Agriculture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jobs Teaser -->
+      <div class="section-header" style="background:#f5f0e8">
+        <h3>💼 Latest Job Listings</h3>
+        <a href="#">See all jobs →</a>
+      </div>
+      <div class="jobs-wrap">
+        <div class="job-row">
+          <div class="job-icon">🚗</div>
+          <div class="job-body">
+            <h4>Driver Needed — Daily Deliveries</h4>
+            <p>Kampala Central · Posted today</p>
+          </div>
+          <div class="job-right">
+            <div class="job-salary">UGX 80k/day</div>
+            <div class="job-tag">Urgent</div>
+          </div>
+        </div>
+        <div class="job-row">
+          <div class="job-icon">✂️</div>
+          <div class="job-body">
+            <h4>Tailor — School Uniforms</h4>
+            <p>Entebbe · Posted 2 days ago</p>
+          </div>
+          <div class="job-right">
+            <div class="job-salary">UGX 50k/day</div>
+          </div>
+        </div>
+        <div class="job-row">
+          <div class="job-icon">🌾</div>
+          <div class="job-body">
+            <h4>Farm Workers — Harvest Season</h4>
+            <p>Jinja District · Posted 3 days ago</p>
+          </div>
+          <div class="job-right">
+            <div class="job-salary">UGX 30k/day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <span class="footer-logo">🇺🇬 UgandaBiz</span>
+        <div class="footer-links">
+          <span>Ideas</span>
+          <span>Jobs</span>
+          <span>Guides</span>
+          <span>Blog</span>
+          <span>About</span>
+          <span>Contact</span>
+        </div>
+        <span>© 2026 Uganda Business Hub</span>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ANNOTATIONS -->
+  <div style="flex:1; min-width:220px;">
+    <div class="frame-label">DESIGN NOTES</div>
+    <div style="padding: 14px 0;">
+      <div class="annotation"><strong>Colors:</strong> Deep forest green #1C3A2A + warm gold #F5C842 (Uganda Sunrise)</div>
+      <div class="annotation"><strong>Headlines:</strong> Georgia serif for hero + section titles. Segoe UI for body.</div>
+      <div class="annotation"><strong>Hero:</strong> Centred, dual CTA — "Browse Ideas" (gold) + "Find Work" (outline)</div>
+      <div class="annotation"><strong>Pillars:</strong> Post a Job / Find Work — 2-column, sits directly under hero</div>
+      <div class="annotation"><strong>Ideas:</strong> Magazine grid — 1 featured (full-width, dark green) + 2 smaller cards</div>
+      <div class="annotation"><strong>Jobs teaser:</strong> 3 horizontal rows with salary visible. "See all jobs" link.</div>
+      <div class="annotation"><strong>Nav (desktop):</strong> Logo left, links centre, "Post a Job" CTA button right</div>
+      <div class="annotation"><strong>Nav (mobile):</strong> Logo left, hamburger right — drawer slides in</div>
+      <div class="annotation"><strong>Footer:</strong> Dark green background, gold logo, all page links</div>
+      <div class="annotation"><strong>Mobile:</strong> All sections stack vertically. Pillars become full-width. Ideas grid stays 2-col.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

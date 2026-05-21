@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uganda Business Hub — Color Approach</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: #fff; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .subtitle { font-size: 14px; color: #aaa; margin-bottom: 32px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+  .card {
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .card:hover { transform: translateY(-3px); }
+  .card.selected { border-color: #fff; }
+
+  .card-preview { height: 220px; display: flex; flex-direction: column; }
+  .card-nav { height: 44px; display: flex; align-items: center; padding: 0 16px; gap: 12px; font-size: 13px; font-weight: 600; }
+  .card-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; }
+  .card-hero h2 { font-size: 22px; font-weight: 800; text-align: center; line-height: 1.2; }
+  .card-hero p { font-size: 12px; text-align: center; opacity: 0.8; }
+  .card-ctas { display: flex; gap: 8px; margin-top: 8px; }
+  .cta { padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+
+  .card-body { padding: 16px; background: #111; }
+  .card-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .card-body p { font-size: 12px; color: #999; line-height: 1.5; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 8px; }
+
+  /* Approach A — Uganda Sunrise */
+  .sunrise .card-nav { background: #1C3A2A; color: #F5C842; }
+  .sunrise .card-hero { background: linear-gradient(135deg, #1C3A2A 0%, #2D5A40 100%); color: #fff; }
+  .sunrise .card-hero h2 { font-family: Georgia, serif; color: #F5C842; }
+  .sunrise .cta.primary { background: #F5C842; color: #1C3A2A; }
+  .sunrise .cta.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+  .sunrise .badge { background: #E53E3E; color: #fff; }
+
+  /* Approach B — Modern Green */
+  .modern .card-nav { background: #00501E; color: #fff; }
+  .modern .card-hero { background: linear-gradient(135deg, #006627 0%, #00882E 100%); color: #fff; }
+  .modern .card-hero h2 { font-family: 'Segoe UI', sans-serif; color: #fff; }
+  .modern .cta.primary { background: #C9A84C; color: #fff; }
+  .modern .cta.secondary { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+  .modern .badge { background: #C9A84C; color: #000; }
+
+  /* Approach C — Bold Black & Gold */
+  .boldgold .card-nav { background: #000; color: #D4AF37; border-bottom: 1px solid #D4AF37; }
+  .boldgold .card-hero { background: #111; color: #fff; }
+  .boldgold .card-hero h2 { color: #D4AF37; font-family: Georgia, serif; }
+  .boldgold .cta.primary { background: #D4AF37; color: #000; }
+  .boldgold .cta.secondary { background: transparent; color: #D4AF37; border: 1px solid #D4AF37; }
+  .boldgold .badge { background: #D4AF37; color: #000; }
+
+  .pick-label {
+    margin-top: 10px;
+    font-size: 11px;
+    text-align: center;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .card.selected .pick-label { color: #fff; }
+  .card.selected .pick-label::before { content: '✓ '; }
+</style>
+</head>
+<body>
+
+<h1>Which color approach fits Uganda Business Hub?</h1>
+<p class="subtitle">Click a card to select. Each preview shows the nav + hero section of the homepage.</p>
+
+<div class="cards">
+
+  <!-- A: Uganda Sunrise -->
+  <div class="card sunrise" onclick="pick(this, 'A')">
+    <div class="card-preview">
+      <div class="card-nav">🇺🇬 UgandaBiz <span style="margin-left:auto;font-weight:400;font-size:12px">Ideas · Jobs · Guides · Blog · About</span></div>
+      <div class="card-hero">
+        <h2>Grow Your Business<br>in Uganda</h2>
+        <p>Discover ideas · Find workers · Build your future</p>
+        <div class="card-ctas">
+          <button class="cta primary">Browse Ideas</button>
+          <button class="cta secondary">Find Work</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Uganda Sunrise</h3>
+      <p>Deep forest green + warm amber/gold. Serif headlines. Earthy, community-driven. Distinctly Ugandan.</p>
+      <span class="badge">Recommended</span>
+    </div>
+    <div class="pick-label">Click to select</div>
+  </div>
+
+  <!-- B: Modern Green -->
+  <div class="card modern" onclick="pick(this, 'B')">
+    <div class="card-preview">
+      <div class="card-nav">🇺🇬 UgandaBiz <span style="margin-left:auto;font-weight:400;font-size:12px">Ideas · Jobs · Guides · Blog · About</span></div>
+      <div class="card-hero">
+        <h2>Grow Your Business<br>in Uganda</h2>
+        <p>Discover ideas · Find workers · Build your future</p>
+        <div class="card-ctas">
+          <button class="cta primary">Browse Ideas</button>
+          <button class="cta secondary">Find Work</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Modern Green</h3>
+      <p>Bright green + gold accents. Clean sans-serif throughout. Professional, corporate feel. Safe choice.</p>
+      <span class="badge">Professional</span>
+    </div>
+    <div class="pick-label">Click to select</div>
+  </div>
+
+  <!-- C: Bold Black & Gold -->
+  <div class="card boldgold" onclick="pick(this, 'C')">
+    <div class="card-preview">
+      <div class="card-nav">🇺🇬 UgandaBiz <span style="margin-left:auto;font-weight:400;font-size:12px">Ideas · Jobs · Guides · Blog · About</span></div>
+      <div class="card-hero">
+        <h2>Grow Your Business<br>in Uganda</h2>
+        <p>Discover ideas · Find workers · Build your future</p>
+        <div class="card-ctas">
+          <button class="cta primary">Browse Ideas</button>
+          <button class="cta secondary">Find Work</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Bold Black & Gold</h3>
+      <p>Dark background, gold accents. High contrast, premium feel. Modern but heavy on mobile.</p>
+      <span class="badge">Premium</span>
+    </div>
+    <div class="pick-label">Click to select</div>
+  </div>
+
+</div>
+
+<script>
+  function pick(el, choice) {
+    document.querySelectorAll('.card').forEach(c => {
+      c.classList.remove('selected');
+      c.querySelector('.pick-label').textContent = 'Click to select';
+    });
+    el.classList.add('selected');
+    el.querySelector('.pick-label').textContent = 'Selected';
+    console.log('Selected:', choice);
+  }
+</script>
+
+</body>
+</html>

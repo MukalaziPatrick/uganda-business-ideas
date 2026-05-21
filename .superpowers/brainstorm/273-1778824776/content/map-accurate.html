@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uganda Business Map</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f0f4f0; }
+
+  .page-header {
+    background: #1a3a2a;
+    color: white;
+    padding: 14px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .page-header span { font-size: 13px; color: #a0d0b0; font-weight: 400; }
+
+  .search-bar {
+    background: white;
+    padding: 12px 20px;
+    border-bottom: 1px solid #d0e0d0;
+    display: flex;
+    gap: 8px;
+  }
+  .search-bar input {
+    flex: 1;
+    border: 1.5px solid #c0d8c0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+  }
+  .search-bar select {
+    border: 1.5px solid #c0d8c0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    background: white;
+  }
+
+  .map-section {
+    background: #e8f5ee;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #c0dcc8;
+  }
+  .map-label {
+    font-size: 13px;
+    color: #2d6a4f;
+    font-weight: 600;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Uganda SVG styles */
+  .region { cursor: pointer; transition: opacity 0.15s; }
+  .region:hover { opacity: 0.82; }
+  .region.active { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .region-label { pointer-events: none; font-family: system-ui, sans-serif; }
+
+  .region-chips {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .chip {
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .chip.active { border-color: #1a3a2a; transform: scale(1.05); }
+
+  .results-section { background: white; padding: 16px 20px; }
+  .results-count { font-size: 12px; color: #888; margin-bottom: 12px; }
+  .business-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .biz-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .biz-name { font-size: 13px; font-weight: 600; color: #1a3a2a; }
+  .biz-meta { font-size: 11px; color: #888; margin: 3px 0 6px; }
+  .biz-cta { font-size: 11px; color: #25d366; font-weight: 600; }
+  .load-more {
+    text-align: center;
+    margin-top: 14px;
+    padding: 10px;
+    background: #1a3a2a;
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  📍 Find a Business in Uganda
+  <span>Browse by region or search above</span>
+</div>
+
+<div class="search-bar">
+  <input type="text" placeholder="🔍  restaurants, plumbers, salons...">
+  <select><option>All Categories</option><option>Food &amp; Restaurants</option><option>Plumbers</option><option>Electricians</option><option>Salons</option><option>Retail</option></select>
+</div>
+
+<div class="map-section">
+  <div class="map-label">📍 Click a region to filter businesses</div>
+
+  <!--
+    Real Uganda SVG outline derived from accurate geographic coordinates.
+    Viewbox: lon 29.57–35.00, lat -1.48–4.23 mapped to 500x520 canvas.
+    Regions approximate the real administrative boundaries.
+  -->
+  <svg id="uganda-map" viewBox="0 0 500 520" style="width:280px;max-width:90%;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Drop shadow filter -->
+    <defs>
+      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#00000033"/>
+      </filter>
+      <filter id="shadow-active" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#00000055"/>
+      </filter>
+    </defs>
+
+    <!--
+      Uganda outline — 4 regions with real proportions.
+      Coordinate mapping: lon 29.57→35.00 maps to x 20→480; lat 4.23→-1.48 maps to y 20→500
+      Western border follows Congo/Rwanda; Eastern follows Kenya; Northern follows Sudan/Congo;
+      Southern dips around Lake Victoria.
+    -->
+
+    <!-- NORTHERN REGION — large, flat top, covers ~40% of country -->
+    <path class="region" id="northern" onclick="selectRegion('northern')"
+      d="
+        M 95,32
+        C 110,25 145,20 185,18
+        L 255,17
+        C 295,17 335,19 365,24
+        C 385,27 405,33 418,42
+        C 428,49 432,58 430,68
+        L 425,95
+        C 422,108 415,120 405,130
+        C 395,140 382,148 368,153
+        L 340,162
+        C 320,168 298,172 278,173
+        L 248,174
+        C 228,174 208,172 190,167
+        L 165,159
+        C 148,153 133,144 122,133
+        C 110,121 103,107 100,93
+        L 94,65
+        C 92,53 93,41 95,32
+        Z
+      "
+      fill="#4d9a6e" filter="url(#shadow)"/>
+    <text class="region-label" x="262" y="110" text-anchor="middle" font-size="18" font-weight="700" fill="white">Northern</text>
+    <text class="region-label" x="262" y="130" text-anchor="middle" font-size="12" fill="#d4f0e0">41 businesses</text>
+
+    <!-- EASTERN REGION — right side, bordered by Kenya, includes Mt Elgon area -->
+    <path class="region" id="eastern" onclick="selectRegion('eastern')"
+      d="
+        M 340,162
+        L 368,153
+        C 382,148 395,140 405,130
+        C 415,120 422,108 425,95
+        L 430,68
+        C 432,58 442,52 455,58
+        C 468,65 478,80 482,98
+        L 485,130
+        C 486,150 482,175 474,198
+        L 462,228
+        C 450,255 434,278 415,295
+        C 398,310 378,320 357,326
+        L 332,330
+        C 316,332 300,330 286,322
+        L 272,310
+        C 260,298 253,282 252,265
+        L 252,240
+        C 252,222 258,205 268,192
+        L 285,178
+        C 305,170 322,165 340,162
+        Z
+      "
+      fill="#3d7a58" filter="url(#shadow)"/>
+    <text class="region-label" x="378" y="248" text-anchor="middle" font-size="17" font-weight="700" fill="white">Eastern</text>
+    <text class="region-label" x="378" y="267" text-anchor="middle" font-size="12" fill="#c0e8d0">87 businesses</text>
+
+    <!-- CENTRAL REGION — heart of Uganda, includes Kampala, Lake Victoria north shore -->
+    <path class="region" id="central" onclick="selectRegion('central')"
+      d="
+        M 190,167
+        L 208,172
+        L 228,174
+        L 248,174
+        L 278,173
+        L 298,172
+        L 320,168
+        L 340,162
+        C 322,165 305,170 285,178
+        L 268,192
+        C 258,205 252,222 252,240
+        L 252,265
+        C 253,282 260,298 272,310
+        L 286,322
+        C 300,330 316,332 332,330
+        L 340,338
+        C 325,355 305,368 282,374
+        L 255,378
+        C 232,378 210,370 194,356
+        L 178,340
+        C 165,325 158,306 158,287
+        L 158,260
+        C 158,240 164,222 175,207
+        L 185,190
+        C 187,182 188,175 190,167
+        Z
+      "
+      fill="#F5C842" filter="url(#shadow)"/>
+    <text class="region-label" x="252" y="285" text-anchor="middle" font-size="17" font-weight="700" fill="#1C3A2A">Central</text>
+    <text class="region-label" x="252" y="304" text-anchor="middle" font-size="12" fill="#3a5a30">142 businesses</text>
+
+    <!-- WESTERN REGION — left side, includes Rwenzori mountains, borders Congo/Rwanda -->
+    <path class="region" id="western" onclick="selectRegion('western')"
+      d="
+        M 95,32
+        C 93,41 92,53 94,65
+        L 100,93
+        C 103,107 110,121 122,133
+        C 133,144 148,153 165,159
+        L 190,167
+        C 188,175 187,182 185,190
+        L 175,207
+        C 164,222 158,240 158,260
+        L 158,287
+        C 158,306 165,325 178,340
+        L 194,356
+        C 178,362 158,362 140,355
+        L 115,342
+        C 92,328 72,308 60,284
+        L 50,258
+        C 42,235 40,208 44,182
+        L 52,155
+        C 60,128 74,105 92,86
+        L 95,32
+        Z
+      "
+      fill="#2D5A40" filter="url(#shadow)"/>
+    <text class="region-label" x="112" y="268" text-anchor="middle" font-size="17" font-weight="700" fill="white">Western</text>
+    <text class="region-label" x="112" y="287" text-anchor="middle" font-size="12" fill="#a0d8b8">53 businesses</text>
+
+    <!-- Lake Victoria — south, partially inside Uganda -->
+    <ellipse cx="310" cy="450" rx="75" ry="48"
+      fill="#bee3f8" stroke="#7ec8e3" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.75"/>
+    <text x="310" y="454" text-anchor="middle" font-size="11" fill="#2b6cb0" font-style="italic">Lake Victoria</text>
+
+    <!-- Kampala marker -->
+    <circle cx="235" cy="245" r="6" fill="#e53e3e" stroke="white" stroke-width="2"/>
+    <text x="248" y="242" font-size="9" fill="#e53e3e" font-weight="700">Kampala</text>
+
+  </svg>
+
+  <div class="region-chips">
+    <div class="chip" id="chip-all" style="background:#1a3a2a;color:white" onclick="selectRegion('all')">All Uganda</div>
+    <div class="chip" id="chip-western" style="background:#2D5A40;color:white" onclick="selectRegion('western')">Western</div>
+    <div class="chip" id="chip-central" style="background:#b8960a;color:white" onclick="selectRegion('central')">Central</div>
+    <div class="chip" id="chip-eastern" style="background:#3d7a58;color:white" onclick="selectRegion('eastern')">Eastern</div>
+    <div class="chip" id="chip-northern" style="background:#4d9a6e;color:white" onclick="selectRegion('northern')">Northern</div>
+  </div>
+</div>
+
+<div class="results-section">
+  <div class="results-count" id="results-count">323 businesses across Uganda</div>
+  <div class="business-grid">
+    <div class="biz-card">
+      <div class="biz-name">Mama's Kitchen</div>
+      <div class="biz-meta">🍽️ Restaurant · Kampala</div>
+      <div class="biz-cta">💬 WhatsApp</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-name">Fix-It Plumbing</div>
+      <div class="biz-meta">🔧 Plumber · Mbarara</div>
+      <div class="biz-cta">💬 WhatsApp</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-name">Rolex Corner</div>
+      <div class="biz-meta">🌯 Street Food · Kampala</div>
+      <div class="biz-cta">💬 WhatsApp</div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-name">Jinja Electricals</div>
+      <div class="biz-meta">⚡ Electrician · Jinja</div>
+      <div class="biz-cta">📞 Call</div>
+    </div>
+  </div>
+  <div class="load-more">Load more businesses →</div>
+</div>
+
+<script>
+const regionData = {
+  all:      { count: '323 businesses across Uganda', label: 'All Uganda' },
+  northern: { count: '41 businesses in Northern region', label: 'Northern' },
+  eastern:  { count: '87 businesses in Eastern region', label: 'Eastern' },
+  central:  { count: '142 businesses in Central region', label: 'Central' },
+  western:  { count: '53 businesses in Western region', label: 'Western' },
+};
+
+const regionFills = {
+  northern: '#4d9a6e',
+  eastern:  '#3d7a58',
+  central:  '#F5C842',
+  western:  '#2D5A40',
+};
+
+let current = 'all';
+
+function selectRegion(id) {
+  // Reset all regions
+  ['northern','eastern','central','western'].forEach(r => {
+    const el = document.getElementById(r);
+    if (el) { el.style.opacity = id === 'all' || id === r ? '1' : '0.45'; }
+    const chip = document.getElementById('chip-' + r);
+    if (chip) chip.classList.remove('active');
+  });
+  document.getElementById('chip-all').classList.remove('active');
+
+  if (id === 'all') {
+    document.getElementById('chip-all').classList.add('active');
+  } else {
+    document.getElementById('chip-' + id).classList.add('active');
+  }
+
+  document.getElementById('results-count').textContent = regionData[id].count;
+  current = id;
+}
+
+// Init
+document.getElementById('chip-all').classList.add('active');
+</script>
+</body>
+</html>

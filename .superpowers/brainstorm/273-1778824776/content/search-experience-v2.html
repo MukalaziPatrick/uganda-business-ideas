@@ -1,0 +1,129 @@
+<h2>How should users find businesses?</h2>
+<p class="subtitle">You mentioned using a Uganda map — here are 4 approaches including map-based discovery.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="padding:10px;background:#1a365d;color:white;text-align:center">
+        <div style="font-size:12px;font-weight:bold;margin-bottom:6px">Find a Business</div>
+        <div style="display:flex;gap:6px;justify-content:center">
+          <div class="mock-input" style="width:180px;font-size:12px;background:white;color:#333">🔍 restaurants in Kampala</div>
+          <div class="mock-button" style="font-size:11px;padding:5px 10px">Go</div>
+        </div>
+      </div>
+      <div style="padding:8px 12px;background:#f8f9fa;display:flex;gap:6px">
+        <select class="mock-input" style="flex:1;font-size:11px"><option>All Categories</option></select>
+        <select class="mock-input" style="flex:1;font-size:11px"><option>All Districts</option></select>
+      </div>
+      <div style="padding:8px 12px;display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:11px"><strong>Mama's Kitchen</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:11px"><strong>Rolex Corner</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:11px"><strong>Café Java</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:8px;font-size:11px"><strong>Nandos UG</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Search bar → results list</h3>
+      <p>Text search + dropdowns. Simple and fast. No map.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="d" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="padding:10px;background:#1a365d;color:white;text-align:center;font-size:12px;font-weight:bold">Click your region to find businesses</div>
+      <div style="padding:12px;display:flex;gap:10px;align-items:center">
+        <!-- SVG Uganda map mockup -->
+        <svg viewBox="0 0 160 180" style="width:140px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+          <!-- Northern -->
+          <polygon points="40,10 120,10 130,30 110,70 50,70 30,30" fill="#c6f6d5" stroke="#2d6a4f" stroke-width="1.5"/>
+          <text x="80" y="44" text-anchor="middle" font-size="10" fill="#1a4731" font-weight="bold">Northern</text>
+          <!-- Eastern -->
+          <polygon points="110,70 150,80 145,140 100,145 100,110 110,70" fill="#bee3f8" stroke="#2b6cb0" stroke-width="1.5"/>
+          <text x="127" y="112" text-anchor="middle" font-size="10" fill="#1a365d" font-weight="bold">Eastern</text>
+          <!-- Central -->
+          <polygon points="50,70 110,70 100,110 100,145 60,140 40,100" fill="#fefcbf" stroke="#b7791f" stroke-width="1.5"/>
+          <text x="74" y="112" text-anchor="middle" font-size="10" fill="#7b341e" font-weight="bold">Central</text>
+          <!-- Western -->
+          <polygon points="30,30 50,70 40,100 15,130 10,80 20,40" fill="#fed7d7" stroke="#c53030" stroke-width="1.5"/>
+          <text x="26" y="90" text-anchor="middle" font-size="9" fill="#7b1d1d" font-weight="bold">Western</text>
+        </svg>
+        <div style="font-size:11px;color:#555">
+          <div style="margin-bottom:6px;font-weight:600;color:#333">← Click a region</div>
+          <div style="background:#e8f4f0;border-radius:4px;padding:6px;margin-bottom:4px">📍 Central — 142 businesses</div>
+          <div style="background:#ebf8ff;border-radius:4px;padding:6px;margin-bottom:4px">📍 Eastern — 87 businesses</div>
+          <div style="background:#fff5f5;border-radius:4px;padding:6px;margin-bottom:4px">📍 Western — 53 businesses</div>
+          <div style="background:#f0fff4;border-radius:4px;padding:6px">📍 Northern — 41 businesses</div>
+        </div>
+      </div>
+      <div style="padding:0 10px 10px;font-size:11px;color:#666;text-align:center">Click region → filtered business list below</div>
+    </div>
+    <div class="card-body">
+      <h3>D — Map-first: click region → results ⭐ Recommended</h3>
+      <p>Uganda SVG map at top of /businesses. Click a region to filter listings below. Same map pattern as the Ideas page region filter.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="e" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="padding:10px;background:#1a365d;color:white;text-align:center;font-size:12px;font-weight:bold">Find Businesses in Uganda</div>
+      <div style="display:flex;height:160px">
+        <!-- Left: map -->
+        <div style="flex:1;padding:8px;border-right:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 160 180" style="width:110px" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="40,10 120,10 130,30 110,70 50,70 30,30" fill="#c6f6d5" stroke="#2d6a4f" stroke-width="1.5"/>
+            <text x="80" y="44" text-anchor="middle" font-size="10" fill="#1a4731" font-weight="bold">Northern</text>
+            <polygon points="110,70 150,80 145,140 100,145 100,110 110,70" fill="#bee3f8" stroke="#2b6cb0" stroke-width="1.5"/>
+            <text x="127" y="112" text-anchor="middle" font-size="10" fill="#1a365d" font-weight="bold">Eastern</text>
+            <polygon points="50,70 110,70 100,110 100,145 60,140 40,100" fill="#ffd700" stroke="#b7791f" stroke-width="1.5"/>
+            <text x="74" y="112" text-anchor="middle" font-size="10" fill="#7b341e" font-weight="bold">Central</text>
+            <polygon points="30,30 50,70 40,100 15,130 10,80 20,40" fill="#fed7d7" stroke="#c53030" stroke-width="1.5"/>
+            <text x="26" y="90" text-anchor="middle" font-size="9" fill="#7b1d1d" font-weight="bold">Western</text>
+          </svg>
+        </div>
+        <!-- Right: results -->
+        <div style="flex:1;padding:8px;overflow:hidden">
+          <div style="font-size:10px;color:#888;margin-bottom:4px">Central selected — 142 results</div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:6px;font-size:10px;margin-bottom:4px"><strong>Mama's Kitchen</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:6px;font-size:10px;margin-bottom:4px"><strong>Fix-It Plumbing</strong><br><span style="color:#888">Plumber · Kampala</span></div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:6px;font-size:10px;margin-bottom:4px"><strong>Kampala Electricals</strong><br><span style="color:#888">Electrician · Kampala</span></div>
+          <div style="font-size:10px;color:#2b6cb0;text-align:center">+ 139 more →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>E — Map + results side by side</h3>
+      <p>Split layout: map on left, results update on right as you click regions. Desktop-focused, very visual.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="f" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="padding:10px;background:#1a365d;color:white;text-align:center">
+        <div style="font-size:12px;font-weight:bold;margin-bottom:6px">Find a Business</div>
+        <div style="display:flex;gap:6px;justify-content:center">
+          <div class="mock-input" style="width:160px;font-size:11px;background:white;color:#333">🔍 Search businesses...</div>
+          <div class="mock-button" style="font-size:11px;padding:5px 10px">Search</div>
+        </div>
+      </div>
+      <div style="padding:8px;text-align:center">
+        <svg viewBox="0 0 200 120" style="width:180px" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="60,5 140,5 155,25 135,60 65,60 45,25" fill="#c6f6d5" stroke="#2d6a4f" stroke-width="1.5"/>
+          <text x="100" y="36" text-anchor="middle" font-size="9" fill="#1a4731" font-weight="bold">Northern</text>
+          <polygon points="135,60 175,68 170,110 125,114 125,85 135,60" fill="#bee3f8" stroke="#2b6cb0" stroke-width="1.5"/>
+          <text x="152" y="92" text-anchor="middle" font-size="9" fill="#1a365d" font-weight="bold">Eastern</text>
+          <polygon points="65,60 135,60 125,85 125,114 82,110 60,80" fill="#fefcbf" stroke="#b7791f" stroke-width="1.5"/>
+          <text x="95" y="90" text-anchor="middle" font-size="9" fill="#7b341e" font-weight="bold">Central</text>
+          <polygon points="45,25 65,60 60,80 30,105 22,65 32,32" fill="#fed7d7" stroke="#c53030" stroke-width="1.5"/>
+          <text x="38" y="72" text-anchor="middle" font-size="8" fill="#7b1d1d" font-weight="bold">Western</text>
+        </svg>
+      </div>
+      <div style="padding:0 10px 8px;font-size:10px;color:#555;text-align:center">Search bar at top + map below for browsing by region</div>
+    </div>
+    <div class="card-body">
+      <h3>F — Search bar + map combined</h3>
+      <p>Text search at top for when you know what you want. Map below for browsing. Both work together on /businesses.</p>
+    </div>
+  </div>
+
+</div>

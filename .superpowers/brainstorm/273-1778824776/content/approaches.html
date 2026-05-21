@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approach Comparison</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f0f4f0; padding: 20px; }
+
+  h2 { font-size: 18px; color: #1a3a2a; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 20px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+  .approach {
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #d0e0d0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .approach:hover { transform: translateY(-2px); border-color: #4d9a6e; }
+  .approach.selected { border-color: #F5C842; box-shadow: 0 4px 16px #F5C84244; }
+
+  .approach-header {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .badge {
+    font-size: 10px;
+    background: #F5C842;
+    color: #1a3a2a;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-weight: 700;
+  }
+
+  .screen {
+    border: 1px solid #e0e8e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 12px;
+    font-size: 11px;
+  }
+  .screen-nav {
+    background: #1a3a2a;
+    color: white;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .screen-nav .logo { font-size: 11px; font-weight: 700; margin-right: 6px; }
+  .screen-nav .nav-link { color: #a0d0b0; font-size: 10px; }
+  .screen-nav .nav-link.active { color: white; text-decoration: underline; }
+
+  .screen-body { background: #f8faf8; }
+
+  /* Search bar */
+  .s-search {
+    background: white;
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e8e0;
+    display: flex;
+    gap: 6px;
+  }
+  .s-input {
+    flex: 1;
+    border: 1px solid #c0d8c0;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 10px;
+    color: #888;
+  }
+  .s-select {
+    border: 1px solid #c0d8c0;
+    border-radius: 4px;
+    padding: 5px 6px;
+    font-size: 10px;
+    color: #555;
+    background: white;
+  }
+
+  /* Map region block */
+  .s-map {
+    background: #e8f5ee;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #d0e8d8;
+  }
+  .s-map-label { font-size: 9px; color: #2d6a4f; font-weight: 600; margin-bottom: 6px; }
+  .region-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    max-width: 160px;
+    margin: 0 auto;
+  }
+  .region-btn {
+    border-radius: 4px;
+    padding: 5px 4px;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+  }
+
+  /* Business cards */
+  .s-results { padding: 8px; }
+  .s-results-label { font-size: 9px; color: #888; margin-bottom: 6px; }
+  .biz-row {
+    background: white;
+    border: 1px solid #e0e8e0;
+    border-radius: 5px;
+    padding: 7px 8px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .biz-info .biz-name { font-size: 11px; font-weight: 700; color: #1a3a2a; }
+  .biz-info .biz-sub { font-size: 9px; color: #888; margin-top: 1px; }
+  .biz-wa { background: #25d366; color: white; border-radius: 4px; padding: 4px 7px; font-size: 9px; font-weight: 700; }
+
+  /* Profile page */
+  .s-profile-header {
+    background: #1a3a2a;
+    color: white;
+    padding: 10px;
+  }
+  .s-profile-header .pname { font-size: 13px; font-weight: 700; }
+  .s-profile-header .pcat { font-size: 9px; color: #a0d0b0; margin-top: 2px; }
+  .s-profile-body { padding: 8px; }
+  .p-field { margin-bottom: 6px; }
+  .p-label { font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 1px; }
+  .p-value { font-size: 10px; color: #1a3a2a; font-weight: 500; }
+  .p-ctas { display: flex; gap: 4px; margin-top: 8px; }
+  .p-btn { flex: 1; border-radius: 4px; padding: 5px 4px; font-size: 9px; font-weight: 700; text-align: center; }
+  .p-btn-wa { background: #25d366; color: white; }
+  .p-btn-call { background: #e8f5ee; color: #1a3a2a; border: 1px solid #c0dcc8; }
+  .p-btn-view { background: #1a3a2a; color: white; }
+
+  .socials-row { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+  .social-chip { background: #f0f4f0; border-radius: 10px; padding: 2px 6px; font-size: 9px; color: #555; }
+
+  /* Register form */
+  .s-form { padding: 8px; }
+  .f-field { margin-bottom: 6px; }
+  .f-label { font-size: 9px; color: #555; margin-bottom: 2px; font-weight: 600; }
+  .f-input {
+    width: 100%;
+    border: 1px solid #c0d8c0;
+    border-radius: 4px;
+    padding: 4px 7px;
+    font-size: 10px;
+    color: #888;
+    background: white;
+  }
+  .f-submit {
+    width: 100%;
+    background: #1a3a2a;
+    color: white;
+    border-radius: 4px;
+    padding: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* Iframe approach */
+  .s-iframe-wrap {
+    margin: 10px;
+    border: 2px dashed #c0d8c0;
+    border-radius: 6px;
+    background: #e8f5ee;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #4d9a6e;
+    font-size: 11px;
+    text-align: center;
+    gap: 4px;
+  }
+  .iframe-logo { font-size: 22px; }
+  .iframe-note { font-size: 9px; color: #888; margin-top: 2px; }
+
+  /* Hybrid */
+  .s-hybrid-row {
+    background: #e8f5ee;
+    border: 1px solid #d0e8d8;
+    border-radius: 5px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .view-map-btn {
+    background: #3d7a58;
+    color: white;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  /* Pros/cons */
+  .pc { padding: 10px 12px; border-top: 1px solid #e8f0e8; }
+  .pc-row { display: flex; gap: 10px; }
+  .pc-col { flex: 1; }
+  .pc-title { font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+  .pc-title.pro { color: #2d6a4f; }
+  .pc-title.con { color: #c53030; }
+  .pc li { font-size: 10px; color: #555; margin-left: 12px; margin-bottom: 2px; line-height: 1.3; }
+
+  .tabs { display: flex; border-bottom: 2px solid #e0e8e0; }
+  .tab {
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  .tab.active { color: #1a3a2a; border-bottom-color: #1a3a2a; }
+</style>
+</head>
+<body>
+
+<h2>3 Approaches — How the site would look</h2>
+<p class="subtitle">Compare all three side by side. Click an approach to select it.</p>
+
+<div class="grid">
+
+  <!-- APPROACH 1 -->
+  <div class="approach selected" onclick="select(this)">
+    <div class="approach-header" style="background:#2D5A40">
+      Approach 1 — Built here
+      <span class="badge">⭐ Recommended</span>
+    </div>
+
+    <!-- Screen 1: /businesses list -->
+    <div style="padding:10px 12px 0;font-size:10px;font-weight:700;color:#555">📄 /businesses — search + region filter</div>
+    <div class="screen">
+      <div class="screen-nav">
+        <span class="logo">UG Hub</span>
+        <span class="nav-link">Ideas</span>
+        <span class="nav-link active">Businesses</span>
+        <span class="nav-link">Jobs</span>
+      </div>
+      <div class="screen-body">
+        <div class="s-search">
+          <div class="s-input">🔍 restaurants, plumbers...</div>
+          <div class="s-select">Category ▾</div>
+        </div>
+        <div class="s-map">
+          <div class="s-map-label">📍 Click a region</div>
+          <div class="region-grid">
+            <div class="region-btn" style="background:#4d9a6e">Northern<br><span style="font-weight:400;font-size:8px">41 biz</span></div>
+            <div class="region-btn" style="background:#3d7a58">Eastern<br><span style="font-weight:400;font-size:8px">87 biz</span></div>
+            <div class="region-btn" style="background:#F5C842;color:#1a3a2a">Central ✓<br><span style="font-weight:400;font-size:8px">142 biz</span></div>
+            <div class="region-btn" style="background:#2D5A40">Western<br><span style="font-weight:400;font-size:8px">53 biz</span></div>
+          </div>
+        </div>
+        <div class="s-results">
+          <div class="s-results-label">142 businesses in Central</div>
+          <div class="biz-row">
+            <div class="biz-info"><div class="biz-name">Mama's Kitchen</div><div class="biz-sub">🍽️ Restaurant · Kampala</div></div>
+            <div class="biz-wa">💬</div>
+          </div>
+          <div class="biz-row">
+            <div class="biz-info"><div class="biz-name">Fix-It Plumbing</div><div class="biz-sub">🔧 Plumber · Kampala</div></div>
+            <div class="biz-wa">💬</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: profile page -->
+    <div style="padding:0 12px 0;font-size:10px;font-weight:700;color:#555">📄 /businesses/[id] — profile</div>
+    <div class="screen">
+      <div class="s-profile-header">
+        <div class="pname">Mama's Kitchen</div>
+        <div class="pcat">🍽️ Restaurant · Kampala, Central</div>
+      </div>
+      <div class="s-profile-body">
+        <div class="p-field"><div class="p-label">About</div><div class="p-value">Authentic Ugandan meals — katogo, matoke, rolex.</div></div>
+        <div class="p-field"><div class="p-label">Location</div><div class="p-value">📍 Wandegeya, Kampala</div></div>
+        <div class="p-field"><div class="p-label">Hours</div><div class="p-value">Mon–Fri: 7am–9pm · Sat–Sun: 8am–8pm</div></div>
+        <div class="socials-row">
+          <div class="social-chip">🌐 Website</div>
+          <div class="social-chip">📘 Facebook</div>
+          <div class="social-chip">🎵 TikTok</div>
+        </div>
+        <div class="p-ctas">
+          <div class="p-btn p-btn-wa">💬 WhatsApp</div>
+          <div class="p-btn p-btn-call">📞 Call</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: register -->
+    <div style="padding:0 12px 0;font-size:10px;font-weight:700;color:#555">📄 /businesses/register</div>
+    <div class="screen">
+      <div class="screen-nav"><span class="logo">UG Hub</span><span style="color:#a0d0b0;font-size:10px">List your business</span></div>
+      <div class="s-form">
+        <div class="f-field"><div class="f-label">Business name *</div><div class="f-input" style="color:#1a3a2a">Mama's Kitchen</div></div>
+        <div class="f-field"><div class="f-label">Category *</div><div class="f-input">Restaurant ▾</div></div>
+        <div class="f-field"><div class="f-label">District *</div><div class="f-input">Kampala ▾</div></div>
+        <div class="f-field"><div class="f-label">WhatsApp</div><div class="f-input">+256 7XX XXX XXX</div></div>
+        <div class="f-field"><div class="f-label">TikTok / Instagram / Website</div><div class="f-input">@mamaskitchen</div></div>
+        <div class="f-submit">Submit for review →</div>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-row">
+        <div class="pc-col">
+          <div class="pc-title pro">✅ Pros</div>
+          <ul>
+            <li>One codebase</li>
+            <li>Admin approves here</li>
+            <li>Full UI control</li>
+            <li>Fast to build</li>
+          </ul>
+        </div>
+        <div class="pc-col">
+          <div class="pc-title con">❌ Cons</div>
+          <ul>
+            <li>Region map only (no pins)</li>
+            <li>New data to populate</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPROACH 2 -->
+  <div class="approach" onclick="select(this)">
+    <div class="approach-header" style="background:#555">
+      Approach 2 — Embed LocateUG
+    </div>
+
+    <div style="padding:10px 12px 0;font-size:10px;font-weight:700;color:#555">📄 /businesses — iframe embed</div>
+    <div class="screen">
+      <div class="screen-nav">
+        <span class="logo">UG Hub</span>
+        <span class="nav-link">Ideas</span>
+        <span class="nav-link active">Businesses</span>
+        <span class="nav-link">Jobs</span>
+      </div>
+      <div class="screen-body">
+        <div class="s-iframe-wrap">
+          <div class="iframe-logo">🗺️</div>
+          <div style="font-weight:700">LocateUG Map</div>
+          <div style="font-size:10px;color:#4d9a6e">locate-ug.vercel.app</div>
+          <div class="iframe-note">Entire LocateUG app loaded inside an iframe.<br>Pin map, search, filters — all from the other site.</div>
+        </div>
+        <div style="padding:8px;font-size:10px;color:#888;text-align:center;border-top:1px solid #e0e8e0">
+          ⚠️ User is now on a different site's UI inside this page.<br>Styling won't match. Mobile may break.
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 12px;font-size:10px;font-weight:700;color:#555">📄 No profile page</div>
+    <div class="screen">
+      <div class="screen-body" style="padding:14px;text-align:center;color:#888;font-size:11px">
+        <div style="font-size:24px;margin-bottom:6px">🚫</div>
+        Business profiles are inside the LocateUG iframe.<br>No profile page on this site.<br><br>
+        <span style="font-size:10px">No registration form here either — users must register on LocateUG directly.</span>
+      </div>
+    </div>
+
+    <div style="padding:0 12px;font-size:10px;font-weight:700;color:#555">📄 No register form</div>
+    <div class="screen">
+      <div class="screen-body" style="padding:14px;text-align:center;color:#888;font-size:11px">
+        <div style="font-size:24px;margin-bottom:6px">🔗</div>
+        Registration happens on LocateUG.<br>This site just links out.<br><br>
+        <span style="font-size:10px">You have no control over their form or approval flow.</span>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-row">
+        <div class="pc-col">
+          <div class="pc-title pro">✅ Pros</div>
+          <ul>
+            <li>Real pin map</li>
+            <li>Zero backend work</li>
+            <li>Existing data</li>
+          </ul>
+        </div>
+        <div class="pc-col">
+          <div class="pc-title con">❌ Cons</div>
+          <ul>
+            <li>Broken on mobile</li>
+            <li>UI mismatch</li>
+            <li>No control</li>
+            <li>No registration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPROACH 3 -->
+  <div class="approach" onclick="select(this)">
+    <div class="approach-header" style="background:#3d7a58">
+      Approach 3 — Hybrid
+    </div>
+
+    <div style="padding:10px 12px 0;font-size:10px;font-weight:700;color:#555">📄 /businesses — list + "View on map" links</div>
+    <div class="screen">
+      <div class="screen-nav">
+        <span class="logo">UG Hub</span>
+        <span class="nav-link">Ideas</span>
+        <span class="nav-link active">Businesses</span>
+        <span class="nav-link">Jobs</span>
+      </div>
+      <div class="screen-body">
+        <div class="s-search">
+          <div class="s-input">🔍 restaurants, plumbers...</div>
+          <div class="s-select">Region ▾</div>
+        </div>
+        <div class="s-results" style="padding-top:8px">
+          <div class="s-results-label">323 businesses · <span style="color:#3d7a58;font-weight:600">🗺️ View all on LocateUG map →</span></div>
+          <div class="s-hybrid-row">
+            <div class="biz-info"><div class="biz-name">Mama's Kitchen</div><div class="biz-sub">🍽️ Restaurant · Kampala</div></div>
+            <div style="display:flex;gap:4px">
+              <div class="biz-wa">💬</div>
+              <div class="view-map-btn">🗺️ Map</div>
+            </div>
+          </div>
+          <div class="s-hybrid-row">
+            <div class="biz-info"><div class="biz-name">Fix-It Plumbing</div><div class="biz-sub">🔧 Plumber · Mbarara</div></div>
+            <div style="display:flex;gap:4px">
+              <div class="biz-wa">💬</div>
+              <div class="view-map-btn">🗺️ Map</div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:8px;font-size:10px;color:#888;border-top:1px solid #e0e8e0;margin-top:4px">
+            "View on map" opens LocateUG in a new tab, zoomed to that business
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 12px;font-size:10px;font-weight:700;color:#555">📄 /businesses/[id] — profile (with map link)</div>
+    <div class="screen">
+      <div class="s-profile-header">
+        <div class="pname">Mama's Kitchen</div>
+        <div class="pcat">🍽️ Restaurant · Kampala, Central</div>
+      </div>
+      <div class="s-profile-body">
+        <div class="p-field"><div class="p-label">About</div><div class="p-value">Authentic Ugandan meals.</div></div>
+        <div class="p-field"><div class="p-label">Location</div><div class="p-value">📍 Wandegeya, Kampala &nbsp;<span style="color:#3d7a58;font-size:9px;font-weight:700">🗺️ Open on LocateUG →</span></div></div>
+        <div class="socials-row">
+          <div class="social-chip">🌐 Website</div>
+          <div class="social-chip">🎵 TikTok</div>
+        </div>
+        <div class="p-ctas">
+          <div class="p-btn p-btn-wa">💬 WhatsApp</div>
+          <div class="p-btn p-btn-call">📞 Call</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:0 12px;font-size:10px;font-weight:700;color:#555">📄 /businesses/register — same as Approach 1</div>
+    <div class="screen">
+      <div class="screen-nav"><span class="logo">UG Hub</span><span style="color:#a0d0b0;font-size:10px">List your business</span></div>
+      <div class="s-form">
+        <div class="f-field"><div class="f-label">Business name *</div><div class="f-input" style="color:#1a3a2a">Mama's Kitchen</div></div>
+        <div class="f-field"><div class="f-label">Category *</div><div class="f-input">Restaurant ▾</div></div>
+        <div class="f-field"><div class="f-label">District *</div><div class="f-input">Kampala ▾</div></div>
+        <div class="f-field"><div class="f-label">TikTok / Instagram / Website</div><div class="f-input">@mamaskitchen</div></div>
+        <div class="f-submit">Submit for review →</div>
+      </div>
+    </div>
+
+    <div class="pc">
+      <div class="pc-row">
+        <div class="pc-col">
+          <div class="pc-title pro">✅ Pros</div>
+          <ul>
+            <li>Rich profiles here</li>
+            <li>Real map on LocateUG</li>
+            <li>Best of both</li>
+          </ul>
+        </div>
+        <div class="pc-col">
+          <div class="pc-title con">❌ Cons</div>
+          <ul>
+            <li>Users bounce between sites</li>
+            <li>More complex</li>
+            <li>Two systems to sync</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function select(el) {
+  document.querySelectorAll('.approach').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+</body>
+</html>

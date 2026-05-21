@@ -1,0 +1,46 @@
+<h2>How do users find businesses near them?</h2>
+<p class="subtitle">Location is the core feature — how should it work on a phone in Uganda where many people have basic internet?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Interactive Map (Google Maps style)</h3>
+      <p>Show pins on a live map. User taps a pin to see the business. Needs good internet. Most visual and familiar.</p>
+      <ul style="margin-top:8px;padding-left:16px;font-size:13px;color:#64748b;">
+        <li>Uses GPS to center on user</li>
+        <li>Pins by category (food, services, etc.)</li>
+        <li>Tap pin → business profile</li>
+        <li>Requires decent data connection</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Area / District Dropdown</h3>
+      <p>User picks their district or town from a list. Results show as cards. Works on slow internet, no GPS needed.</p>
+      <ul style="margin-top:8px;padding-left:16px;font-size:13px;color:#64748b;">
+        <li>Select: Kampala → Nakawa → results</li>
+        <li>Fast on 2G/3G</li>
+        <li>No GPS permission needed</li>
+        <li>Less "discovery", more "search"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Both — Map + Area Filter</h3>
+      <p>Map view for those with good internet. Area dropdown as fallback. User chooses what works for them.</p>
+      <ul style="margin-top:8px;padding-left:16px;font-size:13px;color:#64748b;">
+        <li>Map tab + List tab on same page</li>
+        <li>GPS auto-detects district on map</li>
+        <li>List view works offline-ish</li>
+        <li>Best experience, more to build</li>
+      </ul>
+    </div>
+  </div>
+</div>

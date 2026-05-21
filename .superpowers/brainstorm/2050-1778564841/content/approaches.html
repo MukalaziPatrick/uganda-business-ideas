@@ -1,0 +1,40 @@
+<h2>How should the two apps connect?</h2>
+<p class="subtitle">LocateUG (uganda-map) is already fully built — map, pins, search, claims, verification. Uganda Business Ideas is your ideas + WhatsApp traffic app. Here are 3 ways to bring them together.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Embed LocateUG inside the Business Ideas app</h3>
+      <p>Use the existing <code>/embed/[tag]</code> widget from LocateUG. Embed it as an iframe section on the Business Ideas homepage. Add a /jobs page to Business Ideas. Two separate apps, one page links them.</p>
+      <div class="pros-cons" style="margin-top:10px;font-size:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero new backend work</li><li>LocateUG stays standalone</li><li>Ships in days</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Iframe feels disconnected</li><li>No shared design language</li><li>Jobs lives in a different codebase</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Redesign Business Ideas as the hub, deep-link to LocateUG (Recommended)</h3>
+      <p>Rebuild the Business Ideas homepage with the 3-pillar hero (Ideas | Businesses | Jobs). "Find Businesses" links to LocateUG at its own URL. Add /jobs page inside Business Ideas. Same visual design on both apps.</p>
+      <div class="pros-cons" style="margin-top:10px;font-size:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Both apps keep their own domain</li><li>Shared design = feels like one platform</li><li>Jobs built once in Business Ideas</li><li>LocateUG gets traffic from hub</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>User navigates between 2 domains</li><li>Slightly more design work upfront</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Merge everything into LocateUG as the main platform</h3>
+      <p>LocateUG becomes the master app. Business ideas, jobs, and the map all live under one roof. Business Ideas app redirects to LocateUG. One URL, one codebase.</p>
+      <div class="pros-cons" style="margin-top:10px;font-size:12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>One app, one URL, one brand</li><li>Everything integrated natively</li><li>Long-term cleanest architecture</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Most work — migrate all content</li><li>Lose ugandabusinessideas.com SEO</li><li>Weeks not days to ship</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

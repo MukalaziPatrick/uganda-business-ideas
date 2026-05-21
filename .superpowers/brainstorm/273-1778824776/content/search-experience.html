@@ -1,0 +1,85 @@
+<h2>What should the search experience look like?</h2>
+<p class="subtitle">How does a user find "restaurants in Kampala" or "plumbers in Western region"?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-nav" style="font-size:12px">Uganda Business Hub &nbsp;|&nbsp; Ideas &nbsp;|&nbsp; <strong>Businesses</strong> &nbsp;|&nbsp; Jobs</div>
+      <div style="padding:16px;background:#f8f9fa;border-bottom:1px solid #ddd">
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="mock-input" style="flex:1;font-size:13px">🔍 &nbsp;Search businesses...</div>
+          <select class="mock-input" style="width:130px;font-size:12px"><option>All Categories</option></select>
+          <select class="mock-input" style="width:120px;font-size:12px"><option>All Districts</option></select>
+        </div>
+      </div>
+      <div style="padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Mama's Kitchen</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Fix-It Plumbing</strong><br><span style="color:#888">Plumber · Mbarara</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Kampala Electricals</strong><br><span style="color:#888">Electrician · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Fresh Farms</strong><br><span style="color:#888">Agriculture · Jinja</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Dedicated /businesses page</h3>
+      <p>Homepage links here. Full search bar + category &amp; district filters. Clean, focused experience.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-nav" style="font-size:12px">Uganda Business Hub &nbsp;|&nbsp; Ideas &nbsp;|&nbsp; Jobs</div>
+      <div style="padding:12px;background:#1a365d;color:white;text-align:center">
+        <div style="font-size:14px;font-weight:bold;margin-bottom:4px">Uganda Business Hub</div>
+        <div style="display:flex;gap:6px;justify-content:center;margin-bottom:8px">
+          <div style="background:#2d6a4f;border-radius:4px;padding:6px 10px;font-size:11px">💡 Ideas</div>
+          <div style="background:#c05621;border-radius:4px;padding:6px 10px;font-size:11px">📍 Businesses</div>
+          <div style="background:#553c9a;border-radius:4px;padding:6px 10px;font-size:11px">💼 Jobs</div>
+        </div>
+        <div style="display:flex;gap:6px;justify-content:center">
+          <div class="mock-input" style="width:200px;font-size:12px;background:white;color:#333">🔍 &nbsp;restaurants in Kampala</div>
+          <div class="mock-button" style="font-size:12px;padding:6px 12px">Search</div>
+        </div>
+      </div>
+      <div style="padding:10px;font-size:12px;color:#666;text-align:center">Results appear here inline ↓</div>
+      <div style="padding:0 12px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Mama's Kitchen</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Rolex Corner</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Search on homepage, results inline</h3>
+      <p>No navigation needed. Type and results appear below the hero. Everything on one page.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mock-nav" style="font-size:12px">Uganda Business Hub &nbsp;|&nbsp; Ideas &nbsp;|&nbsp; <strong>Businesses</strong> &nbsp;|&nbsp; Jobs</div>
+      <div style="padding:12px;background:#1a365d;color:white;text-align:center">
+        <div style="font-size:13px;font-weight:bold;margin-bottom:6px">Find a Business in Uganda</div>
+        <div style="display:flex;gap:6px;justify-content:center">
+          <div class="mock-input" style="width:200px;font-size:12px;background:white;color:#333">🔍 &nbsp;restaurants in Kampala</div>
+          <div class="mock-button" style="font-size:12px;padding:6px 12px">Search</div>
+        </div>
+      </div>
+      <div style="padding:8px;background:#e8f4f0;text-align:center;font-size:11px;color:#2d6a4f">→ Navigates to /businesses?q=restaurants&district=Kampala</div>
+      <div style="padding:8px 12px;background:#f8f9fa;border-bottom:1px solid #ddd">
+        <div style="display:flex;gap:6px;align-items:center">
+          <div class="mock-input" style="flex:1;font-size:12px">🔍 &nbsp;restaurants in Kampala</div>
+          <select class="mock-input" style="width:110px;font-size:11px"><option>Restaurant</option></select>
+          <select class="mock-input" style="width:100px;font-size:11px"><option>Kampala</option></select>
+        </div>
+      </div>
+      <div style="padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Mama's Kitchen</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px;font-size:12px"><strong>Rolex Corner</strong><br><span style="color:#888">Restaurant · Kampala</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Homepage search → /businesses with results ⭐ Recommended</h3>
+      <p>Search bar on homepage navigates to /businesses with query pre-loaded. Best of both: discoverability + a dedicated, bookmarkable page.</p>
+    </div>
+  </div>
+
+</div>

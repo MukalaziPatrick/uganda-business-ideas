@@ -1,0 +1,40 @@
+<h2>Where does business data come from?</h2>
+<p class="subtitle">How should real businesses (restaurants, plumbers, shops) surface on the site? Pick the approach that fits best.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>New businesses table here ⭐ Recommended</h3>
+      <p>Add a <code>businesses</code> table to <strong>uganda-business-ideas</strong> Supabase. Businesses register and are searched entirely on this site.</p>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>One codebase to maintain</li><li>Full control over schema &amp; UI</li><li>Business registration form lives here</li><li>Search + map on same page</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Duplicate data if same business is in LocateUG</li><li>Have to re-enter existing LocateUG businesses</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Cross-project query from LocateUG</h3>
+      <p>Query the existing LocateUG Supabase project remotely. Both sites share one businesses database.</p>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>No data duplication</li><li>Existing LocateUG businesses appear immediately</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Exposes LocateUG's anon key in this app</li><li>Tight coupling between two separate apps</li><li>Two Supabase projects to manage</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Deep-link to LocateUG</h3>
+      <p>Keep LocateUG as source of truth. Searching "restaurants in Kampala" bounces you to LocateUG with filters pre-applied.</p>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero backend work on this site</li><li>LocateUG stays the map authority</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Users leave this site — jarring experience</li><li>No control over LocateUG's UI or data</li><li>Search box here feels hollow</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

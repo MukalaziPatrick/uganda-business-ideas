@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uganda Map — 3 Approaches</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f5f0e8; color: #1C3A2A; padding: 24px; }
+  h1 { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 32px; }
+  .approaches { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .card {
+    background: white; border-radius: 20px; padding: 24px;
+    border: 3px solid transparent; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .card:hover { border-color: #1C3A2A; transform: translateY(-2px); }
+  .card.selected { border-color: #F5C842; background: #fffbec; }
+  .card-label { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+  .card-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+  .card-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; }
+  .tag-simple { background: #e8f4ee; color: #2D5A40; }
+  .tag-recommended { background: #F5C842; color: #1C3A2A; }
+  .tag-heavy { background: #fde8e8; color: #c0392b; }
+  .map-preview { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: #f5f0e8; margin-bottom: 16px; }
+  .pros-cons { font-size: 13px; }
+  .pros-cons .pro { color: #2D5A40; margin-bottom: 4px; }
+  .pros-cons .con { color: #c0392b; margin-bottom: 4px; }
+  .selection-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #1C3A2A; color: white; padding: 16px 24px;
+    display: none; align-items: center; justify-content: space-between;
+    font-weight: 700;
+  }
+  .selection-bar.visible { display: flex; }
+  .selection-bar button {
+    background: #F5C842; color: #1C3A2A; border: none; border-radius: 10px;
+    padding: 10px 24px; font-weight: 800; font-size: 14px; cursor: pointer;
+  }
+
+  /* ── Approach A: Flat real-shape SVG ── */
+  .map-a svg .region { transition: all 0.2s; cursor: pointer; }
+  .map-a svg .region:hover { opacity: 0.8; }
+
+  /* ── Approach B: 3D raised tiles ── */
+  .map-b svg .region-group { cursor: pointer; }
+  .map-b svg .region-group:hover .top { filter: brightness(1.1); }
+  .map-b svg .region-group.active .top { fill: #F5C842 !important; }
+
+  /* ── Approach C: 3D extruded WebGL-style ── */
+  .map-c { position: relative; }
+  .map-c .region-block {
+    position: absolute; border-radius: 6px; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; color: white;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 4px 8px 0 rgba(0,0,0,0.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .map-c .region-block:hover { transform: translateY(-4px); box-shadow: 4px 12px 0 rgba(0,0,0,0.3); }
+  .map-c .region-block.active { background: #F5C842 !important; color: #1C3A2A !important; text-shadow: none; }
+</style>
+</head>
+<body>
+
+<h1>Uganda Map — 3 Visual Approaches</h1>
+<p class="subtitle">Click a card to select your preferred approach. Click regions inside each map to see interaction.</p>
+
+<div class="approaches">
+
+  <!-- APPROACH A -->
+  <div class="card" onclick="selectCard('a')" id="card-a">
+    <div class="card-label">Approach A</div>
+    <div class="card-title">Real Shape, Flat 2D</div>
+    <span class="card-tag tag-simple">Simple &amp; Fast</span>
+    <div class="map-preview map-a">
+      <svg viewBox="0 0 220 260" width="180" height="220">
+        <defs>
+          <filter id="shadow-a" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000022"/>
+          </filter>
+        </defs>
+        <!-- Northern -->
+        <path id="a-north" class="region" fill="#4d9a6e" filter="url(#shadow-a)"
+          d="M30,20 L190,20 L195,30 L185,90 L150,100 L110,95 L70,100 L35,88 Z"
+          onclick="toggleRegionA('north',this)" />
+        <text x="110" y="62" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Northern</text>
+
+        <!-- Eastern -->
+        <path id="a-east" class="region" fill="#3d7a58" filter="url(#shadow-a)"
+          d="M150,100 L185,90 L195,105 L192,185 L168,210 L140,220 L125,180 L130,140 Z"
+          onclick="toggleRegionA('east',this)" />
+        <text x="162" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Eastern</text>
+
+        <!-- Western -->
+        <path id="a-west" class="region" fill="#2D5A40" filter="url(#shadow-a)"
+          d="M35,88 L70,100 L110,95 L125,180 L108,220 L80,235 L45,215 L28,170 L25,120 Z"
+          onclick="toggleRegionA('west',this)" />
+        <text x="68" y="165" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Western</text>
+
+        <!-- Central -->
+        <path id="a-central" class="region" fill="#1C3A2A" filter="url(#shadow-a)"
+          d="M110,95 L150,100 L130,140 L125,180 L108,220 L100,210 L95,175 L100,140 Z"
+          onclick="toggleRegionA('central',this)" />
+        <text x="115" y="148" text-anchor="middle" font-size="9" font-weight="bold" fill="white" pointer-events="none">Central</text>
+      </svg>
+    </div>
+    <div class="pros-cons">
+      <div class="pro">✅ Real Uganda silhouette</div>
+      <div class="pro">✅ Loads instantly, zero deps</div>
+      <div class="pro">✅ Works on all screen sizes</div>
+      <div class="con">❌ Flat — no visual "wow"</div>
+    </div>
+  </div>
+
+  <!-- APPROACH B -->
+  <div class="card" onclick="selectCard('b')" id="card-b">
+    <div class="card-label">Approach B ⭐</div>
+    <div class="card-title">Real Shape + 3D Raised</div>
+    <span class="card-tag tag-recommended">Recommended</span>
+    <div class="map-preview map-b">
+      <svg viewBox="0 0 220 280" width="180" height="230">
+        <defs>
+          <filter id="shadow-b">
+            <feDropShadow dx="3" dy="6" stdDeviation="4" flood-color="#00000044"/>
+          </filter>
+          <filter id="shadow-active">
+            <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#F5C84288"/>
+            <feDropShadow dx="3" dy="6" stdDeviation="4" flood-color="#00000044"/>
+          </filter>
+        </defs>
+
+        <!-- Northern raised -->
+        <g class="region-group" id="b-north" onclick="toggleRegionB('north')">
+          <!-- side face -->
+          <path fill="#1a4a2a" d="M30,88 L35,95 L70,107 L110,102 L150,107 L185,97 L190,90 L185,90 L150,100 L110,95 L70,100 L35,88 Z"/>
+          <!-- top face -->
+          <path class="top" fill="#4d9a6e" filter="url(#shadow-b)"
+            d="M30,20 L190,20 L195,30 L185,90 L150,100 L110,95 L70,100 L35,88 Z"/>
+          <text x="110" y="62" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Northern</text>
+        </g>
+
+        <!-- Eastern raised -->
+        <g class="region-group" id="b-east" onclick="toggleRegionB('east')">
+          <path fill="#1a3a28" d="M150,107 L185,97 L192,112 L192,192 L168,217 L140,227 L125,187 L130,147 L150,107 Z"/>
+          <path class="top" fill="#3d7a58" filter="url(#shadow-b)"
+            d="M150,100 L185,90 L195,105 L192,185 L168,210 L140,220 L125,180 L130,140 Z"/>
+          <text x="162" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Eastern</text>
+        </g>
+
+        <!-- Western raised -->
+        <g class="region-group" id="b-west" onclick="toggleRegionB('west')">
+          <path fill="#0e2a18" d="M35,95 L70,107 L110,102 L125,187 L108,227 L80,242 L45,222 L28,177 L25,127 L35,95 Z"/>
+          <path class="top" fill="#2D5A40" filter="url(#shadow-b)"
+            d="M35,88 L70,100 L110,95 L125,180 L108,220 L80,235 L45,215 L28,170 L25,120 Z"/>
+          <text x="68" y="165" text-anchor="middle" font-size="11" font-weight="bold" fill="white" pointer-events="none">Western</text>
+        </g>
+
+        <!-- Central raised -->
+        <g class="region-group" id="b-central" onclick="toggleRegionB('central')">
+          <path fill="#0a1f10" d="M110,102 L150,107 L130,147 L125,187 L108,227 L100,217 L95,182 L100,147 L110,102 Z"/>
+          <path class="top" fill="#1C3A2A" filter="url(#shadow-b)"
+            d="M110,95 L150,100 L130,140 L125,180 L108,220 L100,210 L95,175 L100,140 Z"/>
+          <text x="115" y="148" text-anchor="middle" font-size="9" font-weight="bold" fill="white" pointer-events="none">Central</text>
+        </g>
+      </svg>
+    </div>
+    <div class="pros-cons">
+      <div class="pro">✅ Real Uganda silhouette</div>
+      <div class="pro">✅ 3D depth — looks premium</div>
+      <div class="pro">✅ Yellow glow on active region</div>
+      <div class="pro">✅ No heavy library needed</div>
+      <div class="con">❌ Slightly more SVG complexity</div>
+    </div>
+  </div>
+
+  <!-- APPROACH C -->
+  <div class="card" onclick="selectCard('c')" id="card-c">
+    <div class="card-label">Approach C</div>
+    <div class="card-title">Full 3D WebGL Blocks</div>
+    <span class="card-tag tag-heavy">Heavy / Complex</span>
+    <div class="map-preview map-c" style="position:relative; width:100%; height:220px; background:#1C3A2A; border-radius:12px; overflow:hidden;">
+      <!-- Perspective grid floor -->
+      <svg style="position:absolute;bottom:0;left:0;width:100%;height:100%;opacity:0.15" viewBox="0 0 280 220" preserveAspectRatio="none">
+        <line x1="140" y1="60" x2="0" y2="220" stroke="white" stroke-width="0.5"/>
+        <line x1="140" y1="60" x2="70" y2="220" stroke="white" stroke-width="0.5"/>
+        <line x1="140" y1="60" x2="140" y2="220" stroke="white" stroke-width="0.5"/>
+        <line x1="140" y1="60" x2="210" y2="220" stroke="white" stroke-width="0.5"/>
+        <line x1="140" y1="60" x2="280" y2="220" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="130" x2="280" y2="130" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="170" x2="280" y2="170" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="210" x2="280" y2="210" stroke="white" stroke-width="0.5"/>
+      </svg>
+
+      <!-- 3D block: Northern -->
+      <div onclick="toggleRegionC('north',this)" id="c-north" style="position:absolute;left:70px;top:30px;width:130px;height:55px;background:#4d9a6e;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;cursor:pointer;box-shadow:5px 10px 0 #1a4a2a, 0 15px 20px rgba(0,0,0,0.4);transition:all 0.2s;text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        Northern
+      </div>
+      <!-- 3D block: Eastern -->
+      <div onclick="toggleRegionC('east',this)" id="c-east" style="position:absolute;left:155px;top:95px;width:85px;height:60px;background:#3d7a58;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;cursor:pointer;box-shadow:5px 10px 0 #1a3a28, 0 15px 20px rgba(0,0,0,0.4);transition:all 0.2s;text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        Eastern
+      </div>
+      <!-- 3D block: Western -->
+      <div onclick="toggleRegionC('west',this)" id="c-west" style="position:absolute;left:40px;top:95px;width:100px;height:70px;background:#2D5A40;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;cursor:pointer;box-shadow:5px 10px 0 #0e2a18, 0 15px 20px rgba(0,0,0,0.4);transition:all 0.2s;text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        Western
+      </div>
+      <!-- 3D block: Central -->
+      <div onclick="toggleRegionC('central',this)" id="c-central" style="position:absolute;left:150px;top:165px;width:70px;height:42px;background:#1C3A2A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;cursor:pointer;box-shadow:5px 8px 0 #0a1810, 0 12px 16px rgba(0,0,0,0.4);transition:all 0.2s;border:1px solid #2D5A40;text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        Central
+      </div>
+    </div>
+    <div class="pros-cons" style="margin-top:16px">
+      <div class="pro">✅ Most dramatic 3D effect</div>
+      <div class="pro">✅ Very eye-catching</div>
+      <div class="con">❌ Abstract — not real Uganda shape</div>
+      <div class="con">❌ Heavy bundle (deck.gl/three.js)</div>
+      <div class="con">❌ Slow on low-end phones</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Selection bar -->
+<div class="selection-bar" id="selection-bar">
+  <span id="selection-text">No approach selected</span>
+  <button onclick="confirmSelection()">Confirm Choice →</button>
+</div>
+
+<script>
+let selectedCard = null;
+let selectedApproach = null;
+
+function selectCard(id) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('card-' + id).classList.add('selected');
+  selectedCard = id;
+  const names = { a: 'Approach A — Real Shape, Flat 2D', b: 'Approach B — Real Shape + 3D Raised ⭐', c: 'Approach C — Full 3D Blocks' };
+  document.getElementById('selection-text').textContent = '✅ Selected: ' + names[id];
+  document.getElementById('selection-bar').classList.add('visible');
+}
+
+// Approach A interactions
+let activeA = null;
+function toggleRegionA(region, el) {
+  event.stopPropagation();
+  if (activeA === el) {
+    el.setAttribute('fill', el.dataset.orig || el.getAttribute('fill'));
+    activeA = null;
+  } else {
+    if (activeA) activeA.setAttribute('fill', activeA.dataset.orig || activeA.getAttribute('fill'));
+    el.dataset.orig = el.getAttribute('fill');
+    el.setAttribute('fill', '#F5C842');
+    activeA = el;
+  }
+}
+
+// Approach B interactions
+let activeB = null;
+function toggleRegionB(region) {
+  event.stopPropagation();
+  const g = document.getElementById('b-' + region);
+  const top = g.querySelector('.top');
+  const origColors = { north: '#4d9a6e', east: '#3d7a58', west: '#2D5A40', central: '#1C3A2A' };
+  if (activeB === region) {
+    top.setAttribute('fill', origColors[region]);
+    top.setAttribute('filter', 'url(#shadow-b)');
+    activeB = null;
+  } else {
+    if (activeB) {
+      const prev = document.getElementById('b-' + activeB).querySelector('.top');
+      prev.setAttribute('fill', origColors[activeB]);
+      prev.setAttribute('filter', 'url(#shadow-b)');
+    }
+    top.setAttribute('fill', '#F5C842');
+    top.setAttribute('filter', 'url(#shadow-active)');
+    activeB = region;
+  }
+}
+
+// Approach C interactions
+let activeC = null;
+function toggleRegionC(region, el) {
+  event.stopPropagation();
+  const origColors = { north: '#4d9a6e', east: '#3d7a58', west: '#2D5A40', central: '#1C3A2A' };
+  if (activeC === region) {
+    el.style.background = origColors[region];
+    el.style.color = 'white';
+    el.style.transform = '';
+    activeC = null;
+  } else {
+    if (activeC) {
+      const prev = document.getElementById('c-' + activeC);
+      prev.style.background = origColors[activeC];
+      prev.style.color = 'white';
+      prev.style.transform = '';
+    }
+    el.style.background = '#F5C842';
+    el.style.color = '#1C3A2A';
+    el.style.transform = 'translateY(-6px)';
+    activeC = region;
+  }
+}
+
+function confirmSelection() {
+  const names = { a: 'A', b: 'B', c: 'C' };
+  alert('You chose Approach ' + names[selectedCard] + '! Tell Claude your choice in the chat.');
+}
+</script>
+</body>
+</html>

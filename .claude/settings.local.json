@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:brainstorming:*)",
+      "Skill(superpowers:writing-plans)",
+      "Skill(superpowers:writing-plans:*)",
+      "Bash(awk '/export const ideas:.*\\\\[/,/^\\\\];/' app/data/ideas.ts)",
+      "PowerShell(cd d:\\\\projects\\\\uganda-business-ideas; $GIT_DIR = git rev-parse --git-dir; $GIT_COMMON = git rev-parse --git-common-dir; Write-Host \"GIT_DIR: $GIT_DIR\"; Write-Host \"GIT_COMMON: $GIT_COMMON\"; git log --oneline -6)",
+      "Read(//c/Users/patri/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/**)",
+      "Bash(C:\\\\Users\\\\patri\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.1.0\\\\skills\\\\brainstorming\\\\scripts\\\\start-server.sh --project-dir \"d:/projects/uganda-business-ideas\")",
+      "PowerShell(bash \"C:/Users/patri/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/start-server.sh\" --project-dir \"d:/projects/uganda-business-ideas\" 2>&1)",
+      "PowerShell(Get-Command bash -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Command git -ErrorAction SilentlyContinue)",
+      "PowerShell(wsl --status 2>&1)"
+    ]
+  }
+}
