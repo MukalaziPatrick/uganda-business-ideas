@@ -34,6 +34,8 @@ export type Business = {
   whatsapp_clicks: number;
   contact_clicks: number;
   status: BusinessStatus;
+  external_id: string | null;
+  source: string | null;
   created_at: string;
 };
 
@@ -51,4 +53,6 @@ export type BusinessInsert = {
   facebook?: string;
   instagram?: string;
   tiktok?: string;
+  external_id?: string;
+  source?: string;
 };
