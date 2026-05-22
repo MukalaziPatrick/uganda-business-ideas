@@ -1,6 +1,6 @@
 # Business Yoo — Uganda Business Scraper Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Populate the Business Yoo `/businesses` map with thousands of real Ugandan businesses scraped from Google Places API and OpenStreetMap, reviewable via a new `/admin/import-places` page before going live.
 
@@ -47,7 +47,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS businesses_external_id_idx
 **Files:**
 - No code files — run SQL in Supabase dashboard
 
-- [ ] **Step 1: Run migration in Supabase SQL editor**
+- [x] **Step 1: Run migration in Supabase SQL editor**
 
 Go to your Supabase project → SQL Editor → New query. Paste and run:
 
@@ -60,7 +60,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS businesses_external_id_idx
 
 Expected output: `Success. No rows returned.`
 
-- [ ] **Step 2: Verify columns exist**
+- [x] **Step 2: Verify columns exist**
 
 Run this query in Supabase SQL Editor:
 
@@ -80,7 +80,7 @@ Expected: 2 rows returned — `external_id text` and `source text`.
 **Files:**
 - Modify: `lib/supabase/types.ts`
 
-- [ ] **Step 1: Add `external_id` and `source` to the `Business` type**
+- [x] **Step 1: Add `external_id` and `source` to the `Business` type**
 
 Open `lib/supabase/types.ts`. The `Business` type currently ends with `created_at: string`. Add two new fields after `status`:
 
@@ -110,7 +110,7 @@ export type Business = {
 };
 ```
 
-- [ ] **Step 2: Add `external_id` and `source` to `BusinessInsert`**
+- [x] **Step 2: Add `external_id` and `source` to `BusinessInsert`**
 
 `BusinessInsert` currently ends with `tiktok?: string`. Add:
 
@@ -134,7 +134,7 @@ export type BusinessInsert = {
 };
 ```
 
-- [ ] **Step 3: Verify TypeScript compiles**
+- [x] **Step 3: Verify TypeScript compiles**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -143,7 +143,7 @@ npx tsc --noEmit
 
 Expected: no errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add lib/supabase/types.ts
@@ -157,7 +157,7 @@ git commit -m "feat: add external_id and source fields to Business types"
 **Files:**
 - Modify: `app/data/businesses.ts`
 
-- [ ] **Step 1: Add new categories to `BUSINESS_CATEGORIES`**
+- [x] **Step 1: Add new categories to `BUSINESS_CATEGORIES`**
 
 Open `app/data/businesses.ts`. Replace the existing `BUSINESS_CATEGORIES` array with:
 
@@ -185,7 +185,7 @@ export const BUSINESS_CATEGORIES = [
 ] as const;
 ```
 
-- [ ] **Step 2: Add emoji for the new categories in `categoryEmoji`**
+- [x] **Step 2: Add emoji for the new categories in `categoryEmoji`**
 
 In the same file, update the `categoryEmoji` function's map to include the new categories:
 
@@ -216,7 +216,7 @@ export function categoryEmoji(category: string): string {
 }
 ```
 
-- [ ] **Step 3: Verify TypeScript compiles**
+- [x] **Step 3: Verify TypeScript compiles**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -225,7 +225,7 @@ npx tsc --noEmit
 
 Expected: no errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add app/data/businesses.ts
@@ -242,14 +242,14 @@ git commit -m "feat: add 7 new business categories (banks, gym, church, mosque, 
 - Create: `scraper/output/.gitkeep`
 - Create: `scraper/map_districts.py`
 
-- [ ] **Step 1: Create `scraper/requirements.txt`**
+- [x] **Step 1: Create `scraper/requirements.txt`**
 
 ```
 requests==2.31.0
 python-dotenv==1.0.0
 ```
 
-- [ ] **Step 2: Create `scraper/.env.example`**
+- [x] **Step 2: Create `scraper/.env.example`**
 
 ```
 GOOGLE_PLACES_API_KEY=your_key_here
@@ -257,7 +257,7 @@ GOOGLE_PLACES_API_KEY=your_key_here
 
 Copy this file to `scraper/.env` and fill in your actual Google Places API key from the GCP Console.
 
-- [ ] **Step 3: Create `scraper/output/.gitkeep`**
+- [x] **Step 3: Create `scraper/output/.gitkeep`**
 
 Create an empty file at `scraper/output/.gitkeep`. Then add to `.gitignore` (root of project):
 
@@ -266,7 +266,7 @@ scraper/output/*.json
 scraper/.env
 ```
 
-- [ ] **Step 4: Create `scraper/map_districts.py`**
+- [x] **Step 4: Create `scraper/map_districts.py`**
 
 This file maps every Uganda district name → its region. Used by both scrapers.
 
@@ -323,7 +323,7 @@ def get_region(district: str) -> str:
     return DISTRICT_TO_REGION.get(district, "Central")
 ```
 
-- [ ] **Step 5: Install Python deps**
+- [x] **Step 5: Install Python deps**
 
 ```bash
 cd d:/projects/uganda-business-ideas/scraper
@@ -332,7 +332,7 @@ pip install -r requirements.txt
 
 Expected: Successfully installed requests-2.31.0 python-dotenv-1.0.0 (or similar).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -347,7 +347,7 @@ git commit -m "feat: add Python scraper scaffold and district→region mapping"
 **Files:**
 - Create: `scraper/scrape_google.py`
 
-- [ ] **Step 1: Create `scraper/scrape_google.py`**
+- [x] **Step 1: Create `scraper/scrape_google.py`**
 
 ```python
 """
@@ -523,7 +523,7 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 2: Run a test scrape (Phase 1 — Kampala hospitals, max 20)**
+- [x] **Step 2: Run a test scrape (Phase 1 — Kampala hospitals, max 20)**
 
 ```bash
 cd d:/projects/uganda-business-ideas/scraper
@@ -532,7 +532,7 @@ python scrape_google.py --type hospital --district Kampala --max 20
 
 Expected: Asks "Continue? (y/n):" → type `y` → prints something like "Saved 20 businesses to scraper/output/2026-05-22-hospital-Kampala.json"
 
-- [ ] **Step 3: Inspect the output file**
+- [x] **Step 3: Inspect the output file**
 
 Open `scraper/output/2026-05-22-hospital-kampala.json` and verify it looks like:
 
@@ -553,7 +553,7 @@ Open `scraper/output/2026-05-22-hospital-kampala.json` and verify it looks like:
 
 If the file is empty or has no `external_id` values, check your `GOOGLE_PLACES_API_KEY` in `scraper/.env`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -568,7 +568,7 @@ git commit -m "feat: add Google Places scraper script"
 **Files:**
 - Create: `scraper/scrape_osm.py`
 
-- [ ] **Step 1: Create `scraper/scrape_osm.py`**
+- [x] **Step 1: Create `scraper/scrape_osm.py`**
 
 ```python
 """
@@ -685,7 +685,7 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 2: Run a test scrape (petrol stations — free)**
+- [x] **Step 2: Run a test scrape (petrol stations — free)**
 
 ```bash
 cd d:/projects/uganda-business-ideas/scraper
@@ -694,7 +694,7 @@ python scrape_osm.py --amenity fuel
 
 Expected: "Saved X businesses to scraper/output/YYYY-MM-DD-osm-fuel.json" — typically 300–800 results for Uganda.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -709,7 +709,7 @@ git commit -m "feat: add OSM scraper for petrol stations and bus parks (free)"
 **Files:**
 - Create: `app/api/admin/import-places/route.ts`
 
-- [ ] **Step 1: Create `app/api/admin/import-places/route.ts`**
+- [x] **Step 1: Create `app/api/admin/import-places/route.ts`**
 
 ```typescript
 import { NextRequest, NextResponse } from "next/server";
@@ -779,7 +779,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-- [ ] **Step 2: Verify TypeScript compiles**
+- [x] **Step 2: Verify TypeScript compiles**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -788,7 +788,7 @@ npx tsc --noEmit
 
 Expected: no errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add app/api/admin/import-places/route.ts
@@ -803,7 +803,7 @@ git commit -m "feat: add /api/admin/import-places POST endpoint with deduplicati
 - Create: `app/admin/import-places/page.tsx`
 - Create: `app/admin/import-places/ImportPlacesClient.tsx`
 
-- [ ] **Step 1: Create `app/admin/import-places/page.tsx`**
+- [x] **Step 1: Create `app/admin/import-places/page.tsx`**
 
 ```typescript
 import { cookies } from "next/headers";
@@ -827,7 +827,7 @@ export default async function ImportPlacesPage() {
 }
 ```
 
-- [ ] **Step 2: Create `app/admin/import-places/ImportPlacesClient.tsx`**
+- [x] **Step 2: Create `app/admin/import-places/ImportPlacesClient.tsx`**
 
 ```typescript
 "use client";
@@ -1010,7 +1010,7 @@ export default function ImportPlacesClient() {
 }
 ```
 
-- [ ] **Step 3: Verify TypeScript compiles**
+- [x] **Step 3: Verify TypeScript compiles**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -1019,7 +1019,7 @@ npx tsc --noEmit
 
 Expected: no errors.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add app/admin/import-places/page.tsx app/admin/import-places/ImportPlacesClient.tsx
@@ -1033,7 +1033,7 @@ git commit -m "feat: add /admin/import-places UI for reviewing and bulk-importin
 **Files:**
 - Modify: `app/admin/businesses/page.tsx`
 
-- [ ] **Step 1: Add import link at top of admin businesses page**
+- [x] **Step 1: Add import link at top of admin businesses page**
 
 Open `app/admin/businesses/page.tsx`. After the `<h1>` tag, add a link to the import page:
 
@@ -1052,7 +1052,7 @@ Open `app/admin/businesses/page.tsx`. After the `<h1>` tag, add a link to the im
 
 Replace the existing standalone `<h1>` line with this `<div>` block.
 
-- [ ] **Step 2: Verify TypeScript compiles**
+- [x] **Step 2: Verify TypeScript compiles**
 
 ```bash
 cd d:/projects/uganda-business-ideas
@@ -1061,7 +1061,7 @@ npx tsc --noEmit
 
 Expected: no errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add app/admin/businesses/page.tsx
@@ -1072,37 +1072,37 @@ git commit -m "feat: add import-places link to admin businesses page"
 
 ## Task 10: End-to-end smoke test
 
-- [ ] **Step 1: Start the dev server**
+- [x] **Step 1: Start the dev server**
 
 ```bash
 cd d:/projects/uganda-business-ideas
 npm run dev
 ```
 
-- [ ] **Step 2: Run a small scrape if you haven't already**
+- [x] **Step 2: Run a small scrape if you haven't already**
 
 ```bash
 cd d:/projects/uganda-business-ideas/scraper
 python scrape_google.py --type hospital --district Kampala --max 20
 ```
 
-- [ ] **Step 3: Log in to admin and navigate to import page**
+- [x] **Step 3: Log in to admin and navigate to import page**
 
 Open `http://localhost:3000/admin/login` → log in → navigate to `http://localhost:3000/admin/businesses` → click "Import from scraper".
 
-- [ ] **Step 4: Upload the JSON and import**
+- [x] **Step 4: Upload the JSON and import**
 
 Upload `scraper/output/YYYY-MM-DD-hospital-kampala.json` → verify table shows businesses → click "Import X businesses" → verify success message says "X imported".
 
-- [ ] **Step 5: Check they appear as pending**
+- [x] **Step 5: Check they appear as pending**
 
 Go to `http://localhost:3000/admin/businesses` → verify the imported hospitals appear with Approve/Reject buttons.
 
-- [ ] **Step 6: Approve one and verify it appears on the map**
+- [x] **Step 6: Approve one and verify it appears on the map**
 
 Click Approve on one hospital → go to `http://localhost:3000/businesses` → filter by Central region → verify the hospital appears.
 
-- [ ] **Step 7: Final commit**
+- [x] **Step 7: Final commit**
 
 ```bash
 git add .

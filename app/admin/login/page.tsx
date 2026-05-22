@@ -8,7 +8,7 @@ type LoginPageProps = {
 export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
   const error = params?.error;
-  const next = params?.next ?? "/admin/leads";
+  const next = params?.next ?? "/admin/businesses";
 
   function errorMessage(code: string | undefined) {
     if (code === "credentials") return "Invalid email or password.";

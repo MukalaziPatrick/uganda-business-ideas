@@ -63,19 +63,28 @@ TYPE_TO_CATEGORY: dict[str, str] = {
     "local_government_office":   "Government Office",
 }
 
-NEARBY_SEARCH_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+NEARBY_SEARCH_URL = "https://places.googleapis.com/v1/places:searchNearby"
 
 
 def fetch_page(lat: float, lng: float, place_type: str, page_token: str | None = None) -> dict:
-    params: dict = {
-        "key": API_KEY,
-        "location": f"{lat},{lng}",
-        "radius": 10000,
-        "type": place_type,
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": API_KEY,
+        "X-Goog-FieldMask": "places.displayName,places.id,places.formattedAddress",
+    }
+    body: dict = {
+        "includedTypes": [place_type],
+        "maxResultCount": 20,
+        "locationRestriction": {
+            "circle": {
+                "center": {"latitude": lat, "longitude": lng},
+                "radius": 10000.0,
+            }
+        },
     }
     if page_token:
-        params = {"key": API_KEY, "pagetoken": page_token}
-    resp = requests.get(NEARBY_SEARCH_URL, params=params, timeout=10)
+        body["pageToken"] = page_token
+    resp = requests.post(NEARBY_SEARCH_URL, json=body, headers=headers, timeout=10)
     resp.raise_for_status()
     return resp.json()
 
@@ -98,33 +107,30 @@ def scrape_district(place_type: str, district: str, max_results: int) -> list[di
             break
 
         if page_token:
-            time.sleep(2)  # Google requires a short delay before using a page token
+            time.sleep(2)
 
         data = fetch_page(lat, lng, place_type, page_token)
         request_count += 1
-        status = data.get("status")
 
-        if status == "ZERO_RESULTS":
-            break
-        if status not in ("OK", "ZERO_RESULTS"):
-            print(f"  WARNING: API returned status '{status}' — stopping pagination.")
+        places = data.get("places", [])
+        if not places:
             break
 
-        for place in data.get("results", []):
+        for place in places:
             if len(results) >= max_results:
                 break
             results.append({
-                "name":        place.get("name", "").strip(),
+                "name":        place.get("displayName", {}).get("text", "").strip(),
                 "category":    category,
                 "region":      region,
                 "district":    district,
                 "town":        None,
                 "phone":       None,
                 "source":      "google_places",
-                "external_id": place.get("place_id"),
+                "external_id": place.get("id"),
             })
 
-        page_token = data.get("next_page_token")
+        page_token = data.get("nextPageToken")
         page_num += 1
 
     print(f"  Fetched {len(results)} results in {request_count} API requests (~${request_count * 0.017:.3f})")
