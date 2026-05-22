@@ -40,7 +40,15 @@ export default async function AdminBusinessesPage() {
 
   return (
     <main className="p-6">
-      <h1 className="text-xl font-black text-[#1C3A2A] mb-4">Pending Businesses ({businesses.length})</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-black text-[#1C3A2A]">Pending Businesses ({businesses.length})</h1>
+        <a
+          href="/admin/import-places"
+          className="rounded-lg bg-[#1C3A2A] px-4 py-2 text-xs font-bold text-[#F5C842]"
+        >
+          + Import from scraper
+        </a>
+      </div>
       {businesses.length === 0 ? (
         <p className="text-gray-500 text-sm">No pending businesses. All clear!</p>
       ) : (
