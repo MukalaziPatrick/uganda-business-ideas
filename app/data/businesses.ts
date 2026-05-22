@@ -12,6 +12,13 @@ export const BUSINESS_CATEGORIES = [
   "Health & Pharmacy",
   "Education & Tutoring",
   "Hotel & Accommodation",
+  "Banks & Finance",
+  "Gym & Fitness",
+  "Church",
+  "Mosque",
+  "Police & Security",
+  "Government Office",
+  "Petrol Station",
   "Other",
 ] as const;
 
@@ -67,6 +74,13 @@ export function categoryEmoji(category: string): string {
     "Health & Pharmacy": "💊",
     "Education & Tutoring": "📚",
     "Hotel & Accommodation": "🏨",
+    "Banks & Finance": "🏦",
+    "Gym & Fitness": "🏋️",
+    "Church": "⛪",
+    "Mosque": "🕌",
+    "Police & Security": "🚔",
+    "Government Office": "🏛️",
+    "Petrol Station": "⛽",
     "Other": "💼",
   };
   return map[category] ?? "💼";
