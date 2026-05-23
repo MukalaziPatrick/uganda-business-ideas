@@ -182,6 +182,14 @@ export default function HomeClient({
             <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Jobs</p>
             <p className="mt-3 text-xs font-bold text-violet-700">Browse Jobs →</p>
           </Link>
+          <Link
+            href="/travel"
+            className="rounded-2xl bg-gradient-to-br from-[#1a3a5c] to-[#0d6e6e] p-4 hover:opacity-90 transition-opacity"
+          >
+            <div className="text-2xl mb-2">🏨</div>
+            <p className="font-black text-[#F5C842] text-sm mb-1">ZuulaUganda</p>
+            <p className="mt-3 text-xs font-bold text-white/80">Find stays →</p>
+          </Link>
         </div>
       </div>
 
