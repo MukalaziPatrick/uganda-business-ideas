@@ -11,6 +11,9 @@ type Job = {
   job_type: string | null; gender_pref: string | null; min_education: string | null;
   accommodation: string | null; food_provided: string | null; languages: string[] | null;
   description: string | null; featured: boolean; created_at: string;
+  source: string | null;
+  source_url: string | null;
+  expires_at: string | null;
 };
 
 type Worker = {
@@ -42,6 +45,33 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
     const clean = phone.replace(/\D/g, "");
     const num = clean.startsWith("0") ? "256" + clean.slice(1) : clean;
     return `https://wa.me/${num}?text=Hi%20${encodeURIComponent(name)}%2C%20I%20saw%20your%20listing%20on%20Uganda%20Business%20Hub`;
+  }
+
+  function timeAgo(dateStr: string): string {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 60) return mins <= 1 ? "Just now" : `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days === 1) return "Yesterday";
+    if (days < 30) return `${days}d ago`;
+    return `${Math.floor(days / 30)}mo ago`;
+  }
+
+  function expiryLabel(expiresAt: string | null): string | null {
+    if (!expiresAt) return null;
+    const diff = new Date(expiresAt).getTime() - Date.now();
+    const days = Math.ceil(diff / 86400000);
+    if (days <= 0) return "Closes today";
+    if (days <= 5) return `Closes in ${days}d`;
+    return null;
+  }
+
+  function sourceLabel(source: string | null): string | null {
+    if (source === "brightermonday") return "Via BrighterMonday";
+    if (source === "psc") return "Via PSC Uganda";
+    return null;
   }
 
   function skillEmoji(skill: string): string {
@@ -152,6 +182,24 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     {job.description && (
                       <p className="text-xs text-slate-500 mt-2 line-clamp-2">{job.description}</p>
                     )}
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <span className="text-[10px] text-slate-400">{timeAgo(job.created_at)}</span>
+                      {job.source && job.source_url && (
+                        <a
+                          href={job.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-semibold text-violet-500 hover:underline"
+                        >
+                          {sourceLabel(job.source)} ↗
+                        </a>
+                      )}
+                      {expiryLabel(job.expires_at) && (
+                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                          {expiryLabel(job.expires_at)}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Contact buttons */}
