@@ -29,6 +29,7 @@ const NAV_LINKS = [
   { href: "/ideas", label: "Ideas" },
   { href: "/businesses", label: "Businesses" },
   { href: "/jobs", label: "Jobs" },
+  { href: "/pitch", label: "SoundPitch" },
   { href: "/guides", label: "Guides" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
