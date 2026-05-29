@@ -6,6 +6,7 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 
