@@ -36,6 +36,9 @@ export type Business = {
   status: BusinessStatus;
   external_id: string | null;
   source: string | null;
+  address: string | null;
+  lat: number | null;
+  lng: number | null;
   created_at: string;
 };
 
@@ -55,4 +58,14 @@ export type BusinessInsert = {
   tiktok?: string;
   external_id?: string;
   source?: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
 };
+
+export type {
+  LandType, IntendedUse, TitleStatus, VerificationStage,
+  PaymentMethod, PaymentStatus, ContentType,
+  LandAgent, LandListing, LandInsight, LandPayment,
+  LandContent, LandSavedSearch, LandSyncPayload,
+} from './land-types';
