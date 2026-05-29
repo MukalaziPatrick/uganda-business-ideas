@@ -1,5 +1,6 @@
 // app/api/land/sync/route.ts
 import { NextRequest, NextResponse } from 'next/server';
+import { timingSafeEqual } from 'crypto';
 import { syncLandListing } from '@/lib/land/sync';
 import type { LandSyncPayload } from '@/lib/supabase/land-types';
 
@@ -12,7 +13,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Server not configured' }, { status: 500 });
   }
 
-  if (authHeader !== `Bearer ${secret}`) {
+  const expected = Buffer.from(`Bearer ${secret}`);
+  const received = Buffer.from(authHeader ?? '');
+  const match = expected.length === received.length &&
+    timingSafeEqual(expected, received);
+  if (!match) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
