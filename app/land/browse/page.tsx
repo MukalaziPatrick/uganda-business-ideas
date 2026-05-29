@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getLandListings } from '@/lib/land/queries';
 import { LandListingCard } from './LandListingCard';
-import { LandFilterChips } from './LandFilterChips';
 import { LandSaveSearch } from './LandSaveSearch';
+import { LandBrowseHeader } from './LandBrowseHeader';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -18,31 +18,26 @@ export default async function LandBrowsePage({
   searchParams: Promise<Record<string, string>>;
 }) {
   const params = await searchParams;
+  const bboxParams = params.minLat && params.maxLat && params.minLng && params.maxLng
+    ? {
+        minLat: parseFloat(params.minLat),
+        maxLat: parseFloat(params.maxLat),
+        minLng: parseFloat(params.minLng),
+        maxLng: parseFloat(params.maxLng),
+      }
+    : undefined;
   const listings = await getLandListings({
     district: params.district,
     land_type: params.land_type,
     intended_use: params.intended_use,
     verification_stage: params.verification_stage,
     q: params.q,
+    bbox: bboxParams,
   });
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/land" className="text-[#2d6a4f] font-bold text-lg">🏞 Land</Link>
-          <span className="text-gray-300">|</span>
-          <input
-            readOnly
-            placeholder="Search by district, area, or landmark..."
-            className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm text-gray-500 cursor-pointer"
-          />
-        </div>
-        <Suspense>
-          <LandFilterChips />
-        </Suspense>
-      </div>
+      <LandBrowseHeader />
 
       {/* Results */}
       <div className="max-w-6xl mx-auto px-4 py-6">

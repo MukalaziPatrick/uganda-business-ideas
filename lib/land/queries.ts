@@ -10,6 +10,7 @@ export type LandListingFilters = {
   size_min?: number;
   verification_stage?: string;
   q?: string;
+  bbox?: { minLat: number; maxLat: number; minLng: number; maxLng: number };
 };
 
 export async function getLandListings(
@@ -36,6 +37,13 @@ export async function getLandListings(
   if (filters.size_min) query = query.gte('size_acres', filters.size_min);
   if (filters.verification_stage) query = query.eq('verification_stage', filters.verification_stage);
   if (filters.q) query = query.ilike('title', `%${filters.q}%`);
+  if (filters.bbox) {
+    query = query
+      .gte('lat', filters.bbox.minLat)
+      .lte('lat', filters.bbox.maxLat)
+      .gte('lng', filters.bbox.minLng)
+      .lte('lng', filters.bbox.maxLng);
+  }
 
   const { data, error } = await query;
   if (error) { console.error('getLandListings:', error); return []; }
