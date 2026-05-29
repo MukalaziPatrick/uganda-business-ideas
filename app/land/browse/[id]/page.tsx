@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getLandListingById } from '@/lib/land/queries';
 import { LandTrustPanel } from './LandTrustPanel';
 import { LandDetailMap } from './LandDetailMap';
+import { LandChatBubble } from './LandChatBubble';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -123,6 +124,7 @@ export default async function LandListingDetailPage({
           )}
         </div>
       </div>
+      <LandChatBubble listingId={listing.id} />
     </main>
   );
 }
