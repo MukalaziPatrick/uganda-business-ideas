@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { getLandListings } from '@/lib/land/queries';
 import { LandListingCard } from './LandListingCard';
 import { LandFilterChips } from './LandFilterChips';
+import { LandSaveSearch } from './LandSaveSearch';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -49,6 +50,10 @@ export default async function LandBrowsePage({
           {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
           {params.district ? ` in ${params.district}` : ' across Uganda'}
         </p>
+
+        <Suspense>
+          <LandSaveSearch />
+        </Suspense>
 
         {listings.length === 0 ? (
           <div className="text-center py-20">
