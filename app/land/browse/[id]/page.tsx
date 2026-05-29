@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getLandListingById } from '@/lib/land/queries';
 import { LandTrustPanel } from './LandTrustPanel';
+import { LandDetailMap } from './LandDetailMap';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -60,13 +61,13 @@ export default async function LandListingDetailPage({
             <p className="text-2xl font-bold text-[#2d6a4f]">{formatPrice(listing.price_ugx)}</p>
           </div>
 
-          {/* Map placeholder */}
-          <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 text-sm border border-gray-200">
-            🗺 Interactive map coming in Phase 3
-            {listing.lat && listing.lng && (
-              <span className="ml-2 text-xs text-gray-400">({listing.lat}, {listing.lng})</span>
-            )}
-          </div>
+          {listing.lat && listing.lng ? (
+            <LandDetailMap lat={listing.lat} lng={listing.lng} title={listing.title} />
+          ) : (
+            <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 text-sm border border-gray-200">
+              🗺 No coordinates for this listing yet
+            </div>
+          )}
 
           {listing.insight && (
             <div className="bg-[#f0faf4] rounded-2xl p-5 border border-green-100">
