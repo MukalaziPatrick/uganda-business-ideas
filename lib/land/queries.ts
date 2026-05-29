@@ -1,6 +1,6 @@
 // lib/land/queries.ts
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
-import type { LandListing, LandContent } from '@/lib/supabase/land-types';
+import type { LandListing, LandContent, LandAgent } from '@/lib/supabase/land-types';
 
 export type LandListingFilters = {
   district?: string;
@@ -107,4 +107,16 @@ export async function getLandContentBySlug(slug: string): Promise<LandContent | 
     .single();
   if (error) return null;
   return data as LandContent;
+}
+
+export async function getLandAgents(): Promise<LandAgent[]> {
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('land_agents')
+    .select('*')
+    .eq('is_verified', true)
+    .order('rating', { ascending: false });
+  if (error) return [];
+  return (data ?? []) as LandAgent[];
 }
