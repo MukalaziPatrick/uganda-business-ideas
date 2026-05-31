@@ -90,12 +90,19 @@ def start_bot() -> None:
         log.warning("TELEGRAM_BOT_TOKEN not set — bot disabled")
         return
     import threading
-    def run():
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
+
+    async def _run_bot():
         app = Application.builder().token(TOKEN).build()
         app.add_handler(CallbackQueryHandler(handle_callback))
         log.info("Telegram bot started")
-        app.run_polling(drop_pending_updates=True)
+        async with app:
+            await app.start()
+            await app.updater.start_polling(drop_pending_updates=True)
+            # Keep running until cancelled
+            await asyncio.Event().wait()
+
+    def run():
+        asyncio.run(_run_bot())
+
     t = threading.Thread(target=run, daemon=True)
     t.start()
