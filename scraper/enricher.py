@@ -41,7 +41,7 @@ def enrich(raw: dict) -> dict:
     prompt = f"Title: {raw.get('title', '')}\n\nFull text: {raw.get('raw_text', '')}"
     try:
         resp = client.chat.completions.create(
-            model="anthropic/claude-sonnet-4-6",
+            model="anthropic/claude-haiku-4-5",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},

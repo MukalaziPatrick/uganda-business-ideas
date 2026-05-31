@@ -33,7 +33,11 @@ def process_listings(raw_listings: list[dict]) -> None:
         # Send to Telegram if new and suspicious
         if saved and scored["status"] == "pending":
             scored["id"] = saved.get("id")
-            asyncio.run(send_for_review(scored))
+            loop = asyncio.new_event_loop()
+            try:
+                loop.run_until_complete(send_for_review(scored))
+            finally:
+                loop.close()
 
 def run_scrape() -> None:
     log.info("=== Scrape run started ===")
