@@ -43,17 +43,43 @@ def _scrape_detail(client: httpx.Client, url: str) -> str:
 
     # Target the main content area — Lamudi ASP.NET uses a table-based layout
     # Try common content wrappers first, fall back to full body text
-    content = (
-        soup.find("div", id="PropertyDetails")
-        or soup.find("div", class_="property-details")
-        or soup.find("table", id="DataList5")
-        or soup.find("form", id="form1")
-        or soup.body
-    )
+    # Try to find the QUICK SUMMARY section by label text
+    # Lamudi renders a table with Code/Location/District/Price/Size/Tenure/Agent/Contact
+    summary = None
+    for tag in soup.find_all(string=lambda t: t and "QUICK SUMMARY" in t.upper()):
+        summary = tag.find_parent()
+        if summary:
+            # Walk up to a container that holds the full summary table
+            for _ in range(5):
+                if summary.parent:
+                    summary = summary.parent
+                if len(summary.get_text(strip=True)) > 200:
+                    break
 
-    if content:
-        return content.get_text(separator=" ", strip=True)
-    return soup.get_text(separator=" ", strip=True)
+    # Also grab description block
+    desc = None
+    for tag in soup.find_all(string=lambda t: t and "DESCRIPTION" in t.upper()):
+        desc = tag.find_parent()
+        if desc:
+            for _ in range(3):
+                if desc.parent:
+                    desc = desc.parent
+                if len(desc.get_text(strip=True)) > 100:
+                    break
+
+    parts = []
+    if summary:
+        parts.append(summary.get_text(separator=" ", strip=True))
+    if desc:
+        parts.append(desc.get_text(separator=" ", strip=True))
+
+    if parts:
+        return " ".join(parts)
+
+    # Fallback: full body but capped at 3000 chars to keep AI prompt small
+    body = soup.body
+    full = body.get_text(separator=" ", strip=True) if body else soup.get_text(separator=" ", strip=True)
+    return full[:3000]
 
 
 def scrape(max_pages: int = 5) -> list[dict]:
