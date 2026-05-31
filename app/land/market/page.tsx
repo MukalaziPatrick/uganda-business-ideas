@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getMarketListings, type MarketFilters } from '@/lib/land/market-queries';
 import MarketClient from './MarketClient';
 
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Open Market Land Radar — Uganda | Business Yoo',

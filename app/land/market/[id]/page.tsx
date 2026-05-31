@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getMarketListingById } from '@/lib/land/market-queries';
 import Link from 'next/link';
 
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
