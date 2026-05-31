@@ -7,17 +7,23 @@ log = logging.getLogger(__name__)
 
 BASE_URL = "https://www.lamudi.co.ug"
 LAND_URL = f"{BASE_URL}/Lamudi/Index.aspx"
+# Base for resolving relative links from pages under /Lamudi/
+LAMUDI_DIR = f"{BASE_URL}/Lamudi"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.5",
+    "Referer": LAND_URL,
 }
 
 
 def _build_detail_url(href: str) -> str:
+    """Resolve a relative href from the /Lamudi/ directory."""
     if href.startswith("http"):
         return href
-    return BASE_URL + "/" + href.lstrip("/")
+    # Strip fragment (#...) before building URL
+    href = href.split("#")[0]
+    return LAMUDI_DIR + "/" + href.lstrip("/")
 
 
 def _scrape_detail(client: httpx.Client, url: str) -> str:
