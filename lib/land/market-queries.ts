@@ -29,6 +29,20 @@ export type MarketFilters = {
   source_site?: string;
 };
 
+export async function getMarketListingById(id: string): Promise<MarketListing | null> {
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from('land_market')
+    .select('id,title,price_ugx,size_acres,land_type,district,road_area,has_title,contact_phone,trust_score,trust_flags,source_url,source_site,scraped_at')
+    .eq('id', id)
+    .single();
+
+  if (error) return null;
+  return data as MarketListing;
+}
+
 export async function getMarketListings(
   filters: MarketFilters = {},
   limit = 48

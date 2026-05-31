@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { MarketListing } from '@/lib/land/market-queries';
 
 function formatPrice(ugx: number | null): string {
@@ -34,7 +35,8 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
     : null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition-shadow flex flex-col gap-2">
+    <Link href={`/land/market/${listing.id}`} className="block group">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition-shadow flex flex-col gap-2 h-full">
       {/* Unverified badge */}
       <div className="flex items-center justify-between">
         <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">
@@ -66,21 +68,16 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="text-xs text-green-700 border border-green-200 rounded-full px-3 py-1 hover:bg-green-50 transition-colors"
           >
             📲 WhatsApp
           </a>
         ) : (
-          <a
-            href={listing.source_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-600 border border-blue-200 rounded-full px-3 py-1 hover:bg-blue-50 transition-colors"
-          >
-            View listing ↗
-          </a>
+          <span className="text-xs text-gray-400">View details →</span>
         )}
       </div>
     </div>
+    </Link>
   );
 }
