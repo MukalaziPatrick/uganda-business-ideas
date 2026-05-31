@@ -30,12 +30,15 @@ def process_listings(raw_listings: list[dict]) -> None:
 
         saved = upsert_listing(scored)
 
-        # Send to Telegram if new and suspicious
-        if saved and scored["status"] == "pending":
+        # Send to Telegram for all NEW listings (upsert returns None for existing rows)
+        if saved:
             scored["id"] = saved.get("id")
             loop = asyncio.new_event_loop()
             try:
                 loop.run_until_complete(send_for_review(scored))
+                log.info(f"Telegram sent for {scored.get('source_url')}")
+            except Exception as e:
+                log.error(f"Telegram send failed: {e}")
             finally:
                 loop.close()
 

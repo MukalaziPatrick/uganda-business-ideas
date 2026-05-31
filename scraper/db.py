@@ -20,11 +20,20 @@ def upsert_listing(listing: dict) -> dict | None:
     existing = sb.table("land_market").select("id").eq("source_url", source_url).execute()
     if existing.data:
         row_id = existing.data[0]["id"]
-        result = sb.table("land_market").update({
+        sb.table("land_market").update({
             "price_ugx": listing.get("price_ugx"),
+            "size_acres": listing.get("size_acres"),
+            "district": listing.get("district"),
+            "road_area": listing.get("road_area"),
+            "contact_phone": listing.get("contact_phone"),
+            "land_type": listing.get("land_type"),
+            "has_title": listing.get("has_title"),
+            "trust_score": listing.get("trust_score"),
+            "trust_flags": listing.get("trust_flags"),
             "scraped_at": "now()",
         }).eq("id", row_id).execute()
-        return result.data[0] if result.data else None
+        # Return None so Telegram is NOT re-sent for existing rows
+        return None
 
     result = sb.table("land_market").insert(listing).execute()
     return result.data[0] if result.data else None
