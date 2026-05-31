@@ -1,6 +1,7 @@
 import httpx
 from bs4 import BeautifulSoup
 import logging
+import time
 
 log = logging.getLogger(__name__)
 
@@ -12,39 +13,108 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.5",
 }
 
-def scrape(max_pages: int = 5) -> list[dict]:
-    listings = []
+
+def _build_detail_url(href: str) -> str:
+    if href.startswith("http"):
+        return href
+    return BASE_URL + "/" + href.lstrip("/")
+
+
+def _scrape_detail(client: httpx.Client, url: str) -> str:
+    """Fetch the HouseDetails page and return all visible text."""
     try:
-        resp = httpx.get(LAND_URL, headers=HEADERS, timeout=20, follow_redirects=True)
+        resp = client.get(url, headers=HEADERS, timeout=20, follow_redirects=True)
         resp.raise_for_status()
     except Exception as e:
-        log.warning(f"Lamudi page 1 failed: {e}")
-        return listings
+        log.warning(f"Lamudi detail fetch failed for {url}: {e}")
+        return ""
 
     soup = BeautifulSoup(resp.text, "html.parser")
 
-    # Cards are divs with a title attribute containing "for sale" or "for rent"
-    cards = soup.select("div[id*='DataList5_Panel1_']")
-    if not cards:
-        log.info("Lamudi: no cards found on homepage")
-        return listings
+    # Remove script/style noise
+    for tag in soup(["script", "style", "noscript"]):
+        tag.decompose()
 
-    for card in cards:
-        link_el = card.select_one("a[href]")
-        title_el = card.select_one("span[id*='ManualTitleLabel']") or card.select_one("span[id*='PropertyType']")
-        if not link_el:
-            continue
-        href = link_el.get("href", "")
-        title = card.get("title", "") or (title_el.get_text(strip=True) if title_el else "")
-        source_url = href if href.startswith("http") else BASE_URL + "/" + href.lstrip("/")
-        raw_text = card.get_text(separator=" ", strip=True)
+    # Target the main content area — Lamudi ASP.NET uses a table-based layout
+    # Try common content wrappers first, fall back to full body text
+    content = (
+        soup.find("div", id="PropertyDetails")
+        or soup.find("div", class_="property-details")
+        or soup.find("table", id="DataList5")
+        or soup.find("form", id="form1")
+        or soup.body
+    )
 
-        listings.append({
-            "title": title,
-            "raw_text": raw_text,
-            "source_url": source_url,
-            "source_site": "lamudi",
-        })
+    if content:
+        return content.get_text(separator=" ", strip=True)
+    return soup.get_text(separator=" ", strip=True)
+
+
+def scrape(max_pages: int = 5) -> list[dict]:
+    listings = []
+
+    with httpx.Client() as client:
+        try:
+            resp = client.get(LAND_URL, headers=HEADERS, timeout=20, follow_redirects=True)
+            resp.raise_for_status()
+        except Exception as e:
+            log.warning(f"Lamudi index page failed: {e}")
+            return listings
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+
+        # Cards are divs with IDs like DataList5_Panel1_0, DataList5_Panel1_1, ...
+        cards = soup.select("div[id*='DataList5_Panel1_']")
+        if not cards:
+            log.info("Lamudi: no cards found on index page")
+            return listings
+
+        for card in cards:
+            link_el = card.select_one("a[href]")
+            if not link_el:
+                continue
+
+            href = link_el.get("href", "")
+            # Skip non-listing links (anchors, javascript:, etc.)
+            if not href or href.startswith("#") or href.startswith("javascript"):
+                continue
+
+            detail_url = _build_detail_url(href)
+
+            # Prefer HouseDetails page; if href already points there, use as-is
+            # If href is a relative path without HouseCode, skip
+            if "HouseCode=" not in detail_url and "HouseDetails" not in detail_url:
+                # Try to find a HouseCode in the card HTML
+                house_code = None
+                for a in card.select("a[href]"):
+                    h = a.get("href", "")
+                    if "HouseCode=" in h or "HouseDetails" in h:
+                        house_code = h
+                        break
+                if house_code:
+                    detail_url = _build_detail_url(house_code)
+
+            # Card-level title as fallback
+            title_el = (
+                card.select_one("span[id*='ManualTitleLabel']")
+                or card.select_one("span[id*='PropertyType']")
+            )
+            title = card.get("title", "") or (title_el.get_text(strip=True) if title_el else "")
+            card_text = card.get_text(separator=" ", strip=True)
+
+            # Fetch detail page for full data
+            detail_text = _scrape_detail(client, detail_url)
+            raw_text = detail_text if detail_text else card_text
+
+            listings.append({
+                "title": title,
+                "raw_text": raw_text,
+                "source_url": detail_url,
+                "source_site": "lamudi",
+            })
+
+            # Polite crawl delay
+            time.sleep(1)
 
     log.info(f"Lamudi total raw listings: {len(listings)}")
     return listings
