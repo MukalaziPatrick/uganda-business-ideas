@@ -82,71 +82,85 @@ def _scrape_detail(client: httpx.Client, url: str) -> str:
     return full[:3000]
 
 
+def _page_url(page: int) -> str:
+    if page == 1:
+        return LAND_URL
+    return f"{LAND_URL}?page={page}"
+
+
 def scrape(max_pages: int = 5) -> list[dict]:
     listings = []
+    seen_urls: set[str] = set()
 
     with httpx.Client() as client:
-        try:
-            resp = client.get(LAND_URL, headers=HEADERS, timeout=20, follow_redirects=True)
-            resp.raise_for_status()
-        except Exception as e:
-            log.warning(f"Lamudi index page failed: {e}")
-            return listings
+        for page_num in range(1, max_pages + 1):
+            page_url = _page_url(page_num)
+            log.info(f"Lamudi: fetching page {page_num} — {page_url}")
+            try:
+                resp = client.get(page_url, headers=HEADERS, timeout=20, follow_redirects=True)
+                resp.raise_for_status()
+            except Exception as e:
+                log.warning(f"Lamudi page {page_num} failed: {e}")
+                break
 
-        soup = BeautifulSoup(resp.text, "html.parser")
+            soup = BeautifulSoup(resp.text, "html.parser")
 
-        # Cards are divs with IDs like DataList5_Panel1_0, DataList5_Panel1_1, ...
-        cards = soup.select("div[id*='DataList5_Panel1_']")
-        if not cards:
-            log.info("Lamudi: no cards found on index page")
-            return listings
+            cards = soup.select("div[id*='DataList5_Panel1_']")
+            if not cards:
+                log.info(f"Lamudi: no cards on page {page_num} — stopping pagination")
+                break
 
-        for card in cards:
-            link_el = card.select_one("a[href]")
-            if not link_el:
-                continue
+            new_on_page = 0
+            for card in cards:
+                link_el = card.select_one("a[href]")
+                if not link_el:
+                    continue
 
-            href = link_el.get("href", "")
-            # Skip non-listing links (anchors, javascript:, etc.)
-            if not href or href.startswith("#") or href.startswith("javascript"):
-                continue
+                href = link_el.get("href", "")
+                if not href or href.startswith("#") or href.startswith("javascript"):
+                    continue
 
-            detail_url = _build_detail_url(href)
+                detail_url = _build_detail_url(href)
 
-            # Prefer HouseDetails page; if href already points there, use as-is
-            # If href is a relative path without HouseCode, skip
-            if "HouseCode=" not in detail_url and "HouseDetails" not in detail_url:
-                # Try to find a HouseCode in the card HTML
-                house_code = None
-                for a in card.select("a[href]"):
-                    h = a.get("href", "")
-                    if "HouseCode=" in h or "HouseDetails" in h:
-                        house_code = h
-                        break
-                if house_code:
-                    detail_url = _build_detail_url(house_code)
+                if "HouseCode=" not in detail_url and "HouseDetails" not in detail_url:
+                    house_code = None
+                    for a in card.select("a[href]"):
+                        h = a.get("href", "")
+                        if "HouseCode=" in h or "HouseDetails" in h:
+                            house_code = h
+                            break
+                    if house_code:
+                        detail_url = _build_detail_url(house_code)
 
-            # Card-level title as fallback
-            title_el = (
-                card.select_one("span[id*='ManualTitleLabel']")
-                or card.select_one("span[id*='PropertyType']")
-            )
-            title = card.get("title", "") or (title_el.get_text(strip=True) if title_el else "")
-            card_text = card.get_text(separator=" ", strip=True)
+                if detail_url in seen_urls:
+                    continue
+                seen_urls.add(detail_url)
 
-            # Fetch detail page for full data
-            detail_text = _scrape_detail(client, detail_url)
-            raw_text = detail_text if detail_text else card_text
+                title_el = (
+                    card.select_one("span[id*='ManualTitleLabel']")
+                    or card.select_one("span[id*='PropertyType']")
+                )
+                title = card.get("title", "") or (title_el.get_text(strip=True) if title_el else "")
+                card_text = card.get_text(separator=" ", strip=True)
 
-            listings.append({
-                "title": title,
-                "raw_text": raw_text,
-                "source_url": detail_url,
-                "source_site": "lamudi",
-            })
+                detail_text = _scrape_detail(client, detail_url)
+                raw_text = detail_text if detail_text else card_text
 
-            # Polite crawl delay
-            time.sleep(1)
+                listings.append({
+                    "title": title,
+                    "raw_text": raw_text,
+                    "source_url": detail_url,
+                    "source_site": "lamudi",
+                })
+                new_on_page += 1
+                time.sleep(1)
+
+            log.info(f"Lamudi page {page_num}: {new_on_page} new listings")
+
+            if new_on_page == 0:
+                break
+
+            time.sleep(2)
 
     log.info(f"Lamudi total raw listings: {len(listings)}")
     return listings
