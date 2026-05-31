@@ -16,7 +16,7 @@ def scrape(max_pages: int = 5) -> list[dict]:
     """
     listings = []
     for page in range(1, max_pages + 1):
-        url = f"{BASE_URL}/land/buy/?page={page}"
+        url = f"{BASE_URL}/land/for-sale/?page={page}"
         try:
             resp = httpx.get(url, headers=HEADERS, timeout=20, follow_redirects=True)
             resp.raise_for_status()

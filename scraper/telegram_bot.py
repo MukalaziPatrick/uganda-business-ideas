@@ -91,6 +91,8 @@ def start_bot() -> None:
         return
     import threading
     def run():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         app = Application.builder().token(TOKEN).build()
         app.add_handler(CallbackQueryHandler(handle_callback))
         log.info("Telegram bot started")
