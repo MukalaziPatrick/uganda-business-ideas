@@ -1,4 +1,3 @@
-// app/apps/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -9,14 +8,6 @@ export const metadata: Metadata = {
 };
 
 const APPS = [
-  {
-    href: '/land',
-    emoji: '🏞',
-    name: 'Find Land',
-    tagline: 'Browse verified plots across Uganda',
-    color: '#2d6a4f',
-    bg: '#f0faf4',
-  },
   {
     href: '/ideas',
     emoji: '💡',
@@ -68,6 +59,33 @@ export default function AppsPage() {
           <p className="text-gray-500">Explore land, jobs, business ideas, salons, travel, and more — all in one place.</p>
         </div>
 
+        {/* Featured Land card */}
+        <div className="mb-6 p-5 rounded-2xl border-2 border-[#2d6a4f] bg-[#f0faf4]">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-2xl">🏞</span>
+            <div>
+              <div className="font-bold text-[#2d6a4f] text-lg">Find Land in Uganda</div>
+              <div className="text-xs text-gray-500">Verified listings + open market radar · updated daily</div>
+            </div>
+          </div>
+          <form action="/land/market" method="get" className="flex gap-2 mb-3">
+            <input
+              name="q"
+              type="text"
+              placeholder="Kayunga road, 5 acres, Milo land..."
+              className="flex-1 border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]"
+            />
+            <button type="submit" className="bg-[#2d6a4f] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#1e4d38] transition-colors">
+              Search
+            </button>
+          </form>
+          <div className="flex gap-3 text-sm">
+            <Link href="/land/browse" className="text-[#2d6a4f] font-medium hover:underline">Browse Verified →</Link>
+            <Link href="/land/market" className="text-gray-500 hover:underline">Open Market Radar →</Link>
+          </div>
+        </div>
+
+        {/* Other apps */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {APPS.map((app) => (
             <Link
