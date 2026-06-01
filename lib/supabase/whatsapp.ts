@@ -26,8 +26,14 @@ export type ConversationUpdate = Partial<
   Omit<Conversation, 'id' | 'phone_number' | 'created_at' | 'updated_at'>
 >;
 
-export async function getOrCreateConversation(phone: string): Promise<Conversation> {
+function getSupabase() {
   const supabase = createSupabaseAdminClient();
+  if (!supabase) throw new Error('Supabase admin client unavailable — check server env vars');
+  return supabase;
+}
+
+export async function getOrCreateConversation(phone: string): Promise<Conversation> {
+  const supabase = getSupabase();
 
   const { data: existing } = await supabase
     .from('whatsapp_conversations')
@@ -51,7 +57,7 @@ export async function updateConversation(
   id: string,
   updates: ConversationUpdate
 ): Promise<void> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabase();
   const { error } = await supabase
     .from('whatsapp_conversations')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -64,7 +70,7 @@ export async function saveReport(
   reportText: string,
   telegramMessageId: string
 ): Promise<string> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from('whatsapp_reports')
     .insert({
@@ -84,7 +90,7 @@ export async function getReportByTelegramMsgId(telegramMsgId: string): Promise<{
   conversation_id: string;
   report_text: string;
 } | null> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabase();
   const { data } = await supabase
     .from('whatsapp_reports')
     .select('id, conversation_id, report_text')
@@ -94,7 +100,7 @@ export async function getReportByTelegramMsgId(telegramMsgId: string): Promise<{
 }
 
 export async function markReportApproved(reportId: string): Promise<void> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabase();
   await supabase
     .from('whatsapp_reports')
     .update({ approved_at: new Date().toISOString() })
@@ -102,7 +108,7 @@ export async function markReportApproved(reportId: string): Promise<void> {
 }
 
 export async function markReportDelivered(reportId: string): Promise<void> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabase();
   await supabase
     .from('whatsapp_reports')
     .update({ delivered_at: new Date().toISOString() })
