@@ -75,7 +75,10 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
       const sourceUrl = link.startsWith("http") ? link : `${BASE_URL}${link}`;
       const sourceJobId = extractJobId(link);
       const pubDate = item.querySelector("pubDate")?.text?.trim() ?? "";
-      const rawDesc = item.querySelector("description")?.text?.trim() ?? "";
+      // node-html-parser strips CDATA — extract description via regex from raw XML
+      const itemStr = item.toString();
+      const descMatch = itemStr.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/);
+      const rawDesc = descMatch?.[1]?.trim() ?? item.querySelector("description")?.text?.trim() ?? "";
       const description = extractDescription(rawDesc);
 
       jobs.push({
