@@ -64,13 +64,11 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
   const root = parse(html);
   const jobs: ScrapedJob[] = [];
 
-  const cards = root.querySelectorAll(
-    "article.job, div.job-listing, [data-job-id], .job-card, article[class*='job']"
-  );
+  const cards = root.querySelectorAll("div.job-card, article.job-card");
 
   for (const card of cards) {
     try {
-      const titleEl = card.querySelector("h2 a, h3 a, .job-title a, a[class*='title']");
+      const titleEl = card.querySelector("a.job-title-link, .job-title a, h2 a, h3 a");
       const title = titleEl?.text?.trim() ?? "";
       if (!title) continue;
 
@@ -78,10 +76,10 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
       const sourceUrl = href.startsWith("http") ? href : `${BASE_URL}${href}`;
       const sourceJobId = extractJobId(href);
 
-      const employerEl = card.querySelector(".company-name, .employer, [class*='company'], [class*='employer']");
+      const employerEl = card.querySelector("span.company-name, .company-name");
       const employerName = employerEl?.text?.trim() ?? "Unknown Employer";
 
-      const locationEl = card.querySelector(".location, [class*='location'], [class*='district']");
+      const locationEl = card.querySelector("span.location, .location");
       const locationRaw = locationEl?.text?.trim() ?? "Kampala";
       const district = locationRaw.split(",")[0].trim() || "Kampala";
 
@@ -89,7 +87,7 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
       const categoryRaw = categoryEl?.text?.trim() ?? "";
       const skillCategory = mapCategory(categoryRaw);
 
-      const jobTypeEl = card.querySelector(".job-type, [class*='type'], [class*='contract']");
+      const jobTypeEl = card.querySelector("span.job-type, .job-type");
       const jobType = jobTypeEl?.text?.trim() ?? null;
 
       const descEl = card.querySelector(".description, .summary, [class*='desc'], [class*='summary']");

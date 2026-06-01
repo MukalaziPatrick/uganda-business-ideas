@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { scrapeBrighterMonday } from "@/lib/scrapers/brightermonday";
-import { scrapePSC } from "@/lib/scrapers/psc";
+import { scrapeJobweb } from "@/lib/scrapers/jobweb";
 import type { ScrapedJob } from "@/lib/scrapers/types";
 
 export const maxDuration = 60;
@@ -23,12 +23,12 @@ export async function GET(req: Request) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const [bmJobs, pscJobs] = await Promise.all([
+  const [bmJobs, jobwebJobs] = await Promise.all([
     scrapeBrighterMonday().catch(() => [] as ScrapedJob[]),
-    scrapePSC().catch(() => [] as ScrapedJob[]),
+    scrapeJobweb().catch(() => [] as ScrapedJob[]),
   ]);
 
-  const allJobs = [...bmJobs, ...pscJobs];
+  const allJobs = [...bmJobs, ...jobwebJobs];
 
   let inserted = 0;
   let updated = 0;
@@ -82,7 +82,7 @@ export async function GET(req: Request) {
 
   return NextResponse.json({
     brightermonday: bmJobs.length,
-    psc: pscJobs.length,
+    jobweb: jobwebJobs.length,
     inserted,
     updated,
     errors,

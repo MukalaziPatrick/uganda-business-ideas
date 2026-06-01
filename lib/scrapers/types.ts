@@ -5,7 +5,7 @@ export type ScrapedJob = {
   skill_category: string;
   job_type: string | null;
   description: string | null;
-  source: "brightermonday" | "psc";
+  source: "brightermonday" | "psc" | "jobweb";
   source_url: string;
   source_job_id: string;
   expires_at: string | null;
