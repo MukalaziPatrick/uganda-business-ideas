@@ -70,7 +70,11 @@ def fetch_page(lat: float, lng: float, place_type: str, page_token: str | None =
     headers = {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": API_KEY,
-        "X-Goog-FieldMask": "places.displayName,places.id,places.formattedAddress",
+        "X-Goog-FieldMask": (
+            "places.displayName,places.id,places.formattedAddress,"
+            "places.location,places.nationalPhoneNumber,places.websiteUri,"
+            "places.editorialSummary,places.currentOpeningHours"
+        ),
     }
     body: dict = {
         "includedTypes": [place_type],
@@ -119,13 +123,21 @@ def scrape_district(place_type: str, district: str, max_results: int) -> list[di
         for place in places:
             if len(results) >= max_results:
                 break
+            loc = place.get("location", {})
+            hours_raw = place.get("currentOpeningHours", {}).get("weekdayDescriptions", [])
             results.append({
                 "name":        place.get("displayName", {}).get("text", "").strip(),
                 "category":    category,
                 "region":      region,
                 "district":    district,
                 "town":        None,
-                "phone":       None,
+                "phone":       place.get("nationalPhoneNumber"),
+                "website":     place.get("websiteUri"),
+                "description": place.get("editorialSummary", {}).get("text"),
+                "hours":       "; ".join(hours_raw) if hours_raw else None,
+                "address":     place.get("formattedAddress"),
+                "lat":         loc.get("latitude"),
+                "lng":         loc.get("longitude"),
                 "source":      "google_places",
                 "external_id": place.get("id"),
             })
