@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
 
   if (action === 'approve') {
     const supabase = createSupabaseAdminClient();
+    if (!supabase) return NextResponse.json({ status: 'server error' }, { status: 500 });
     const { data: report } = await supabase
       .from('whatsapp_reports')
       .select('id, conversation_id, report_text')
