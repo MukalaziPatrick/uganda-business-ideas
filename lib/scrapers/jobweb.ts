@@ -10,11 +10,20 @@ function extractJobId(url: string): string {
 }
 
 function parseCompanyFromTitle(raw: string): { title: string; company: string } {
-  const atIndex = raw.lastIndexOf(" at ");
+  // Normalize multiple spaces, then split on " at "
+  const normalized = raw.replace(/\s+/g, " ").trim();
+  const atIndex = normalized.lastIndexOf(" at ");
   if (atIndex > 0) {
-    return { title: raw.slice(0, atIndex).trim(), company: raw.slice(atIndex + 4).trim() };
+    return { title: normalized.slice(0, atIndex).trim(), company: normalized.slice(atIndex + 4).trim() };
   }
-  return { title: raw, company: "Unknown Employer" };
+  return { title: normalized, company: "Unknown Employer" };
+}
+
+function extractDescription(rawDesc: string): string | null {
+  if (!rawDesc) return null;
+  const stripped = rawDesc.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const clean = stripped.replace(/The post .+ appeared first on .+$/, "").trim();
+  return clean.slice(0, 400) || null;
 }
 
 function expiresFromPubDate(pubDate: string): string | null {
@@ -66,6 +75,8 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
       const sourceUrl = link.startsWith("http") ? link : `${BASE_URL}${link}`;
       const sourceJobId = extractJobId(link);
       const pubDate = item.querySelector("pubDate")?.text?.trim() ?? "";
+      const rawDesc = item.querySelector("description")?.text?.trim() ?? "";
+      const description = extractDescription(rawDesc);
 
       jobs.push({
         title,
@@ -73,7 +84,7 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
         district: "Kampala",
         skill_category: "Other",
         job_type: null,
-        description: null,
+        description,
         source: "jobweb",
         source_url: sourceUrl,
         source_job_id: sourceJobId,
