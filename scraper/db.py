@@ -52,23 +52,26 @@ def upsert_business(business: dict) -> bool:
     if existing.data:
         return False  # already in DB
 
-    sb.table("businesses").insert({
-        "name":        business.get("name"),
-        "category":    business.get("category"),
-        "region":      business.get("region"),
-        "district":    business.get("district"),
-        "town":        business.get("town"),
-        "phone":       business.get("phone"),
-        "website":     business.get("website"),
-        "address":     business.get("address"),
-        "description": business.get("description"),
-        "hours":       business.get("hours"),
-        "lat":         business.get("lat"),
-        "lng":         business.get("lng"),
-        "external_id": external_id,
-        "source":      business.get("source", "google_places"),
-        "status":      "active",
-    }).execute()
+    try:
+        sb.table("businesses").insert({
+            "name":        business.get("name"),
+            "category":    business.get("category"),
+            "region":      business.get("region"),
+            "district":    business.get("district"),
+            "town":        business.get("town"),
+            "phone":       business.get("phone"),
+            "website":     business.get("website"),
+            "address":     business.get("address"),
+            "description": business.get("description"),
+            "hours":       business.get("hours"),
+            "lat":         business.get("lat"),
+            "lng":         business.get("lng"),
+            "external_id": external_id,
+            "source":      business.get("source", "google_places"),
+            "status":      "active",
+        }).execute()
+    except Exception:
+        return False
     return True
 
 def update_listing_status(listing_id: str, status: str, reviewed_by: str) -> None:
