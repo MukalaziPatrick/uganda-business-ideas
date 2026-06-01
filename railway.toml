@@ -1,0 +1,7 @@
+[build]
+# No special build config needed — Railway auto-detects Python
+
+[[crons]]
+name = "businesses-topup"
+command = "cd scraper && python scrape_businesses_topup.py"
+schedule = "0 0 * * 0"
