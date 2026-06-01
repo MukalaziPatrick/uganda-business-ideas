@@ -27,18 +27,36 @@ export default async function BusinessesPage({
   searchParams: Promise<{ q?: string; region?: string; category?: string }>;
 }) {
   const params = await searchParams;
+  const region = params.region ?? "";
+  const category = params.category ?? "";
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  const { data } = await supabase
+  let query = supabase
     .from("businesses")
     .select("id,name,category,region,district,town,whatsapp,phone,status")
     .eq("status", "active")
     .order("created_at", { ascending: false })
     .limit(20);
+
+  if (region) query = query.eq("region", region);
+  if (category) query = query.eq("category", category);
+
+  const { data } = await query;
+
+  // Fetch per-region counts for the map (unfiltered)
+  const { data: regionRows } = await supabase
+    .from("businesses")
+    .select("region")
+    .eq("status", "active");
+
+  const regionCounts: Partial<Record<string, number>> = {};
+  for (const row of regionRows ?? []) {
+    regionCounts[row.region] = (regionCounts[row.region] ?? 0) + 1;
+  }
 
   const businesses = (data ?? []) as Pick<
     Business,
@@ -49,8 +67,9 @@ export default async function BusinessesPage({
     <BusinessesClient
       initialBusinesses={businesses}
       initialQuery={params.q ?? ""}
-      initialRegion={(params.region as Business["region"]) ?? ""}
-      initialCategory={params.category ?? ""}
+      initialRegion={(region as Business["region"]) ?? ""}
+      initialCategory={category}
+      regionCounts={regionCounts}
     />
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 import UgandaBusinessMap from "@/components/UgandaBusinessMap";
-import { BUSINESS_CATEGORIES, UGANDA_REGIONS, categoryEmoji } from "@/app/data/businesses";
+import { BUSINESS_CATEGORIES, categoryEmoji } from "@/app/data/businesses";
 import type { UgandaRegion } from "@/app/data/businesses";
 import type { Business } from "@/lib/supabase/types";
 
@@ -15,6 +16,7 @@ type Props = {
   initialQuery: string;
   initialRegion: string;
   initialCategory: string;
+  regionCounts: Partial<Record<string, number>>;
 };
 
 const PAGE_SIZE = 20;
@@ -31,7 +33,12 @@ export default function BusinessesClient({
   initialQuery,
   initialRegion,
   initialCategory,
+  regionCounts,
 }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [businesses, setBusinesses] = useState<BusinessCard[]>(initialBusinesses);
   const [query, setQuery] = useState(initialQuery);
   const [region, setRegion] = useState<"All" | UgandaRegion>(
@@ -42,42 +49,61 @@ export default function BusinessesClient({
   const [hasMore, setHasMore] = useState(initialBusinesses.length === PAGE_SIZE);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setBusinesses(initialBusinesses);
+    setOffset(PAGE_SIZE);
+    setHasMore(initialBusinesses.length === PAGE_SIZE);
+  }, [initialBusinesses]);
+
+  function navigate(newRegion: string, newCategory: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (newRegion && newRegion !== "All") params.set("region", newRegion);
+    else params.delete("region");
+    if (newCategory) params.set("category", newCategory);
+    else params.delete("category");
+    router.push(`${pathname}?${params.toString()}`);
+  }
+
+  function handleRegionClick(r: "All" | UgandaRegion) {
+    setRegion(r);
+    navigate(r, category);
+  }
+
+  function handleCategoryChange(c: string) {
+    setCategory(c);
+    navigate(region, c);
+  }
+
+  // Client-side text search only (region + category are server-side)
   const filtered = useMemo(() => {
     return businesses.filter((b) => {
-      const matchesQuery =
+      return (
         !query ||
         b.name.toLowerCase().includes(query.toLowerCase()) ||
         b.category.toLowerCase().includes(query.toLowerCase()) ||
-        b.district.toLowerCase().includes(query.toLowerCase());
-      const matchesRegion = region === "All" || b.region === region;
-      const matchesCategory = !category || b.category === category;
-      return matchesQuery && matchesRegion && matchesCategory;
+        b.district.toLowerCase().includes(query.toLowerCase())
+      );
     });
-  }, [businesses, query, region, category]);
-
-  const businessCounts = useMemo(() => {
-    const counts: Partial<Record<UgandaRegion, number>> = {};
-    for (const r of UGANDA_REGIONS) {
-      counts[r] = businesses.filter((b) => b.region === r).length;
-    }
-    return counts;
-  }, [businesses]);
+  }, [businesses, query]);
 
   const loadMore = useCallback(async () => {
     setLoading(true);
     const supabase = getSupabase();
-    const { data } = await supabase
+    let q = supabase
       .from("businesses")
       .select("id,name,category,region,district,town,whatsapp,phone,status")
       .eq("status", "active")
       .order("created_at", { ascending: false })
       .range(offset, offset + PAGE_SIZE - 1);
+    if (region && region !== "All") q = q.eq("region", region);
+    if (category) q = q.eq("category", category);
+    const { data } = await q;
     const rows = (data ?? []) as BusinessCard[];
     setBusinesses((prev) => [...prev, ...rows]);
     setOffset((o) => o + PAGE_SIZE);
     setHasMore(rows.length === PAGE_SIZE);
     setLoading(false);
-  }, [offset]);
+  }, [offset, region, category]);
 
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
@@ -98,7 +124,7 @@ export default function BusinessesClient({
         />
         <select
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => handleCategoryChange(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1C3A2A]"
         >
           <option value="">All Categories</option>
@@ -114,8 +140,8 @@ export default function BusinessesClient({
         </p>
         <UgandaBusinessMap
           activeRegion={region}
-          onRegionClick={setRegion}
-          businessCounts={businessCounts}
+          onRegionClick={handleRegionClick}
+          businessCounts={regionCounts as Partial<Record<UgandaRegion, number>>}
         />
       </div>
 
