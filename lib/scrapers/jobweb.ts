@@ -55,8 +55,12 @@ async function fetchPage(page: number): Promise<ScrapedJob[]> {
 
       const { title, company: employerName } = parseCompanyFromTitle(rawTitle);
 
-      const link = item.querySelector("link")?.text?.trim() ??
-        item.querySelector("guid")?.text?.trim() ?? "";
+      // node-html-parser treats <link> as void element — use guid or regex instead
+      const guidEl = item.querySelector("guid");
+      const rawGuid = guidEl?.text?.trim() ?? "";
+      // Prefer the actual job URL from <link> via regex on raw XML
+      const linkMatch = item.toString().match(/<link>(https?:\/\/[^<]+)<\/link>/);
+      const link = linkMatch?.[1]?.trim() ?? rawGuid;
       if (!link) continue;
 
       const sourceUrl = link.startsWith("http") ? link : `${BASE_URL}${link}`;
