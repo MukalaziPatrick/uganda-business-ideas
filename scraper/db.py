@@ -38,6 +38,39 @@ def upsert_listing(listing: dict) -> dict | None:
     result = sb.table("land_market").insert(listing).execute()
     return result.data[0] if result.data else None
 
+def upsert_business(business: dict) -> bool:
+    """
+    Insert a business row if external_id doesn't exist yet.
+    Returns True if inserted, False if already existed.
+    """
+    sb = get_client()
+    external_id = business.get("external_id")
+    if not external_id:
+        return False
+
+    existing = sb.table("businesses").select("id").eq("external_id", external_id).execute()
+    if existing.data:
+        return False  # already in DB
+
+    sb.table("businesses").insert({
+        "name":        business.get("name"),
+        "category":    business.get("category"),
+        "region":      business.get("region"),
+        "district":    business.get("district"),
+        "town":        business.get("town"),
+        "phone":       business.get("phone"),
+        "website":     business.get("website"),
+        "address":     business.get("address"),
+        "description": business.get("description"),
+        "hours":       business.get("hours"),
+        "lat":         business.get("lat"),
+        "lng":         business.get("lng"),
+        "external_id": external_id,
+        "source":      business.get("source", "google_places"),
+        "status":      "active",
+    }).execute()
+    return True
+
 def update_listing_status(listing_id: str, status: str, reviewed_by: str) -> None:
     sb = get_client()
     sb.table("land_market").update({
