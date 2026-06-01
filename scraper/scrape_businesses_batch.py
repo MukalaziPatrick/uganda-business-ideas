@@ -9,7 +9,6 @@ Usage:
 """
 
 import argparse
-import sys
 import time
 from dotenv import load_dotenv
 
