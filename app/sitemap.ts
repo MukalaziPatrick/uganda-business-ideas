@@ -41,20 +41,25 @@ const BASE_URL = SITE_URL;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
-  // ── Fetch active business IDs from Supabase ───────────────────────────────
+  // ── Fetch active IDs from Supabase ───────────────────────────────────────
   let businessIds: string[] = [];
+  let salonIds: string[] = [];
+  let travelStayIds: string[] = [];
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
-    const { data } = await supabase
-      .from("businesses")
-      .select("id, updated_at")
-      .eq("status", "active");
-    businessIds = (data ?? []).map((b: { id: string }) => b.id);
+    const [bizRes, salonRes, stayRes] = await Promise.all([
+      supabase.from("businesses").select("id").eq("status", "active"),
+      supabase.from("salons").select("id").in("status", ["active", "featured"]),
+      supabase.from("travel_stays").select("id").in("status", ["active", "featured"]),
+    ]);
+    businessIds   = (bizRes.data   ?? []).map((r: { id: string }) => r.id);
+    salonIds      = (salonRes.data ?? []).map((r: { id: string }) => r.id);
+    travelStayIds = (stayRes.data  ?? []).map((r: { id: string }) => r.id);
   } catch {
-    // Sitemap still works without business pages if Supabase is unavailable
+    // Sitemap still works without dynamic pages if Supabase is unavailable
   }
 
   // ── Static pages ─────────────────────────────────────────────────────────
@@ -178,6 +183,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority:        0.7,
   }));
 
+  // ── Dynamic salon profile pages ───────────────────────────────────────────
+  const salonPages: MetadataRoute.Sitemap = salonIds.map((id) => ({
+    url:             `${BASE_URL}/salons/${id}`,
+    lastModified:    new Date(),
+    changeFrequency: "weekly" as const,
+    priority:        0.7,
+  }));
+
+  // ── Dynamic travel stay pages ─────────────────────────────────────────────
+  const travelStayPages: MetadataRoute.Sitemap = travelStayIds.map((id) => ({
+    url:             `${BASE_URL}/travel/stays/${id}`,
+    lastModified:    new Date(),
+    changeFrequency: "weekly" as const,
+    priority:        0.7,
+  }));
+
   // ── Combine and return ────────────────────────────────────────────────────
-  return [...staticPages, ...ideaPages, ...guidePages, ...blogPages, ...businessPages];
+  return [...staticPages, ...ideaPages, ...guidePages, ...blogPages, ...businessPages, ...salonPages, ...travelStayPages];
 }

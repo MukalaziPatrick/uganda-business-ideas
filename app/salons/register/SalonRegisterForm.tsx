@@ -42,6 +42,7 @@ export default function SalonRegisterForm() {
   const [whatsapp, setWhatsapp] = useState("");
   const [phone, setPhone] = useState("");
   const [openingHours, setOpeningHours] = useState("");
+  const [walkin, setWalkin] = useState(false);
   const [about, setAbout] = useState("");
 
   // Step 2 fields
@@ -104,6 +105,7 @@ export default function SalonRegisterForm() {
         whatsapp: whatsapp.trim(),
         phone: phone.trim() || null,
         opening_hours: openingHours.trim(),
+        walkin,
         about: about.trim() || null,
         cover_photo_url: coverPhotoUrl.trim() || null,
         status: "pending",
@@ -212,6 +214,10 @@ export default function SalonRegisterForm() {
           <div><label className={labelClass}>WhatsApp number *</label><input className={fieldClass} type="tel" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} placeholder="+256 7XX XXX XXX" /></div>
           <div><label className={labelClass}>Phone number</label><input className={fieldClass} type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+256 7XX XXX XXX" /></div>
           <div><label className={labelClass}>Opening hours *</label><input className={fieldClass} value={openingHours} onChange={e => setOpeningHours(e.target.value)} placeholder="e.g. Mon–Sat 8am–7pm" /></div>
+          <label className="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" checked={walkin} onChange={e => setWalkin(e.target.checked)} className="w-4 h-4 accent-[#1C3A2A]" />
+            <span className="text-sm font-medium text-gray-700">Walk-ins welcome (no appointment needed)</span>
+          </label>
           <div>
             <label className={labelClass}>About your salon <span className="text-gray-400 font-normal">({about.length}/300)</span></label>
             <textarea className={`${fieldClass} resize-none`} rows={3} value={about} onChange={e => setAbout(e.target.value)} maxLength={300} placeholder="What do you offer? What makes you special?" />
@@ -294,6 +300,7 @@ export default function SalonRegisterForm() {
             <p><span className="font-bold">Location:</span> {town ? `${town}, ` : ""}{district}</p>
             <p><span className="font-bold">WhatsApp:</span> {whatsapp}</p>
             <p><span className="font-bold">Hours:</span> {openingHours}</p>
+            <p><span className="font-bold">Walk-ins:</span> {walkin ? "Yes" : "No"}</p>
             <p><span className="font-bold">Services:</span> {services.filter(s => s.name.trim()).length} added</p>
             <p><span className="font-bold">Photos:</span> {portfolioUrls.filter(u => u.trim()).length} added</p>
           </div>

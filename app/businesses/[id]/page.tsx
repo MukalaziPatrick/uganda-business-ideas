@@ -145,6 +145,39 @@ export default async function BusinessProfilePage({
           )}
         </div>
 
+        {/* Location */}
+        <div className="bg-white rounded-xl p-4 border border-gray-200">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Location</p>
+          <p className="text-sm text-gray-700 mb-3">
+            📍 {business.address ?? [business.town, business.district, business.region, "Uganda"].filter(Boolean).join(", ")}
+          </p>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.district} Uganda`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[#f5f0e8] border border-gray-200 px-3 py-2 text-xs font-semibold text-[#1C3A2A] hover:bg-[#e8f5ee] transition-colors"
+          >
+            🗺️ Get Directions
+          </a>
+        </div>
+
+        {/* Google Maps embed */}
+        <div className="rounded-xl overflow-hidden border border-gray-200 h-48">
+          <iframe
+            title="Map"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src={
+              business.lat != null && business.lng != null
+                ? `https://maps.google.com/maps?q=${business.lat},${business.lng}&z=16&output=embed`
+                : `https://maps.google.com/maps?q=${encodeURIComponent(`${business.name} ${business.district} Uganda`)}&output=embed`
+            }
+          />
+        </div>
+
         {socials.length > 0 && (
           <div className="bg-white rounded-xl p-4 border border-gray-200">
             <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Find us online</p>

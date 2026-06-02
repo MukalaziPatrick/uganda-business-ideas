@@ -1,12 +1,14 @@
 # Uganda Business Ideas - Roadmap Next Phases
 
-Date: 2026-05-01
+Date: 2026-05-01 (last updated 2026-05-23)
 
 This roadmap starts after Phase 1 Foundation, which delivered the 50 idea inventory, idea discovery, guides, advertising page, lead capture, supplier placeholders, and safe analytics.
 
-Current status: Phase 4 supplier verification and monetization ops is complete. Phase 5 guide sales workflow is complete. Next recommended phase is Phase 6 database/admin dashboard planning only.
+Current status: Phases 1–7 are largely complete. The project has grown well beyond the original roadmap to include a full Businesses directory, Jobs board, Travel listings, and Salons directory — all database-backed with admin approval flows. See phase notes below for details.
 
 ## Phase 2 - Homepage Funnel Upgrade
+
+Status: Complete (homepage routes users to /ideas, /start, /guides, /advertise, /businesses, /travel, /salons).
 
 ### Goal
 
@@ -41,6 +43,8 @@ Turn the homepage into a clearer funnel for users who want to browse ideas, get 
 - `npm.cmd run build` passes.
 
 ## Phase 3 - Blog and SEO Content Clusters
+
+Status: Complete (blog index, detail pages, and posts exist; sitemap includes blog URLs).
 
 ### Goal
 
@@ -142,6 +146,8 @@ Make manual guide sales easier to operate before adding payment APIs.
 
 ## Phase 6 - Database and Admin Dashboard Planning Only
 
+Status: Complete and exceeded. Full Supabase database is live. Admin dashboard covers leads, businesses, salons, and travel. Businesses directory, Jobs board, Travel listings, and Salons directory are all implemented with registration forms, public listing pages, detail pages, and admin approval/feature flows.
+
 ### Goal
 
 Plan a possible move from static data to managed content only after static editing becomes painful or revenue operations require it. This phase is planning only unless separately approved.
@@ -169,6 +175,8 @@ Plan a possible move from static data to managed content only after static editi
 - Existing public pages remain unchanged.
 
 ## Phase 7 - AI Recommendation Engine
+
+Status: Complete (/api/ask route exists and powers the AI assistant on /start).
 
 ### Goal
 

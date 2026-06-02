@@ -8,5 +8,11 @@
       "path": "/api/cron/expire-jobs",
       "schedule": "30 3 * * *"
     }
-  ]
+  ],
+  "experimentalServices": {
+    "web": {
+      "routePrefix": "/",
+      "framework": "nextjs"
+    }
+  }
 }

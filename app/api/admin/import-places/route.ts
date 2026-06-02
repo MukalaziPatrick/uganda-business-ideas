@@ -10,6 +10,9 @@ export type ImportRow = {
   district: string;
   town: string | null;
   phone: string | null;
+  address: string | null;
+  lat: number | null;
+  lng: number | null;
   source: string;
   external_id: string;
 };
@@ -48,8 +51,11 @@ export async function POST(req: NextRequest) {
     category:    r.category,
     region:      r.region,
     district:    r.district,
-    ...(r.town  && { town: r.town }),
-    ...(r.phone && { phone: r.phone }),
+    ...(r.town    && { town: r.town }),
+    ...(r.phone   && { phone: r.phone }),
+    ...(r.address && { address: r.address }),
+    ...(r.lat != null && { lat: r.lat }),
+    ...(r.lng != null && { lng: r.lng }),
     source:      r.source,
     external_id: r.external_id,
   }));

@@ -2,8 +2,8 @@ import os
 import logging
 from dotenv import load_dotenv
 from apscheduler.schedulers.blocking import BlockingScheduler
-from scrapers.olx import scrape as scrape_olx
 from scrapers.lamudi import scrape as scrape_lamudi
+from scrapers.realestate_db import scrape as scrape_red
 from enricher import enrich
 from verifier import score
 from db import upsert_listing
@@ -45,11 +45,11 @@ def process_listings(raw_listings: list[dict]) -> None:
 def run_scrape() -> None:
     log.info("=== Scrape run started ===")
     try:
-        olx_raw = scrape_olx(max_pages=5)[:MAX_PER_SOURCE]
-        log.info(f"OLX: {len(olx_raw)} raw listings")
-        process_listings(olx_raw)
+        red_raw = scrape_red(max_listings=20)[:MAX_PER_SOURCE]
+        log.info(f"RealEstateDB: {len(red_raw)} raw listings")
+        process_listings(red_raw)
     except Exception as e:
-        log.error(f"OLX scrape error: {e}")
+        log.error(f"RealEstateDB scrape error: {e}")
 
     try:
         lamudi_raw = scrape_lamudi(max_pages=5)[:MAX_PER_SOURCE]
