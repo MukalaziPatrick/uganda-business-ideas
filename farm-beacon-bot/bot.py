@@ -20,15 +20,10 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     await query.answer()
     data = query.data or ""
 
-    # data format: "fb_approve:rec123abc" or "fb_reject:rec123abc"
-    parts = data.split(":", 1)
-    action_key = parts[0]
-    record_id = parts[1] if len(parts) > 1 else ""
-
-    if action_key == "fb_approve":
+    if data == "fb_approve":
         url = APPROVE_URL
         reply = "✅ Approved — posting to Facebook now"
-    elif action_key == "fb_reject":
+    elif data == "fb_reject":
         url = REJECT_URL
         reply = "❌ Skipped today"
     else:
@@ -39,8 +34,8 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     async with httpx.AsyncClient(timeout=10) as client:
         try:
-            resp = await client.post(url, json={"record_id": record_id})
-            log.info(f"n8n response: {resp.status_code} — action={action_key} record={record_id}")
+            resp = await client.post(url, json={"action": data})
+            log.info(f"n8n response: {resp.status_code} — {data}")
         except Exception as e:
             log.error(f"Failed to notify n8n: {e}")
             await query.message.reply_text("⚠️ Could not reach n8n. Try again.")
