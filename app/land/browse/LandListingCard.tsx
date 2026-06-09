@@ -9,26 +9,23 @@ function formatPrice(ugx: number | null): string {
   return `UGX ${ugx.toLocaleString()}`;
 }
 
-function TrustBadge({ stage, score }: { stage: string; score: number }) {
+function TrustBadge({ stage }: { stage: string }) {
   if (stage === 'verified') {
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-[#2d6a4f]">
-        ✅ Surveyor Verified
+        ✅ Verified
       </span>
     );
   }
-  if (stage === 'in-review') {
+  if (stage === 'checked') {
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
-        🔍 Under Review
+        🔍 Partially checked
       </span>
     );
   }
-  return (
-    <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
-      ⚠️ Unverified
-    </span>
-  );
+  // self_listed — no badge
+  return null;
 }
 
 export function LandListingCard({ listing }: { listing: LandListing }) {
@@ -48,7 +45,7 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
       {/* Content */}
       <div className="p-4">
         <div className="mb-2">
-          <TrustBadge stage={listing.verification_stage} score={listing.trust_score} />
+          <TrustBadge stage={listing.verification_stage} />
         </div>
         <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">{listing.title}</h3>
         <p className="text-xs text-gray-500 mb-3">

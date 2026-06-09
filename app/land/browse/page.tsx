@@ -41,9 +41,12 @@ export default async function LandBrowsePage({
 
       {/* Results */}
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500 mb-1">
           {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
           {params.district ? ` in ${params.district}` : ' across Uganda'}
+        </p>
+        <p className="text-xs text-gray-400 italic mb-4">
+          Self-listed plots have not been checked by SafeLands. Verify before paying.
         </p>
 
         <Suspense>

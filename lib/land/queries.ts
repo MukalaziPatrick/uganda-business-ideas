@@ -47,7 +47,16 @@ export async function getLandListings(
 
   const { data, error } = await query;
   if (error) { console.error('getLandListings:', error); return []; }
-  return (data ?? []) as LandListing[];
+
+  const STAGE_ORDER: Record<string, number> = { verified: 0, checked: 1, self_listed: 2 };
+  const listings = (data ?? []) as LandListing[];
+  listings.sort((a, b) => {
+    const sa = STAGE_ORDER[a.verification_stage] ?? 3;
+    const sb = STAGE_ORDER[b.verification_stage] ?? 3;
+    if (sa !== sb) return sa - sb;
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+  return listings;
 }
 
 export async function getLandListingById(id: string): Promise<LandListing | null> {
