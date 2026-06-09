@@ -53,6 +53,18 @@ export default async function LandBrowsePage({
           <LandSaveSearch />
         </Suspense>
 
+        <details className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+          <summary className="cursor-pointer font-medium text-gray-800 select-none">
+            How trust works here
+          </summary>
+          <ul className="mt-3 space-y-2 list-none">
+            <li><span className="font-medium text-green-700">Verified</span> — SafeLands and a licensed agent reviewed the title and documents at the Ministry of Lands portal.</li>
+            <li><span className="font-medium text-amber-600">Partially checked</span> — Physically inspected by a licensed agent, but full document review pending.</li>
+            <li><span className="font-medium text-gray-500">Self-listed</span> — Submitted by the seller. Not yet checked by SafeLands.</li>
+          </ul>
+          <p className="mt-3 italic text-xs text-gray-400">Always conduct your own search and a physical site visit before any payment.</p>
+        </details>
+
         {listings.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-4xl mb-4">🔍</div>
