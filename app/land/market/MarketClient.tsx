@@ -1,7 +1,8 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { MarketListing } from '@/lib/land/market-queries';
+import { getTrustTier } from '@/lib/land/market-queries';
 import { MarketListingCard } from './MarketListingCard';
 import Link from 'next/link';
 
@@ -12,6 +13,7 @@ const SOURCES = ['olx','lamudi'];
 export default function MarketClient({ listings, total }: { listings: MarketListing[]; total: number }) {
   const router = useRouter();
   const params = useSearchParams();
+  const [highTrustOnly, setHighTrustOnly] = useState(false);
 
   const setParam = useCallback((key: string, value: string) => {
     const p = new URLSearchParams(params.toString());
@@ -24,6 +26,11 @@ export default function MarketClient({ listings, total }: { listings: MarketList
   const land_type = params.get('land_type') ?? '';
   const has_title = params.get('has_title') ?? '';
   const source_site = params.get('source_site') ?? '';
+
+  const visibleListings = useMemo(
+    () => highTrustOnly ? listings.filter(l => getTrustTier(l.trust_score) === 'high') : listings,
+    [listings, highTrustOnly]
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -42,8 +49,13 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f] mb-3"
           />
 
+          {/* Disclaimer */}
+          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3">
+            Self-listed plots have not been checked by SafeLands. Verify before paying.
+          </p>
+
           {/* Filter row */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             <select
               value={district}
               onChange={(e) => setParam('district', e.target.value)}
@@ -81,6 +93,17 @@ export default function MarketClient({ listings, total }: { listings: MarketList
               {SOURCES.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
             </select>
 
+            {/* High trust toggle */}
+            <label className="flex items-center gap-1.5 cursor-pointer select-none border border-green-200 rounded-lg px-3 py-1.5 text-sm bg-white hover:bg-green-50 transition-colors">
+              <input
+                type="checkbox"
+                checked={highTrustOnly}
+                onChange={(e) => setHighTrustOnly(e.target.checked)}
+                className="accent-green-700"
+              />
+              <span className={highTrustOnly ? 'text-green-800 font-medium' : 'text-gray-600'}>Show high trust only</span>
+            </label>
+
             {(q || district || land_type || has_title || source_site) && (
               <button
                 onClick={() => router.push('/land/market')}
@@ -95,19 +118,28 @@ export default function MarketClient({ listings, total }: { listings: MarketList
 
       {/* Listings grid */}
       <div className="max-w-5xl mx-auto px-4 py-8">
-        {listings.length === 0 ? (
+        {visibleListings.length === 0 ? (
           <div className="text-center py-20 text-gray-500">
             <div className="text-4xl mb-3">🔍</div>
-            <p className="font-medium mb-1">No listings found for your search.</p>
+            <p className="font-medium mb-1">
+              {highTrustOnly && listings.length > 0
+                ? 'No high-trust listings match your filters.'
+                : 'No listings found for your search.'}
+            </p>
             <p className="text-sm">The scraper runs daily at 6AM — check back tomorrow.</p>
             <Link href="/land/browse" className="inline-block mt-4 text-sm text-[#2d6a4f] hover:underline">
               Browse SafeLands verified listings →
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {listings.map(l => <MarketListingCard key={l.id} listing={l} />)}
-          </div>
+          <>
+            {highTrustOnly && (
+              <p className="text-xs text-green-700 mb-3">Showing {visibleListings.length} high-trust listing{visibleListings.length !== 1 ? 's' : ''} (trust score 4–5)</p>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {visibleListings.map(l => <MarketListingCard key={l.id} listing={l} />)}
+            </div>
+          </>
         )}
       </div>
 

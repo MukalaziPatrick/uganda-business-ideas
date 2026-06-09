@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getMarketListings, type MarketFilters } from '@/lib/land/market-queries';
+import { getMarketListings, sortListings, type MarketFilters } from '@/lib/land/market-queries';
 import MarketClient from './MarketClient';
 
 export const dynamic = 'force-dynamic';
@@ -36,7 +36,8 @@ export default async function LandMarketPage({ searchParams }: Props) {
     source_site: searchParams.source_site,
   };
 
-  const listings = await getMarketListings(filters, 48);
+  const raw = await getMarketListings(filters, 48);
+  const listings = sortListings(raw);
 
   return <MarketClient listings={listings} total={listings.length} />;
 }

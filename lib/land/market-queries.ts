@@ -15,7 +15,26 @@ export type MarketListing = {
   source_url: string;
   source_site: string;
   scraped_at: string;
+  /** Derived from trust_score: 'high' (4-5), 'medium' (2-3), 'low' (0-1) */
+  trust_tier?: 'high' | 'medium' | 'low';
 };
+
+const TRUST_ORDER = { high: 0, medium: 1, low: 2 };
+
+export function getTrustTier(score: number | null): 'high' | 'medium' | 'low' {
+  if (!score || score <= 1) return 'low';
+  if (score <= 3) return 'medium';
+  return 'high';
+}
+
+export function sortListings(listings: MarketListing[]): MarketListing[] {
+  return [...listings].sort((a, b) => {
+    const tierA = TRUST_ORDER[getTrustTier(a.trust_score)];
+    const tierB = TRUST_ORDER[getTrustTier(b.trust_score)];
+    if (tierA !== tierB) return tierA - tierB;
+    return new Date(b.scraped_at).getTime() - new Date(a.scraped_at).getTime();
+  });
+}
 
 export type MarketFilters = {
   q?: string;

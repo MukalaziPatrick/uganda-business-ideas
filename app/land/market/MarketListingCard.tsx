@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { MarketListing } from '@/lib/land/market-queries';
+import { getTrustTier } from '@/lib/land/market-queries';
 
 function formatPrice(ugx: number | null): string {
   if (!ugx) return 'Price on request';
@@ -13,6 +14,22 @@ function daysSince(iso: string): string {
   if (diff === 0) return 'today';
   if (diff === 1) return '1d ago';
   return `${diff}d ago`;
+}
+
+const TRUST_BADGE: Record<'high' | 'medium' | 'low', { label: string; className: string }> = {
+  high:   { label: 'High trust',   className: 'bg-green-100 text-green-800 border border-green-200' },
+  medium: { label: 'Partially checked', className: 'bg-amber-100 text-amber-800 border border-amber-200' },
+  low:    { label: 'Self-listed',  className: 'bg-gray-100 text-gray-500 border border-gray-200' },
+};
+
+function TrustBadge({ score }: { score: number | null }) {
+  const tier = getTrustTier(score);
+  const { label, className } = TRUST_BADGE[tier];
+  return (
+    <span className={`inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full ${className}`}>
+      {tier === 'high' ? '✓' : tier === 'medium' ? '~' : '!'} {label}
+    </span>
+  );
 }
 
 function TrustDots({ score }: { score: number | null }) {
@@ -37,11 +54,9 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
   return (
     <Link href={`/land/market/${listing.id}`} className="block group">
     <div className="bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition-shadow flex flex-col gap-2 h-full">
-      {/* Unverified badge */}
+      {/* Trust badge */}
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">
-          ⚠️ Unverified
-        </span>
+        <TrustBadge score={listing.trust_score} />
         <TrustDots score={listing.trust_score} />
       </div>
 
