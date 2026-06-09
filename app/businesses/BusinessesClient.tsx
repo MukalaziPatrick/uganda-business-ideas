@@ -4,8 +4,7 @@ import { useMemo, useState, useCallback, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
-import UgandaBusinessMap from "@/components/UgandaBusinessMap";
-import { BUSINESS_CATEGORIES, categoryEmoji } from "@/app/data/businesses";
+import { BUSINESS_CATEGORIES, categoryEmoji, UGANDA_REGIONS } from "@/app/data/businesses";
 import type { UgandaRegion } from "@/app/data/businesses";
 import type { Business } from "@/lib/supabase/types";
 
@@ -134,15 +133,29 @@ export default function BusinessesClient({
         </select>
       </div>
 
-      <div className="bg-[#e8f5ee] px-4 py-5 border-b border-[#c0dcc8]">
+      <div className="bg-[#e8f5ee] px-4 py-4 border-b border-[#c0dcc8]">
         <p className="text-xs font-semibold text-[#2d6a4f] text-center mb-3">
-          Browse by region — click to filter
+          Browse by region — tap to filter
         </p>
-        <UgandaBusinessMap
-          activeRegion={region}
-          onRegionClick={handleRegionClick}
-          businessCounts={regionCounts as Partial<Record<UgandaRegion, number>>}
-        />
+        <div className="flex gap-2 overflow-x-auto pb-1 justify-center flex-wrap">
+          {(["All", ...UGANDA_REGIONS] as Array<"All" | UgandaRegion>).map((r) => {
+            const count = r !== "All" ? regionCounts[r] : undefined;
+            return (
+              <button
+                key={r}
+                onClick={() => handleRegionClick(r)}
+                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+                  region === r
+                    ? "bg-[#F5C842] text-[#1C3A2A]"
+                    : "bg-[#2D5A40] text-white hover:bg-[#1C3A2A]"
+                }`}
+              >
+                {r === "All" ? "All Regions" : r}
+                {count != null ? ` (${count})` : ""}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="px-4 py-5 max-w-2xl mx-auto">

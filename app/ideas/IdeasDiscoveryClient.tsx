@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { AudienceSegment, BudgetBand, Category, Idea, Region } from "../data/ideas";
-import UgandaRegionMap from "../../components/UgandaRegionMap";
 
 type IdeasDiscoveryClientProps = { ideas: Idea[] };
 
@@ -69,8 +68,22 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
 
   return (
     <div>
-      {/* Region map */}
-      <UgandaRegionMap activeRegion={region} onRegionClick={setRegion} />
+      {/* Region filter */}
+      <div className="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-hide">
+        {(["All", "Central", "Eastern", "Northern", "Western"] as Array<"All" | Region>).map((r) => (
+          <button
+            key={r}
+            onClick={() => setRegion(r)}
+            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+              region === r
+                ? "bg-[#F5C842] text-[#1C3A2A]"
+                : "bg-[#2D5A40] text-white hover:bg-[#1C3A2A]"
+            }`}
+          >
+            {r === "All" ? "All Regions" : r}
+          </button>
+        ))}
+      </div>
 
       {/* Search bar */}
       <div className="relative mb-4">
