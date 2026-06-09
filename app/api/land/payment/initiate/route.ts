@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
-import { initiateMobileMoney } from '@/lib/land/flutterwave';
+import { submitOrder } from '@/lib/land/pesapal';
 import { getLandListingById } from '@/lib/land/queries';
 
 export async function POST(req: NextRequest) {
-  const { listing_id, phone, network } = await req.json();
+  const { listing_id, phone } = await req.json();
 
-  if (!listing_id || !phone || !network) {
-    return NextResponse.json({ error: 'listing_id, phone, and network are required' }, { status: 400 });
-  }
-
-  if (!['MTN', 'AIRTEL'].includes(network)) {
-    return NextResponse.json({ error: 'network must be MTN or AIRTEL' }, { status: 400 });
+  if (!listing_id || !phone) {
+    return NextResponse.json({ error: 'listing_id and phone are required' }, { status: 400 });
   }
 
   const listing = await getLandListingById(listing_id);
@@ -26,24 +22,27 @@ export async function POST(req: NextRequest) {
     listing_id,
     buyer_phone: phone,
     amount_ugx: 10000,
-    payment_method: network.toLowerCase(),
+    payment_method: 'mtn',
     status: 'pending',
     agent_id: listing.agent_id,
-    flutterwave_ref: tx_ref,
+    payment_ref: tx_ref,
   });
 
-  const result = await initiateMobileMoney({
-    tx_ref,
-    amount: 10000,
-    phone,
-    network,
-    listing_id,
-    listing_title: listing.title,
-  });
+  const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/land/payment/ipn`;
 
-  if (!result.success) {
-    return NextResponse.json({ error: result.error }, { status: 400 });
+  let result: { redirect_url: string; order_tracking_id: string };
+  try {
+    result = await submitOrder({
+      amount: 10000,
+      reference: tx_ref,
+      phone,
+      description: `Land title check: ${listing.title}`,
+      callbackUrl,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Payment initiation failed';
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 
-  return NextResponse.json({ success: true, tx_ref, message: result.message });
+  return NextResponse.json({ redirect_url: result.redirect_url, tx_ref });
 }

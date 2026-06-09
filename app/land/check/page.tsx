@@ -2,18 +2,14 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { CheckSuccess } from './CheckSuccess';
 
 function CheckForm() {
   const searchParams = useSearchParams();
   const listingId = searchParams.get('listing');
 
   const [phone, setPhone] = useState('');
-  const [network, setNetwork] = useState<'MTN' | 'AIRTEL'>('MTN');
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,22 +20,20 @@ function CheckForm() {
     const res = await fetch('/api/land/payment/initiate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ listing_id: listingId, phone, network }),
+      body: JSON.stringify({ listing_id: listingId, phone }),
     });
 
     const data = await res.json();
-    setLoading(false);
 
     if (!res.ok) {
+      setLoading(false);
       setError(data.error ?? 'Payment failed. Try again or use WhatsApp.');
       return;
     }
 
-    setMessage(data.message);
-    setTimeout(() => setSuccess(true), 3000);
+    // Redirect to Pesapal hosted payment page
+    window.location.href = data.redirect_url;
   }
-
-  if (success) return <CheckSuccess phone={phone} />;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -53,33 +47,8 @@ function CheckForm() {
           className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#2d6a4f]"
           required
         />
+        <p className="text-xs text-gray-400 mt-1">MTN or Airtel — choose on the next screen</p>
       </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Network</label>
-        <div className="grid grid-cols-2 gap-3">
-          {(['MTN', 'AIRTEL'] as const).map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => setNetwork(n)}
-              className={`py-3 rounded-xl border-2 font-semibold text-sm transition-colors ${
-                network === n
-                  ? 'border-[#2d6a4f] bg-[#f0faf4] text-[#2d6a4f]'
-                  : 'border-gray-200 text-gray-600 hover:border-gray-300'
-              }`}
-            >
-              {n === 'MTN' ? '🟡 MTN Mobile Money' : '🔴 Airtel Money'}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {message && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-700">
-          {message} — check your phone and approve the payment.
-        </div>
-      )}
 
       {error && (
         <div className="space-y-3">
@@ -100,7 +69,7 @@ function CheckForm() {
         disabled={loading || !phone.trim()}
         className="w-full bg-[#2d6a4f] text-white font-semibold py-4 rounded-xl hover:bg-[#235840] transition-colors disabled:opacity-50"
       >
-        {loading ? 'Processing...' : 'Pay UGX 10,000 — Get 24hr Access'}
+        {loading ? 'Redirecting to payment...' : 'Pay UGX 10,000 — Get 24hr Access'}
       </button>
     </form>
   );

@@ -71,7 +71,7 @@ export type LandPayment = {
   status: PaymentStatus;
   access_expires_at: string | null;
   agent_id: string | null;
-  flutterwave_ref: string | null;
+  payment_ref: string | null;
   paid_at: string | null;
   created_at: string;
 };
