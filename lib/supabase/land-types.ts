@@ -3,7 +3,7 @@
 export type LandType = 'mailo' | 'freehold' | 'leasehold' | 'customary';
 export type IntendedUse = 'farming' | 'residential' | 'commercial' | 'mixed';
 export type TitleStatus = 'clean' | 'caution' | 'pending' | 'unknown';
-export type VerificationStage = 'unverified' | 'submitted' | 'in-review' | 'verified';
+export type VerificationStage = 'unverified' | 'submitted' | 'in-review' | 'verified' | 'checked' | 'self_listed';
 export type PaymentMethod = 'mtn' | 'airtel' | 'whatsapp-manual';
 export type PaymentStatus = 'pending' | 'paid' | 'expired';
 export type ContentType = 'guide' | 'spotlight' | 'seasonal' | 'explainer';

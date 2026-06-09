@@ -74,7 +74,9 @@ export async function syncLandListing(payload: LandSyncPayload): Promise<SyncRes
         qr_token,
         agent_id: agent.id,
         photos: payload.photos ?? [],
-        verified_at: payload.verification_stage === 'verified' ? new Date().toISOString() : null,
+        verified_at: (payload.verification_stage === 'verified' || payload.verification_stage === 'checked')
+          ? new Date().toISOString()
+          : null,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'safelands_id' }
