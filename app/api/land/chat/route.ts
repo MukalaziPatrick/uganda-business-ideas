@@ -1,9 +1,32 @@
 // app/api/land/chat/route.ts
 import { NextRequest } from 'next/server';
 import { getLandListingById } from '@/lib/land/queries';
+import { matchFaq } from '@/lib/land/faq';
 
 const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY!;
-const MODEL = 'anthropic/claude-sonnet-4-6';
+// Haiku is much cheaper than Sonnet and is plenty for simple plain-language Q&A.
+// (Same model Farm Beacon moved to — see memory project_farm_beacon_haiku_model.md)
+const MODEL = 'anthropic/claude-haiku-4.5';
+
+// Stream a pre-written answer back in the same SSE shape the client parses,
+// so a cached FAQ hit looks identical to a real model response — with zero API call.
+function faqStream(answer: string): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      const payload = { choices: [{ delta: { content: answer } }] };
+      controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
+      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+      controller.close();
+    },
+  });
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
 
 const BASE_SYSTEM = `You are a friendly land guide for SafeLands UG — Uganda's verified land platform. Help buyers understand Ugandan land, titles, farming, and the buying process.
 
@@ -22,6 +45,16 @@ Key facts you know:
 
 export async function POST(req: NextRequest) {
   const { messages, listing_id } = await req.json();
+
+  // FAQ cache: only for general questions (no listing context). If the latest user
+  // message matches a common question, serve the cached answer instantly — no API call.
+  if (!listing_id) {
+    const lastUser = [...messages].reverse().find((m: { role: string }) => m.role === 'user');
+    if (lastUser?.content) {
+      const cached = matchFaq(lastUser.content);
+      if (cached) return faqStream(cached);
+    }
+  }
 
   let systemPrompt = BASE_SYSTEM;
 
