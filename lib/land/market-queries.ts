@@ -73,6 +73,8 @@ export async function getMarketListings(
     .from('land_market')
     .select('id,title,price_ugx,size_acres,land_type,district,road_area,has_title,contact_phone,trust_score,trust_flags,source_url,source_site,scraped_at')
     .eq('status', 'published')
+    // Exclude listings with corrupt parsed prices (e.g. UGX 3,000) — real land prices start well above this
+    .or('price_ugx.is.null,price_ugx.gte.100000')
     .order('scraped_at', { ascending: false })
     .limit(limit);
 
