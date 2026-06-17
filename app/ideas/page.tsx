@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import IdeasDiscoveryClient from "./IdeasDiscoveryClient";
-import { ideas } from "../data/ideas";
+import { getPublishedIdeas } from "@/lib/ideas/queries";
 import { SITE_URL } from "@/lib/site";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "All Business Ideas in Uganda | Business Yoo",
@@ -13,7 +16,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function IdeasPage() {
+export default async function IdeasPage() {
+  const ideas = await getPublishedIdeas();
+
   return (
     <main className="min-h-screen bg-[#f5f7fa] text-slate-900">
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:px-10">
@@ -62,7 +67,9 @@ export default function IdeasPage() {
           </p>
         </section>
 
-        <IdeasDiscoveryClient ideas={ideas} />
+        <Suspense fallback={<div className="py-10 text-center text-slate-400">Loading ideas…</div>}>
+          <IdeasDiscoveryClient ideas={ideas} />
+        </Suspense>
       </section>
     </main>
   );
