@@ -1,16 +1,22 @@
 // cspell:ignore Fertilisers NARO Agro Owino Balikuddembe Kikuubo Jumia Jiji KCCA didn
-import { formatCapital, getIdeaBySlug, ideas } from "../../data/ideas";
-import { stories } from "../../data/stories";
-import { resources } from "../../data/resources";
-import { suppliers as supplierListings } from "../../data/suppliers";
+import {
+  getPublishedIdeas,
+  getIdeaBySlug,
+  getIdeaStories,
+  getIdeaResources,
+  getIdeaSuppliers,
+  getRelatedIdeas,
+} from "@/lib/ideas/queries";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AnalyticsLink from "@/components/AnalyticsLink";
-import SupplierCard from "@/components/SupplierCard";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { SITE_URL } from "@/lib/site";
 import { buildIdeaHelpMessage } from "@/lib/whatsapp";
+
+export const revalidate = 60;
+export const dynamicParams = true;
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 export async function generateMetadata({
@@ -19,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const idea = getIdeaBySlug(slug);
+  const idea = await getIdeaBySlug(slug);
 
   if (!idea) {
     return {
@@ -30,57 +36,21 @@ export async function generateMetadata({
 
   return {
     title: `${idea.title} in Uganda | Cost, Steps & Profit`,
-    description: `${idea.desc} Learn startup capital, steps, risks, and profit potential in Uganda.`,
+    description: `${idea.description} Learn startup capital, steps, risks, and profit potential in Uganda.`,
     alternates: {
       canonical: `${SITE_URL}/ideas/${idea.slug}`,
     },
   };
 }
 
-export function generateStaticParams() {
-  return ideas.map((idea) => ({
-    slug: idea.slug,
-  }));
+export async function generateStaticParams() {
+  const ideas = await getPublishedIdeas();
+  return ideas.map((idea) => ({ slug: idea.slug }));
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const toArray = (v: string | string[]): string[] =>
   Array.isArray(v) ? v : [v];
-
-// ─── Where-to-buy map (category → supplier list) ──────────────────────────
-const supplierMap: Record<string, { name: string; type: string; tip: string }[]> = {
-  Agriculture: [
-    { name: "Farmers' Input Markets",  type: "Seeds & Fertilisers", tip: "Buy early before the planting season rush drives up prices." },
-    { name: "NARO Extension Offices",  type: "Technical Inputs",    tip: "Free certified seeds and advice available for registered farmers." },
-    { name: "Agro-vet Shops",          type: "Pesticides & Tools",  tip: "Compare prices at two or three shops — markups vary widely." },
-  ],
-  Food: [
-    { name: "Owino / St. Balikuddembe Market", type: "Wholesale Ingredients", tip: "Buy in bulk on weekday mornings for the best prices and freshest stock." },
-    { name: "Kikuubo Trading Centre",           type: "Packaging & Supplies",  tip: "Negotiate volume discounts — most vendors expect it." },
-    { name: "Local Wholesale Distributors",     type: "Branded Goods",         tip: "Ask for a credit account once you have a consistent order history." },
-  ],
-  Services: [
-    { name: "Kampala City Centre Shops",  type: "Equipment & Tools", tip: "Check second-hand first — quality used equipment cuts startup costs by 40%+." },
-    { name: "Online (Jumia / Jiji Uganda)", type: "Electronics & Supplies", tip: "Read seller reviews and request a warranty in writing before buying." },
-    { name: "Chinese Wholesale Importers", type: "Bulk Supplies",    tip: "Pool orders with other small business owners to hit minimum quantities." },
-  ],
-  Digital: [
-    { name: "Computer Training Centres", type: "Skills & Setup", tip: "Ask for practical examples and avoid paying for vague promises." },
-    { name: "Printing and Cyber Shops", type: "Digital Services", tip: "Compare turnaround time, file handling, and support before choosing a provider." },
-    { name: "Freelance Tech Providers", type: "Online Tools", tip: "Start with a small test job before paying for a larger package." },
-  ],
-  Retail: [
-    { name: "Kikuubo Trading Centre",   type: "Wholesale Stock",    tip: "Walk the whole street before buying — identical goods can differ by 30% in price." },
-    { name: "Industrial Area Factories", type: "Direct Manufacture", tip: "Buying direct removes the middleman and increases your margin." },
-    { name: "Owino Market",              type: "Second-Hand Goods",  tip: "Grade carefully: A-grade items resell fast; C-grade stock ties up your capital." },
-  ],
-};
-
-const defaultSuppliers = [
-  { name: "Kampala City Markets",        type: "General Supplies",   tip: "Always compare prices across at least three vendors before committing." },
-  { name: "Kikuubo Trading Centre",      type: "Wholesale Goods",    tip: "Arrive early on weekday mornings for the widest selection and freshest stock." },
-  { name: "Online (Jumia / Jiji Uganda)", type: "Electronics & Tools", tip: "Check seller ratings and request warranties before transferring any money." },
-];
 
 // ─── Resource type colours ────────────────────────────────────────────────────
 const resourceTypeStyle: Record<string, { badge: string; dot: string }> = {
@@ -98,8 +68,15 @@ export default async function IdeaPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const idea = getIdeaBySlug(slug);
+  const idea = await getIdeaBySlug(slug);
   if (!idea) notFound();
+
+  const [ideaStories, ideaResources, supplierList, relatedIdeas] = await Promise.all([
+    getIdeaStories(slug, idea.category),
+    getIdeaResources(idea.category),
+    getIdeaSuppliers(slug, idea.category),
+    getRelatedIdeas(slug, idea.category, 4),
+  ]);
 
   const categoryConfig: Record<string, { color: string; bg: string; icon: string; accent: string }> = {
     Digital:     { color: "text-indigo-700",  bg: "bg-indigo-50  border-indigo-200",  icon: "💻", accent: "indigo"  },
@@ -114,27 +91,6 @@ export default async function IdeaPage({
     icon: "💡",
     accent: "slate",
   };
-
-  const suppliers = supplierMap[idea.category] ?? defaultSuppliers;
-
-  // ── Stories for this idea: exact slug match OR same category ─────────────
-  const ideaStories = stories.filter(
-    (s) =>
-      s.ideaSlugs.includes(idea.slug) ||
-      s.categories.some((c) => c === idea.category)
-  );
-
-  // ── Resources for this idea: exact category match OR "All" ───────────────
-  const ideaResources = resources.filter(
-    (r) => r.categories.includes("All") || r.categories.includes(idea.category)
-  );
-
-  const relevantSupplierListings = supplierListings.filter(
-    (supplier) =>
-      supplier.ideaSlugs.includes(idea.slug) ||
-      supplier.category === idea.category ||
-      supplier.category === "General"
-  );
 
   // ── Shared design tokens ──────────────────────────────────────────────────
   const card        = "rounded-2xl border border-slate-200 bg-white shadow-sm";
@@ -189,7 +145,7 @@ export default async function IdeaPage({
                 ✓ Beginner-friendly
               </span>
               <span className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[11px] font-semibold text-green-200/80">
-                {formatCapital(idea.capital)}
+                {idea.capital}
               </span>
               {ideaStories.length > 0 && (
                 <span className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[11px] font-semibold text-yellow-200/90">
@@ -203,14 +159,14 @@ export default async function IdeaPage({
             </h1>
 
             <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-green-100/70 sm:text-[17px]">
-              {idea.desc}
+              {idea.description}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {[
-                { label: "Capital needed", value: formatCapital(idea.capital),        icon: "💰" },
+                { label: "Capital needed", value: idea.capital,        icon: "💰" },
                 { label: "Category",       value: idea.category,       icon: "🏷️" },
-                { label: "Best for",       value: idea.bestFor?.split(" ").slice(0, 5).join(" ") + "…", icon: "🎯" },
+                { label: "Best for",       value: idea.best_for?.split(" ").slice(0, 5).join(" ") + "…", icon: "🎯" },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/8 px-4 py-3 backdrop-blur-sm">
                   <span className="text-base">{stat.icon}</span>
@@ -255,6 +211,7 @@ export default async function IdeaPage({
             ...(ideaStories.length > 0 ? [{ label: "Stories", href: "#stories" }] : []),
             { label: "Resources",    href: "#resources"    },
             { label: "FAQ",          href: "#faq"          },
+            ...(relatedIdeas.length > 0 ? [{ label: "Related", href: "#related" }] : []),
           ].map((n) => (
             <a key={n.href} href={n.href}
               className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-slate-500 shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700">
@@ -273,7 +230,7 @@ export default async function IdeaPage({
                 <h2 className="text-[15px] font-bold text-slate-900">Best For</h2>
               </div>
             </div>
-            <p className={body}>{idea.bestFor}</p>
+            <p className={body}>{idea.best_for}</p>
           </div>
 
           <div className={`${card} p-6`}>
@@ -339,7 +296,7 @@ export default async function IdeaPage({
               </div>
               <p className="text-[13.5px] text-slate-600">
                 <span className="font-bold text-slate-900">Total capital range:</span>{" "}
-                {formatCapital(idea.capital)} — exact costs depend on your location and choices.
+                {idea.capital} — exact costs depend on your location and choices.
               </p>
             </div>
           </div>
@@ -425,8 +382,8 @@ export default async function IdeaPage({
             </div>
 
             <div className="divide-y divide-slate-100">
-              {suppliers.map((s, i) => (
-                <div key={i} className="flex items-start gap-4 px-6 py-5 sm:px-8 hover:bg-slate-50/60 transition-colors">
+              {supplierList.map((s, i) => (
+                <div key={s.id} className="flex items-start gap-4 px-6 py-5 sm:px-8 hover:bg-slate-50/60 transition-colors">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-50 border border-indigo-100 text-[12px] font-black text-indigo-600">
                     {i + 1}
                   </div>
@@ -442,32 +399,12 @@ export default async function IdeaPage({
                   <span className="shrink-0 text-slate-300">→</span>
                 </div>
               ))}
+              {supplierList.length === 0 && (
+                <div className="px-6 py-5 sm:px-8 text-[13.5px] text-slate-500">
+                  Supplier recommendations for this idea are being added. Check back soon.
+                </div>
+              )}
             </div>
-
-            {relevantSupplierListings.length > 0 && (
-              <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-6 sm:px-8">
-                <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <p className={`${eyebrow} text-green-600`}>Supplier listings</p>
-                    <h3 className="mt-1 text-[15px] font-bold text-slate-900">
-                      Businesses to verify before buying
-                    </h3>
-                  </div>
-                  <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[11px] font-bold text-amber-700">
-                    Placeholder contacts
-                  </span>
-                </div>
-                <div className="grid gap-3">
-                  {relevantSupplierListings.map((supplier) => (
-                    <SupplierCard
-                      key={supplier.id}
-                      supplier={supplier}
-                      ideaTitle={idea.title}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
 
             <div className="flex flex-col gap-3 border-t border-slate-100 bg-indigo-50/50 px-6 py-5 sm:flex-row sm:items-center sm:px-8">
               <div className="flex-1">
@@ -477,7 +414,7 @@ export default async function IdeaPage({
               <div className="flex flex-wrap gap-2">
                 <WhatsAppCTA
                   label="Ask on WhatsApp"
-                  message={buildIdeaHelpMessage(idea.title, formatCapital(idea.capital))}
+                  message={buildIdeaHelpMessage(idea.title, idea.capital)}
                   className="inline-flex items-center gap-1.5 rounded-xl border border-indigo-200 bg-white px-4 py-2 text-[12.5px] font-bold text-indigo-700 shadow-sm transition-all hover:bg-indigo-50 active:scale-95"
                 />
                 <a href="tel:0800100006"
@@ -594,34 +531,17 @@ export default async function IdeaPage({
                 {ideaStories.map((story) => (
                   <div key={story.id} className="px-6 py-6 sm:px-8">
 
-                    {/* YouTube embed — only shown when youtubeId is set */}
-                    {story.youtubeId && (
+                    {/* YouTube embed — only shown when youtube_id is set */}
+                    {story.youtube_id && (
                       <div className="mb-5 overflow-hidden rounded-2xl border border-slate-200 bg-black">
                         <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
                           <iframe
                             className="absolute inset-0 h-full w-full"
-                            src={`https://www.youtube.com/embed/${story.youtubeId}`}
+                            src={`https://www.youtube.com/embed/${story.youtube_id}`}
                             title={`${story.name} — ${story.business}`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           />
-                        </div>
-                      </div>
-                    )}
-
-                    {/* No video yet — placeholder */}
-                    {!story.youtubeId && (
-                      <div className="mb-5 flex items-center gap-4 rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-4">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-slate-400">
-                          <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M12 18.75H4.5a2.25 2.25 0 01-2.25-2.25V9m12.841 9.091L16.5 19.5m-1.409-1.409c.407-.407.659-.97.659-1.591v-9a2.25 2.25 0 00-2.25-2.25h-9c-.621 0-1.184.252-1.591.659m12.182 12.182L2.909 5.909M1.5 4.5l1.409 1.409" />
-                          </svg>
-                        </div>
-                        <div>
-                          <p className="text-[13px] font-semibold text-slate-600">Video coming soon</p>
-                          <p className="text-[12px] text-slate-400">
-                            To add a video: open <code className="rounded bg-slate-100 px-1">app/data/stories.ts</code>, find story <code className="rounded bg-slate-100 px-1">{story.id}</code>, and add <code className="rounded bg-slate-100 px-1">youtubeId: &quot;YOUR_VIDEO_ID&quot;</code>
-                          </p>
                         </div>
                       </div>
                     )}
@@ -640,7 +560,7 @@ export default async function IdeaPage({
                     <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-3">
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100 text-2xl">
-                          {story.avatarEmoji}
+                          {story.avatar_emoji}
                         </div>
                         <div>
                           <p className="text-[14px] font-bold text-slate-900">{story.name}</p>
@@ -749,9 +669,8 @@ export default async function IdeaPage({
               {ideaResources.map((r, i) => {
                 const style = resourceTypeStyle[r.type] ?? { badge: "bg-slate-100 text-slate-600 border-slate-200", dot: "bg-slate-400" };
                 return (
-                  <a key={i} href={r.url} target="_blank" rel="noopener noreferrer"
+                  <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer"
                     className="flex items-start gap-4 px-6 py-5 sm:px-8 transition-colors hover:bg-slate-50/60 group">
-                    {/* Index bubble */}
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 border border-blue-100 text-[12px] font-black text-blue-600">
                       {i + 1}
                     </div>
@@ -763,7 +682,7 @@ export default async function IdeaPage({
                           <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10.5px] font-bold text-emerald-700 ring-1 ring-emerald-100">Free</span>
                         )}
                       </div>
-                      <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{r.desc}</p>
+                      <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{r.description}</p>
                     </div>
                     <svg className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
@@ -783,14 +702,18 @@ export default async function IdeaPage({
 
         {/* ── 12. FAQ ─────────────────────────────────────────────────────── */}
         {(() => {
+          const supplierNames = supplierList.length > 0
+            ? supplierList.map((s) => `${s.name} (${s.type})`).join(", ")
+            : "Kampala City Markets (General Supplies), Kikuubo Trading Centre (Wholesale Goods)";
+
           const faqs = [
             {
               q: `How much does it cost to start a ${idea.title} in Uganda?`,
-              a: `The estimated startup capital for ${idea.title} in Uganda is ${formatCapital(idea.capital)}. The exact amount depends on your location, scale, and setup choices. Starting small and growing is a common approach for beginners.`,
+              a: `The estimated startup capital for ${idea.title} in Uganda is ${idea.capital}. The exact amount depends on your location, scale, and setup choices. Starting small and growing is a common approach for beginners.`,
             },
             {
               q: `Is ${idea.title} a good business for beginners in Uganda?`,
-              a: `${idea.bestFor} With the right preparation and the step-by-step guidance in this guide, it is possible to start even with limited prior experience.`,
+              a: `${idea.best_for} With the right preparation and the step-by-step guidance in this guide, it is possible to start even with limited prior experience.`,
             },
             {
               q: `Where is the best place to start a ${idea.title} business in Uganda?`,
@@ -806,7 +729,7 @@ export default async function IdeaPage({
             },
             {
               q: `Where can I buy materials or supplies for a ${idea.title} business?`,
-              a: `${suppliers.map((s) => `${s.name} (${s.type})`).join(", ")} are good starting points. Always compare prices across multiple vendors before committing.`,
+              a: `${supplierNames} are good starting points. Always compare prices across multiple vendors before committing.`,
             },
           ];
 
@@ -864,6 +787,37 @@ export default async function IdeaPage({
             </section>
           );
         })()}
+
+        {/* ── 13. RELATED IDEAS ───────────────────────────────────────────── */}
+        {relatedIdeas.length > 0 && (
+          <section id="related" className="mt-6">
+            <div className={`${card} overflow-hidden`}>
+              <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:px-8">
+                <div className={`${iconWrap} bg-green-50`}>💡</div>
+                <div>
+                  <p className={`${eyebrow} text-green-600`}>More ideas like this</p>
+                  <h2 className="text-[15px] font-bold text-slate-900">Related Ideas</h2>
+                </div>
+                <span className="ml-auto rounded-full bg-green-50 border border-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
+                  {idea.category}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-4">
+                {relatedIdeas.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/ideas/${related.slug}`}
+                    className="flex flex-col rounded-xl border border-slate-200 bg-white p-4 hover:border-green-300 hover:shadow-sm transition-all"
+                  >
+                    <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 mb-1">{related.category}</p>
+                    <h3 className="font-black text-[#1C3A2A] text-sm leading-snug mb-3 flex-1">{related.title}</h3>
+                    <p className="text-[11px] font-semibold text-slate-500 mt-auto">{related.capital}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── FOOTER ──────────────────────────────────────────────────────── */}
         <footer className="mt-8 rounded-2xl border border-slate-200 bg-white px-5 py-6 shadow-sm sm:rounded-3xl sm:px-8 sm:py-8">
