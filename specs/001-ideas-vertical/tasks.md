@@ -111,9 +111,11 @@
 
 **Purpose**: Remove app/ imports of static data files and relocate them to scripts/seed-data/
 
-- [ ] T027 [P] Move `app/data/ideas.ts` → `scripts/seed-data/ideas.ts` (git mv)
-- [ ] T028 [P] Move `app/data/stories.ts` → `scripts/seed-data/stories.ts`; move `app/data/resources.ts` → `scripts/seed-data/resources.ts`; move `app/data/suppliers.ts` → `scripts/seed-data/suppliers.ts` (git mv for each)
-- [ ] T029 Update `scripts/seed-ideas.ts` import paths from `app/data/…` → `./seed-data/…`; run `npm run build` to confirm zero TypeScript errors and no remaining `app/data` import references in `app/`
+> ⛔ **DEFERRED (2026-06-19).** Premise is invalid: `app/data/{ideas,stories,suppliers}.ts` are still imported OUTSIDE the Ideas vertical — `app/page.tsx` + `app/HomeClient.tsx` (homepage, FROZEN), `app/sitemap.ts`, `app/guides/[slug]/page.tsx`, `app/advertise/page.tsx`, `components/SupplierCard.tsx`. Moving the files now breaks `npm run build` and would touch the frozen homepage, so T029's "no remaining `app/data` imports in `app/`" gate cannot pass. Blocked until those consumers are migrated off static data — needs its own spec (option B). Static files stay in place; they harm nothing.
+
+- [ ] T027 [P] (DEFERRED) Move `app/data/ideas.ts` → `scripts/seed-data/ideas.ts` (git mv)
+- [ ] T028 [P] (DEFERRED) Move `app/data/stories.ts` → `scripts/seed-data/stories.ts`; move `app/data/resources.ts` → `scripts/seed-data/resources.ts`; move `app/data/suppliers.ts` → `scripts/seed-data/suppliers.ts` (git mv for each)
+- [ ] T029 (DEFERRED) Update `scripts/seed-ideas.ts` import paths from `app/data/…` → `./seed-data/…`; run `npm run build` to confirm zero TypeScript errors and no remaining `app/data` import references in `app/`
 
 ---
 
