@@ -85,8 +85,8 @@
 
 **Independent Test** (quickstart Scenario 7): Note the count shown on the Ideas card; add one row in Supabase with `published = true`; wait ≤ 60 s; hard-refresh `/apps` and confirm count incremented
 
-- [ ] T021 [US3] Update `app/apps/page.tsx`: add `export const revalidate = 60`; add `import { getPublishedIdeasCount } from "@/lib/ideas/queries"` at the top; call `const ideaCount = await getPublishedIdeasCount()` in the server component body
-- [ ] T022 [US3] Update the Business Ideas card tagline in `app/apps/page.tsx`: replace the hardcoded string `'48 curated ideas to start your business'` with the dynamic value (e.g. `` `${ideaCount} curated ideas to start your business` ``)
+- [x] T021 [US3] Update `app/apps/page.tsx`: add `export const revalidate = 60`; add `import { getPublishedIdeasCount } from "@/lib/ideas/queries"` at the top; call `const ideaCount = await getPublishedIdeasCount()` in the server component body
+- [x] T022 [US3] Update the Business Ideas card tagline in `app/apps/page.tsx`: replace the hardcoded string `'48 curated ideas to start your business'` with the dynamic value (e.g. `` `${ideaCount} curated ideas to start your business` ``)
 - [ ] T023 [US3] Manual verification: open `/apps`, note the count; insert a test idea row in Supabase with `published = true`; wait ≤ 60 s; hard-refresh `/apps` and confirm count went up by 1; then delete the test row
 
 **Checkpoint**: US3 functional — /apps hub shows an accurate, auto-refreshing idea count

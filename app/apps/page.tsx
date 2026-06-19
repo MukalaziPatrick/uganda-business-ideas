@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getPublishedIdeasCount } from '@/lib/ideas/queries';
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Everything on Business Yoo',
@@ -7,7 +10,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const APPS = [
+const BASE_APPS = [
   {
     href: '/ideas',
     emoji: '💡',
@@ -50,7 +53,14 @@ const APPS = [
   },
 ];
 
-export default function AppsPage() {
+export default async function AppsPage() {
+  const ideaCount = await getPublishedIdeasCount();
+  const APPS = BASE_APPS.map((app) =>
+    app.href === '/ideas'
+      ? { ...app, tagline: `${ideaCount} curated ideas to start your business` }
+      : app
+  );
+
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-16">
