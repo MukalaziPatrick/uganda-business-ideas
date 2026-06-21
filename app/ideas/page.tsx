@@ -10,7 +10,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "All Business Ideas in Uganda | Business Yoo",
   description:
-    "Search and filter 50 Uganda business ideas by category, budget, audience, demand, startup ease, and supplier potential.",
+    "Search and filter Uganda business ideas by category, budget, audience, demand, startup ease, and supplier potential.",
   alternates: {
     canonical: `${SITE_URL}/ideas`,
   },

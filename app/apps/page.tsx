@@ -15,7 +15,7 @@ const BASE_APPS = [
     href: '/ideas',
     emoji: '💡',
     name: 'Business Ideas',
-    tagline: '48 curated ideas to start your business',
+    tagline: 'Curated ideas to start your business',
     color: '#c05621',
     bg: '#fff8f0',
   },
