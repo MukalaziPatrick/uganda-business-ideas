@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { Business } from "@/lib/supabase/types";
 import { categoryEmoji } from "@/app/data/businesses";
 import ShareButton from "./ShareButton";
+import ClaimButton from "./ClaimButton";
 import { SITE_URL } from "@/lib/site";
 
 function makeSupabase() {
@@ -71,9 +72,12 @@ export default async function BusinessProfilePage({
 }) {
   const { id } = await params;
 
+  // Explicit column list — never select edit_token/owner_contact via the public anon client
   const { data } = await makeSupabase()
     .from("businesses")
-    .select("*")
+    .select(
+      "id, name, category, region, district, town, description, hours, whatsapp, phone, website, facebook, instagram, tiktok, view_count, whatsapp_clicks, contact_clicks, status, claimed_by, claimed_at, external_id, source, address, lat, lng, created_at"
+    )
     .eq("id", id)
     .eq("status", "active")
     .single();
@@ -198,6 +202,10 @@ export default async function BusinessProfilePage({
         )}
 
         <ShareButton name={business.name} />
+
+        {!business.claimed_by && (
+          <ClaimButton businessId={business.id} businessName={business.name} />
+        )}
 
         <Link href="/businesses" className="block text-center text-sm font-bold text-[#1C3A2A] underline underline-offset-2 pb-4">
           ← Back to all businesses

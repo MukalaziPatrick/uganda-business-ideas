@@ -34,6 +34,10 @@ export type Business = {
   whatsapp_clicks: number;
   contact_clicks: number;
   status: BusinessStatus;
+  claimed_by: string | null;
+  owner_contact: string | null;
+  edit_token: string | null;
+  claimed_at: string | null;
   external_id: string | null;
   source: string | null;
   address: string | null;
