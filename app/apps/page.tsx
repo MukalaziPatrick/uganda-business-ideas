@@ -36,6 +36,14 @@ const BASE_APPS = [
     bg: '#faf5ff',
   },
   {
+    href: '/laundry',
+    emoji: '🧺',
+    name: 'Laundry Pickup',
+    tagline: 'Doorstep laundry pickup & delivery',
+    color: '#0A2540',
+    bg: '#eef6ff',
+  },
+  {
     href: '/travel',
     emoji: '✈️',
     name: 'Explore Uganda',
