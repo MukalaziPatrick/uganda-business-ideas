@@ -1,13 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@supabase/supabase-js', () => ({
-  createClient: vi.fn(),
+vi.mock('@/lib/supabase/server', () => ({
+  createSupabaseAdminClient: vi.fn(),
 }));
 
 import { getActivePharmacies } from './queries';
-import { createClient } from '@supabase/supabase-js';
+import { createSupabaseAdminClient } from '@/lib/supabase/server';
 
-const mockCreate = createClient as ReturnType<typeof vi.fn>;
+const mockCreate = createSupabaseAdminClient as ReturnType<typeof vi.fn>;
 
 function makeBuilder() {
   const builder: Record<string, unknown> = {

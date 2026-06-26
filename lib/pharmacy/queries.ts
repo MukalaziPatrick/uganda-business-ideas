@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import type { PharmacyBusiness } from '@/lib/supabase/pharmacy-types';
 
 export type PharmacyCard = Pick<
@@ -24,14 +24,12 @@ const CARD_COLUMNS =
 // Returns active/featured pharmacies with a valid (non-lapsed) NDA licence,
 // featured first. Compliance: no drug/price/stock columns are ever selected.
 export async function getActivePharmacies(): Promise<PharmacyCard[]> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return [];
 
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('pharmacy_businesses')
     .select(CARD_COLUMNS)
     .in('status', ['active', 'featured'])
@@ -39,6 +37,11 @@ export async function getActivePharmacies(): Promise<PharmacyCard[]> {
     .order('status', { ascending: false }) // featured before active
     .order('created_at', { ascending: false })
     .limit(20);
+
+  if (error) {
+    console.error('getActivePharmacies:', error);
+    return [];
+  }
 
   return (data ?? []) as PharmacyCard[];
 }
