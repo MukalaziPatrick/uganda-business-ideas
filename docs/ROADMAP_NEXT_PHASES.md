@@ -208,6 +208,68 @@ Add a recommendation flow that uses real UBI content, user budget, location, aud
 - `npm.cmd run lint` passes.
 - `npm.cmd run build` passes.
 
+## Phase 8 - Pharmacy Directory Launch Ops
+
+Status: In progress. Core route, query layer, admin endpoints, `/apps` entry, live Supabase table, phone-first import, and `/admin/pharmacy` review page now exist. Public directory is still intentionally empty because imported rows remain pending until reviewed.
+
+### Goal
+
+Turn the pharmacy locator from a safe backend/data setup into a curated public directory with approved rows, review workflow, and cautious compliance controls.
+
+### Files Likely Affected
+
+- `docs/superpowers/plans/2026-06-26-pharmacy-locator.md`
+- `docs/superpowers/specs/2026-06-26-pharmacy-locator-design.md`
+- `app/admin/pharmacy/page.tsx`
+- `app/admin/pharmacy/AdminPharmacyClient.tsx`
+- `app/pharmacy/page.tsx`
+- `app/api/admin/pharmacy/*`
+- `supabase/migrations/2026062600000*_pharmacy*.sql`
+- possible ops notes under `docs/`
+
+### Risks
+
+- Scraped phone contacts are not the same as owner-confirmed WhatsApp numbers.
+- NDA licence numbers must not be invented or guessed.
+- Publishing rows too aggressively could surface bad or stale pharmacy data.
+- Broad "Health & Pharmacy" imports may include edge cases that need manual review.
+
+### Definition of Done
+
+- A first reviewed set of pharmacy rows is approved from `/admin/pharmacy`.
+- `/pharmacy` shows real public rows with `Call` where available.
+- WhatsApp appears only when a real WhatsApp value exists.
+- `nda_licence_no` remains null until independently verified.
+- Admin can feature and unfeature curated rows.
+- Live verification confirms public rows are visible through the anon-read contract.
+- `npm.cmd run build` passes.
+
+### Task 1: Approve the starter launch batch
+
+- Review the imported pending rows in `/admin/pharmacy`.
+- Approve a small trusted launch set instead of all imported rows at once.
+- Prefer clear pharmacy names with clean call numbers and plausible locations.
+
+### Task 2: Feature the best starter rows
+
+- Mark a few stronger records as `featured` so the public page has a clear top set.
+- Prefer rows with stronger naming clarity, recognizable locations, and cleaner contact details.
+
+### Task 3: Add pharmacy admin filters
+
+- Add search and district filtering to `/admin/pharmacy`.
+- Make it faster to work through the imported 93 pending rows.
+
+### Task 4: Add bulk moderation actions
+
+- Support approving/rejecting multiple pending rows in one pass.
+- Reduce repetitive manual review work during launch ops.
+
+### Task 5: Add licence verification workflow
+
+- Add a lightweight admin path for filling `nda_licence_no` and `licence_expiry` after verification.
+- Keep the public badge tied only to actually verified licence information.
+
 ## Cross-Phase Principles
 
 - Preserve existing user changes.

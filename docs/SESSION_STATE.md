@@ -15,6 +15,7 @@ Completed implementation batches:
 7. Batch 7 - `/ideas` discovery page with search, filters, and sorting.
 8. Phase 4 - Supplier verification and monetization ops.
 9. Phase 5 - Guide sales workflow.
+10. Pharmacy locator foundation and launch-ops groundwork.
 
 ## Current Monetization Model
 
@@ -28,10 +29,21 @@ UBI is currently set up for manual, early-stage monetization:
 - Safe analytics events for key monetization clicks.
 - Supplier listing packages and placeholder ops fields are centralized in supplier data.
 - Guide purchase messages are generated centrally and include manual sales routing context.
+- Pharmacy locator now has a separate moderation workflow, but no pharmacy monetization flow is live yet.
 
 No payment API, database, admin dashboard, or auth has been added.
 
 ## Recently Completed
+
+### Pharmacy Locator - Launch Ops Groundwork
+
+- Added `/pharmacy` public route and pharmacy query layer.
+- Added `pharmacy_businesses` live Supabase table plus RLS.
+- Added phone-first support so rows can publish with `Call` even when `WhatsApp` is null.
+- Imported 93 likely pharmacy rows from `businesses` into `pharmacy_businesses` as `pending`.
+- Added `/admin/pharmacy` review UI with approve, reject, feature, and unfeature actions.
+- Kept imported rows non-public until manually reviewed.
+- Kept `nda_licence_no` and `licence_expiry` null for all imported rows.
 
 ### Phase 4 - Supplier Verification and Monetization Ops
 
@@ -111,16 +123,16 @@ If `ANTHROPIC_API_KEY` is missing, `/api/ask` returns an API-key-not-configured 
 
 ## Next Recommended Batch
 
-Recommended next batch: Phase 2 homepage funnel upgrade.
-Recommended next phase: Phase 6 database/admin dashboard planning only.
+Recommended next batch: Phase 8 pharmacy directory launch ops.
+Recommended next phase: approve the first curated pharmacy launch batch, then add pharmacy admin filters and bulk actions.
 
 Suggested scope:
 
-- Review whether static files are still enough for ideas, guides, suppliers, and blog content.
-- Draft database/admin requirements without implementing them.
-- Compare architecture options and operational risks.
-- Define approval gates for database choice, auth, migrations, backups, and admin permissions.
-- Do not add a database, auth, payment API, or admin dashboard during planning.
+- Review the 93 imported pending pharmacy rows from `/admin/pharmacy`.
+- Approve a small trusted public launch set.
+- Add admin search/filter UX for pharmacy moderation.
+- Add bulk approve/reject controls for pharmacy review.
+- Keep licence fields null until verified against real sources.
 
 ## Commands Before Future Changes
 
@@ -165,6 +177,8 @@ Known issue:
 - Fake supplier contacts
 - Fake verified suppliers
 - Fake reviews or ratings
+- Invented pharmacy licence numbers
+- Pretend WhatsApp numbers copied from phone fields
 
 ## Current Handoff Docs
 
