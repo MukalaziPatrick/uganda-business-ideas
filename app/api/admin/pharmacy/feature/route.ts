@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id } = (await req.json()) as { id?: string };
+  const { id, status } = (await req.json()) as { id?: string; status?: "active" | "featured" };
   if (!id) {
     return NextResponse.json({ error: "Missing pharmacy id" }, { status: 400 });
   }
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const { error } = await supabase
     .from("pharmacy_businesses")
-    .update({ status: "featured" })
+    .update({ status: status === "active" ? "active" : "featured" })
     .eq("id", id);
 
   if (error) {
