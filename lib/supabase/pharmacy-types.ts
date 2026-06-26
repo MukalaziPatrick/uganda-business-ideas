@@ -1,4 +1,4 @@
-export type PharmacyBusinessStatus = 'pending' | 'active' | 'featured';
+export type PharmacyBusinessStatus = "pending" | "active" | "featured";
 
 export interface PharmacyBusiness {
   id: string;
@@ -11,8 +11,8 @@ export interface PharmacyBusiness {
   service_area: string | null;
   address: string | null;
 
-  // Contact (the only action — off-platform)
-  whatsapp: string;
+  // Contact (the only action - off-platform)
+  whatsapp: string | null;
   phone: string | null;
 
   // Facility info (no drug names / prices / stock)

@@ -24,9 +24,9 @@ export default async function PharmacyPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">Find a Licensed Pharmacy</h1>
-        <p className="text-gray-500 mb-6">Verified, NDA-licensed pharmacies near you.</p>
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <h1 className="mb-1 text-3xl font-bold text-gray-900">Find a Licensed Pharmacy</h1>
+        <p className="mb-6 text-gray-500">Verified, NDA-licensed pharmacies near you.</p>
 
         <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           This is an informational directory. Business Yoo does not sell or dispense
@@ -42,8 +42,8 @@ export default async function PharmacyPage() {
 
         <div className="grid grid-cols-1 gap-4">
           {pharmacies.map((pharmacy) => {
-            const waNumber = pharmacy.whatsapp.replace(/[^0-9]/g, "");
-            const telNumber = (pharmacy.phone ?? pharmacy.whatsapp).replace(/[^0-9+]/g, "");
+            const whatsappNumber = pharmacy.whatsapp?.replace(/[^0-9]/g, "") ?? "";
+            const phoneNumber = pharmacy.phone?.replace(/[^0-9+]/g, "") ?? "";
             const location = [pharmacy.district, pharmacy.service_area]
               .filter(Boolean)
               .join(" - ");
@@ -64,7 +64,7 @@ export default async function PharmacyPage() {
 
                 {pharmacy.nda_licence_no && (
                   <div className="mt-2 inline-block rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-                    ✓ NDA Licensed · #{pharmacy.nda_licence_no}
+                    NDA Licensed #{pharmacy.nda_licence_no}
                   </div>
                 )}
 
@@ -93,18 +93,31 @@ export default async function PharmacyPage() {
                 )}
 
                 <div className="mt-4 flex gap-3">
-                  <a
-                    href={`https://wa.me/${waNumber}`}
-                    className="flex-1 rounded-xl bg-[#25D366] py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  >
-                    WhatsApp
-                  </a>
-                  <a
-                    href={`tel:${telNumber}`}
-                    className="flex-1 rounded-xl border border-gray-300 py-2 text-center text-sm font-medium text-[#0A2540] transition-colors hover:bg-gray-50"
-                  >
-                    Call
-                  </a>
+                  {whatsappNumber ? (
+                    <a
+                      href={`https://wa.me/${whatsappNumber}`}
+                      className="flex-1 rounded-xl bg-[#25D366] py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
+                    >
+                      WhatsApp
+                    </a>
+                  ) : (
+                    <div className="flex-1 rounded-xl border border-dashed border-gray-300 bg-gray-50 py-2 text-center text-sm text-gray-500">
+                      WhatsApp not listed
+                    </div>
+                  )}
+
+                  {phoneNumber ? (
+                    <a
+                      href={`tel:${phoneNumber}`}
+                      className="flex-1 rounded-xl border border-gray-300 py-2 text-center text-sm font-medium text-[#0A2540] transition-colors hover:bg-gray-50"
+                    >
+                      Call
+                    </a>
+                  ) : (
+                    <div className="flex-1 rounded-xl border border-dashed border-gray-300 bg-gray-50 py-2 text-center text-sm text-gray-500">
+                      Call not listed
+                    </div>
+                  )}
                 </div>
               </div>
             );
