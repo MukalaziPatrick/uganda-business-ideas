@@ -32,8 +32,8 @@ export async function saveBusinessEdits(token: string, formData: FormData): Prom
 
   const updates = {
     hours: get("hours") || null,
-    whatsapp: get("whatsapp") || null,
-    phone: get("phone") || null,
+    whatsapp: get("whatsapp").replace(/\s+/g, " ").trim() || null,
+    phone: get("phone").replace(/\s+/g, " ").trim() || null,
     description: description || null,
     website: get("website") || null,
     facebook: get("facebook") || null,
