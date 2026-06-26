@@ -28,10 +28,9 @@ export default async function PharmacyPage() {
         <h1 className="text-3xl font-bold text-gray-900 mb-1">Find a Licensed Pharmacy</h1>
         <p className="text-gray-500 mb-6">Verified, NDA-licensed pharmacies near you.</p>
 
-        {/* Compliance disclaimer — required */}
-        <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900">
+        <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           This is an informational directory. Business Yoo does not sell or dispense
-          medicines. We list licensed pharmacies only — for prescriptions and orders,
+          medicines. We list licensed pharmacies only - for prescriptions and orders,
           contact the pharmacy directly.
         </div>
 
@@ -42,67 +41,69 @@ export default async function PharmacyPage() {
         )}
 
         <div className="grid grid-cols-1 gap-4">
-          {pharmacies.map((p) => {
-            const waNumber = p.whatsapp.replace(/[^0-9]/g, "");
-            const telNumber = (p.phone ?? p.whatsapp).replace(/[^0-9+]/g, "");
+          {pharmacies.map((pharmacy) => {
+            const waNumber = pharmacy.whatsapp.replace(/[^0-9]/g, "");
+            const telNumber = (pharmacy.phone ?? pharmacy.whatsapp).replace(/[^0-9+]/g, "");
+            const location = [pharmacy.district, pharmacy.service_area]
+              .filter(Boolean)
+              .join(" - ");
+
             return (
               <div
-                key={p.id}
-                className="p-5 rounded-2xl border border-gray-200 bg-white"
+                key={pharmacy.id}
+                className="rounded-2xl border border-gray-200 bg-white p-5"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <div className="font-semibold text-[#0A2540] text-lg">{p.name}</div>
-                  {p.status === "featured" && (
-                    <span className="text-xs font-semibold text-[#3DA9FC] bg-[#eef6ff] px-2 py-0.5 rounded-full">
+                  <div className="text-lg font-semibold text-[#0A2540]">{pharmacy.name}</div>
+                  {pharmacy.status === "featured" && (
+                    <span className="rounded-full bg-[#eef6ff] px-2 py-0.5 text-xs font-semibold text-[#3DA9FC]">
                       Featured
                     </span>
                   )}
                 </div>
 
-                {p.nda_licence_no && (
-                  <div className="text-xs font-medium text-green-700 bg-green-50 inline-block px-2 py-0.5 rounded-full mt-2">
-                    ✓ NDA Licensed · #{p.nda_licence_no}
+                {pharmacy.nda_licence_no && (
+                  <div className="mt-2 inline-block rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
+                    ✓ NDA Licensed · #{pharmacy.nda_licence_no}
                   </div>
                 )}
 
-                {p.service_area && (
-                  <div className="text-xs text-gray-400 mt-2">📍 {p.service_area}</div>
-                )}
-                {p.hours && <div className="text-xs text-gray-400 mt-1">🕐 {p.hours}</div>}
+                {location && <div className="mt-2 text-xs text-gray-400">{location}</div>}
+                {pharmacy.hours && <div className="mt-1 text-xs text-gray-400">{pharmacy.hours}</div>}
 
-                {(p.is_24_hour || p.has_delivery) && (
-                  <div className="flex gap-2 mt-2">
-                    {p.is_24_hour && (
-                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">
+                {(pharmacy.is_24_hour || pharmacy.has_delivery) && (
+                  <div className="mt-2 flex gap-2">
+                    {pharmacy.is_24_hour && (
+                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
                         24-Hour
                       </span>
                     )}
-                    {p.has_delivery && (
-                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">
-                        🛵 Delivery available
+                    {pharmacy.has_delivery && (
+                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                        Delivery available
                       </span>
                     )}
                   </div>
                 )}
 
-                {p.supervising_pharmacist && (
-                  <div className="text-xs text-gray-400 mt-2">
-                    Supervising pharmacist: {p.supervising_pharmacist}
+                {pharmacy.supervising_pharmacist && (
+                  <div className="mt-2 text-xs text-gray-400">
+                    Supervising pharmacist: {pharmacy.supervising_pharmacist}
                   </div>
                 )}
 
-                <div className="flex gap-3 mt-4">
+                <div className="mt-4 flex gap-3">
                   <a
                     href={`https://wa.me/${waNumber}`}
-                    className="flex-1 text-center text-sm font-medium text-white bg-[#25D366] rounded-xl py-2 hover:opacity-90 transition-opacity"
+                    className="flex-1 rounded-xl bg-[#25D366] py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
                   >
-                    💬 WhatsApp
+                    WhatsApp
                   </a>
                   <a
                     href={`tel:${telNumber}`}
-                    className="flex-1 text-center text-sm font-medium text-[#0A2540] border border-gray-300 rounded-xl py-2 hover:bg-gray-50 transition-colors"
+                    className="flex-1 rounded-xl border border-gray-300 py-2 text-center text-sm font-medium text-[#0A2540] transition-colors hover:bg-gray-50"
                   >
-                    📞 Call
+                    Call
                   </a>
                 </div>
               </div>
