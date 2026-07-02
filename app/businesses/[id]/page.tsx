@@ -140,7 +140,7 @@ export default async function BusinessProfilePage({
   incrementSignal(id, "view_count").catch(() => {});
 
   const socials = [
-    business.website && { label: "Website", href: business.website },
+    business.website && /^https?:\/\//i.test(business.website) && { label: "Website", href: business.website },
     business.facebook && {
       label: "Facebook",
       href: business.facebook.startsWith("http")

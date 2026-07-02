@@ -3,11 +3,20 @@ import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import { submitOrder } from '@/lib/land/pesapal';
 import { getLandListingById } from '@/lib/land/queries';
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const PHONE_RE = /^\+?[0-9]{9,15}$/;
+
 export async function POST(req: NextRequest) {
   const { listing_id, phone } = await req.json();
 
   if (!listing_id || !phone) {
     return NextResponse.json({ error: 'listing_id and phone are required' }, { status: 400 });
+  }
+  if (typeof listing_id !== 'string' || !UUID_RE.test(listing_id)) {
+    return NextResponse.json({ error: 'Invalid listing_id' }, { status: 400 });
+  }
+  if (typeof phone !== 'string' || !PHONE_RE.test(phone.trim())) {
+    return NextResponse.json({ error: 'Invalid phone number' }, { status: 400 });
   }
 
   const listing = await getLandListingById(listing_id);
@@ -18,7 +27,7 @@ export async function POST(req: NextRequest) {
   const supabase = createSupabaseAdminClient();
   if (!supabase) return NextResponse.json({ error: 'DB not configured' }, { status: 500 });
 
-  await supabase.from('land_payments').insert({
+  const { error: insertError } = await supabase.from('land_payments').insert({
     listing_id,
     buyer_phone: phone,
     amount_ugx: 10000,
@@ -27,6 +36,11 @@ export async function POST(req: NextRequest) {
     agent_id: listing.agent_id,
     payment_ref: tx_ref,
   });
+
+  if (insertError) {
+    console.error('[payment/initiate] insert failed:', insertError);
+    return NextResponse.json({ error: 'Could not start payment. Please try again.' }, { status: 500 });
+  }
 
   const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/land/payment/ipn`;
 

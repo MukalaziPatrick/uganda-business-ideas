@@ -1,4 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { revalidatePath } from "next/cache";
 import type { Business } from "@/lib/supabase/types";
 
@@ -6,6 +7,7 @@ type BusinessRow = Pick<Business, "id" | "name" | "category" | "district" | "reg
 
 async function approveBusiness(formData: FormData) {
   "use server";
+  if (!(await requireAdmin())) return;
   const id = formData.get("id");
   if (typeof id !== "string" || !id) return;
   const supabase = createSupabaseAdminClient();
@@ -16,6 +18,7 @@ async function approveBusiness(formData: FormData) {
 
 async function rejectBusiness(formData: FormData) {
   "use server";
+  if (!(await requireAdmin())) return;
   const id = formData.get("id");
   if (typeof id !== "string" || !id) return;
   const supabase = createSupabaseAdminClient();

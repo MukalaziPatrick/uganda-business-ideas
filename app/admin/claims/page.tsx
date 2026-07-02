@@ -1,4 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { revalidatePath } from "next/cache";
 import crypto from "crypto";
 
@@ -20,6 +21,8 @@ function generateEditToken(): string {
 
 async function approveClaim(formData: FormData) {
   "use server";
+  if (!(await requireAdmin())) return;
+
   const claimId = formData.get("claimId");
   const businessId = formData.get("businessId");
   const claimantName = formData.get("claimantName");
@@ -57,6 +60,8 @@ async function approveClaim(formData: FormData) {
 
 async function rejectClaim(formData: FormData) {
   "use server";
+  if (!(await requireAdmin())) return;
+
   const claimId = formData.get("claimId");
   if (typeof claimId !== "string") return;
 

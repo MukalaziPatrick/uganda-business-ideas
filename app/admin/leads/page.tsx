@@ -1,4 +1,5 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 import type { LeadStatus } from "@/lib/supabase/types";
 import { revalidatePath } from "next/cache";
 
@@ -32,6 +33,8 @@ function formatLeadStatus(status: LeadStatus) {
 
 async function markLeadContacted(formData: FormData) {
   "use server";
+
+  if (!(await requireAdmin())) return;
 
   const id = formData.get("id");
 
