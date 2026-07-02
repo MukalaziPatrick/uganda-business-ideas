@@ -3,14 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ideas } from "./data/ideas";
-
-type Worker = {
-  id: string;
-  name: string;
-  skill_primary: string;
-  district: string;
-  available: boolean;
-};
+import GetHelp from "@/components/GetHelp";
 
 function categoryEmoji(category: string): string {
   const map: Record<string, string> = {
@@ -36,11 +29,11 @@ const NAV_LINKS = [
 ];
 
 export default function HomeClient({
-  workers,
   ideasCount,
+  jobsTeaser,
 }: {
-  workers: Worker[];
   ideasCount: number;
+  jobsTeaser: React.ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [bizSearch, setBizSearch] = useState("");
@@ -55,18 +48,18 @@ export default function HomeClient({
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans flex flex-col">
 
       {/* ── Nav ── */}
-      <nav className="sticky top-0 z-20 bg-[#1C3A2A] px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-black text-[#F5C842] text-base" style={{ fontFamily: "Georgia, serif" }}>
+      <nav className="sticky top-0 z-20 bg-slate-900 px-4 py-3 flex items-center justify-between shadow-sm">
+        <Link href="/" className="font-black text-white text-base flex items-center gap-2">
           🇺🇬 Business Yoo
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden sm:flex gap-5 text-sm font-semibold text-white/70">
+        <div className="hidden sm:flex gap-5 text-sm font-semibold text-slate-300">
           {NAV_LINKS.map(l => (
-            <Link key={l.href} href={l.href} className="hover:text-[#F5C842] transition-colors">
+            <Link key={l.href} href={l.href} className="hover:text-green-400 transition-colors">
               {l.label}
             </Link>
           ))}
@@ -75,14 +68,14 @@ export default function HomeClient({
         {/* Desktop CTA */}
         <Link
           href="/jobs/post"
-          className="hidden sm:inline-block rounded-lg bg-[#F5C842] px-4 py-2 text-xs font-bold text-[#1C3A2A] hover:bg-yellow-300 transition-colors"
+          className="hidden sm:inline-block rounded-lg bg-slate-800 border border-slate-700 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-colors"
         >
           Post a Job
         </Link>
 
         {/* Mobile hamburger */}
         <button
-          className="sm:hidden text-[#F5C842] text-2xl leading-none"
+          className="sm:hidden text-white text-2xl leading-none"
           onClick={() => setMenuOpen(o => !o)}
           aria-label="Toggle menu"
         >
@@ -92,13 +85,13 @@ export default function HomeClient({
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div className="fixed inset-0 z-10 bg-[#1C3A2A] pt-16 px-6 flex flex-col gap-5 sm:hidden">
+        <div className="fixed inset-0 z-10 bg-slate-900 pt-16 px-6 flex flex-col gap-5 sm:hidden">
           {NAV_LINKS.map(l => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setMenuOpen(false)}
-              className="text-xl font-bold text-white hover:text-[#F5C842] transition-colors py-2 border-b border-white/10"
+              className="text-xl font-bold text-white hover:text-green-400 transition-colors py-2 border-b border-slate-800"
             >
               {l.label}
             </Link>
@@ -106,7 +99,7 @@ export default function HomeClient({
           <Link
             href="/jobs/post"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 rounded-xl bg-[#F5C842] py-4 text-center text-base font-black text-[#1C3A2A]"
+            className="mt-4 rounded-xl bg-green-500 py-4 text-center text-base font-black text-slate-900"
           >
             Post a Job
           </Link>
@@ -114,93 +107,123 @@ export default function HomeClient({
       )}
 
       {/* ── Hero ── */}
-      <div className="bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] px-4 py-14 text-center text-white">
-        <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#F5C842] mb-3">
+      <div className="bg-slate-900 px-4 py-16 text-center text-white">
+        <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-green-400 mb-3">
           Uganda's Business Hub
         </p>
-        <h1
-          className="text-3xl sm:text-4xl font-black leading-tight text-[#F5C842] mb-4"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Grow Your Business.<br />Find Your Next Job.
+        <h1 className="text-3xl sm:text-5xl font-black leading-tight mb-4 tracking-tight">
+          Grow Your Business.<br />Find Your Next <span className="text-amber-400">Job.</span>
         </h1>
-        <p className="text-sm text-white/80 mb-8 max-w-xs mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-300 mb-8 max-w-sm mx-auto leading-relaxed">
           Hundreds of proven business ideas, job listings, and guides — built for every Ugandan.
         </p>
-        <div className="flex gap-3 justify-center flex-wrap mb-6">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
           <Link
-            href="/ideas"
-            className="rounded-xl bg-[#F5C842] px-6 py-3 text-sm font-black text-[#1C3A2A] hover:bg-yellow-300 transition-colors"
+            href="/start"
+            className="rounded-xl bg-green-500 px-6 py-3.5 text-sm font-black text-slate-900 hover:bg-green-400 transition-colors w-full sm:w-auto"
           >
-            Browse Ideas
+            Get a personalised start
           </Link>
           <Link
             href="/jobs"
-            className="rounded-xl border-2 border-white/40 px-6 py-3 text-sm font-bold text-white hover:bg-white/10 transition-colors"
+            className="rounded-xl border-2 border-slate-700 px-6 py-3.5 text-sm font-bold text-white hover:bg-slate-800 transition-colors w-full sm:w-auto"
           >
             Find Work
           </Link>
         </div>
-        <span className="inline-block rounded-full bg-white/10 border border-white/20 text-white/70 text-[11px] px-4 py-1.5">
+        <span className="inline-block rounded-full bg-slate-800 border border-slate-700 text-amber-400 font-semibold text-[11px] px-4 py-1.5">
           {ideasCount}+ Ideas · Growing Jobs · All Uganda Districts
         </span>
       </div>
 
+      {/* ── How It Works / Trust ── */}
+      <div className="bg-white px-4 py-10 border-b border-slate-200">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-6 tracking-tight">How it works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="flex flex-col items-center">
+               <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 font-black flex items-center justify-center text-lg mb-3">1</div>
+               <h3 className="font-bold text-slate-900 text-sm mb-1">Pick an Idea</h3>
+               <p className="text-xs text-slate-500">Explore businesses matching your budget.</p>
+            </div>
+            <div className="flex flex-col items-center">
+               <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 font-black flex items-center justify-center text-lg mb-3">2</div>
+               <h3 className="font-bold text-slate-900 text-sm mb-1">Get a Plan</h3>
+               <p className="text-xs text-slate-500">Read guides & calculate exact costs.</p>
+            </div>
+            <div className="flex flex-col items-center">
+               <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 font-black flex items-center justify-center text-lg mb-3">3</div>
+               <h3 className="font-bold text-slate-900 text-sm mb-1">Launch & Earn</h3>
+               <p className="text-xs text-slate-500">Find buyers and grow your business.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── Pillars ── */}
-      <div className="bg-white px-4 py-6 max-w-2xl mx-auto">
-        <div className="grid grid-cols-3 gap-3">
+      <div className="bg-slate-50 px-4 py-8 max-w-2xl mx-auto w-full">
+        <div className="grid grid-cols-2 gap-4">
           <Link
             href="/ideas"
-            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
+            className="rounded-2xl bg-white border border-slate-200 p-5 hover:border-green-500 transition-colors shadow-sm"
           >
             <div className="text-2xl mb-2">💡</div>
-            <p className="font-black text-[#1C3A2A] text-sm mb-1">Business Ideas</p>
-            <p className="mt-3 text-xs font-bold text-green-700">Browse →</p>
+            <p className="font-black text-slate-900 text-sm mb-1">Business Ideas</p>
+            <p className="mt-3 text-xs font-bold text-green-600">Browse →</p>
           </Link>
-          <div className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors">
+          
+          <Link
+            href="/jobs"
+            className="rounded-2xl bg-white border border-slate-200 p-5 hover:border-green-500 transition-colors shadow-sm"
+          >
+            <div className="text-2xl mb-2">💼</div>
+            <p className="font-black text-slate-900 text-sm mb-1">Find Jobs</p>
+            <p className="mt-3 text-xs font-bold text-green-600">Browse Jobs →</p>
+          </Link>
+
+          <div className="col-span-2 sm:col-span-1 rounded-2xl bg-white border border-slate-200 p-5 hover:border-green-500 transition-colors shadow-sm">
             <div className="text-2xl mb-2">📍</div>
-            <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Businesses</p>
-            <p className="text-xs text-slate-500 leading-relaxed mb-2">Restaurants, salons & more across Uganda.</p>
-            <form onSubmit={handleBizSearch} className="flex gap-1">
+            <p className="font-black text-slate-900 text-sm mb-1">Find Businesses</p>
+            <p className="text-xs text-slate-500 leading-relaxed mb-3">Restaurants, salons & more.</p>
+            <form onSubmit={handleBizSearch} className="flex gap-2">
               <input
                 type="search"
                 value={bizSearch}
                 onChange={e => setBizSearch(e.target.value)}
                 placeholder="e.g. restaurant"
-                className="flex-1 min-w-0 border border-gray-300 rounded-lg px-2 py-1.5 text-xs outline-none focus:border-[#1C3A2A]"
+                className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
               />
-              <button type="submit" className="rounded-lg bg-[#1C3A2A] px-2 py-1.5 text-xs font-bold text-[#F5C842]">
+              <button type="submit" className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white hover:bg-slate-800">
                 Go
               </button>
             </form>
-            <Link href="/businesses" className="mt-2 block text-xs font-bold text-[#1C3A2A]">Browse all →</Link>
+            <Link href="/businesses" className="mt-3 block text-xs font-bold text-green-600">Browse all →</Link>
           </div>
-          <Link
-            href="/jobs"
-            className="rounded-2xl bg-[#f5f0e8] border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
-          >
-            <div className="text-2xl mb-2">💼</div>
-            <p className="font-black text-[#1C3A2A] text-sm mb-1">Find Jobs</p>
-            <p className="mt-3 text-xs font-bold text-violet-700">Browse Jobs →</p>
-          </Link>
+          
           <Link
             href="/travel"
-            className="rounded-2xl bg-gradient-to-br from-[#1a3a5c] to-[#0d6e6e] p-4 hover:opacity-90 transition-opacity"
+            className="col-span-2 sm:col-span-1 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 p-5 hover:opacity-95 transition-opacity shadow-sm flex flex-col justify-between"
           >
-            <div className="text-2xl mb-2">🏨</div>
-            <p className="font-black text-[#F5C842] text-sm mb-1">ZuulaUganda</p>
-            <p className="mt-3 text-xs font-bold text-white/80">Find stays →</p>
+            <div>
+              <div className="text-2xl mb-2">🏨</div>
+              <p className="font-black text-amber-400 text-sm mb-1">ZuulaUganda</p>
+              <p className="text-xs text-slate-300 leading-relaxed">Book local stays.</p>
+            </div>
+            <p className="mt-3 text-xs font-bold text-white">Find stays →</p>
           </Link>
         </div>
       </div>
 
+      {/* ── Jobs Teaser ── */}
+      {jobsTeaser}
+
       {/* ── Featured Ideas ── */}
-      <div className="px-4 py-6 max-w-2xl mx-auto">
-        <div className="flex items-baseline justify-between mb-4">
-          <h2 className="text-lg font-black text-[#1C3A2A]" style={{ fontFamily: "Georgia, serif" }}>
-            💡 Featured Business Ideas
+      <div className="px-4 py-8 max-w-2xl mx-auto w-full">
+        <div className="flex items-baseline justify-between mb-5">
+          <h2 className="text-xl font-black text-slate-900 tracking-tight">
+            Featured Ideas
           </h2>
-          <Link href="/ideas" className="text-xs font-bold text-[#1C3A2A] underline underline-offset-2">
+          <Link href="/ideas" className="text-xs font-bold text-green-600 hover:underline">
             View all {ideasCount}+ →
           </Link>
         </div>
@@ -209,20 +232,20 @@ export default function HomeClient({
         {featuredIdeas[0] && (
           <Link
             href={`/ideas/${featuredIdeas[0].slug}`}
-            className="block rounded-2xl bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] p-5 mb-3 hover:opacity-95 transition-opacity"
+            className="block rounded-2xl bg-slate-900 p-6 mb-4 shadow-lg hover:bg-slate-800 transition-colors"
           >
-            <span className="inline-block rounded-full bg-[#F5C842] text-[#1C3A2A] text-[10px] font-bold px-2 py-0.5 mb-3">
-              ⭐ Editor&apos;s Pick
+            <span className="inline-block rounded-full bg-amber-400 text-slate-900 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 mb-3">
+              ⭐ Editor's Pick
             </span>
-            <h3 className="text-base font-black text-[#F5C842] leading-snug mb-2" style={{ fontFamily: "Georgia, serif" }}>
+            <h3 className="text-lg sm:text-xl font-black text-white leading-snug mb-2">
               {featuredIdeas[0].title}
             </h3>
-            <p className="text-xs text-white/75 leading-relaxed mb-4 line-clamp-2">
+            <p className="text-sm text-slate-300 leading-relaxed mb-5 line-clamp-2">
               {featuredIdeas[0].desc}
             </p>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-white/60">{featuredIdeas[0].capital}</span>
-              <span className="rounded-lg bg-[#F5C842] px-3 py-1.5 text-xs font-bold text-[#1C3A2A]">
+              <span className="text-xs font-semibold text-slate-400">{featuredIdeas[0].capital}</span>
+              <span className="rounded-lg bg-green-500 px-4 py-2 text-xs font-bold text-slate-900">
                 Read More
               </span>
             </div>
@@ -230,19 +253,21 @@ export default function HomeClient({
         )}
 
         {/* 2-col grid */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-4">
           {featuredIdeas.slice(1, 3).map(idea => (
             <Link
               key={idea.slug}
               href={`/ideas/${idea.slug}`}
-              className="rounded-2xl bg-white border border-[#e0d8cc] p-4 hover:border-[#1C3A2A] transition-colors"
+              className="rounded-2xl bg-white border border-slate-200 p-5 hover:border-green-500 transition-colors shadow-sm flex flex-col justify-between"
             >
-              <div className="text-xl mb-2">{categoryEmoji(idea.category)}</div>
-              <p className="font-black text-[#1C3A2A] text-sm leading-snug mb-1">{idea.title}</p>
-              <p className="text-xs text-slate-500 line-clamp-1">{idea.desc}</p>
-              <div className="flex items-center justify-between mt-3">
-                <span className="text-xs font-bold text-[#1C3A2A]">{idea.capital}</span>
-                <span className="text-[10px] rounded-full bg-[#f5f0e8] px-2 py-0.5 text-slate-500 font-semibold">
+              <div>
+                <div className="text-xl mb-3">{categoryEmoji(idea.category)}</div>
+                <h3 className="font-black text-slate-900 text-sm leading-snug mb-2">{idea.title}</h3>
+                <p className="text-xs text-slate-500 line-clamp-2 mb-4">{idea.desc}</p>
+              </div>
+              <div className="flex items-center justify-between mt-auto">
+                <span className="text-xs font-bold text-slate-900">{idea.capital}</span>
+                <span className="text-[10px] rounded-full bg-slate-100 px-2 py-1 text-slate-600 font-bold">
                   {idea.category}
                 </span>
               </div>
@@ -250,21 +275,25 @@ export default function HomeClient({
           ))}
         </div>
       </div>
-
+      
+      {/* ── Support ── */}
+      <div className="px-4 py-8 max-w-2xl mx-auto w-full">
+         <GetHelp message="Hello Business Yoo, I want help starting a business." />
+      </div>
 
       {/* ── Footer ── */}
-      <footer className="bg-[#1C3A2A] px-4 py-8 text-center text-white/50 text-xs mt-auto">
-        <p className="font-black text-[#F5C842] mb-3" style={{ fontFamily: "Georgia, serif" }}>
+      <footer className="bg-slate-900 px-4 py-12 text-center text-slate-400 text-xs mt-auto">
+        <p className="font-black text-white text-base mb-4">
           🇺🇬 Business Yoo
         </p>
-        <div className="flex flex-wrap justify-center gap-4 mb-3 text-white/60 font-semibold">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-6 font-semibold max-w-lg mx-auto">
           {NAV_LINKS.map(l => (
-            <Link key={l.href} href={l.href} className="hover:text-[#F5C842] transition-colors">
+            <Link key={l.href} href={l.href} className="hover:text-green-400 transition-colors">
               {l.label}
             </Link>
           ))}
-          <Link href="/contact" className="hover:text-[#F5C842] transition-colors">Contact</Link>
-          <Link href="/advertise" className="hover:text-[#F5C842] transition-colors">Advertise</Link>
+          <Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link>
+          <Link href="/advertise" className="hover:text-green-400 transition-colors">Advertise</Link>
         </div>
         <p>© {new Date().getFullYear()} Uganda Business Hub</p>
       </footer>

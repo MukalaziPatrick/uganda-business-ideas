@@ -1,4 +1,3 @@
-// app/HomeJobsTeaser.tsx
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 
@@ -30,25 +29,25 @@ export default async function HomeJobsTeaser() {
     .order("created_at", { ascending: false })
     .limit(3);
 
-  const eyebrow = "text-[10.5px] font-bold uppercase tracking-[0.14em] text-violet-600";
+  const eyebrow = "text-[10.5px] font-bold uppercase tracking-[0.14em] text-green-600";
 
   return (
-    <section className="bg-gradient-to-br from-[#3b0764]/5 to-violet-50 px-4 py-8 sm:px-6 md:px-10">
-      <div className="mx-auto max-w-7xl">
+    <section className="bg-slate-50 px-4 py-8 sm:px-6 md:px-10">
+      <div className="mx-auto max-w-2xl">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className={eyebrow}>💼 Latest Jobs</p>
-            <h2 className="mt-1 text-xl font-black text-slate-900">Work Near You</h2>
+            <p className={eyebrow}>💼 Work Near You</p>
+            <h2 className="mt-1 text-xl font-black text-slate-900">Latest Jobs</h2>
           </div>
-          <Link href="/jobs" className="rounded-xl border border-violet-200 bg-violet-50 px-4 py-2 text-xs font-bold text-violet-700 hover:bg-violet-100">
+          <Link href="/jobs" className="rounded-xl border border-green-200 bg-green-50 px-4 py-2 text-xs font-bold text-green-700 hover:bg-green-100">
             View all →
           </Link>
         </div>
 
         {(!jobs || jobs.length === 0) ? (
-          <div className="rounded-2xl border border-violet-200 bg-white p-4 text-center text-sm text-slate-500">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center text-sm text-slate-500">
             <p className="mb-3">No jobs posted yet — be the first!</p>
-            <Link href="/jobs/post" className="rounded-xl bg-violet-600 px-4 py-2 text-xs font-bold text-white hover:bg-violet-700">
+            <Link href="/jobs/post" className="rounded-xl bg-green-600 px-4 py-2 text-xs font-bold text-white hover:bg-green-700">
               Post a Job (Free)
             </Link>
           </div>
@@ -59,10 +58,10 @@ export default async function HomeJobsTeaser() {
                 ? whatsappHref(job.contact_whatsapp, job.title)
                 : job.contact_phone ? `tel:${job.contact_phone}` : "/jobs";
               return (
-                <div key={job.id} className={`flex items-center justify-between gap-3 rounded-2xl border bg-white p-4 ${job.featured ? "border-violet-400" : "border-slate-200"}`}>
+                <div key={job.id} className={`flex items-center justify-between gap-3 rounded-2xl border bg-white p-4 ${job.featured ? "border-amber-400" : "border-slate-200"}`}>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      {job.featured && <span className="text-[10px] font-bold text-violet-600">⭐</span>}
+                      {job.featured && <span className="text-[10px] font-bold text-amber-500">⭐</span>}
                       <p className="truncate text-sm font-black text-slate-900">{job.title}</p>
                     </div>
                     <p className="text-xs text-slate-500 mt-0.5">
@@ -78,7 +77,7 @@ export default async function HomeJobsTeaser() {
               );
             })}
             <Link href="/jobs/post"
-              className="block rounded-2xl border-2 border-dashed border-violet-200 bg-white p-3 text-center text-xs font-semibold text-violet-600 hover:bg-violet-50">
+              className="block rounded-2xl border border-slate-200 bg-white p-3 text-center text-xs font-semibold text-green-600 hover:bg-slate-50">
               + Post a Job (Free)
             </Link>
           </div>
