@@ -1,6 +1,6 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 import AdminPharmacyClient from "./AdminPharmacyClient";
 
 type PharmacyRow = {
@@ -10,13 +10,22 @@ type PharmacyRow = {
   service_area: string | null;
   whatsapp: string | null;
   phone: string | null;
+  is_24_hour?: boolean;
+  has_delivery?: boolean;
+  google_rating?: number | null;
+  google_review_count?: number | null;
+  phone_verified?: boolean;
+  map_verified?: boolean;
+  licence_verified?: boolean;
+  rank_score?: number;
+  ranking_notes?: string | null;
+  ranking_updated_at?: string | null;
   status?: string;
   created_at: string;
 };
 
 export default async function AdminPharmacyPage() {
-  const cookieStore = await cookies();
-  if (cookieStore.get("admin_token")?.value !== process.env.ADMIN_SECRET) {
+  if (!(await requireAdmin())) {
     redirect("/admin/login");
   }
 
@@ -33,8 +42,11 @@ export default async function AdminPharmacyPage() {
       .order("created_at", { ascending: false }),
     supabase
       .from("pharmacy_businesses")
-      .select("id,name,district,service_area,whatsapp,phone,status,created_at")
+      .select(
+        "id,name,district,service_area,whatsapp,phone,is_24_hour,has_delivery,google_rating,google_review_count,phone_verified,map_verified,licence_verified,rank_score,ranking_notes,ranking_updated_at,status,created_at"
+      )
       .in("status", ["active", "featured"])
+      .order("rank_score", { ascending: false })
       .order("created_at", { ascending: false }),
   ]);
 

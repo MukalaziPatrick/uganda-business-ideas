@@ -1,10 +1,9 @@
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/supabase/admin-auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
-  const cookieStore = await cookies();
-  if (cookieStore.get("admin_token")?.value !== process.env.ADMIN_SECRET) {
+  if (!(await requireAdmin())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
