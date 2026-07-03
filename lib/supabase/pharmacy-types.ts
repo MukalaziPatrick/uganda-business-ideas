@@ -25,6 +25,16 @@ export interface PharmacyBusiness {
   nda_licence_no: string | null;
   licence_expiry: string | null;
 
+  // Admin-only ranking inputs
+  google_rating: number | null;
+  google_review_count: number | null;
+  phone_verified: boolean;
+  map_verified: boolean;
+  licence_verified: boolean;
+  rank_score: number;
+  ranking_notes: string | null;
+  ranking_updated_at: string | null;
+
   // Lifecycle
   status: PharmacyBusinessStatus;
   created_at: string;
