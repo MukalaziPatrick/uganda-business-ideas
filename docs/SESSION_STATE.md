@@ -1,6 +1,6 @@
 # Uganda Business Ideas - Current Session State
 
-Date: 2026-05-01
+Date: 2026-06-27
 
 ## Completed Batches
 
@@ -42,8 +42,17 @@ No payment API, database, admin dashboard, or auth has been added.
 - Added phone-first support so rows can publish with `Call` even when `WhatsApp` is null.
 - Imported 93 likely pharmacy rows from `businesses` into `pharmacy_businesses` as `pending`.
 - Added `/admin/pharmacy` review UI with approve, reject, feature, and unfeature actions.
+- Added pharmacy admin search and district filters to speed up review.
+- Added admin-only pharmacy ranking workflow with private Google rating/review inputs, phone/map/licence verification flags, ranking notes, and computed `rank_score`.
+- Added public pharmacy contact fallback UI so phone-only pharmacies show a visible number plus `Copy number` alongside `Call`.
 - Kept imported rows non-public until manually reviewed.
 - Kept `nda_licence_no` and `licence_expiry` null for all imported rows.
+- Approved the first curated launch batch: 6 Kampala rows are now public (`2 featured`, `4 active`).
+- Approved the remaining 80 imported rows that had phone, address, district, and map-usable location details.
+- Pharmacy live totals are now `93` public rows (`2 featured`, `91 active`) with `0 pending`.
+- Verified the anon/public query returns public rows live with phone-only contact where applicable and no licence badges yet.
+- Applied live Supabase ranking columns to `pharmacy_businesses`; public `/pharmacy` does not show Google ratings.
+- Verified the public `/pharmacy` page now works better on desktop for phone-only rows because users can copy the number even when `tel:` cannot place a call locally.
 
 ### Phase 4 - Supplier Verification and Monetization Ops
 
@@ -123,16 +132,17 @@ If `ANTHROPIC_API_KEY` is missing, `/api/ask` returns an API-key-not-configured 
 
 ## Next Recommended Batch
 
-Recommended next batch: Phase 8 pharmacy directory launch ops.
-Recommended next phase: approve the first curated pharmacy launch batch, then add pharmacy admin filters and bulk actions.
+Recommended next batch: Phase 8 pharmacy ranking and verification workflow.
+Recommended next phase: begin filling ranking signals for the strongest active pharmacies, then feature the highest-confidence rows.
 
 Suggested scope:
 
-- Review the 93 imported pending pharmacy rows from `/admin/pharmacy`.
-- Approve a small trusted public launch set.
-- Add admin search/filter UX for pharmacy moderation.
-- Add bulk approve/reject controls for pharmacy review.
+- Fill internal pharmacy ranking inputs for admin use only.
+- Manually feature the best-ranked and best-verified pharmacies after scoring a first batch.
+- Keep Google ratings/reviews as moderation signals, not public claims.
+- Add licence verification workflow for `nda_licence_no` and `licence_expiry`.
 - Keep licence fields null until verified against real sources.
+- Optionally add bulk feature/unfeature tools if curation gets repetitive.
 
 ## Commands Before Future Changes
 
