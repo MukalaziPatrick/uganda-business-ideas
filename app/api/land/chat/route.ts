@@ -43,8 +43,41 @@ Key facts you know:
 - Always recommend WhatsApp-ing the agent for site visits.
 - Do not make up listing details you don't have.`;
 
+const MAX_MESSAGES = 10;
+const MAX_MESSAGE_CHARS = 2000;
+
+function errorStream(message: string): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      const payload = { choices: [{ delta: { content: message } }] };
+      controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
+      controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+      controller.close();
+    },
+  });
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+    },
+  });
+}
+
 export async function POST(req: NextRequest) {
   const { messages, listing_id } = await req.json();
+
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return new Response(JSON.stringify({ error: 'messages is required' }), { status: 400 });
+  }
+  if (messages.length > MAX_MESSAGES) {
+    return new Response(JSON.stringify({ error: 'Too many messages' }), { status: 400 });
+  }
+  for (const m of messages) {
+    if (typeof m?.content !== 'string' || m.content.length > MAX_MESSAGE_CHARS) {
+      return new Response(JSON.stringify({ error: 'Message too long' }), { status: 400 });
+    }
+  }
 
   // FAQ cache: only for general questions (no listing context). If the latest user
   // message matches a common question, serve the cached answer instantly — no API call.
@@ -87,12 +120,18 @@ Agent WhatsApp: ${listing.agent?.whatsapp ?? 'contact via platform'}`;
     body: JSON.stringify({
       model: MODEL,
       stream: true,
+      max_tokens: 500,
       messages: [
         { role: 'system', content: systemPrompt },
         ...messages,
       ],
     }),
   });
+
+  if (!response.ok) {
+    console.error('[land/chat] OpenRouter error:', response.status, await response.text().catch(() => ''));
+    return errorStream('The guide is resting — try again shortly.');
+  }
 
   return new Response(response.body, {
     headers: {

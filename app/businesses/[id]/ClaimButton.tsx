@@ -10,7 +10,13 @@ function getSupabase() {
   );
 }
 
-export default function ClaimButton({ businessId, businessName }: { businessId: string; businessName: string }) {
+export default function ClaimButton({
+  businessId,
+  businessName,
+}: {
+  businessId: string;
+  businessName: string;
+}) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -48,59 +54,70 @@ export default function ClaimButton({ businessId, businessName }: { businessId: 
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-xl bg-white border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]"
+        className="w-full rounded-xl border-2 border-[#1C3A2A] bg-white py-3 text-sm font-bold text-[#1C3A2A]"
       >
-        🏷️ Is this your business? Claim it
+        Is this your business? Claim it and confirm contacts
       </button>
     );
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 space-y-3">
+    <div className="space-y-3 rounded-xl border border-gray-200 bg-white p-4">
       {submitted ? (
-        <div className="text-center py-4">
-          <p className="text-3xl mb-2">✅</p>
-          <h3 className="text-base font-black text-[#1C3A2A] mb-1" style={{ fontFamily: "Georgia, serif" }}>
+        <div className="py-4 text-center">
+          <p className="mb-2 text-3xl">OK</p>
+          <h3
+            className="mb-1 text-base font-black text-[#1C3A2A]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
             Claim submitted!
           </h3>
-          <p className="text-xs text-gray-600 leading-relaxed">
-            We'll reach out to you on WhatsApp or by phone within 24–48 hours to verify and hand over {businessName}.
+          <p className="text-xs leading-relaxed text-gray-600">
+            We&apos;ll reach out to you on WhatsApp or by phone within 24-48 hours to verify
+            and hand over {businessName}. After approval, you can confirm or correct the
+            public contact numbers yourself.
           </p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <p className="text-sm font-bold text-[#1C3A2A]">Claim {businessName}</p>
-            <p className="text-xs text-gray-500 mt-0.5">
-              We'll verify by phone or WhatsApp before handing over the listing — usually within 24–48 hours.
+            <p className="mt-0.5 text-xs text-gray-500">
+              We&apos;ll verify by phone or WhatsApp before handing over the listing -
+              usually within 24-48 hours. Once approved, you can update the WhatsApp and
+              call numbers shown to customers.
             </p>
           </div>
-          {error && <p className="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{error}</p>}
           <div>
-            <label className="block text-xs font-bold text-gray-600 mb-1">Your name</label>
+            <label className="mb-1 block text-xs font-bold text-gray-600">Your name</label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
               placeholder="e.g. Sarah Nakato"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-600 mb-1">Phone or WhatsApp number</label>
+            <label className="mb-1 block text-xs font-bold text-gray-600">
+              Phone or WhatsApp number we should verify
+            </label>
             <input
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
               placeholder="e.g. 0772 123 456"
               inputMode="tel"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-600 mb-1">Your role (optional)</label>
+            <label className="mb-1 block text-xs font-bold text-gray-600">
+              Your role (optional)
+            </label>
             <input
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
               placeholder="e.g. Owner, Manager"
             />
           </div>
@@ -117,7 +134,7 @@ export default function ClaimButton({ businessId, businessName }: { businessId: 
               disabled={submitting}
               className="flex-1 rounded-xl bg-[#1C3A2A] py-2.5 text-sm font-bold text-[#F5C842] disabled:opacity-60"
             >
-              {submitting ? "Submitting…" : "Submit claim"}
+              {submitting ? "Submitting..." : "Submit claim"}
             </button>
           </div>
         </form>

@@ -40,6 +40,8 @@ async function handleIpn(req: NextRequest) {
 
   const accessExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
+  // Guard against replayed IPN deliveries (Pesapal retries legitimately, and
+  // this URL is a GET) re-extending access and re-firing the WhatsApp notify.
   const { data: payment } = await supabase
     .from('land_payments')
     .update({
@@ -48,6 +50,7 @@ async function handleIpn(req: NextRequest) {
       access_expires_at: accessExpiresAt,
     })
     .eq('payment_ref', tx_ref)
+    .eq('status', 'pending')
     .select('*, listing:land_listings(title, id), agent:land_agents(whatsapp, name)')
     .single();
 

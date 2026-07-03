@@ -54,24 +54,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-50">
-          <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto">
-            <a href="/" className="font-bold text-[#2d6a4f] text-sm shrink-0 mr-3">Business Yoo</a>
+        <nav className="bg-[#1C3A2A] px-4 py-3 sticky top-0 z-50 border-b border-[#F5C842]/20">
+          <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <a href="/" className="font-black text-[#f5f0e8] text-sm shrink-0 mr-3 whitespace-nowrap">
+              🇺🇬 Business <span className="text-[#F5C842]">Yoo</span>
+            </a>
             {[
               { href: '/ideas', label: 'Ideas' },
               { href: '/businesses', label: 'Businesses' },
               { href: '/jobs', label: 'Jobs' },
+              { href: '/land', label: 'Land', highlight: true },
+              { href: '/laundry', label: 'Laundry' },
               { href: '/salons', label: 'Salons' },
               { href: '/travel', label: 'Travel' },
-              { href: '/land', label: 'Land', highlight: true },
+              { href: '/apps', label: 'More' },
             ].map(item => (
               <a
                 key={item.href}
                 href={item.href}
-                className={`shrink-0 text-sm px-3 py-1.5 rounded-full transition-colors ${
+                className={`shrink-0 text-sm px-3 py-1.5 rounded-full transition-colors whitespace-nowrap ${
                   item.highlight
-                    ? 'bg-[#2d6a4f] text-white font-medium hover:bg-[#1e4d38]'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-[#F5C842] text-[#1C3A2A] font-bold hover:bg-[#ffd95e]'
+                    : 'text-[#cfe0d5] hover:bg-[#2D5A40] hover:text-white'
                 }`}
               >
                 {item.label}
