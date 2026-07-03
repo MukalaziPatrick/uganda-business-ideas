@@ -28,7 +28,7 @@ const SERVICES = [
   { href: "/laundry", emoji: "🧺", name: "Laundry", tagline: "Doorstep pickup & delivery" },
   { href: "/salons", emoji: "✂️", name: "Salons", tagline: "Book your next visit nearby" },
   { href: "/travel", emoji: "✈️", name: "Travel", tagline: "Stays & destinations in Uganda" },
-  { href: "/pitch", emoji: "🎙️", name: "SoundPitch", tagline: "Pitch your business in audio" },
+  { href: "/pitch", emoji: "🎵", name: "Music", tagline: "Get your music heard by radios & blogs" },
 ];
 
 const FOOTER_GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
@@ -42,7 +42,7 @@ const FOOTER_GROUPS: { title: string; links: { href: string; label: string }[] }
       { href: "/laundry", label: "Laundry" },
       { href: "/salons", label: "Salons" },
       { href: "/travel", label: "Travel" },
-      { href: "/pitch", label: "SoundPitch" },
+      { href: "/pitch", label: "Music" },
     ],
   },
   {
