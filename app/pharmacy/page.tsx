@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PublicPharmacyContactActions from "@/components/pharmacy/PublicPharmacyContactActions";
 import { getActivePharmacies } from "@/lib/pharmacy/queries";
 import { SITE_URL } from "@/lib/site";
 
@@ -42,8 +43,6 @@ export default async function PharmacyPage() {
 
         <div className="grid grid-cols-1 gap-4">
           {pharmacies.map((pharmacy) => {
-            const whatsappNumber = pharmacy.whatsapp?.replace(/[^0-9]/g, "") ?? "";
-            const phoneNumber = pharmacy.phone?.replace(/[^0-9+]/g, "") ?? "";
             const location = [pharmacy.district, pharmacy.service_area]
               .filter(Boolean)
               .join(" - ");
@@ -92,33 +91,10 @@ export default async function PharmacyPage() {
                   </div>
                 )}
 
-                <div className="mt-4 flex gap-3">
-                  {whatsappNumber ? (
-                    <a
-                      href={`https://wa.me/${whatsappNumber}`}
-                      className="flex-1 rounded-xl bg-[#25D366] py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
-                    >
-                      WhatsApp
-                    </a>
-                  ) : (
-                    <div className="flex-1 rounded-xl border border-dashed border-gray-300 bg-gray-50 py-2 text-center text-sm text-gray-500">
-                      WhatsApp not listed
-                    </div>
-                  )}
-
-                  {phoneNumber ? (
-                    <a
-                      href={`tel:${phoneNumber}`}
-                      className="flex-1 rounded-xl border border-gray-300 py-2 text-center text-sm font-medium text-[#0A2540] transition-colors hover:bg-gray-50"
-                    >
-                      Call
-                    </a>
-                  ) : (
-                    <div className="flex-1 rounded-xl border border-dashed border-gray-300 bg-gray-50 py-2 text-center text-sm text-gray-500">
-                      Call not listed
-                    </div>
-                  )}
-                </div>
+                <PublicPharmacyContactActions
+                  phone={pharmacy.phone}
+                  whatsapp={pharmacy.whatsapp}
+                />
               </div>
             );
           })}
