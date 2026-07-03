@@ -29,6 +29,7 @@ const SERVICES = [
   { href: "/salons", emoji: "✂️", name: "Salons", tagline: "Book your next visit nearby" },
   { href: "/travel", emoji: "✈️", name: "Travel", tagline: "Stays & destinations in Uganda" },
   { href: "/pitch", emoji: "🎵", name: "Music", tagline: "Get your music heard by radios & blogs" },
+  { href: "/pharmacy", emoji: "💊", name: "Pharmacy", tagline: "Find medicine & pharmacies near you" },
 ];
 
 const FOOTER_GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
@@ -43,6 +44,7 @@ const FOOTER_GROUPS: { title: string; links: { href: string; label: string }[] }
       { href: "/salons", label: "Salons" },
       { href: "/travel", label: "Travel" },
       { href: "/pitch", label: "Music" },
+      { href: "/pharmacy", label: "Pharmacy" },
     ],
   },
   {
