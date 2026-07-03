@@ -32,6 +32,29 @@ const SERVICES = [
   { href: "/pharmacy", emoji: "💊", name: "Pharmacy", tagline: "Find medicine & pharmacies near you" },
 ];
 
+// Coming-soon services: shown as muted chips under the live grid (25 categories total
+// with SERVICES). Named by Patrick 2026-07-03: mechanics, schools, gym, swimming,
+// land brokers — rest chosen for Uganda relevance. Some will later link to his own
+// apps (Gym = Nguvu Fit, Swimming = SwimPace, Loans & SACCOs = Sacco Smart Manager).
+const COMING_SOON = [
+  { emoji: "🔧", name: "Mechanics" },
+  { emoji: "🏫", name: "Schools" },
+  { emoji: "💪", name: "Gym & Fitness" },
+  { emoji: "🏊", name: "Swimming" },
+  { emoji: "🤝", name: "Land Brokers" },
+  { emoji: "🏠", name: "Rentals" },
+  { emoji: "🚗", name: "Cars" },
+  { emoji: "🌾", name: "Farming" },
+  { emoji: "🎉", name: "Events" },
+  { emoji: "🧱", name: "Construction" },
+  { emoji: "⚖️", name: "Legal Help" },
+  { emoji: "💰", name: "Loans & SACCOs" },
+  { emoji: "🛵", name: "Boda & Delivery" },
+  { emoji: "🩺", name: "Clinics" },
+  { emoji: "👗", name: "Fashion & Tailoring" },
+  { emoji: "📱", name: "Electronics & Repairs" },
+];
+
 const FOOTER_GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
   {
     title: "Explore",
@@ -162,6 +185,27 @@ export default function HomeClient({
             Search
           </button>
         </form>
+
+        {/* Coming-soon categories */}
+        <div className="mt-8">
+          <div className="flex items-baseline gap-2 mb-1">
+            <h3 className="text-sm font-black tracking-tight">Coming soon</h3>
+            <span className="rounded-full bg-[#F5C842] text-[#1C3A2A] text-[9px] font-black uppercase tracking-wider px-2 py-0.5">
+              {COMING_SOON.length} more services
+            </span>
+          </div>
+          <p className="text-[11px] text-[#5c6f63] mb-3">Business Yoo is growing — these are on the way.</p>
+          <div className="flex flex-wrap gap-2">
+            {COMING_SOON.map(c => (
+              <span
+                key={c.name}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/60 border border-dashed border-[#e0d8cc] px-3 py-1.5 text-xs font-semibold text-[#5c6f63]"
+              >
+                <span>{c.emoji}</span>{c.name}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── Grow: for EXISTING business owners ── */}
