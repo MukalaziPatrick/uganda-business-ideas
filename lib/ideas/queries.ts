@@ -1,6 +1,22 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/server';
 import type { BusinessIdea, IdeaStory, IdeaResource, IdeaSupplier } from '@/lib/supabase/ideas-types';
 
+// B7: `slug` and `category` come straight from URL route params and are used
+// to build PostgREST `.or()` filters by string interpolation below. Braces
+// or commas in a crafted URL rewrite the filter expression (PostgREST filter
+// injection), so both are validated against a strict allowlist before they
+// ever reach a query string.
+const SLUG_RE = /^[a-z0-9-]+$/;
+const CATEGORY_RE = /^[A-Za-z0-9 ]+$/;
+
+function isValidSlug(slug: string): boolean {
+  return typeof slug === 'string' && SLUG_RE.test(slug);
+}
+
+function isValidCategory(category: string): boolean {
+  return typeof category === 'string' && CATEGORY_RE.test(category);
+}
+
 export async function getPublishedIdeas(): Promise<BusinessIdea[]> {
   const supabase = createSupabaseAdminClient();
   if (!supabase) return [];
@@ -16,6 +32,8 @@ export async function getPublishedIdeas(): Promise<BusinessIdea[]> {
 }
 
 export async function getIdeaBySlug(slug: string): Promise<BusinessIdea | null> {
+  if (!isValidSlug(slug)) return null;
+
   const supabase = createSupabaseAdminClient();
   if (!supabase) return null;
 
@@ -35,6 +53,8 @@ export async function getRelatedIdeas(
   category: string,
   limit = 4
 ): Promise<BusinessIdea[]> {
+  if (!isValidSlug(slug) || !isValidCategory(category)) return [];
+
   const supabase = createSupabaseAdminClient();
   if (!supabase) return [];
 
@@ -51,6 +71,8 @@ export async function getRelatedIdeas(
 }
 
 export async function getIdeaStories(slug: string, category: string): Promise<IdeaStory[]> {
+  if (!isValidSlug(slug) || !isValidCategory(category)) return [];
+
   const supabase = createSupabaseAdminClient();
   if (!supabase) return [];
 
@@ -64,6 +86,8 @@ export async function getIdeaStories(slug: string, category: string): Promise<Id
 }
 
 export async function getIdeaResources(category: string): Promise<IdeaResource[]> {
+  if (!isValidCategory(category)) return [];
+
   const supabase = createSupabaseAdminClient();
   if (!supabase) return [];
 
@@ -77,6 +101,8 @@ export async function getIdeaResources(category: string): Promise<IdeaResource[]
 }
 
 export async function getIdeaSuppliers(slug: string, category: string): Promise<IdeaSupplier[]> {
+  if (!isValidSlug(slug) || !isValidCategory(category)) return [];
+
   const supabase = createSupabaseAdminClient();
   if (!supabase) return [];
 
