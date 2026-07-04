@@ -2,6 +2,7 @@
 import { NextRequest } from 'next/server';
 import { getLandListingById } from '@/lib/land/queries';
 import { matchFaq } from '@/lib/land/faq';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY!;
 // Haiku is much cheaper than Sonnet and is plenty for simple plain-language Q&A.
@@ -46,6 +47,11 @@ Key facts you know:
 const MAX_MESSAGES = 10;
 const MAX_MESSAGE_CHARS = 2000;
 
+// B2 part 2: this is a public, unauthenticated OpenRouter proxy — cap how
+// often one IP can call it so a script can't run up the OpenRouter bill.
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
 function errorStream(message: string): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
@@ -65,6 +71,16 @@ function errorStream(message: string): Response {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req.headers);
+  const { allowed, resetAt } = checkRateLimit(`land-chat:${ip}`, RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW_MS);
+  if (!allowed) {
+    const retryAfterSeconds = Math.max(1, Math.ceil((resetAt - Date.now()) / 1000));
+    return new Response(JSON.stringify({ error: 'Too many requests. Please slow down.' }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfterSeconds) },
+    });
+  }
+
   const { messages, listing_id } = await req.json();
 
   if (!Array.isArray(messages) || messages.length === 0) {
