@@ -1,4 +1,6 @@
-import { createSupabaseAdminClient } from '@/lib/supabase/server';
+// B6: these market pages are also public reads, so they should respect the
+// anon-key visibility boundary instead of bypassing it with the service role.
+import { getSupabasePublicClient } from '@/lib/supabase/public';
 
 export type MarketListing = {
   id: string;
@@ -49,7 +51,7 @@ export type MarketFilters = {
 };
 
 export async function getMarketListingById(id: string): Promise<MarketListing | null> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return null;
 
   const { data, error } = await supabase
@@ -66,7 +68,7 @@ export async function getMarketListings(
   filters: MarketFilters = {},
   limit = 48
 ): Promise<MarketListing[]> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return [];
 
   let query = supabase

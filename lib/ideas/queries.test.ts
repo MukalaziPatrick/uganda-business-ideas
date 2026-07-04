@@ -1,13 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-vi.mock('@/lib/supabase/server', () => ({
-  createSupabaseAdminClient: vi.fn(),
+// B6: queries.ts now reads through the shared anon (RLS-enforced) client
+// instead of the service-role admin client — mock that module instead.
+vi.mock('@/lib/supabase/public', () => ({
+  getSupabasePublicClient: vi.fn(),
 }));
 
 import { getPublishedIdeas, getIdeaBySlug, getIdeaStories, getIdeaResources, getIdeaSuppliers } from './queries';
-import { createSupabaseAdminClient } from '@/lib/supabase/server';
+import { getSupabasePublicClient } from '@/lib/supabase/public';
 
-const mockCreate = createSupabaseAdminClient as ReturnType<typeof vi.fn>;
+const mockCreate = getSupabasePublicClient as ReturnType<typeof vi.fn>;
 
 function makeBuilder(overrides: Record<string, unknown> = {}) {
   const builder: Record<string, unknown> = {

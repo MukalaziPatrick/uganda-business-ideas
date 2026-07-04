@@ -1,5 +1,10 @@
 // lib/land/queries.ts
-import { createSupabaseAdminClient } from '@/lib/supabase/server';
+//
+// B6: these are all public reads used by land browse/detail/guides pages and
+// read-only API flows. Using the shared anon client means the visibility rules
+// in supabase/migrations/20260613000001_land_rls.sql actually enforce what the
+// public can see instead of being bypassed by the service-role client.
+import { getSupabasePublicClient } from '@/lib/supabase/public';
 import type { LandListing, LandContent, LandAgent } from '@/lib/supabase/land-types';
 
 export type LandListingFilters = {
@@ -17,7 +22,7 @@ export async function getLandListings(
   filters: LandListingFilters = {},
   limit = 24
 ): Promise<LandListing[]> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return [];
 
   let query = supabase
@@ -60,7 +65,7 @@ export async function getLandListings(
 }
 
 export async function getLandListingById(id: string): Promise<LandListing | null> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return null;
 
   const { data, error } = await supabase
@@ -74,7 +79,7 @@ export async function getLandListingById(id: string): Promise<LandListing | null
 }
 
 export async function getLandListingByQr(qr_token: string): Promise<LandListing | null> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return null;
 
   const { data, error } = await supabase
@@ -88,7 +93,7 @@ export async function getLandListingByQr(qr_token: string): Promise<LandListing 
 }
 
 export async function getFeaturedLandListings(limit = 6): Promise<LandListing[]> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return [];
 
   const { data, error } = await supabase
@@ -103,7 +108,7 @@ export async function getFeaturedLandListings(limit = 6): Promise<LandListing[]>
 }
 
 export async function getLandContent(limit = 12): Promise<LandContent[]> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('land_content')
@@ -115,7 +120,7 @@ export async function getLandContent(limit = 12): Promise<LandContent[]> {
 }
 
 export async function getLandContentBySlug(slug: string): Promise<LandContent | null> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return null;
   const { data, error } = await supabase
     .from('land_content')
@@ -127,7 +132,7 @@ export async function getLandContentBySlug(slug: string): Promise<LandContent | 
 }
 
 export async function getLandAgents(): Promise<LandAgent[]> {
-  const supabase = createSupabaseAdminClient();
+  const supabase = getSupabasePublicClient();
   if (!supabase) return [];
   const { data, error } = await supabase
     .from('land_agents')

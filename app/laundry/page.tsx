@@ -1,7 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import type { LaundryBusiness } from "@/lib/supabase/laundry-types";
 import { SITE_URL } from "@/lib/site";
+import { getSupabasePublicClient } from "@/lib/supabase/public";
 
 export const revalidate = 60;
 
@@ -26,18 +26,17 @@ type Provider = Pick<
 >;
 
 export default async function LaundryPage() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = getSupabasePublicClient();
 
-  const { data } = await supabase
-    .from("laundry_businesses")
-    .select("id,slug,name,region,service_area,whatsapp,promise,app_url,status")
-    .in("status", ["active", "featured"])
-    .order("status", { ascending: false }) // featured first
-    .order("created_at", { ascending: false })
-    .limit(20);
+  const { data } = supabase
+    ? await supabase
+        .from("laundry_businesses")
+        .select("id,slug,name,region,service_area,whatsapp,promise,app_url,status")
+        .in("status", ["active", "featured"])
+        .order("status", { ascending: false }) // featured first
+        .order("created_at", { ascending: false })
+        .limit(20)
+    : { data: null };
 
   const providers = (data ?? []) as Provider[];
 
