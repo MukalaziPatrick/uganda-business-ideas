@@ -19,7 +19,21 @@ export function buildOrderPayload(i: OrderInput) {
   }
 }
 
+// B9: Pesapal tokens live ~5 minutes (`expiryDate` in the auth response).
+// Cache the token at module level and reuse it until 30s before expiry,
+// instead of paying a round-trip to Pesapal's auth endpoint on every call —
+// submitOrder and getTransactionStatus both call getToken(), and the IPN
+// handler pays this cost in webhook latency.
+const TOKEN_SAFETY_MARGIN_MS = 30_000;
+const DEFAULT_TOKEN_TTL_MS = 4 * 60_000; // fallback if Pesapal omits expiryDate
+
+let cachedToken: { token: string; expiresAt: number } | null = null;
+
 export async function getToken(): Promise<string> {
+  if (cachedToken && cachedToken.expiresAt - TOKEN_SAFETY_MARGIN_MS > Date.now()) {
+    return cachedToken.token;
+  }
+
   const res = await fetch(`${BASE}/api/Auth/RequestToken`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -30,6 +44,9 @@ export async function getToken(): Promise<string> {
   })
   const data = await res.json()
   if (!data.token) throw new Error(`Pesapal auth failed: ${JSON.stringify(data)}`)
+
+  const expiresAt = data.expiryDate ? new Date(data.expiryDate).getTime() : Date.now() + DEFAULT_TOKEN_TTL_MS;
+  cachedToken = { token: data.token, expiresAt };
   return data.token
 }
 
