@@ -1,7 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_URL } from "@/lib/site";
+import { getLiveTenders } from "@/lib/tenders";
 
 export const revalidate = 3600;
 
@@ -10,19 +10,6 @@ export const metadata: Metadata = {
   description:
     "Browse public tenders from Uganda and Kenya with source links, sector filters, and a freshness stamp.",
   alternates: { canonical: `${SITE_URL}/tenders` },
-};
-
-type TenderRow = {
-  id: number;
-  source: string;
-  country_iso2: string | null;
-  country_name: string | null;
-  title: string;
-  entity_name: string | null;
-  category: string | null;
-  deadline: string | null;
-  source_url: string | null;
-  updated_at: string | null;
 };
 
 function sourceLabel(source: string): string {
@@ -52,34 +39,6 @@ function formatUpdated(updatedAt: string | null): string {
   });
 }
 
-async function getTenders(): Promise<TenderRow[]> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return [];
-
-  const supabase = createClient(url, anonKey, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-
-  try {
-    const { data, error } = await supabase
-      .from("tenders_live")
-      .select("id,source,country_iso2,country_name,title,entity_name,category,deadline,source_url,updated_at")
-      .order("deadline", { ascending: true })
-      .limit(200);
-
-    if (error) {
-      console.error("tenders_live query failed:", error);
-      return [];
-    }
-
-    return (data ?? []) as TenderRow[];
-  } catch (error) {
-    console.error("tenders_live fetch failed:", error);
-    return [];
-  }
-}
-
 export default async function TendersPage({
   searchParams,
 }: {
@@ -90,7 +49,7 @@ export default async function TendersPage({
   const country = typeof params.country === "string" ? params.country : "all";
   const sector = typeof params.sector === "string" ? params.sector : "all";
 
-  const tenders = await getTenders();
+  const tenders = await getLiveTenders();
   const sectors = Array.from(
     new Set(tenders.map((row) => row.category).filter((value): value is string => Boolean(value)))
   ).sort((a, b) => a.localeCompare(b));
@@ -179,9 +138,7 @@ export default async function TendersPage({
             Showing <span className="font-bold text-[#1C3A2A]">{filtered.length}</span> tender
             {filtered.length === 1 ? "" : "s"}
           </p>
-          <p className="text-xs">
-            Source links point back to PPDA GPP or PPIP Kenya.
-          </p>
+          <p className="text-xs">Source links point back to PPDA GPP or PPIP Kenya.</p>
         </div>
 
         {filtered.length === 0 ? (
@@ -237,7 +194,7 @@ export default async function TendersPage({
                       rel="noreferrer"
                       className="inline-flex items-center justify-center rounded-2xl bg-[#1C3A2A] px-4 py-2 text-sm font-bold text-[#F5C842] hover:bg-[#2D5A40]"
                     >
-                      Open source ↗
+                      Open source
                     </a>
                   )}
                 </div>
