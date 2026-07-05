@@ -45,3 +45,11 @@ next-env.d.ts
 .worktrees/
 scraper/output/*.json
 scraper/.env
+
+# claude worktrees (each is a full checkout with its own .next build cache — 300MB+)
+.claude/worktrees/
+# superpowers scratch/brainstorm temp
+.superpowers/
+# python bytecode
+__pycache__/
+*.pyc
