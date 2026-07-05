@@ -34,6 +34,10 @@ function cleanHelpNeeded(value: unknown): HelpOption[] {
   );
 }
 
+function hasOwn(body: IntakeRequestBody, key: keyof IntakeRequestBody) {
+  return Object.prototype.hasOwnProperty.call(body, key);
+}
+
 type IntakeRequestBody = {
   intakeId?: unknown;
   step?: unknown;
@@ -127,11 +131,16 @@ export async function POST(request: Request) {
 
   // --- Subsequent saves: update only fields that were sent ---------------
   const update: Record<string, unknown> = { current_step: step };
-  for (const [key, value] of Object.entries(fields)) {
-    if (value === null) continue;
-    if (Array.isArray(value) && value.length === 0) continue;
-    update[key] = value;
-  }
+  if (hasOwn(body, "founderName")) update.founder_name = fields.founder_name;
+  if (hasOwn(body, "phone")) update.phone = fields.phone;
+  if (hasOwn(body, "email")) update.email = fields.email;
+  if (hasOwn(body, "businessIdea")) update.business_idea = fields.business_idea;
+  if (hasOwn(body, "niche")) update.niche = fields.niche;
+  if (hasOwn(body, "audience")) update.audience = fields.audience;
+  if (hasOwn(body, "stage")) update.stage = fields.stage;
+  if (hasOwn(body, "budget")) update.budget = fields.budget;
+  if (hasOwn(body, "goals")) update.goals = fields.goals;
+  if (hasOwn(body, "helpNeeded")) update.help_needed = fields.help_needed;
 
   const { error: updateError } = await supabase
     .from("fos_intakes")

@@ -6,6 +6,7 @@ const MODULES = [
   { id: "registration", label: "Business Registration", emoji: "📋" },
   { id: "compliance", label: "Tax & Compliance", emoji: "🧾" },
   { id: "payments", label: "Payments Setup", emoji: "💳" },
+  { id: "banking", label: "Business Banking", emoji: "🏦" },
 ] as const;
 
 export default function ComingSoonModules() {
