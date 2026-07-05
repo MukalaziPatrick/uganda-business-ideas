@@ -1,0 +1,14 @@
+source_name,country,data_type,url_or_search_query,risk_level,update_frequency,manual_or_automated,notes
+PPDA Uganda,Uganda,Tenders,https://gpp.ppda.go.ug/,Low,Daily,Automated,Primary source for government procurement in Uganda.
+New Vision Tenders,Uganda,Tenders,New Vision tender section,Low,Weekly,Manual,Print newspaper contains many tenders not uploaded online.
+UN Global Marketplace (UNGM),Regional,Tenders/NGO,https://www.ungm.org/,Low,Daily,Automated,Highest value NGO and UN contracts.
+ReliefWeb,Regional,Tenders/NGO,https://reliefweb.int/jobs,Low,Daily,Automated,Good source for NGO consultancies and procurements.
+URSB Public Registry,Uganda,Business Directory,URSB name search,Low,Monthly,Automated/Manual,Used to verify if a business is legally registered.
+Uganda Manufacturers Association (UMA),Uganda,Business Directory,https://uma.or.ug/,Low,Yearly,Manual,Excellent source for verified manufacturing suppliers.
+Google Maps Scraper,Regional,Supplier Leads,Hardware shops in Kampala,Medium,On-demand,Automated,Good for raw leads but requires WhatsApp verification.
+KACITA,Uganda,Business Directory,KACITA members list,Medium,Yearly,Manual,Kampala City Traders Association members.
+Facebook Groups,Regional,Supplier Leads,Farming in Uganda group,High,Daily,Manual,High volume of informal businesses; needs verification.
+LinkedIn,Regional,B2B Leads,IT companies in Nairobi,Low,On-demand,Automated,Best for B2B tech and professional services.
+Kenya Ports Authority (KPA),Kenya,Logistics Directory,https://www.kpa.co.ke/,Low,Yearly,Manual,List of approved clearing and forwarding agents.
+Tanzania Ports Authority (TPA),Tanzania,Logistics Directory,https://www.ports.go.tz/,Low,Yearly,Manual,Crucial for Dar es Salaam transit agents.
+Rwanda Development Board (RDB),Rwanda,Business Directory,https://rdb.rw/,Low,Monthly,Automated,Company registration and investment opportunities.

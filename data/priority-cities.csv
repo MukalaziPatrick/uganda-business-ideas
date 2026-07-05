@@ -1,0 +1,26 @@
+country,city,region,commercial_role,priority_score,why_it_matters,first_categories_to_research
+Uganda,Kampala,Central,National Capital / Primary Hub,10,Economic center. Most tenders and B2B activity happen here.,Tender suppliers; ICT; Construction
+Uganda,Wakiso,Central,Industrial & Peri-urban Hub,9,Highest population growth; huge demand for materials and agro-feeds.,Hardware; Real Estate; Agri-business
+Uganda,Jinja,Eastern,Industrial City,8,Heavy manufacturing and tourism.,Manufacturing; Tourism; Logistics
+Uganda,Entebbe,Central,Logistics & Tourism Hub,8,Airport access and major tourist gateway.,Hotels; Tour operators; Import/export
+Uganda,Mbarara,Western,Dairy & Trade Hub,8,Center of Western Uganda economy; high dairy production.,Agriculture; Transport; Retail
+Uganda,Gulu,Northern,NGO & Development Hub,8,Major base for NGOs serving South Sudan and local recovery.,NGO suppliers; Construction; Agriculture
+Uganda,Arua,Northern,Cross-border Trade Hub,8,Gateway to DRC and South Sudan trade.,Import/export; Hardware; Wholesale
+Uganda,Hoima,Western,Oil & Gas Hub,7,Booming due to oil exploration; high real estate demand.,Real estate; Contractors; Professional services
+Uganda,Mbale,Eastern,Agricultural Hub,7,Major center for produce trading to Kenya.,Agriculture (produce); Wholesale
+Uganda,Busia,Eastern,Border Town,7,Primary border crossing for Uganda-Kenya trade.,Import/export; Transport; Forex
+Uganda,Malaba,Eastern,Border Town,7,Major customs clearing point on Kenya border.,Transport; Clearing agents; Retail
+Uganda,Mukono,Central,Industrial & Education Hub,6,Growing industrial parks and large student population.,Manufacturing; Retail; Education
+Uganda,Fort Portal,Western,Tourism Hub,6,Gateway to major national parks.,Tourism; Hospitality; Real estate
+Uganda,Masaka,Central,Agricultural Hub,6,Coffee farming and trading center.,Agriculture (coffee); Retail
+Uganda,Lira,Northern,Agro-processing Hub,6,Oil seed milling and produce trading.,Manufacturing (milling); Agriculture
+Uganda,Soroti,Eastern,Fruit Processing Hub,5,Center for citrus and agricultural trade.,Agri-business; Wholesale
+Uganda,Kasese,Western,Mining & Cross-border,5,Border with DRC; mining and tourism.,Import/export; Tourism; Hardware
+Uganda,Kabale,Western,Tourism & Cross-border,5,Gateway to Rwanda and Gorilla tourism.,Tourism; Cross-border trade
+Kenya,Nairobi,Nairobi,Regional Business Hub,10,Largest East African economy; huge tech and tender volume.,ICT; Corporate suppliers; Tenders
+Kenya,Mombasa,Coast,Major Port City,9,Primary entry point for East African imports.,Logistics; Clearing & Forwarding
+Tanzania,Dar es Salaam,Coast,Major Port City,8,Alternative port for East African trade.,Import/export; Logistics
+Rwanda,Kigali,Central,Corporate & NGO Hub,8,Organized business environment; good B2B services market.,Professional services; Tech
+South Sudan,Juba,Central,NGO & Import Hub,7,Massive reliance on NGO imports and tenders.,NGO suppliers; Logistics
+DRC,Goma,Eastern,Cross-border Trade,6,Major destination for Ugandan goods.,Wholesale; Hardware
+Ethiopia,Addis Ababa,Central,Manufacturing Hub,5,Large population; growing light manufacturing.,Manufacturing; Export
