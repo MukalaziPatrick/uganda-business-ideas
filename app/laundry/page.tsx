@@ -42,18 +42,28 @@ export default async function LaundryPage() {
   const providers = (data ?? []) as Provider[];
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">Laundry Pickup &amp; Delivery</h1>
-        <p className="text-gray-500 mb-8">
-          Doorstep pickup and delivery across Kampala. Pay with MoMo or cash.
-        </p>
+    <main className="min-h-screen bg-brand-cream text-brand-forest">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
+        <section className="overflow-hidden rounded-[2rem] bg-brand-forest p-6 text-brand-cream shadow-xl shadow-brand-forest/10 sm:p-8">
+          <div className="mb-5 inline-flex rounded-full bg-brand-gold px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-brand-forest">
+            Kampala pickup network
+          </div>
+          <h1 className="max-w-xl text-3xl font-black leading-tight tracking-tight sm:text-5xl">
+            <span className="block">Laundry Pickup</span>
+            <span className="block">&amp; Delivery</span>
+          </h1>
+          <p className="mt-4 max-w-lg text-sm leading-7 text-brand-cream/80 text-pretty sm:text-base">
+            Doorstep pickup and delivery across Kampala. Pay with MoMo or cash, then track the order by WhatsApp.
+          </p>
+        </section>
 
         {providers.length === 0 && (
-          <p className="text-gray-400">No laundry services listed yet — check back soon.</p>
+          <div className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-5 text-sm font-semibold text-brand-green">
+            No laundry services listed yet. Check back soon.
+          </div>
         )}
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-4">
           {providers.map((p) => {
             const cta = p.app_url
               ? `${p.app_url}?ref=businessyoo`
@@ -62,21 +72,25 @@ export default async function LaundryPage() {
               <a
                 key={p.id}
                 href={cta}
-                className="block p-5 rounded-2xl border border-gray-200 bg-white hover:shadow-md transition-shadow"
+                className="group block rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 transition-all hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10"
               >
-                <div className="flex items-center justify-between">
-                  <div className="font-semibold text-[#0A2540] text-lg">{p.name}</div>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-lg font-black text-brand-forest">{p.name}</div>
+                    {p.promise && <div className="mt-1 text-sm leading-6 text-brand-green">{p.promise}</div>}
+                  </div>
                   {p.status === "featured" && (
-                    <span className="text-xs font-semibold text-[#3DA9FC] bg-[#eef6ff] px-2 py-0.5 rounded-full">
+                    <span className="shrink-0 rounded-full bg-brand-gold px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-brand-forest">
                       Featured
                     </span>
                   )}
                 </div>
-                {p.promise && <div className="text-sm text-gray-600 mt-1">{p.promise}</div>}
                 {p.service_area && (
-                  <div className="text-xs text-gray-400 mt-2">📍 {p.service_area}</div>
+                  <div className="mt-4 rounded-2xl bg-brand-cream px-3 py-2 text-xs font-semibold text-brand-green">
+                    📍 {p.service_area}
+                  </div>
                 )}
-                <div className="text-sm text-[#3DA9FC] font-medium mt-3">
+                <div className="mt-4 text-sm font-black text-brand-forest group-hover:underline">
                   {p.app_url ? "Order now →" : "Message on WhatsApp →"}
                 </div>
               </a>

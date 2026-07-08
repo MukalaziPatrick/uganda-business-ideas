@@ -16,56 +16,49 @@ const BASE_APPS = [
     emoji: "💡",
     name: "Business Ideas",
     tagline: "Curated ideas to start your business",
-    color: "#c05621",
-    bg: "#fff8f0",
+    iconClass: "bg-brand-gold text-brand-forest",
   },
   {
     href: "/businesses",
     emoji: "💼",
     name: "Find Businesses",
     tagline: "Discover real businesses across Uganda",
-    color: "#374151",
-    bg: "#f9fafb",
+    iconClass: "bg-brand-forest text-brand-cream",
   },
   {
     href: "/salons",
     emoji: "✂️",
     name: "Find Salons",
     tagline: "Book nearby salons via WhatsApp",
-    color: "#6b21a8",
-    bg: "#faf5ff",
+    iconClass: "bg-brand-green text-brand-cream",
   },
   {
     href: "/laundry",
     emoji: "🧺",
     name: "Laundry Pickup",
     tagline: "Doorstep laundry pickup & delivery",
-    color: "#0A2540",
-    bg: "#eef6ff",
+    iconClass: "bg-brand-cream text-brand-forest ring-1 ring-brand-beige",
   },
   {
     href: "/travel",
     emoji: "✈️",
     name: "Explore Uganda",
     tagline: "Destinations, stays, and local tourism",
-    color: "#0e7490",
-    bg: "#f0fdff",
+    iconClass: "bg-brand-beige text-brand-forest",
   },
   {
     href: "/jobs",
     emoji: "👷",
     name: "Find Work",
     tagline: "Browse jobs and post your skills",
-    color: "#1a56db",
-    bg: "#eff6ff",
+    iconClass: "bg-brand-forest text-brand-gold",
   },
   {
     href: "/pharmacy",
     emoji: "💊",
     name: "Find a Pharmacy",
     tagline: "Licensed pharmacies near you",
-    color: "#DC2626",
-    bg: "#FEE2E2",
+    iconClass: "bg-brand-green text-brand-gold",
   },
 ];
 
@@ -78,71 +71,78 @@ export default async function AppsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-4 py-16">
-        <div className="mb-10">
-          <h1 className="mb-2 text-3xl font-bold text-gray-900">Everything on Business Yoo</h1>
-          <p className="text-gray-500">
+    <main className="min-h-screen bg-brand-cream text-brand-forest">
+      <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
+        <div className="mb-8 max-w-2xl">
+          <div className="mb-4 inline-flex rounded-full bg-brand-gold px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-brand-forest">
+            Discovery hub
+          </div>
+          <h1 className="text-3xl font-black leading-tight tracking-tight text-brand-forest sm:text-5xl">
+            <span className="block sm:inline">Everything on</span>{" "}
+            <span className="block sm:inline">Business Yoo</span>
+          </h1>
+          <p className="mt-3 max-w-xl text-sm leading-7 text-brand-green text-pretty sm:text-base">
             Explore land, jobs, business ideas, salons, travel, and more - all in one place.
           </p>
         </div>
 
-        <div className="mb-6 rounded-2xl border-2 border-[#2d6a4f] bg-[#f0faf4] p-5">
-          <div className="mb-3 flex items-center gap-2">
-            <span className="text-2xl">🏞</span>
+        <section className="mb-5 rounded-[2rem] border border-land-secondary/30 bg-land-cream p-5 shadow-sm shadow-land-forest/5 sm:p-6">
+          <div className="mb-4 flex items-start gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-land-primary text-2xl text-white">🏞</span>
             <div>
-              <div className="text-lg font-bold text-[#2d6a4f]">Find Land in Uganda</div>
-              <div className="text-xs text-gray-500">Verified listings + open market radar - updated daily</div>
+              <h2 className="text-lg font-black text-land-forest">Find Land in Uganda</h2>
+              <p className="mt-1 text-xs leading-5 text-land-primary sm:text-sm">
+                Verified listings + open market radar - updated daily
+              </p>
             </div>
           </div>
-          <form action="/land/market" method="get" className="mb-3 flex gap-2">
+          <form action="/land/market" method="get" className="mb-4 flex flex-col gap-2 sm:flex-row">
             <input
               name="q"
               type="text"
               placeholder="Kayunga road, 5 acres, Milo land..."
-              className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f]"
+              className="min-h-11 flex-1 rounded-xl border border-land-secondary/30 bg-white px-3 py-2 text-sm text-land-forest outline-none focus:ring-2 focus:ring-land-secondary"
             />
             <button
               type="submit"
-              className="rounded-xl bg-[#2d6a4f] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#1e4d38]"
+              className="min-h-11 rounded-xl bg-land-primary px-5 py-2 text-sm font-black text-white transition-colors hover:bg-land-forest"
             >
               Search
             </button>
           </form>
-          <div className="flex gap-3 text-sm">
-            <Link href="/land/browse" className="font-medium text-[#2d6a4f] hover:underline">
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link href="/land/browse" className="font-black text-land-forest hover:underline">
               Browse Verified →
             </Link>
-            <Link href="/land/market" className="text-gray-500 hover:underline">
+            <Link href="/land/market" className="font-semibold text-land-primary hover:underline">
               Open Market Radar →
             </Link>
           </div>
-        </div>
+        </section>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {apps.map((app) => (
             <Link
               key={app.href}
               href={app.href}
-              className="group flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition-shadow hover:shadow-md"
+              className="group flex items-start gap-4 rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 transition-all hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10"
             >
               <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-2xl"
-                style={{ background: app.bg }}
+                className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${app.iconClass}`}
               >
                 {app.emoji}
               </div>
               <div>
-                <div className="font-semibold text-gray-900 group-hover:underline" style={{ color: app.color }}>
+                <h2 className="font-black text-brand-forest group-hover:underline">
                   {app.name}
-                </div>
-                <div className="mt-0.5 text-sm text-gray-500">{app.tagline}</div>
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-brand-green">{app.tagline}</p>
               </div>
             </Link>
           ))}
         </div>
 
-        <p className="mt-10 text-center text-xs text-gray-400">
+        <p className="mx-auto mt-10 max-w-xs text-center text-xs font-semibold leading-5 text-brand-green sm:max-w-none">
           Business Yoo - Uganda&apos;s platform for land, work, business, and opportunity.
         </p>
       </div>
