@@ -9,6 +9,7 @@ export default defineConfig({
       '**/dist/**',
       '**/.next/**',
       '**/.claude/worktrees/**',
+      '**/.claude/skill-audit-*/**',
       '**/.worktrees/**',
     ],
   },

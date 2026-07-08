@@ -48,6 +48,9 @@ scraper/.env
 
 # claude worktrees (each is a full checkout with its own .next build cache — 300MB+)
 .claude/worktrees/
+# temporary Phase 0 skill audit clones
+.claude/skill-audit-*/
+.claude/last-skill-audit-dir.txt
 # superpowers scratch/brainstorm temp
 .superpowers/
 
