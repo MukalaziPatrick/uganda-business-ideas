@@ -1,20 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-serif: Georgia, 'Times New Roman', serif;
+  --background: #f5f0e8;
+  --foreground: #1C3A2A;
+  --brand-forest: #1C3A2A;
+  --brand-green: #2D5A40;
+  --brand-gold: #F5C842;
+  --brand-cream: #f5f0e8;
+  --brand-beige: #e0d8cc;
+  --brand-ink: #13291d;
+  --brand-surface: #fffaf1;
+  --land-primary: #2d6a4f;
+  --land-forest: #1b4332;
+  --land-secondary: #40916c;
+  --land-mint: #74c69d;
+  --land-cream: #d8f3dc;
+  --land-ink: #102d22;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-forest: var(--brand-forest);
+  --color-brand-green: var(--brand-green);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-beige: var(--brand-beige);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-surface: var(--brand-surface);
+  --color-land-primary: var(--land-primary);
+  --color-land-forest: var(--land-forest);
+  --color-land-secondary: var(--land-secondary);
+  --color-land-mint: var(--land-mint);
+  --color-land-cream: var(--land-cream);
+  --color-land-ink: var(--land-ink);
+  --font-sans: var(--font-business-sans);
+  --font-serif: var(--font-business-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-business-sans), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
 }

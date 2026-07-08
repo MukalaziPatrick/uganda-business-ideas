@@ -5,11 +5,24 @@
 // without needing to add it to each page manually.
 
 import type { Metadata } from "next";
+import { Lora, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+
+const businessSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-business-sans",
+  display: "swap",
+});
+
+const businessSerif = Lora({
+  subsets: ["latin"],
+  variable: "--font-business-serif",
+  display: "swap",
+});
 
 const defaultTitle = `${SITE_NAME} — Business Ideas & Directory for Uganda`;
 const defaultDescription =
@@ -54,7 +67,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${businessSans.variable} ${businessSerif.variable}`}>
         <nav className="bg-[#1C3A2A] px-4 py-3 sticky top-0 z-50 border-b border-[#F5C842]/20">
           <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <Link href="/" className="font-black text-[#f5f0e8] text-sm shrink-0 mr-3 whitespace-nowrap">
