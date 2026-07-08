@@ -17,7 +17,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#f5f7fa] pb-20 text-slate-900">
+    <div className="min-h-screen bg-brand-cream pb-20 text-brand-forest">
       <DemoBanner />
       {children}
       <BottomNav />

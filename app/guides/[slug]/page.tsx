@@ -50,88 +50,88 @@ export default async function GuidePage({ params }: GuidePageProps) {
   );
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-slate-900">
+    <main className="min-h-screen bg-brand-cream text-brand-forest">
       <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6 md:px-10">
-        <header className="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <header className="flex flex-col gap-4 border-b border-brand-beige pb-6 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-[11px] font-black text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-forest text-[11px] font-black text-brand-gold">
               UBI
             </div>
-            <span className="text-[15px] font-semibold text-slate-800">
+            <span className="text-[15px] font-semibold text-brand-forest">
               Business Yoo
             </span>
           </Link>
           <Link
             href="/guides"
-            className="inline-flex w-fit rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm hover:bg-slate-50"
+            className="inline-flex w-fit rounded-xl border border-brand-beige bg-brand-surface px-4 py-2 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-beige/40"
           >
             All guides
           </Link>
         </header>
 
-        <section className="mt-8 overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] px-6 py-10 text-white shadow-xl sm:px-10 sm:py-12">
-          <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-emerald-300">
+        <section className="mt-8 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-forest via-brand-green to-brand-forest px-6 py-10 text-white shadow-xl sm:px-10 sm:py-12">
+          <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-gold">
             Paid PDF guide
           </p>
           <h1 className="mt-3 max-w-3xl text-3xl font-black leading-tight tracking-tight sm:text-5xl">
             {guide.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-green-100/75">
+          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-brand-cream/75">
             {guide.summary}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <span className="rounded-full bg-white px-4 py-2 text-[13px] font-black text-green-800">
+            <span className="rounded-full bg-white px-4 py-2 text-[13px] font-black text-brand-green">
               {formatUGX(guide.priceUGX)}
             </span>
-            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[12px] font-bold text-green-100">
+            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[12px] font-bold text-brand-cream/85">
               {guide.paymentMethod}
             </span>
-            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[12px] font-bold text-green-100">
+            <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[12px] font-bold text-brand-cream/85">
               {guide.format}
             </span>
           </div>
         </section>
 
-        <section className="mt-6 rounded-2xl border border-green-100 bg-green-50 p-6">
-          <h2 className="text-[15px] font-bold text-green-950">
+        <section className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-6">
+          <h2 className="text-[15px] font-bold text-brand-forest">
             What this guide helps you do
           </h2>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-green-800">
+          <p className="mt-2 text-[13.5px] leading-relaxed text-brand-green">
             {guide.buyerPromise}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            <span className="rounded-full bg-white px-3 py-1.5 text-[12px] font-bold text-green-700 ring-1 ring-green-100">
+            <span className="rounded-full bg-white px-3 py-1.5 text-[12px] font-bold text-brand-forest ring-1 ring-brand-beige">
               {guide.deliveryExpectation}
             </span>
-            <span className="rounded-full bg-white px-3 py-1.5 text-[12px] font-bold text-green-700 ring-1 ring-green-100">
+            <span className="rounded-full bg-white px-3 py-1.5 text-[12px] font-bold text-brand-forest ring-1 ring-brand-beige">
               Manual confirmation
             </span>
           </div>
         </section>
 
         <section className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-[15px] font-bold text-slate-900">
+          <div className="rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm">
+            <h2 className="text-[15px] font-bold text-brand-forest">
               What you get
             </h2>
             <ul className="mt-4 space-y-3">
               {guide.whatYouGet.map((item) => (
-                <li key={item} className="flex gap-3 text-[13.5px] text-slate-600">
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-green-500" />
+                <li key={item} className="flex gap-3 text-[13.5px] text-brand-green">
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand-gold" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-[15px] font-bold text-slate-900">
+          <div className="rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm">
+            <h2 className="text-[15px] font-bold text-brand-forest">
               Best for
             </h2>
             <ul className="mt-4 space-y-3">
               {guide.targetAudience.map((item) => (
-                <li key={item} className="flex gap-3 text-[13.5px] text-slate-600">
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                <li key={item} className="flex gap-3 text-[13.5px] text-brand-green">
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand-gold" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -139,8 +139,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </div>
         </section>
 
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-[15px] font-bold text-green-950">
+        <section className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm">
+          <h2 className="text-[15px] font-bold text-brand-forest">
             Manual purchase flow
           </h2>
           <ol className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -150,35 +150,35 @@ export default async function GuidePage({ params }: GuidePageProps) {
               "Buyer sends payment confirmation",
               "UBI verifies payment before sending the PDF",
             ].map((step, index) => (
-              <li key={step} className="flex gap-3 rounded-xl bg-slate-50 px-4 py-3 text-[13px] text-slate-600">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600 text-[10px] font-black text-white">
+              <li key={step} className="flex gap-3 rounded-xl bg-brand-cream px-4 py-3 text-[13px] text-brand-green">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold text-[10px] font-black text-brand-forest">
                   {index + 1}
                 </span>
                 <span>{step}</span>
               </li>
             ))}
           </ol>
-          <div className="mt-5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3">
-            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700">
+          <div className="mt-5 rounded-xl border border-brand-gold/50 bg-brand-gold/20 px-4 py-3">
+            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-brand-forest">
               Delivery expectations
             </p>
-            <p className="mt-1 text-[12.5px] leading-relaxed text-amber-900">
+            <p className="mt-1 text-[12.5px] leading-relaxed text-brand-forest">
               UBI sends Mobile Money instructions manually and delivers the PDF
               only after payment is confirmed. Keep the guide slug and amount in
               the WhatsApp conversation for manual sales tracking.
             </p>
           </div>
           <div className="mt-5">
-            <h3 className="text-[13px] font-bold text-slate-900">
+            <h3 className="text-[13px] font-bold text-brand-forest">
               Fulfillment checklist
             </h3>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {guide.fulfillmentChecklist.map((item) => (
                 <li
                   key={item}
-                  className="flex gap-2 text-[12.5px] leading-relaxed text-slate-600"
+                  className="flex gap-2 text-[12.5px] leading-relaxed text-brand-green"
                 >
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-green-500" />
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand-gold" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -212,29 +212,29 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 guide_slug: guide.slug,
                 source: "guide_detail",
               }}
-              className="mt-3 inline-flex justify-center rounded-xl border border-green-200 bg-white px-5 py-2.5 text-[13px] font-bold text-green-700 shadow-sm transition hover:bg-green-50 sm:ml-3 sm:mt-0"
+              className="mt-3 inline-flex justify-center rounded-xl border border-brand-beige bg-brand-surface px-5 py-2.5 text-[13px] font-bold text-brand-forest shadow-sm transition hover:bg-brand-gold/10 sm:ml-3 sm:mt-0"
             >
               Get help starting
             </AnalyticsLink>
           </div>
         </section>
 
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-[15px] font-bold text-slate-900">
+        <section className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm">
+          <h2 className="text-[15px] font-bold text-brand-forest">
             Guide FAQs
           </h2>
-          <div className="mt-4 divide-y divide-slate-100">
+          <div className="mt-4 divide-y divide-brand-beige">
             {guide.faqs.map((faq) => (
               <details key={faq.question} className="group py-3">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4 marker:hidden">
-                  <span className="text-[13.5px] font-bold text-slate-800 group-open:text-green-700">
+                  <span className="text-[13.5px] font-bold text-brand-forest group-open:text-brand-forest">
                     {faq.question}
                   </span>
-                  <span className="text-[16px] leading-none text-slate-400 group-open:text-green-600">
+                  <span className="text-[16px] leading-none text-brand-green/70 group-open:text-brand-forest">
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-[13px] leading-relaxed text-slate-600">
+                <p className="mt-2 text-[13px] leading-relaxed text-brand-green">
                   {faq.answer}
                 </p>
               </details>
@@ -243,8 +243,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </section>
 
         {relatedIdeas.length > 0 && (
-          <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-[15px] font-bold text-slate-900">
+          <section className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm">
+            <h2 className="text-[15px] font-bold text-brand-forest">
               Related business ideas
             </h2>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -252,7 +252,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <Link
                   key={idea.slug}
                   href={`/ideas/${idea.slug}`}
-                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[12.5px] font-semibold text-slate-600 hover:bg-slate-100"
+                  className="rounded-full border border-brand-beige bg-brand-cream px-3 py-1.5 text-[12.5px] font-semibold text-brand-green hover:bg-brand-beige/40"
                 >
                   {idea.title}
                 </Link>

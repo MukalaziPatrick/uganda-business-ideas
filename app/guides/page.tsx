@@ -23,46 +23,46 @@ export default function GuidesPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-slate-900">
+    <main className="min-h-screen bg-brand-cream text-brand-forest">
       <section className="mx-auto max-w-5xl px-4 py-8 sm:px-6 md:px-10">
-        <header className="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <header className="flex flex-col gap-4 border-b border-brand-beige pb-6 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-[11px] font-black text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gold text-[11px] font-black text-brand-forest">
               UBI
             </div>
-            <span className="text-[15px] font-semibold text-slate-800">
+            <span className="text-[15px] font-semibold text-brand-forest">
               Business Yoo
             </span>
           </Link>
           <Link
             href="/"
-            className="inline-flex w-fit rounded-xl border border-slate-200 bg-white px-4 py-2 text-[13px] font-semibold text-slate-600 shadow-sm hover:bg-slate-50"
+            className="inline-flex w-fit rounded-xl border border-brand-beige bg-brand-surface px-4 py-2 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-beige/40"
           >
             Back to ideas
           </Link>
         </header>
 
         <section className="py-10 sm:py-12">
-          <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-green-600">
+          <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-forest">
             Practical paid guides
           </p>
-          <h1 className="mt-3 max-w-3xl text-3xl font-black tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="mt-3 max-w-3xl text-3xl font-black tracking-tight text-brand-forest sm:text-5xl">
             Start with a focused guide, then ask for help on WhatsApp.
           </h1>
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-slate-600">
+          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-brand-green">
             These starter guides are sold manually for now. Click a guide, send
             the WhatsApp request, receive Mobile Money instructions from UBI,
             and get the PDF after payment is confirmed.
           </p>
         </section>
 
-        <section className="mb-6 grid gap-3 rounded-2xl border border-green-100 bg-green-50 p-4 sm:grid-cols-4 sm:p-5">
+        <section className="mb-6 grid gap-3 rounded-2xl border border-brand-beige bg-brand-surface p-4 sm:grid-cols-4 sm:p-5">
           {purchaseSteps.map((step, index) => (
             <div key={step} className="flex items-center gap-3">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-600 text-[11px] font-black text-white">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-gold text-[11px] font-black text-brand-forest">
                 {index + 1}
               </span>
-              <p className="text-[12.5px] font-bold text-green-900">{step}</p>
+              <p className="text-[12.5px] font-bold text-brand-forest">{step}</p>
             </div>
           ))}
         </section>
@@ -71,34 +71,34 @@ export default function GuidesPage() {
           {guides.map((guide) => (
             <article
               key={guide.id}
-              className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              className="flex h-full flex-col rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="rounded-full bg-green-50 px-3 py-1 text-[11px] font-bold text-green-700 ring-1 ring-green-100">
+                <span className="rounded-full bg-brand-gold px-3 py-1 text-[11px] font-bold text-brand-forest ring-1 ring-brand-gold">
                   {formatUGX(guide.priceUGX)}
                 </span>
-                <span className="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-amber-700 ring-1 ring-amber-100">
+                <span className="rounded-full bg-brand-cream px-3 py-1 text-[11px] font-bold text-brand-green ring-1 ring-brand-beige">
                   Manual payment
                 </span>
               </div>
-              <h2 className="mt-4 text-[17px] font-black leading-snug text-slate-900">
+              <h2 className="mt-4 text-[17px] font-black leading-snug text-brand-forest">
                 {guide.title}
               </h2>
-              <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-slate-600">
+              <p className="mt-2 flex-1 text-[13.5px] leading-relaxed text-brand-green">
                 {guide.summary}
               </p>
-              <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
-                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <div className="mt-4 rounded-xl border border-brand-beige bg-brand-cream px-4 py-3">
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-brand-green/70">
                   Delivery
                 </p>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-slate-600">
+                <p className="mt-1 text-[12.5px] leading-relaxed text-brand-green">
                   {guide.format} · {guide.deliveryExpectation}
                 </p>
               </div>
               <div className="mt-5 flex flex-col gap-2">
                 <Link
                   href={`/guides/${guide.slug}`}
-                  className="inline-flex justify-center rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-[13px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="inline-flex justify-center rounded-xl border border-brand-beige bg-brand-cream px-4 py-2.5 text-[13px] font-bold text-brand-forest hover:bg-brand-beige/40"
                 >
                   View guide
                 </Link>

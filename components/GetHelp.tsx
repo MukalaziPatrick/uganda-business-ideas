@@ -44,8 +44,8 @@ export default function GetHelp({
   if (activeChannels.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-[13px] font-bold uppercase tracking-[0.1em] text-slate-500 mb-4">Get Help</h2>
+    <div className="rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm">
+      <h2 className="text-[13px] font-bold uppercase tracking-[0.1em] text-brand-green mb-4">Get Help</h2>
       <div className="flex flex-col gap-3">
         {activeChannels.map(channel => (
           <a
@@ -53,9 +53,9 @@ export default function GetHelp({
             href={channel.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3 text-[14px] font-semibold text-slate-700 hover:bg-green-50 hover:text-green-700 hover:border-green-100 transition"
+            className="flex items-center gap-3 rounded-xl border border-brand-beige bg-brand-cream p-3 text-[14px] font-semibold text-brand-forest transition hover:border-brand-gold hover:bg-brand-gold/10 hover:text-brand-forest"
           >
-            <div className="text-green-600">{channel.icon}</div>
+            <div className="text-brand-forest">{channel.icon}</div>
             {channel.label}
           </a>
         ))}
