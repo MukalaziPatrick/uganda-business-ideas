@@ -110,12 +110,14 @@ export default function BusinessesClient({
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10">
         <input
           type="search"
+          aria-label="Search businesses"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search businesses..."
           className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
         />
         <select
+          aria-label="Filter businesses by category"
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
@@ -154,7 +156,7 @@ export default function BusinessesClient({
 
       <div className="px-4 py-5 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-brand-green">
             {filtered.length} {filtered.length === 1 ? "business" : "businesses"}
             {region !== "All" ? ` in ${region}` : ""}
             {category ? ` · ${category}` : ""}
@@ -168,7 +170,7 @@ export default function BusinessesClient({
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-brand-green">
             <p className="text-2xl mb-2">🔍</p>
             <p className="text-sm">No businesses found.</p>
             <Link href="/businesses/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
@@ -186,7 +188,7 @@ export default function BusinessesClient({
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="font-black text-brand-forest text-sm truncate">{b.name}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-brand-green mt-0.5">
                       {categoryEmoji(b.category)} {b.category} · {b.town ? `${b.town}, ` : ""}{b.district}
                     </p>
                   </div>

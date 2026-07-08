@@ -45,7 +45,7 @@ export default async function StayProfilePage({ params }: { params: Promise<{ id
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-gray-500 flex gap-1 flex-wrap">
+      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-brand-green flex gap-1 flex-wrap">
         <Link href="/travel" className="hover:text-brand-forest">ZuulaUganda</Link>
         <span>›</span>
         <Link href={`/travel/destinations/${stay.travel_destinations.slug}`} className="hover:text-brand-forest">{stay.travel_destinations.name}</Link>
@@ -58,7 +58,7 @@ export default async function StayProfilePage({ params }: { params: Promise<{ id
         {stay.status === "featured" && (
           <span className="absolute top-3 right-3 bg-brand-gold text-brand-forest text-[10px] font-black px-2 py-1 rounded-full">⭐ FEATURED</span>
         )}
-        <p className="text-xs text-white/50 mb-1">{STAY_TYPE_LABELS[stay.type]} · {stay.town}</p>
+        <p className="text-xs text-brand-cream/85 mb-1">{STAY_TYPE_LABELS[stay.type]} · {stay.town}</p>
         <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>{stay.name}</h1>
         <p className="text-sm font-bold text-white/80">From UGX {stay.price_from.toLocaleString()} / night</p>
       </div>
@@ -111,14 +111,14 @@ export default async function StayProfilePage({ params }: { params: Promise<{ id
       <div className="px-4 py-5 max-w-lg mx-auto space-y-5">
         {/* About */}
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">About</p>
+          <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-2">About</p>
           <p className="text-sm text-gray-700 leading-relaxed">{stay.description}</p>
         </div>
 
         {/* Amenities */}
         {stay.amenities.length > 0 && (
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Amenities</p>
+            <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">Amenities</p>
             <div className="flex flex-wrap gap-2">
               {stay.amenities.map((a) => (
                 <span key={a} className="bg-brand-cream text-gray-700 text-xs px-3 py-1.5 rounded-full">{a}</span>
@@ -130,13 +130,13 @@ export default async function StayProfilePage({ params }: { params: Promise<{ id
         {/* Rooms */}
         {rooms.length > 0 && (
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Room Types & Prices</p>
+            <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">Room Types & Prices</p>
             <div className="divide-y divide-gray-100">
               {rooms.map((r) => (
                 <div key={r.id} className="flex justify-between items-center py-2">
                   <div>
                     <p className="text-sm font-semibold text-brand-forest">{r.name}</p>
-                    <p className="text-xs text-gray-400">Up to {r.capacity} guest{r.capacity > 1 ? "s" : ""}</p>
+                    <p className="text-xs text-brand-green">Up to {r.capacity} guest{r.capacity > 1 ? "s" : ""}</p>
                   </div>
                   <p className="text-sm font-bold text-brand-green">UGX {r.price_per_night.toLocaleString()}/night</p>
                 </div>
@@ -153,7 +153,7 @@ export default async function StayProfilePage({ params }: { params: Promise<{ id
 
         {/* Location */}
         <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Location</p>
+          <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-2">Location</p>
           <p className="text-sm text-gray-600 mb-3">{stay.town}, {stay.district}, Uganda</p>
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
             className="block w-full bg-brand-green/10 text-brand-green text-sm font-bold text-center py-3 rounded-xl">

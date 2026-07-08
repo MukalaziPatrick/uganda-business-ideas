@@ -29,7 +29,7 @@ export default async function HomeJobsTeaser() {
     .order("created_at", { ascending: false })
     .limit(3);
 
-  const eyebrow = "text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#2D5A40]";
+  const eyebrow = "text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-green";
 
   return (
     <section className="px-4 py-8 sm:px-6 md:px-10">
@@ -37,17 +37,17 @@ export default async function HomeJobsTeaser() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className={eyebrow}>💼 Work Near You</p>
-            <h2 className="mt-1 text-xl font-black text-[#1C3A2A]">Latest Jobs</h2>
+            <h2 className="mt-1 text-xl font-black text-brand-forest">Latest Jobs</h2>
           </div>
-          <Link href="/jobs" className="rounded-xl border border-[#2D5A40]/30 bg-white px-4 py-2 text-xs font-bold text-[#2D5A40] hover:bg-[#f5f0e8]">
+          <Link href="/jobs" className="rounded-xl border border-brand-green/30 bg-white px-4 py-2 text-xs font-bold text-brand-green hover:bg-brand-cream">
             View all →
           </Link>
         </div>
 
         {(!jobs || jobs.length === 0) ? (
-          <div className="rounded-2xl border border-[#e0d8cc] bg-white p-4 text-center text-sm text-[#5c6f63]">
+          <div className="rounded-2xl border border-brand-beige bg-white p-4 text-center text-sm text-brand-green">
             <p className="mb-3">No jobs posted yet — be the first!</p>
-            <Link href="/jobs/post" className="rounded-xl bg-[#2D5A40] px-4 py-2 text-xs font-bold text-white hover:bg-[#1C3A2A]">
+            <Link href="/jobs/post" className="rounded-xl bg-brand-green px-4 py-2 text-xs font-bold text-white hover:bg-brand-forest">
               Post a Job (Free)
             </Link>
           </div>
@@ -58,26 +58,26 @@ export default async function HomeJobsTeaser() {
                 ? whatsappHref(job.contact_whatsapp, job.title)
                 : job.contact_phone ? `tel:${job.contact_phone}` : "/jobs";
               return (
-                <div key={job.id} className={`flex items-center justify-between gap-3 rounded-2xl border bg-white p-4 ${job.featured ? "border-[#F5C842]" : "border-[#e0d8cc]"}`}>
+                <div key={job.id} className={`flex items-center justify-between gap-3 rounded-2xl border bg-white p-4 ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      {job.featured && <span className="text-[10px] font-bold text-[#F5C842]">⭐</span>}
-                      <p className="truncate text-sm font-black text-[#1C3A2A]">{job.title}</p>
+                      {job.featured && <span className="text-[10px] font-bold text-brand-forest">⭐</span>}
+                      <p className="truncate text-sm font-black text-brand-forest">{job.title}</p>
                     </div>
-                    <p className="text-xs text-[#5c6f63] mt-0.5">
+                    <p className="text-xs text-brand-green mt-0.5">
                       📍 {[job.town, job.district].filter(Boolean).join(", ")}
                       {job.pay_amount ? ` · UGX ${job.pay_amount.toLocaleString()}/${job.pay_period}` : ""}
                     </p>
                   </div>
                   <a href={applyHref} target="_blank" rel="noopener noreferrer"
-                    className="shrink-0 rounded-xl bg-[#2D5A40] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#1C3A2A]">
+                    className="shrink-0 rounded-xl bg-brand-green px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-forest">
                     Apply
                   </a>
                 </div>
               );
             })}
             <Link href="/jobs/post"
-              className="block rounded-2xl border border-[#e0d8cc] bg-white p-3 text-center text-xs font-semibold text-[#2D5A40] hover:bg-[#f5f0e8]">
+              className="block rounded-2xl border border-brand-beige bg-white p-3 text-center text-xs font-semibold text-brand-green hover:bg-brand-cream">
               + Post a Job (Free)
             </Link>
           </div>

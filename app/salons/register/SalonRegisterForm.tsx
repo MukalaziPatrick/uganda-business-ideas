@@ -170,7 +170,7 @@ export default function SalonRegisterForm() {
           <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
         ))}
       </div>
-      <p className="text-xs text-gray-500 text-center">Step {step} of 4</p>
+      <p className="text-xs text-brand-green text-center">Step {step} of 4</p>
 
       {error && <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">{error}</div>}
 
@@ -219,7 +219,7 @@ export default function SalonRegisterForm() {
             <span className="text-sm font-medium text-gray-700">Walk-ins welcome (no appointment needed)</span>
           </label>
           <div>
-            <label className={labelClass}>About your salon <span className="text-gray-400 font-normal">({about.length}/300)</span></label>
+            <label className={labelClass}>About your salon <span className="text-brand-green font-normal">({about.length}/300)</span></label>
             <textarea className={`${fieldClass} resize-none`} rows={3} value={about} onChange={e => setAbout(e.target.value)} maxLength={300} placeholder="What do you offer? What makes you special?" />
           </div>
           <button onClick={() => { const e = validateStep1(); if (e) { setError(e); return; } setError(""); setStep(2); }}
@@ -238,17 +238,17 @@ export default function SalonRegisterForm() {
                 <p className="text-xs font-bold text-brand-forest">Service {i + 1}</p>
                 {services.length > 1 && <button onClick={() => removeService(i)} className="text-xs text-red-500">Remove</button>}
               </div>
-              <input className={fieldClass} value={svc.name} onChange={e => updateService(i, "name", e.target.value)} placeholder="Service name (e.g. Box Braids)" />
-              <select className={fieldClass} value={svc.gender} onChange={e => updateService(i, "gender", e.target.value)}>
+              <input aria-label="Service name" className={fieldClass} value={svc.name} onChange={e => updateService(i, "name", e.target.value)} placeholder="Service name (e.g. Box Braids)" />
+              <select aria-label="Service gender" className={fieldClass} value={svc.gender} onChange={e => updateService(i, "gender", e.target.value)}>
                 <option value="men">👨 Men</option>
                 <option value="women">👩 Women</option>
                 <option value="unisex">✂️ Unisex</option>
               </select>
               <div className="grid grid-cols-2 gap-2">
-                <input className={fieldClass} type="number" value={svc.price_from} onChange={e => updateService(i, "price_from", e.target.value)} placeholder="Price from (UGX)" />
-                <input className={fieldClass} type="number" value={svc.price_to} onChange={e => updateService(i, "price_to", e.target.value)} placeholder="Price to (UGX)" />
+                <input aria-label="Price from" className={fieldClass} type="number" value={svc.price_from} onChange={e => updateService(i, "price_from", e.target.value)} placeholder="Price from (UGX)" />
+                <input aria-label="Price to" className={fieldClass} type="number" value={svc.price_to} onChange={e => updateService(i, "price_to", e.target.value)} placeholder="Price to (UGX)" />
               </div>
-              <input className={fieldClass} type="number" value={svc.duration_minutes} onChange={e => updateService(i, "duration_minutes", e.target.value)} placeholder="Duration (minutes, e.g. 45)" />
+              <input aria-label="Service duration" className={fieldClass} type="number" value={svc.duration_minutes} onChange={e => updateService(i, "duration_minutes", e.target.value)} placeholder="Duration (minutes, e.g. 45)" />
             </div>
           ))}
           {services.length < 20 && (
@@ -266,7 +266,7 @@ export default function SalonRegisterForm() {
       {step === 3 && (
         <div className="space-y-4">
           <h2 className="text-sm font-black text-brand-forest">Photos</h2>
-          <p className="text-xs text-gray-500">Paste image URLs from your phone or social media. You can add up to 10 portfolio photos.</p>
+          <p className="text-xs text-brand-green">Paste image URLs from your phone or social media. You can add up to 10 portfolio photos.</p>
           <div>
             <label className={labelClass}>Cover photo URL (main photo shown on the card)</label>
             <input className={fieldClass} value={coverPhotoUrl} onChange={e => setCoverPhotoUrl(e.target.value)} placeholder="https://..." />

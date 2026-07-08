@@ -20,7 +20,7 @@ const OPTIONAL_FIELDS = [
 function ProgressBar({ current, total, label }: { current: number; total: number; label: string }) {
   return (
     <div className="mb-6">
-      <div className="flex justify-between text-xs font-semibold text-slate-500 mb-2">
+      <div className="flex justify-between text-xs font-semibold text-brand-green mb-2">
         <span>{label}</span>
         <span>Step {current} of {total}</span>
       </div>
@@ -124,7 +124,7 @@ export default function WorkerForm() {
           <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
             Profile Created!
           </h2>
-          <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+          <p className="text-sm text-brand-green mb-6 leading-relaxed">
             Employers across Uganda can now find and contact you directly.
           </p>
           <div className="flex flex-col gap-3">
@@ -325,7 +325,7 @@ export default function WorkerForm() {
             <label className={labelCls}>Short Bio (max 100 characters)</label>
             <input maxLength={100} value={form.bio} onChange={e => set("bio", e.target.value)}
               placeholder="e.g. Experienced carpenter based in Kampala, 5 years in furniture" className={inputCls} />
-            <p className="text-xs text-slate-400 mt-1">{form.bio.length}/100</p>
+            <p className="text-xs text-brand-green mt-1">{form.bio.length}/100</p>
           </div>
         )}
         {error && <p className="text-sm text-red-600">{error}</p>}

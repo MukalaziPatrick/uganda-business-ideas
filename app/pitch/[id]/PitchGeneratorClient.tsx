@@ -124,7 +124,7 @@ export default function PitchGeneratorClient({ gatekeeper }: { gatekeeper: Gatek
               {GATEKEEPER_TYPE_LABELS[gatekeeper.type]}
             </span>
             <span className="text-[13px] text-brand-cream/70">{gatekeeper.location}</span>
-            <span className="text-[13px] text-brand-cream/60">· {gatekeeper.genres.join(', ')}</span>
+            <span className="text-[13px] text-brand-cream/85">· {gatekeeper.genres.join(', ')}</span>
           </div>
           <p className="mt-3 max-w-2xl text-[13px] leading-relaxed text-brand-cream/75">{gatekeeper.description}</p>
         </div>
@@ -184,7 +184,7 @@ export default function PitchGeneratorClient({ gatekeeper }: { gatekeeper: Gatek
           <button
             onClick={handleGenerate}
             disabled={loading || !usage.canGenerate}
-            className="w-full rounded-xl bg-brand-gold px-6 py-3 text-[15px] font-black text-brand-forest transition hover:brightness-95 disabled:bg-brand-beige disabled:text-brand-green/60"
+            className="w-full rounded-xl bg-brand-gold px-6 py-3 text-[15px] font-black text-brand-forest transition hover:brightness-95 disabled:bg-brand-beige disabled:text-brand-green"
           >
             {loading ? '✨ Generating your pitch...' : '✨ Generate Pitch Letter'}
           </button>

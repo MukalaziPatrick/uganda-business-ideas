@@ -355,7 +355,7 @@ export default function LaunchWizard() {
           <button
             type="button"
             onClick={() => setStep(step - 1)}
-            className="motion-press text-[13px] font-bold text-brand-forest/60 hover:text-brand-forest"
+            className="motion-press text-[13px] font-bold text-brand-forest hover:text-brand-forest"
           >
             ← Back
           </button>

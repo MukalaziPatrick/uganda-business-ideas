@@ -111,9 +111,11 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         {/* Filters */}
         <div className="flex gap-2 mb-5">
           <input value={skill} onChange={e => setSkill(e.target.value)}
+            aria-label={tab === "jobs" ? "Search jobs by skill or title" : "Search workers by skill"}
             placeholder={tab === "jobs" ? "Search skill or title..." : "Search skill..."}
             className="flex-1 rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60" />
           <select value={district} onChange={e => setDistrict(e.target.value)}
+            aria-label="Filter by district"
             className="rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60">
             <option value="">All districts</option>
             {UGANDA_DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -184,7 +186,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                       <p className="text-xs text-brand-green/75 mt-2 line-clamp-2">{job.description}</p>
                     )}
                     <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <span className="text-[10px] text-brand-green/60">{timeAgo(job.created_at)}</span>
+                      <span className="text-[10px] text-brand-green">{timeAgo(job.created_at)}</span>
                       {job.source && job.source_url && (
                         <a
                           href={job.source_url}
@@ -254,7 +256,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     <p className="text-xs text-brand-green/70 mt-0.5">📍 {[w.town, w.district].filter(Boolean).join(", ")}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${w.available ? "bg-brand-gold/20 text-brand-forest" : "bg-slate-100 text-slate-500"}`}>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${w.available ? "bg-brand-gold/20 text-brand-forest" : "bg-brand-cream text-brand-green"}`}>
                       {w.available ? "Available" : "Unavailable"}
                     </span>
                     {w.pay_expectation && (

@@ -29,7 +29,7 @@ export default async function DestinationsPage() {
   return (
     <div className="min-h-screen bg-brand-cream">
       <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 py-6 text-center text-white">
-        <Link href="/travel" className="text-xs text-white/60 mb-2 block">← ZuulaUganda</Link>
+        <Link href="/travel" className="text-xs text-brand-cream/85 mb-2 block">← ZuulaUganda</Link>
         <h1 className="text-2xl font-black text-brand-gold" style={{ fontFamily: "Georgia, serif" }}>All Destinations</h1>
         <p className="text-sm text-white/70 mt-1">{destinations.length} destinations across Uganda</p>
       </div>
@@ -40,9 +40,9 @@ export default async function DestinationsPage() {
             {d.is_featured && (
               <span className="absolute top-2 right-2 bg-brand-gold text-brand-forest text-[9px] font-black px-2 py-0.5 rounded-full">🔥 HOT</span>
             )}
-            {d.activities[0] && <p className="text-[10px] text-white/60 mb-1">{d.activities[0]}</p>}
+            {d.activities[0] && <p className="text-[10px] text-brand-cream/85 mb-1">{d.activities[0]}</p>}
             <p className="font-black text-sm leading-tight">{d.name}</p>
-            <p className="text-[10px] text-white/50 mt-0.5">{d.region}</p>
+            <p className="text-[10px] text-brand-cream/85 mt-0.5">{d.region}</p>
           </Link>
         ))}
       </div>

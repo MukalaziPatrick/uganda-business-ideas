@@ -82,7 +82,7 @@ export default function ClaimButton({
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <p className="text-sm font-bold text-brand-forest">Claim {businessName}</p>
-            <p className="mt-0.5 text-xs text-gray-500">
+            <p className="mt-0.5 text-xs text-brand-green">
               We&apos;ll verify by phone or WhatsApp before handing over the listing -
               usually within 24-48 hours. Once approved, you can update the WhatsApp and
               call numbers shown to customers.

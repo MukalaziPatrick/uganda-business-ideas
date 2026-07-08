@@ -67,7 +67,7 @@ export default async function IdeasPage() {
           </p>
         </section>
 
-        <Suspense fallback={<div className="py-10 text-center text-slate-400">Loading ideas…</div>}>
+        <Suspense fallback={<div className="py-10 text-center text-brand-green">Loading ideas…</div>}>
           <IdeasDiscoveryClient ideas={ideas} />
         </Suspense>
       </section>

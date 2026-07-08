@@ -140,7 +140,7 @@ export default function TravelRegisterForm() {
           <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
         ))}
       </div>
-      <p className="text-xs text-gray-500 text-center">Step {step} of 4</p>
+      <p className="text-xs text-brand-green text-center">Step {step} of 4</p>
       {error && <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">{error}</div>}
 
       {step === 1 && (
@@ -182,7 +182,7 @@ export default function TravelRegisterForm() {
       {step === 2 && (
         <div className="space-y-4">
           <h2 className="text-sm font-black text-brand-forest">Amenities</h2>
-          <p className="text-xs text-gray-500">Select all that apply.</p>
+          <p className="text-xs text-brand-green">Select all that apply.</p>
           <div className="grid grid-cols-2 gap-2">
             {STAY_AMENITY_OPTIONS.map(a => (
               <button key={a} onClick={() => toggleAmenity(a)}
@@ -207,10 +207,10 @@ export default function TravelRegisterForm() {
                 <p className="text-xs font-bold text-brand-forest">Room Type {i + 1}</p>
                 {rooms.length > 1 && <button onClick={() => setRooms(rooms.filter((_, idx) => idx !== i))} className="text-xs text-red-500">Remove</button>}
               </div>
-              <input className={fieldClass} value={r.name} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, name: e.target.value } : x))} placeholder="Room name (e.g. Standard Room, Family Cabin)" />
+              <input aria-label="Room name" className={fieldClass} value={r.name} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, name: e.target.value } : x))} placeholder="Room name (e.g. Standard Room, Family Cabin)" />
               <div className="grid grid-cols-2 gap-2">
-                <input className={fieldClass} type="number" value={r.capacity} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, capacity: e.target.value } : x))} placeholder="Max guests" />
-                <input className={fieldClass} type="number" value={r.price_per_night} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, price_per_night: e.target.value } : x))} placeholder="Price/night (UGX)" />
+                <input aria-label="Room capacity" className={fieldClass} type="number" value={r.capacity} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, capacity: e.target.value } : x))} placeholder="Max guests" />
+                <input aria-label="Room price per night" className={fieldClass} type="number" value={r.price_per_night} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, price_per_night: e.target.value } : x))} placeholder="Price/night (UGX)" />
               </div>
             </div>
           ))}

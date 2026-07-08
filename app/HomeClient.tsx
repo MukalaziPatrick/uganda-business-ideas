@@ -173,6 +173,7 @@ export default function HomeClient({
         >
           <input
             type="search"
+            aria-label="Search businesses"
             value={bizSearch}
             onChange={e => setBizSearch(e.target.value)}
             placeholder="Find a business… e.g. restaurant in Gulu"

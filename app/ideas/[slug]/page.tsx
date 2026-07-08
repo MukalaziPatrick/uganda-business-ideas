@@ -111,7 +111,7 @@ export default async function IdeaPage({
             <span className="hidden text-[15px] font-semibold tracking-tight text-slate-800 sm:block">
               Business Yoo
             </span>
-            <span className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-400 md:inline-flex">
+            <span className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-brand-green md:inline-flex">
               🇺🇬 Uganda · 2026
             </span>
           </Link>
@@ -214,7 +214,7 @@ export default async function IdeaPage({
             ...(relatedIdeas.length > 0 ? [{ label: "Related", href: "#related" }] : []),
           ].map((n) => (
             <a key={n.href} href={n.href}
-              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-slate-500 shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700">
+              className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-[12px] font-semibold text-brand-green shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700">
               {n.label}
             </a>
           ))}
@@ -274,7 +274,7 @@ export default async function IdeaPage({
                 <div key={item.tier} className={`flex flex-col gap-4 px-6 py-6 sm:px-7 ${item.bg}`}>
                   <div className="flex items-center justify-between">
                     <span className="text-xl">{item.icon}</span>
-                    <span className="rounded-full bg-white/80 px-2.5 py-0.5 text-[10px] font-bold text-slate-500 border border-slate-200/80">{item.emoji}</span>
+                    <span className="rounded-full bg-white/80 px-2.5 py-0.5 text-[10px] font-bold text-brand-green border border-slate-200/80">{item.emoji}</span>
                   </div>
                   <div>
                     <p className="text-[13.5px] font-bold text-slate-800">{item.tier}</p>
@@ -283,7 +283,7 @@ export default async function IdeaPage({
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200/60">
                     <div className={`h-full ${item.bar} rounded-full bg-gradient-to-r from-green-400 to-emerald-500`} />
                   </div>
-                  <p className="text-[11.5px] text-slate-400">{item.note}</p>
+                  <p className="text-[11.5px] text-brand-green">{item.note}</p>
                 </div>
               ))}
             </div>
@@ -327,7 +327,7 @@ export default async function IdeaPage({
                       {i + 1}
                     </div>
                     <div className="flex-1 pt-1.5">
-                      <p className={`${eyebrow} text-slate-400 mb-1`}>Step {i + 1}</p>
+                      <p className={`${eyebrow} text-brand-green mb-1`}>Step {i + 1}</p>
                       <p className={body}>{step}</p>
                     </div>
                   </li>
@@ -390,9 +390,9 @@ export default async function IdeaPage({
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[14px] font-bold text-slate-900">{s.name}</p>
-                      <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10.5px] font-semibold text-slate-500">{s.type}</span>
+                      <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10.5px] font-semibold text-brand-green">{s.type}</span>
                     </div>
-                    <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-brand-green">
                       <span className="font-semibold text-indigo-600">Tip: </span>{s.tip}
                     </p>
                   </div>
@@ -400,7 +400,7 @@ export default async function IdeaPage({
                 </div>
               ))}
               {supplierList.length === 0 && (
-                <div className="px-6 py-5 sm:px-8 text-[13.5px] text-slate-500">
+                <div className="px-6 py-5 sm:px-8 text-[13.5px] text-brand-green">
                   Supplier recommendations for this idea are being added. Check back soon.
                 </div>
               )}
@@ -436,7 +436,7 @@ export default async function IdeaPage({
                 <h2 className="text-[15px] font-bold text-slate-900">Risks to Know</h2>
               </div>
             </div>
-            <p className="mb-5 text-[13.5px] leading-relaxed text-slate-400">
+            <p className="mb-5 text-[13.5px] leading-relaxed text-brand-green">
               Every business has risks. Knowing them in advance helps you prepare and avoid common mistakes.
             </p>
             <ul className="space-y-3">
@@ -481,7 +481,7 @@ export default async function IdeaPage({
                   <div key={p.label} className="rounded-xl border border-emerald-100 bg-white/70 p-3 text-center">
                     <p className="text-[19px] font-black text-emerald-700">{p.pct}</p>
                     <p className="text-[12px] font-bold text-slate-700">{p.label}</p>
-                    <p className="text-[11px] text-slate-400">{p.note}</p>
+                    <p className="text-[11px] text-brand-green">{p.note}</p>
                   </div>
                 ))}
               </div>
@@ -564,7 +564,7 @@ export default async function IdeaPage({
                         </div>
                         <div>
                           <p className="text-[14px] font-bold text-slate-900">{story.name}</p>
-                          <p className="text-[12.5px] text-slate-400">{story.location} · {story.timeframe}</p>
+                          <p className="text-[12.5px] text-brand-green">{story.location} · {story.timeframe}</p>
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2">
@@ -682,7 +682,7 @@ export default async function IdeaPage({
                           <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10.5px] font-bold text-emerald-700 ring-1 ring-emerald-100">Free</span>
                         )}
                       </div>
-                      <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{r.description}</p>
+                      <p className="mt-1.5 text-[13px] leading-relaxed text-brand-green">{r.description}</p>
                     </div>
                     <svg className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-colors group-hover:text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
@@ -693,7 +693,7 @@ export default async function IdeaPage({
             </div>
 
             <div className="border-t border-slate-100 bg-blue-50/40 px-6 py-4 sm:px-8">
-              <p className="text-[12.5px] text-slate-500">
+              <p className="text-[12.5px] text-brand-green">
                 <span className="font-semibold text-slate-700">Always verify:</span> Check that websites are genuine before entering personal information or making payments. Look for official .go.ug domains for government services.
               </p>
             </div>
@@ -751,10 +751,10 @@ export default async function IdeaPage({
                 <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5 sm:px-8">
                   <div className={`${iconWrap} bg-slate-100`}>❓</div>
                   <div>
-                    <p className={`${eyebrow} text-slate-400`}>Common questions</p>
+                    <p className={`${eyebrow} text-brand-green`}>Common questions</p>
                     <h2 className="text-[15px] font-bold text-slate-900">Frequently Asked Questions</h2>
                   </div>
-                  <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-500">
+                  <span className="ml-auto rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-brand-green">
                     {faqs.length} answers
                   </span>
                 </div>
@@ -767,7 +767,7 @@ export default async function IdeaPage({
                           <h3 className="pr-2 text-[14.5px] font-semibold leading-snug text-slate-800 group-open:text-green-700">
                             {faq.q}
                           </h3>
-                          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-400 transition-colors group-open:border-green-200 group-open:bg-green-50 group-open:text-green-600">
+                          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-brand-green transition-colors group-open:border-green-200 group-open:bg-green-50 group-open:text-green-600">
                             <svg className="block h-3 w-3 group-open:hidden" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -809,9 +809,9 @@ export default async function IdeaPage({
                     href={`/ideas/${related.slug}`}
                     className="flex flex-col rounded-xl border border-slate-200 bg-white p-4 hover:border-green-300 hover:shadow-sm transition-all"
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 mb-1">{related.category}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wide text-brand-green mb-1">{related.category}</p>
                     <h3 className="font-black text-brand-forest text-sm leading-snug mb-3 flex-1">{related.title}</h3>
-                    <p className="text-[11px] font-semibold text-slate-500 mt-auto">{related.capital}</p>
+                    <p className="text-[11px] font-semibold text-brand-green mt-auto">{related.capital}</p>
                   </Link>
                 ))}
               </div>
@@ -828,17 +828,17 @@ export default async function IdeaPage({
               </div>
               <div>
                 <p className="text-[14px] font-semibold text-slate-800">Business Yoo</p>
-                <p className="text-xs text-slate-400">Uganda&apos;s beginner-friendly business guide · Updated 2026</p>
+                <p className="text-xs text-brand-green">Uganda&apos;s beginner-friendly business guide · Updated 2026</p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-medium text-slate-500">
+            <div className="flex flex-wrap gap-x-5 gap-y-2 text-[13px] font-medium text-brand-green">
               <Link href="/"        className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Ideas</Link>
               <Link href="/about"   className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">About</Link>
               <Link href="/contact" className="flex min-h-[44px] items-center transition-colors hover:text-slate-900 sm:min-h-0">Contact</Link>
             </div>
           </div>
           <div className="mt-5 border-t border-slate-100 pt-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-slate-400">© 2026 Business Yoo. Built to help Ugandans start smarter. 🇺🇬</p>
+            <p className="text-xs text-brand-green">© 2026 Business Yoo. Built to help Ugandans start smarter. 🇺🇬</p>
             <p className="text-xs text-slate-300">Free · No sign-up · Beginner-friendly</p>
           </div>
         </footer>

@@ -36,10 +36,11 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
 
           <input
             type="text"
+            aria-label="Search pitch contacts"
             placeholder="Search by name, genre, or location..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="mt-6 w-full rounded-xl border border-brand-cream/20 bg-brand-cream px-4 py-3 text-sm text-brand-forest outline-none placeholder:text-brand-green/55 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/30"
+            className="mt-6 w-full rounded-xl border border-brand-cream/20 bg-brand-cream px-4 py-3 text-sm text-brand-forest outline-none placeholder:text-brand-green focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/30"
           />
 
           <div className="mt-4 flex flex-wrap gap-2">

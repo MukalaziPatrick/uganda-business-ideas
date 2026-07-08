@@ -147,8 +147,9 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
 
       {/* Search bar */}
       <div className="relative mb-4">
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-green">🔍</span>
         <input
+          aria-label="Search business ideas"
           value={search}
           onChange={e => handleSearch(e.target.value)}
           placeholder="Search poultry, soap, digital, food..."
@@ -191,7 +192,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
       </div>
 
       {/* Sort + count */}
-      <div className="flex items-center justify-between mb-5 text-xs text-slate-500 font-semibold">
+      <div className="flex items-center justify-between mb-5 text-xs text-brand-green font-semibold">
         <span>Showing {filtered.length} of {ideas.length} ideas{region !== "All" ? ` · ${region} Region` : ""}</span>
         <label className="flex items-center gap-1.5">
           Sort:
@@ -212,7 +213,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
         <div className="rounded-2xl border border-dashed border-brand-beige bg-white p-10 text-center">
           <p className="text-2xl mb-3">🔍</p>
           <p className="font-bold text-brand-forest mb-1">No ideas match your search</p>
-          <p className="text-sm text-slate-500">Try clearing a filter or using a broader term.</p>
+          <p className="text-sm text-brand-green">Try clearing a filter or using a broader term.</p>
           <button
             onClick={clearFilters}
             className="mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold"
@@ -244,13 +245,13 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             <div className="flex gap-3">
               {featured.scoring_demand != null && (
                 <div className="text-center">
-                  <p className="text-[10px] text-white/50 uppercase tracking-wide">Demand</p>
+                  <p className="text-[10px] text-brand-cream/85 uppercase tracking-wide">Demand</p>
                   <p className="text-base font-black text-white">{featured.scoring_demand}</p>
                 </div>
               )}
               {featured.scoring_ease != null && (
                 <div className="text-center">
-                  <p className="text-[10px] text-white/50 uppercase tracking-wide">Ease</p>
+                  <p className="text-[10px] text-brand-cream/85 uppercase tracking-wide">Ease</p>
                   <p className="text-base font-black text-white">{featured.scoring_ease}</p>
                 </div>
               )}
@@ -277,25 +278,25 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
                   {idea.category}
                 </span>
                 {idea.budget_band && (
-                  <span className="rounded-full bg-brand-cream text-slate-500 text-[10px] font-semibold px-2 py-0.5">
+                  <span className="rounded-full bg-brand-cream text-brand-green text-[10px] font-semibold px-2 py-0.5">
                     {budgetLabels[idea.budget_band]}
                   </span>
                 )}
               </div>
               <h3 className="font-black text-brand-forest text-sm leading-snug mb-1 flex-1">{idea.title}</h3>
-              <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">{idea.description}</p>
+              <p className="text-xs text-brand-green line-clamp-2 leading-relaxed mb-3">{idea.description}</p>
               <div className="flex items-center justify-between mt-auto">
                 <span className="text-xs font-bold text-brand-forest">{idea.capital}</span>
                 <div className="flex gap-2 text-xs text-center">
                   {idea.scoring_demand != null && (
                     <div className="rounded-lg bg-brand-cream px-2 py-1">
-                      <p className="text-[9px] text-slate-400 uppercase">D</p>
+                      <p className="text-[9px] text-brand-green uppercase">D</p>
                       <p className="font-black text-brand-forest">{idea.scoring_demand}</p>
                     </div>
                   )}
                   {idea.scoring_ease != null && (
                     <div className="rounded-lg bg-brand-cream px-2 py-1">
-                      <p className="text-[9px] text-slate-400 uppercase">E</p>
+                      <p className="text-[9px] text-brand-green uppercase">E</p>
                       <p className="font-black text-brand-forest">{idea.scoring_ease}</p>
                     </div>
                   )}

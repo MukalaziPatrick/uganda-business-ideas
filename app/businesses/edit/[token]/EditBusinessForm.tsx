@@ -49,7 +49,7 @@ export default function EditBusinessForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="rounded-xl border border-gray-200 bg-white p-4">
-        <p className="mb-3 text-xs font-bold uppercase tracking-wide text-gray-400">
+        <p className="mb-3 text-xs font-bold uppercase tracking-wide text-brand-green">
           {business.category} - {business.district}
         </p>
 
@@ -63,7 +63,7 @@ export default function EditBusinessForm({
               placeholder="e.g. 0772 123 456"
               inputMode="tel"
             />
-            <p className="mt-1 text-[11px] text-gray-400">
+            <p className="mt-1 text-[11px] text-brand-green">
               This powers the &quot;Chat on WhatsApp&quot; button on your listing. Save
               the real number customers should message.
             </p>
@@ -77,7 +77,7 @@ export default function EditBusinessForm({
               placeholder="e.g. 0772 123 456"
               inputMode="tel"
             />
-            <p className="mt-1 text-[11px] text-gray-400">
+            <p className="mt-1 text-[11px] text-brand-green">
               Use this if customers should call you directly, even when you do not
               want WhatsApp messages.
             </p>
@@ -101,13 +101,13 @@ export default function EditBusinessForm({
               className={fieldClass}
               placeholder="Tell customers what makes your business stand out (max 300 characters)"
             />
-            <p className="mt-1 text-[11px] text-gray-400">{description.length}/300</p>
+            <p className="mt-1 text-[11px] text-brand-green">{description.length}/300</p>
           </div>
         </div>
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white p-4">
-        <p className="mb-3 text-xs font-bold uppercase tracking-wide text-gray-400">
+        <p className="mb-3 text-xs font-bold uppercase tracking-wide text-brand-green">
           Online presence (optional)
         </p>
         <div className="space-y-3">
@@ -160,7 +160,7 @@ export default function EditBusinessForm({
         </p>
       )}
 
-      <p className="text-center text-xs text-gray-500">
+      <p className="text-center text-xs text-brand-green">
         Once saved, these contact details appear on your public listing so customers
         can see whether they can call or send a WhatsApp message.
       </p>
@@ -173,7 +173,7 @@ export default function EditBusinessForm({
         {saving ? "Saving..." : "Save changes"}
       </button>
 
-      <p className="pb-4 text-center text-[11px] text-gray-400">
+      <p className="pb-4 text-center text-[11px] text-brand-green">
         Keep this page&apos;s link private - it&apos;s the only way to manage your
         listing without an account.
       </p>

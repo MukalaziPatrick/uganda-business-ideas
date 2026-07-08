@@ -61,7 +61,7 @@ export default function DestinationClient({
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-gray-500 flex gap-1">
+      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-brand-green flex gap-1">
         <Link href="/travel" className="hover:text-brand-forest">ZuulaUganda</Link>
         <span>›</span>
         <Link href="/travel/destinations" className="hover:text-brand-forest">Destinations</Link>
@@ -71,7 +71,7 @@ export default function DestinationClient({
 
       {/* Hero */}
       <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 py-6 text-white">
-        <p className="text-xs text-white/50 mb-1">🇺🇬 {destination.region}</p>
+        <p className="text-xs text-brand-cream/85 mb-1">🇺🇬 {destination.region}</p>
         <h1 className="text-2xl font-black text-brand-gold mb-2" style={{ fontFamily: "Georgia, serif" }}>{destination.name}</h1>
         <p className="text-sm text-white/80 leading-relaxed mb-3">{destination.description}</p>
         <div className="flex gap-2 flex-wrap">
@@ -83,12 +83,12 @@ export default function DestinationClient({
 
       {/* Filters */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap">
-        <select value={type} onChange={(e) => setType(e.target.value)}
+        <select aria-label="Filter stays by type" value={type} onChange={(e) => setType(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
           <option value="">All types</option>
           {Object.entries(STAY_TYPE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
-        <select value={budgetIdx.toString()} onChange={(e) => setBudgetIdx(parseInt(e.target.value))}
+        <select aria-label="Filter stays by budget" value={budgetIdx.toString()} onChange={(e) => setBudgetIdx(parseInt(e.target.value))}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
           {BUDGET_RANGES.map((b, i) => <option key={i} value={i}>{b.label}</option>)}
         </select>
@@ -97,12 +97,12 @@ export default function DestinationClient({
       {/* Stays */}
       <div className="px-4 py-5 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs text-gray-500">{filtered.length} places to stay near {destination.name}</p>
+          <p className="text-xs text-brand-green">{filtered.length} places to stay near {destination.name}</p>
           <Link href="/travel/register" className="text-xs font-bold text-brand-forest underline underline-offset-2">+ List your place</Link>
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">
+          <div className="text-center py-12 text-brand-green">
             <p className="text-2xl mb-2">🏨</p>
             <p className="text-sm">No stays found with these filters.</p>
           </div>
@@ -123,7 +123,7 @@ export default function DestinationClient({
                 )}
                 <div className="p-3">
                   <p className="font-black text-brand-forest text-sm">{stay.name}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{STAY_TYPE_LABELS[stay.type]} · {stay.town}</p>
+                  <p className="text-xs text-brand-green mt-0.5">{STAY_TYPE_LABELS[stay.type]} · {stay.town}</p>
                   <p className="text-xs font-bold text-brand-green mt-1">From UGX {stay.price_from.toLocaleString()} / night</p>
                   <div className="flex gap-2 mt-2">
                     {stay.whatsapp && (

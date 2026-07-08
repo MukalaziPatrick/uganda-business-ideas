@@ -107,7 +107,7 @@ export default async function PlanPage({ params }: PlanPageProps) {
           <h2 className="text-2xl font-black tracking-tight">Your 30-day launch checklist</h2>
           {weeks.map((week) => (
             <div key={week.label} className="mt-6">
-              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest/50">
+              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest">
                 {week.label}
               </h3>
               <ul className="mt-3 space-y-3">
@@ -133,7 +133,7 @@ export default async function PlanPage({ params }: PlanPageProps) {
           <h2 className="text-2xl font-black tracking-tight">Content starters</h2>
           {contentGroups.map((group) => (
             <div key={group.label} className="mt-6">
-              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest/50">
+              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest">
                 {group.label}
               </h3>
               <ul className="mt-3 space-y-3">

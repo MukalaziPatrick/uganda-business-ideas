@@ -29,9 +29,10 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
         </h1>
         <p className="text-sm text-white/80 mb-4">Discover where to stay across Uganda</p>
         <div className="max-w-md mx-auto bg-white rounded-xl px-4 py-2.5 flex items-center gap-2 shadow-sm">
-          <span className="text-gray-400">🔍</span>
+          <span className="text-brand-green">🔍</span>
           <input
             type="search"
+            aria-label="Search destinations"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search destination..."
@@ -63,16 +64,16 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
                 </span>
               )}
               {d.activities[0] && (
-                <p className="text-[10px] text-white/60 mb-1">{d.activities[0]}</p>
+                <p className="text-[10px] text-brand-cream/85 mb-1">{d.activities[0]}</p>
               )}
               <p className="font-black text-sm leading-tight">{d.name}</p>
-              <p className="text-[10px] text-white/50 mt-0.5">{d.region}</p>
+              <p className="text-[10px] text-brand-cream/85 mt-0.5">{d.region}</p>
             </Link>
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-gray-400">
+          <div className="text-center py-12 text-brand-green">
             <p className="text-2xl mb-2">🗺️</p>
             <p className="text-sm">No destinations found for &ldquo;{search}&rdquo;</p>
           </div>

@@ -21,13 +21,13 @@ export default function RequestToBookForm({ stayName, stayWhatsapp }: { stayName
 
   return (
     <div className="space-y-3">
-      <input className={fieldClass} placeholder="Your name" value={guestName} onChange={e => setGuestName(e.target.value)} />
+      <input aria-label="Guest name" className={fieldClass} placeholder="Your name" value={guestName} onChange={e => setGuestName(e.target.value)} />
       <div className="grid grid-cols-2 gap-2">
-        <input className={fieldClass} type="date" placeholder="Check-in" value={checkin} onChange={e => setCheckin(e.target.value)} />
-        <input className={fieldClass} type="date" placeholder="Check-out" value={checkout} onChange={e => setCheckout(e.target.value)} />
+        <input aria-label="Check-in date" className={fieldClass} type="date" placeholder="Check-in" value={checkin} onChange={e => setCheckin(e.target.value)} />
+        <input aria-label="Check-out date" className={fieldClass} type="date" placeholder="Check-out" value={checkout} onChange={e => setCheckout(e.target.value)} />
       </div>
-      <input className={fieldClass} type="number" min="1" placeholder="Number of guests" value={guests} onChange={e => setGuests(e.target.value)} />
-      <input className={fieldClass} type="tel" placeholder="Your WhatsApp number" value={myWhatsapp} onChange={e => setMyWhatsapp(e.target.value)} />
+      <input aria-label="Number of guests" className={fieldClass} type="number" min="1" placeholder="Number of guests" value={guests} onChange={e => setGuests(e.target.value)} />
+      <input aria-label="WhatsApp number" className={fieldClass} type="tel" placeholder="Your WhatsApp number" value={myWhatsapp} onChange={e => setMyWhatsapp(e.target.value)} />
       <button
         onClick={handleRequest}
         disabled={!isValid}

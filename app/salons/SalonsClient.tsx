@@ -80,12 +80,14 @@ export default function SalonsClient({
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10">
         <input
           type="search"
+          aria-label="Search salons"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, style or location..."
           className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
         />
         <select
+          aria-label="Filter salons by gender"
           value={gender}
           onChange={(e) => setGender(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
@@ -96,6 +98,7 @@ export default function SalonsClient({
           <option value="unisex">✂️ Unisex</option>
         </select>
         <select
+          aria-label="Filter salons by type"
           value={type}
           onChange={(e) => setType(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
@@ -108,14 +111,14 @@ export default function SalonsClient({
 
       <div className="px-4 py-5 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs text-gray-500">{filtered.length} {filtered.length === 1 ? "salon" : "salons"}</p>
+          <p className="text-xs text-brand-green">{filtered.length} {filtered.length === 1 ? "salon" : "salons"}</p>
           <Link href="/salons/register" className="text-xs font-bold text-brand-forest underline underline-offset-2">
             + List your salon
           </Link>
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-brand-green">
             <p className="text-2xl mb-2">✂️</p>
             <p className="text-sm">No salons found.</p>
             <Link href="/salons/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
@@ -153,10 +156,10 @@ export default function SalonsClient({
                 )}
                 <div className="p-3">
                   <p className="font-black text-brand-forest text-sm truncate">{s.name}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-brand-green mt-0.5">
                     {SALON_GENDER_LABELS[s.gender]} · {SALON_TYPE_LABELS[s.type]}
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-brand-green mt-0.5">
                     📍 {s.town ? `${s.town}, ` : ""}{s.district}
                   </p>
                   {s.whatsapp && (

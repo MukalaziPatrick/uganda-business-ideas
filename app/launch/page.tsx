@@ -62,7 +62,7 @@ export default function LaunchPage() {
             </div>
             <div>
               <span className="block text-[15px] font-bold leading-tight">Founder OS</span>
-              <span className="block text-[11px] font-medium text-brand-forest/60">
+              <span className="block text-[11px] font-medium text-brand-forest">
                 by Business Yoo
               </span>
             </div>
@@ -76,12 +76,12 @@ export default function LaunchPage() {
         </header>
 
         <section className="py-16 sm:py-24">
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-forest/60">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-forest">
             For first-time founders in Uganda
           </p>
           <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
             Launch your business in 30 days.{" "}
-            <span className="text-brand-forest/50">Get your first customers.</span>
+            <span className="text-brand-forest">Get your first customers.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[16px] leading-relaxed text-brand-forest/75">
             You have the idea. Founder OS gives you the plan, the tools, and a real human
@@ -133,7 +133,7 @@ export default function LaunchPage() {
                   className={
                     offer.highlight
                       ? "mt-1 text-[13px] font-black uppercase tracking-wide text-brand-gold"
-                      : "mt-1 text-[13px] font-black uppercase tracking-wide text-brand-forest/60"
+                      : "mt-1 text-[13px] font-black uppercase tracking-wide text-brand-forest"
                   }
                 >
                   {offer.price}
@@ -179,7 +179,7 @@ export default function LaunchPage() {
           </Link>
         </section>
 
-        <footer className="flex items-center justify-between py-8 text-[12px] text-brand-forest/50">
+        <footer className="flex items-center justify-between py-8 text-[12px] text-brand-forest">
           <span>Founder OS — a Business Yoo product</span>
           <Link href="/" className="font-semibold hover:text-brand-forest">
             ← Back to Business Yoo

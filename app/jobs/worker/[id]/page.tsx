@@ -23,7 +23,7 @@ type Worker = {
 
 function Breadcrumb() {
   return (
-    <nav className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold mb-6">
+    <nav className="flex items-center gap-1.5 text-xs text-brand-green font-semibold mb-6">
       <Link href="/" className="hover:text-brand-forest transition-colors">Home</Link>
       <span className="text-slate-300">›</span>
       <Link href="/jobs" className="hover:text-brand-forest transition-colors">Jobs</Link>
@@ -76,9 +76,9 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
             <div className="flex-1">
               <h1 className="text-xl font-black text-brand-forest">{displayName}</h1>
               <p className="text-sm font-semibold text-brand-green mt-0.5">{allSkills.join(" · ")}</p>
-              <p className="text-xs text-slate-500 mt-1">📍 {[worker.town, worker.district].filter(Boolean).join(", ")}</p>
+              <p className="text-xs text-brand-green mt-1">📍 {[worker.town, worker.district].filter(Boolean).join(", ")}</p>
             </div>
-            <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${worker.available ? "bg-brand-gold/20 text-brand-forest" : "bg-slate-100 text-slate-500"}`}>
+            <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${worker.available ? "bg-brand-gold/20 text-brand-forest" : "bg-slate-100 text-brand-green"}`}>
               {worker.available ? "Available" : "Not available"}
             </span>
           </div>
@@ -86,13 +86,13 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
           <div className="grid grid-cols-2 gap-3 mb-6">
             {worker.experience_years != null && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Experience</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-brand-green">Experience</p>
                 <p className="text-sm font-semibold text-slate-800 mt-0.5">{worker.experience_years} yr{worker.experience_years !== 1 ? "s" : ""}</p>
               </div>
             )}
             {worker.pay_expectation != null && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pay Expectation</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-brand-green">Pay Expectation</p>
                 <p className="text-sm font-semibold text-slate-800 mt-0.5">
                   UGX {worker.pay_expectation.toLocaleString()}{worker.pay_period ? `/${worker.pay_period}` : ""}
                 </p>
@@ -100,13 +100,13 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
             )}
             {worker.job_type_pref?.length && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Job Type</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-brand-green">Job Type</p>
                 <p className="text-sm font-semibold text-slate-800 mt-0.5 capitalize">{worker.job_type_pref.join(", ")}</p>
               </div>
             )}
             {worker.education && (
               <div className="rounded-xl bg-slate-50 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Education</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-brand-green">Education</p>
                 <p className="text-sm font-semibold text-slate-800 mt-0.5 uppercase">{worker.education}</p>
               </div>
             )}

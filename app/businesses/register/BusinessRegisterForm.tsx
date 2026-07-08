@@ -117,7 +117,7 @@ export default function BusinessRegisterForm() {
           </select>
         </div>
         <div>
-          <label className={labelClass}>Description <span className="text-gray-400 font-normal">({description.length}/300)</span></label>
+          <label className={labelClass}>Description <span className="text-brand-green font-normal">({description.length}/300)</span></label>
           <textarea
             className={`${fieldClass} resize-none`}
             rows={3}
@@ -150,13 +150,13 @@ export default function BusinessRegisterForm() {
           </select>
         </div>
         <div>
-          <label className={labelClass}>Town / Area <span className="text-gray-400 font-normal">(optional)</span></label>
+          <label className={labelClass}>Town / Area <span className="text-brand-green font-normal">(optional)</span></label>
           <input className={fieldClass} value={town} onChange={e => setTown(e.target.value)} placeholder="e.g. Wandegeya" />
         </div>
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Contact <span className="font-normal text-gray-500">(at least one required)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Contact <span className="font-normal text-brand-green">(at least one required)</span></h2>
         <div>
           <label className={labelClass}>WhatsApp number</label>
           <input className={fieldClass} value={whatsapp} onChange={e => setWhatsapp(e.target.value)} placeholder="+256 7XX XXX XXX" type="tel" />
@@ -168,7 +168,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Online Presence <span className="font-normal text-gray-500">(optional)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Online Presence <span className="font-normal text-brand-green">(optional)</span></h2>
         <div>
           <label className={labelClass}>Website</label>
           <input className={fieldClass} value={website} onChange={e => setWebsite(e.target.value)} placeholder="https://yourwebsite.com" type="url" />

@@ -23,7 +23,7 @@ export default function LaunchStartPage() {
             </div>
             <span className="text-[15px] font-bold text-brand-forest">Founder OS</span>
           </Link>
-          <span className="text-[12px] font-semibold text-brand-forest/50">
+          <span className="text-[12px] font-semibold text-brand-forest">
             Free readiness assessment
           </span>
         </header>

@@ -163,7 +163,7 @@ export default async function BusinessProfilePage({
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="flex gap-1 border-b border-gray-200 bg-white px-4 py-2 text-xs text-gray-500">
+      <div className="flex gap-1 border-b border-gray-200 bg-white px-4 py-2 text-xs text-brand-green">
         <Link href="/businesses" className="hover:text-brand-forest">
           Businesses
         </Link>
@@ -199,14 +199,14 @@ export default async function BusinessProfilePage({
 
         {business.description && (
           <div className="rounded-xl border border-gray-200 bg-white p-4">
-            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-gray-400">About</p>
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-green">About</p>
             <p className="text-sm leading-relaxed text-gray-700">{business.description}</p>
           </div>
         )}
 
         {business.hours && (
           <div className="rounded-xl border border-gray-200 bg-white p-4">
-            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-gray-400">
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-green">
               Opening Hours
             </p>
             <p className="text-sm text-gray-700">{business.hours}</p>
@@ -233,14 +233,14 @@ export default async function BusinessProfilePage({
             </a>
           )}
           {!hasWhatsApp && !hasPhone && (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-500">
+            <div className="rounded-xl border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-brand-green">
               No public phone or WhatsApp contact has been confirmed for this listing yet.
             </div>
           )}
         </div>
 
         <div className="rounded-xl border border-gray-200 bg-white p-4">
-          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-gray-400">
+          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-green">
             Location
           </p>
           <p className="mb-3 text-sm text-gray-700">
@@ -281,7 +281,7 @@ export default async function BusinessProfilePage({
 
         {socials.length > 0 && (
           <div className="rounded-xl border border-gray-200 bg-white p-4">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-gray-400">
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-green">
               Find us online
             </p>
             <div className="flex flex-wrap gap-2">

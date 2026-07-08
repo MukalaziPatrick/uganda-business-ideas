@@ -55,7 +55,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-gray-500 flex gap-1">
+      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-brand-green flex gap-1">
         <Link href="/salons" className="hover:text-brand-forest">Salons</Link>
         <span>›</span>
         <span className="text-brand-forest font-semibold truncate">{s.name}</span>
@@ -106,7 +106,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
         {/* Services */}
         {svcList.length > 0 && (
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">✂️ Services & Prices</p>
+            <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">✂️ Services & Prices</p>
             <div className="space-y-3">
               {svcList.map((svc) => (
                 <div key={svc.id} className="flex gap-3 items-start">
@@ -119,7 +119,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
                   )}
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-brand-forest text-sm">{svc.name}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-brand-green mt-0.5">
                       {SALON_GENDER_LABELS[svc.gender]}{svc.duration_minutes ? ` · ${formatDuration(svc.duration_minutes)}` : ""}
                     </p>
                     <p className="text-xs font-bold text-brand-green mt-0.5">{formatPrice(svc.price_from, svc.price_to)}</p>
@@ -133,7 +133,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
         {/* Portfolio */}
         {photos.length > 0 && (
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">📸 Our Work</p>
+            <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">📸 Our Work</p>
             <div className="grid grid-cols-3 gap-2">
               {photos.slice(0, 6).map((p, i) => (
                 <div key={p.id} className="relative aspect-square rounded-lg overflow-hidden">
@@ -152,7 +152,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
         {/* About */}
         {s.about && (
           <div className="bg-white rounded-xl border border-gray-200 p-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">About</p>
+            <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-1">About</p>
             <p className="text-sm text-gray-700 leading-relaxed">{s.about}</p>
           </div>
         )}
