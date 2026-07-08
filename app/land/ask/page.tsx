@@ -71,13 +71,13 @@ export default function LandAskPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="bg-[#2d6a4f] text-white px-4 py-6">
+      <div className="bg-land-primary text-white px-4 py-6">
         <div className="max-w-2xl mx-auto">
-          <Link href="/land" className="text-green-200 text-sm hover:underline">← Back to Land</Link>
+          <Link href="/land" className="text-land-cream text-sm hover:underline">← Back to Land</Link>
           <h1 className="text-2xl font-bold mt-2" style={{ fontFamily: 'Playfair Display, serif' }}>
             Ask about land in Uganda
           </h1>
-          <p className="text-green-100 text-sm mt-1">
+          <p className="text-land-cream/90 text-sm mt-1">
             Get plain-language answers about titles, districts, farming, and buying safely.
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function LandAskPage() {
               <button
                 key={q}
                 onClick={() => sendMessage(q)}
-                className="block w-full text-left px-4 py-3 bg-white rounded-xl border border-gray-200 text-sm text-gray-700 hover:border-[#2d6a4f] hover:text-[#2d6a4f] transition-colors"
+                className="block w-full text-left px-4 py-3 bg-white rounded-xl border border-gray-200 text-sm text-gray-700 hover:border-land-primary hover:text-land-primary transition-colors"
               >
                 {q}
               </button>
@@ -103,7 +103,7 @@ export default function LandAskPage() {
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
               msg.role === 'user'
-                ? 'bg-[#2d6a4f] text-white'
+                ? 'bg-land-primary text-white'
                 : 'bg-white text-gray-800 border border-gray-200'
             }`}>
               {msg.content || (loading && msg.role === 'assistant' ? '...' : '')}
@@ -120,12 +120,12 @@ export default function LandAskPage() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && sendMessage()}
             placeholder="Ask anything about land in Uganda..."
-            className="flex-1 text-sm border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-[#2d6a4f]"
+            className="flex-1 text-sm border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-land-primary"
           />
           <button
             onClick={() => sendMessage()}
             disabled={loading || !input.trim()}
-            className="bg-[#2d6a4f] text-white rounded-full w-12 h-12 flex items-center justify-center disabled:opacity-50 flex-shrink-0"
+            className="bg-land-primary text-white rounded-full w-12 h-12 flex items-center justify-center disabled:opacity-50 flex-shrink-0"
           >
             ↑
           </button>

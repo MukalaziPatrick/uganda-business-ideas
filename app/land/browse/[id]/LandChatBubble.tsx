@@ -66,7 +66,7 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#2d6a4f] text-white shadow-lg flex items-center justify-center text-2xl hover:bg-[#235840] transition-colors"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-land-primary text-white shadow-lg flex items-center justify-center text-2xl hover:bg-land-forest transition-colors"
         aria-label="Ask about this land"
       >
         {open ? '✕' : '💬'}
@@ -74,9 +74,9 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
 
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-200 flex flex-col overflow-hidden" style={{ maxHeight: '60vh' }}>
-          <div className="bg-[#2d6a4f] text-white px-4 py-3">
+          <div className="bg-land-primary text-white px-4 py-3">
             <p className="font-semibold text-sm">🏞 Land Assistant</p>
-            <p className="text-xs text-green-100">Ask about this land</p>
+            <p className="text-xs text-land-cream/90">Ask about this land</p>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -84,7 +84,7 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
                   msg.role === 'user'
-                    ? 'bg-[#2d6a4f] text-white'
+                    ? 'bg-land-primary text-white'
                     : 'bg-gray-100 text-gray-800'
                 }`}>
                   {msg.content || (loading && msg.role === 'assistant' ? '...' : '')}
@@ -100,12 +100,12 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Ask a question..."
-              className="flex-1 text-sm border border-gray-200 rounded-full px-3 py-2 focus:outline-none focus:border-[#2d6a4f]"
+              className="flex-1 text-sm border border-gray-200 rounded-full px-3 py-2 focus:outline-none focus:border-land-primary"
             />
             <button
               onClick={sendMessage}
               disabled={loading || !input.trim()}
-              className="bg-[#2d6a4f] text-white rounded-full w-9 h-9 flex items-center justify-center disabled:opacity-50"
+              className="bg-land-primary text-white rounded-full w-9 h-9 flex items-center justify-center disabled:opacity-50"
             >
               ↑
             </button>

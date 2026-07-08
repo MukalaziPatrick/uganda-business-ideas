@@ -22,12 +22,12 @@ export default async function LandGuidesPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="bg-[#2d6a4f] text-white px-4 py-12">
+      <div className="bg-land-primary text-white px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
             Land Guides
           </h1>
-          <p className="text-green-100">Everything you need to know about buying land safely in Uganda.</p>
+          <p className="text-land-cream/90">Everything you need to know about buying land safely in Uganda.</p>
         </div>
       </div>
 

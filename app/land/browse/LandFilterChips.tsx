@@ -42,8 +42,8 @@ export function LandFilterChips() {
           onClick={() => setFilter('verification_stage', 'verified')}
           className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
             activeVerified === 'verified'
-              ? 'bg-[#2d6a4f] text-white border-[#2d6a4f]'
-              : 'bg-white text-gray-700 border-gray-200 hover:border-[#2d6a4f]'
+              ? 'bg-land-primary text-white border-land-primary'
+              : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
           }`}
         >
           ✅ Verified only
@@ -56,8 +56,8 @@ export function LandFilterChips() {
             onClick={() => setFilter('district', d)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeDistrict === d
-                ? 'bg-[#2d6a4f] text-white border-[#2d6a4f]'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-[#2d6a4f]'
+                ? 'bg-land-primary text-white border-land-primary'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
             }`}
           >
             {d}
@@ -71,8 +71,8 @@ export function LandFilterChips() {
             onClick={() => setFilter('land_type', t.value)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeType === t.value
-                ? 'bg-[#2d6a4f] text-white border-[#2d6a4f]'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-[#2d6a4f]'
+                ? 'bg-land-primary text-white border-land-primary'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
             }`}
           >
             {t.label}
@@ -86,8 +86,8 @@ export function LandFilterChips() {
             onClick={() => setFilter('intended_use', u.value)}
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeUse === u.value
-                ? 'bg-[#2d6a4f] text-white border-[#2d6a4f]'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-[#2d6a4f]'
+                ? 'bg-land-primary text-white border-land-primary'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
             }`}
           >
             {u.label}

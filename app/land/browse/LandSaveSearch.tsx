@@ -40,7 +40,7 @@ export function LandSaveSearch() {
 
   if (saved) {
     return (
-      <div className="text-sm text-[#2d6a4f] font-medium px-4 py-2">
+      <div className="text-sm text-land-primary font-medium px-4 py-2">
         ✅ Search saved — we&apos;ll WhatsApp you when new listings match
       </div>
     );
@@ -51,7 +51,7 @@ export function LandSaveSearch() {
       {!open ? (
         <button
           onClick={() => setOpen(true)}
-          className="text-sm text-[#2d6a4f] font-medium hover:underline"
+          className="text-sm text-land-primary font-medium hover:underline"
         >
           🔔 Get WhatsApp alerts for new listings here
         </button>
@@ -62,13 +62,13 @@ export function LandSaveSearch() {
             value={phone}
             onChange={e => setPhone(e.target.value)}
             placeholder="Your WhatsApp number"
-            className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#2d6a4f]"
+            className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-land-primary"
             required
           />
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#2d6a4f] text-white text-sm font-medium px-4 py-2 rounded-full disabled:opacity-50"
+            className="bg-land-primary text-white text-sm font-medium px-4 py-2 rounded-full disabled:opacity-50"
           >
             {loading ? '...' : 'Save'}
           </button>

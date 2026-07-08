@@ -14,12 +14,12 @@ export default async function LandAgentsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="bg-[#2d6a4f] text-white px-4 py-12">
+      <div className="bg-land-primary text-white px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
             Verified Land Agents
           </h1>
-          <p className="text-green-100">Certified agents ready to help you buy land safely.</p>
+          <p className="text-land-cream/90">Certified agents ready to help you buy land safely.</p>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ export default async function LandAgentsPage() {
             {agents.map((agent) => (
               <div key={agent.id} className="bg-white rounded-2xl border border-gray-200 p-5">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0faf4] flex items-center justify-center text-2xl flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-land-cream/60 flex items-center justify-center text-2xl flex-shrink-0">
                     {agent.photo ? (
                       <Image src={agent.photo} alt={agent.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
                     ) : '👤'}
@@ -42,7 +42,7 @@ export default async function LandAgentsPage() {
                     <h2 className="font-bold text-gray-900">{agent.name}</h2>
                     <p className="text-sm text-gray-500">{agent.district ?? 'Uganda'}</p>
                     {agent.rating && (
-                      <p className="text-xs text-yellow-600 mt-0.5">{'⭐'.repeat(Math.round(agent.rating))} {agent.rating}/5</p>
+                      <p className="text-xs text-land-forest mt-0.5">{'⭐'.repeat(Math.round(agent.rating))} {agent.rating}/5</p>
                     )}
                   </div>
                 </div>
@@ -60,7 +60,7 @@ export default async function LandAgentsPage() {
                     href={`https://wa.me/${agent.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hi, I found you on SafeLands UG and need help with land.')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center py-2 rounded-xl bg-[#2d6a4f] text-white text-sm font-semibold hover:bg-[#235840] transition-colors"
+                    className="block w-full text-center py-2 rounded-xl bg-land-primary text-white text-sm font-semibold hover:bg-land-forest transition-colors"
                   >
                     📲 WhatsApp {agent.name.split(' ')[0]}
                   </a>

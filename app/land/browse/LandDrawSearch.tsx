@@ -68,7 +68,7 @@ export function LandDrawSearch({ onClose }: { onClose: () => void }) {
           <button
             onClick={applySearch}
             disabled={!hasDrawn}
-            className="bg-[#2d6a4f] text-white text-sm font-semibold px-5 py-2 rounded-full disabled:opacity-40"
+            className="bg-land-primary text-white text-sm font-semibold px-5 py-2 rounded-full disabled:opacity-40"
           >
             Search this area
           </button>

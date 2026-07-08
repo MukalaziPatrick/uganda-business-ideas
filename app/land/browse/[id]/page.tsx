@@ -38,7 +38,7 @@ export default async function LandListingDetailPage({
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 pt-4">
-        <Link href="/land/browse" className="text-sm text-[#2d6a4f] hover:underline">← Back to listings</Link>
+        <Link href="/land/browse" className="text-sm text-land-primary hover:underline">← Back to listings</Link>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -48,7 +48,7 @@ export default async function LandListingDetailPage({
             {listing.photos?.[0] ? (
               <Image src={listing.photos[0]} alt={listing.title} width={1200} height={675} className="w-full aspect-video object-cover" />
             ) : (
-              <div className="w-full aspect-video bg-[#f0faf4] flex items-center justify-center text-6xl">🏞</div>
+              <div className="w-full aspect-video bg-land-cream/60 flex items-center justify-center text-6xl">🏞</div>
             )}
           </div>
 
@@ -60,7 +60,7 @@ export default async function LandListingDetailPage({
               {listing.district}{listing.parish ? `, ${listing.parish}` : ''}
               {listing.size_acres ? ` · ${listing.size_acres} acres` : ''}
             </p>
-            <p className="text-2xl font-bold text-[#2d6a4f]">{formatPrice(listing.price_ugx)}</p>
+            <p className="text-2xl font-bold text-land-primary">{formatPrice(listing.price_ugx)}</p>
           </div>
 
           {listing.lat && listing.lng ? (
@@ -72,8 +72,8 @@ export default async function LandListingDetailPage({
           )}
 
           {listing.insight && (
-            <div className="bg-[#f0faf4] rounded-2xl p-5 border border-green-100">
-              <h3 className="font-bold text-[#2d6a4f] mb-3">🤖 Land Intelligence</h3>
+            <div className="bg-land-cream/60 rounded-2xl p-5 border border-land-mint/40">
+              <h3 className="font-bold text-land-primary mb-3">🤖 Land Intelligence</h3>
               {listing.insight.farming_suitability && (
                 <div className="mb-2">
                   <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Farming suitability</span>
@@ -100,7 +100,7 @@ export default async function LandListingDetailPage({
             <p className="text-sm text-gray-500 mb-4">Get a full land check — UGX 10,000 for 24-hour expert access</p>
             <Link
               href={`/land/check?listing=${listing.id}`}
-              className="inline-block bg-[#2d6a4f] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#235840] transition-colors"
+              className="inline-block bg-land-primary text-white font-semibold px-6 py-3 rounded-full hover:bg-land-forest transition-colors"
             >
               Request Assisted Check
             </Link>
@@ -115,7 +115,7 @@ export default async function LandListingDetailPage({
             <div className="bg-white rounded-2xl border border-gray-200 p-5">
               <h3 className="font-bold text-gray-900 mb-3">Listed by</h3>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f0faf4] flex items-center justify-center text-lg">👤</div>
+                <div className="w-10 h-10 rounded-full bg-land-cream/60 flex items-center justify-center text-lg">👤</div>
                 <div>
                   <p className="font-medium text-sm text-gray-900">{listing.agent.name}</p>
                   <p className="text-xs text-gray-500">{listing.agent.district}</p>

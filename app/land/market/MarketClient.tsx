@@ -46,11 +46,11 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             defaultValue={q}
             placeholder="Search by location, road, or keyword..."
             onKeyDown={(e) => { if (e.key === 'Enter') setParam('q', (e.target as HTMLInputElement).value); }}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d6a4f] mb-3"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-land-primary mb-3"
           />
 
           {/* Disclaimer */}
-          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3">
+          <p className="text-xs text-land-forest bg-land-cream/60 border border-land-mint/40 rounded-lg px-3 py-2 mb-3">
             Self-listed plots have not been checked by SafeLands. Verify before paying.
           </p>
 
@@ -94,14 +94,14 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             </select>
 
             {/* High trust toggle */}
-            <label className="flex items-center gap-1.5 cursor-pointer select-none border border-green-200 rounded-lg px-3 py-1.5 text-sm bg-white hover:bg-green-50 transition-colors">
+            <label className="flex items-center gap-1.5 cursor-pointer select-none border border-land-mint/50 rounded-lg px-3 py-1.5 text-sm bg-white hover:bg-land-cream/45 transition-colors">
               <input
                 type="checkbox"
                 checked={highTrustOnly}
                 onChange={(e) => setHighTrustOnly(e.target.checked)}
-                className="accent-green-700"
+                className="accent-land-primary"
               />
-              <span className={highTrustOnly ? 'text-green-800 font-medium' : 'text-gray-600'}>Show high trust only</span>
+              <span className={highTrustOnly ? 'text-land-forest font-medium' : 'text-gray-600'}>Show high trust only</span>
             </label>
 
             {(q || district || land_type || has_title || source_site) && (
@@ -127,14 +127,14 @@ export default function MarketClient({ listings, total }: { listings: MarketList
                 : 'No listings found for your search.'}
             </p>
             <p className="text-sm">The scraper runs daily at 6AM — check back tomorrow.</p>
-            <Link href="/land/browse" className="inline-block mt-4 text-sm text-[#2d6a4f] hover:underline">
+            <Link href="/land/browse" className="inline-block mt-4 text-sm text-land-primary hover:underline">
               Browse SafeLands verified listings →
             </Link>
           </div>
         ) : (
           <>
             {highTrustOnly && (
-              <p className="text-xs text-green-700 mb-3">Showing {visibleListings.length} high-trust listing{visibleListings.length !== 1 ? 's' : ''} (trust score 4–5)</p>
+              <p className="text-xs text-land-primary mb-3">Showing {visibleListings.length} high-trust listing{visibleListings.length !== 1 ? 's' : ''} (trust score 4–5)</p>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {visibleListings.map(l => <MarketListingCard key={l.id} listing={l} />)}
@@ -144,9 +144,9 @@ export default function MarketClient({ listings, total }: { listings: MarketList
       </div>
 
       {/* SafeLands CTA */}
-      <div className="bg-[#2d6a4f] text-white py-8 px-4 text-center">
+      <div className="bg-land-primary text-white py-8 px-4 text-center">
         <p className="font-medium mb-2">Want a surveyor-verified listing?</p>
-        <Link href="/land/browse" className="inline-block bg-white text-[#2d6a4f] font-semibold px-6 py-2 rounded-full hover:bg-green-50 transition-colors text-sm">
+        <Link href="/land/browse" className="inline-block bg-white text-land-primary font-semibold px-6 py-2 rounded-full hover:bg-land-cream/45 transition-colors text-sm">
           Browse SafeLands ↗
         </Link>
       </div>

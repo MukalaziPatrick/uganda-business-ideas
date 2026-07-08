@@ -47,7 +47,11 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     map.current.on('load', () => {
-      new mapboxgl.Marker({ color: '#2d6a4f' })
+      const landPrimary = getComputedStyle(document.documentElement)
+        .getPropertyValue('--land-primary')
+        .trim() || 'rgb(45, 106, 79)';
+
+      new mapboxgl.Marker({ color: landPrimary })
         .setLngLat([lng, lat])
         .setPopup(new mapboxgl.Popup().setText(title))
         .addTo(map.current!);
@@ -84,7 +88,7 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
             onClick={() => setMapMode(m)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium shadow transition-colors ${
               mode === m
-                ? 'bg-[#2d6a4f] text-white'
+                ? 'bg-land-primary text-white'
                 : 'bg-white text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -111,7 +115,7 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
                 type="checkbox"
                 checked={activeLayers.has(layer)}
                 onChange={() => toggleCustomLayer(layer)}
-                className="accent-[#2d6a4f]"
+                className="accent-land-primary"
               />
               <span className="text-sm text-gray-700">{LAYER_LABELS[layer]}</span>
             </label>

@@ -58,8 +58,8 @@ export default async function LandBrowsePage({
             How trust works here
           </summary>
           <ul className="mt-3 space-y-2 list-none">
-            <li><span className="font-medium text-green-700">Verified</span> — SafeLands and a licensed agent reviewed the title and documents at the Ministry of Lands portal.</li>
-            <li><span className="font-medium text-amber-600">Partially checked</span> — Physically inspected by a licensed agent, but full document review pending.</li>
+            <li><span className="font-medium text-land-primary">Verified</span> — SafeLands and a licensed agent reviewed the title and documents at the Ministry of Lands portal.</li>
+            <li><span className="font-medium text-land-secondary">Partially checked</span> — Physically inspected by a licensed agent, but full document review pending.</li>
             <li><span className="font-medium text-gray-500">Self-listed</span> — Submitted by the seller. Not yet checked by SafeLands.</li>
           </ul>
           <p className="mt-3 italic text-xs text-gray-400">Always conduct your own search and a physical site visit before any payment.</p>
@@ -72,7 +72,7 @@ export default async function LandBrowsePage({
             <p className="text-gray-500 text-sm mb-6">Save your search and we&apos;ll WhatsApp you when something matches.</p>
             <Link
               href="/land/browse"
-              className="text-[#2d6a4f] font-medium text-sm hover:underline"
+              className="text-land-primary font-medium text-sm hover:underline"
             >
               Clear filters
             </Link>

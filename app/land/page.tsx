@@ -22,18 +22,18 @@ export default async function LandHomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero */}
-      <section className="relative bg-[#2d6a4f] text-white py-20 px-4 overflow-hidden">
+      <section className="relative bg-land-primary text-white py-20 px-4 overflow-hidden">
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
             Discover land you can trust.
           </h1>
-          <p className="text-lg text-green-100 mb-8">
+          <p className="text-lg text-land-cream/90 mb-8">
             Browse verified plots across Uganda — inspect visually, check the title, and connect with a certified agent.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/land/browse"
-              className="bg-white text-[#2d6a4f] font-semibold px-8 py-3 rounded-full hover:bg-green-50 transition-colors"
+              className="bg-white text-land-primary font-semibold px-8 py-3 rounded-full hover:bg-land-cream/45 transition-colors"
             >
               Browse Land
             </Link>
@@ -48,8 +48,8 @@ export default async function LandHomePage() {
       </section>
 
       {/* Trust strip */}
-      <section className="bg-[#f0faf4] border-b border-green-100 py-4 px-4">
-        <div className="max-w-3xl mx-auto flex flex-wrap justify-center gap-6 text-sm text-[#2d6a4f] font-medium">
+      <section className="bg-land-cream/60 border-b border-land-mint/40 py-4 px-4">
+        <div className="max-w-3xl mx-auto flex flex-wrap justify-center gap-6 text-sm text-land-primary font-medium">
           <span>✅ Surveyor-verified listings</span>
           <span>🗺 Visual land inspection</span>
           <span>📲 WhatsApp agents instantly</span>
@@ -64,7 +64,7 @@ export default async function LandHomePage() {
             <Link
               key={d}
               href={`/land/browse?district=${encodeURIComponent(d)}`}
-              className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm text-gray-700 hover:border-[#2d6a4f] hover:text-[#2d6a4f] transition-colors"
+              className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm text-gray-700 hover:border-land-primary hover:text-land-primary transition-colors"
             >
               {d}
             </Link>
@@ -77,7 +77,7 @@ export default async function LandHomePage() {
         <section className="max-w-4xl mx-auto px-4 pb-16">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-900">Verified listings</h2>
-            <Link href="/land/browse" className="text-sm text-[#2d6a4f] font-medium hover:underline">
+            <Link href="/land/browse" className="text-sm text-land-primary font-medium hover:underline">
               View all →
             </Link>
           </div>
@@ -90,12 +90,12 @@ export default async function LandHomePage() {
       )}
 
       {/* Assisted check CTA */}
-      <section className="bg-[#2d6a4f] text-white py-12 px-4 text-center">
+      <section className="bg-land-primary text-white py-12 px-4 text-center">
         <h2 className="text-2xl font-bold mb-2">Need expert help?</h2>
-        <p className="text-green-100 mb-6">Get a full land check — UGX 10,000 for 24-hour expert access</p>
+        <p className="text-land-cream/90 mb-6">Get a full land check — UGX 10,000 for 24-hour expert access</p>
         <Link
           href="/land/check"
-          className="bg-white text-[#2d6a4f] font-semibold px-8 py-3 rounded-full hover:bg-green-50 transition-colors inline-block"
+          className="bg-white text-land-primary font-semibold px-8 py-3 rounded-full hover:bg-land-cream/45 transition-colors inline-block"
         >
           Request Assisted Check
         </Link>

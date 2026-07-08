@@ -13,14 +13,14 @@ function formatPrice(ugx: number | null): string {
 function TrustBadge({ stage }: { stage: string }) {
   if (stage === 'verified') {
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-[#2d6a4f]">
+      <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-land-cream/80 text-land-primary">
         ✅ Verified
       </span>
     );
   }
   if (stage === 'checked') {
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700">
+      <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-land-mint/25 text-land-forest">
         🔍 Partially checked
       </span>
     );
@@ -39,7 +39,7 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
         {photo ? (
           <Image src={photo} alt={listing.title} width={600} height={450} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl bg-[#f0faf4]">🏞</div>
+          <div className="w-full h-full flex items-center justify-center text-4xl bg-land-cream/60">🏞</div>
         )}
       </div>
 
@@ -54,14 +54,14 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
           {listing.size_acres ? ` ${listing.size_acres} acres` : ''}
         </p>
         <div className="flex items-center justify-between">
-          <span className="font-bold text-[#2d6a4f] text-sm">{formatPrice(listing.price_ugx)}</span>
+          <span className="font-bold text-land-primary text-sm">{formatPrice(listing.price_ugx)}</span>
           {listing.agent?.whatsapp && (
             <a
               href={`https://wa.me/${listing.agent.whatsapp.replace(/\D/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="text-xs text-green-700 border border-green-200 rounded-full px-3 py-1 hover:bg-green-50 transition-colors"
+              className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/45 transition-colors"
             >
               📲 WhatsApp
             </a>

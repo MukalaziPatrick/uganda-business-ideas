@@ -25,7 +25,7 @@ export default async function LandGuideArticlePage({
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-10">
-        <Link href="/land/guides" className="text-sm text-[#2d6a4f] hover:underline">← All Guides</Link>
+        <Link href="/land/guides" className="text-sm text-land-primary hover:underline">← All Guides</Link>
 
         <h1 className="text-3xl font-bold text-gray-900 mt-6 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
           {article.title}
@@ -39,11 +39,11 @@ export default async function LandGuideArticlePage({
           {article.body}
         </div>
 
-        <div className="mt-12 p-6 bg-[#f0faf4] rounded-2xl border border-green-100 text-center">
-          <p className="font-semibold text-[#2d6a4f] mb-2">Ready to find land?</p>
+        <div className="mt-12 p-6 bg-land-cream/60 rounded-2xl border border-land-mint/40 text-center">
+          <p className="font-semibold text-land-primary mb-2">Ready to find land?</p>
           <Link
             href="/land/browse"
-            className="inline-block bg-[#2d6a4f] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#235840] transition-colors text-sm"
+            className="inline-block bg-land-primary text-white font-semibold px-6 py-3 rounded-full hover:bg-land-forest transition-colors text-sm"
           >
             Browse Verified Listings
           </Link>

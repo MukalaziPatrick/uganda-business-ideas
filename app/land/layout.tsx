@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function LandLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ '--sl-green': '#2d6a4f', '--sl-green-light': '#f0faf4' } as React.CSSProperties}>
+    <div style={{ '--sl-green': 'var(--land-primary)', '--sl-green-light': 'var(--land-cream)' } as React.CSSProperties}>
       {children}
     </div>
   );

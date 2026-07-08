@@ -31,12 +31,12 @@ export default async function LandVerifyPage({
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header */}
-        <div className={`px-6 py-8 text-center ${isVerified ? 'bg-[#2d6a4f]' : 'bg-gray-700'}`}>
+        <div className={`px-6 py-8 text-center ${isVerified ? 'bg-land-primary' : 'bg-gray-700'}`}>
           <div className="text-5xl mb-3">{isVerified ? '✅' : '⚠️'}</div>
           <h1 className="text-xl font-bold text-white mb-1">
             {isVerified ? 'This listing has been verified.' : 'Verification in progress.'}
           </h1>
-          <p className="text-green-100 text-sm">
+          <p className="text-land-cream/90 text-sm">
             {isVerified
               ? 'A certified surveyor has reviewed this property.'
               : 'This property has not yet been fully verified by our surveyor.'}
@@ -70,7 +70,7 @@ export default async function LandVerifyPage({
             </div>
             <div>
               <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Trust score</p>
-              <p className="font-medium text-sm text-[#2d6a4f]">{listing.trust_score}/100</p>
+              <p className="font-medium text-sm text-land-primary">{listing.trust_score}/100</p>
             </div>
           </div>
 
@@ -86,7 +86,7 @@ export default async function LandVerifyPage({
         <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex flex-col gap-3">
           <Link
             href={`/land/browse/${listing.id}`}
-            className="block w-full text-center py-3 rounded-xl bg-[#2d6a4f] text-white font-semibold text-sm hover:bg-[#235840] transition-colors"
+            className="block w-full text-center py-3 rounded-xl bg-land-primary text-white font-semibold text-sm hover:bg-land-forest transition-colors"
           >
             View Full Listing
           </Link>
