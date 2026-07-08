@@ -54,7 +54,7 @@ export default function ClaimButton({
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-xl border-2 border-[#1C3A2A] bg-white py-3 text-sm font-bold text-[#1C3A2A]"
+        className="w-full rounded-xl border-2 border-brand-forest bg-white py-3 text-sm font-bold text-brand-forest"
       >
         Is this your business? Claim it and confirm contacts
       </button>
@@ -67,7 +67,7 @@ export default function ClaimButton({
         <div className="py-4 text-center">
           <p className="mb-2 text-3xl">OK</p>
           <h3
-            className="mb-1 text-base font-black text-[#1C3A2A]"
+            className="mb-1 text-base font-black text-brand-forest"
             style={{ fontFamily: "Georgia, serif" }}
           >
             Claim submitted!
@@ -81,7 +81,7 @@ export default function ClaimButton({
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <p className="text-sm font-bold text-[#1C3A2A]">Claim {businessName}</p>
+            <p className="text-sm font-bold text-brand-forest">Claim {businessName}</p>
             <p className="mt-0.5 text-xs text-gray-500">
               We&apos;ll verify by phone or WhatsApp before handing over the listing -
               usually within 24-48 hours. Once approved, you can update the WhatsApp and
@@ -94,7 +94,7 @@ export default function ClaimButton({
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. Sarah Nakato"
             />
           </div>
@@ -105,7 +105,7 @@ export default function ClaimButton({
             <input
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. 0772 123 456"
               inputMode="tel"
             />
@@ -117,7 +117,7 @@ export default function ClaimButton({
             <input
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. Owner, Manager"
             />
           </div>
@@ -132,7 +132,7 @@ export default function ClaimButton({
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 rounded-xl bg-[#1C3A2A] py-2.5 text-sm font-bold text-[#F5C842] disabled:opacity-60"
+              className="flex-1 rounded-xl bg-brand-forest py-2.5 text-sm font-bold text-brand-gold disabled:opacity-60"
             >
               {submitting ? "Submitting..." : "Submit claim"}
             </button>

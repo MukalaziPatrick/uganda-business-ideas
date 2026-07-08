@@ -81,7 +81,7 @@ export default function BusinessRegisterForm() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
-        <h2 className="text-xl font-black text-[#1C3A2A] mb-2" style={{ fontFamily: "Georgia, serif" }}>
+        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
           Listing submitted!
         </h2>
         <p className="text-sm text-gray-600 leading-relaxed">
@@ -91,7 +91,7 @@ export default function BusinessRegisterForm() {
     );
   }
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white";
+  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
   const labelClass = "block text-xs font-bold text-gray-600 mb-1";
   const sectionClass = "space-y-3";
 
@@ -104,7 +104,7 @@ export default function BusinessRegisterForm() {
       )}
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-[#1C3A2A] border-b border-gray-200 pb-1">Business Details</h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Business Details</h2>
         <div>
           <label className={labelClass}>Business name *</label>
           <input className={fieldClass} value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Mama's Kitchen" />
@@ -134,7 +134,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-[#1C3A2A] border-b border-gray-200 pb-1">Location *</h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Location *</h2>
         <div>
           <label className={labelClass}>Region *</label>
           <select className={fieldClass} value={region} onChange={e => { setRegion(e.target.value as UgandaRegion); setDistrict(""); }}>
@@ -156,7 +156,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-[#1C3A2A] border-b border-gray-200 pb-1">Contact <span className="font-normal text-gray-500">(at least one required)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Contact <span className="font-normal text-gray-500">(at least one required)</span></h2>
         <div>
           <label className={labelClass}>WhatsApp number</label>
           <input className={fieldClass} value={whatsapp} onChange={e => setWhatsapp(e.target.value)} placeholder="+256 7XX XXX XXX" type="tel" />
@@ -168,7 +168,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-[#1C3A2A] border-b border-gray-200 pb-1">Online Presence <span className="font-normal text-gray-500">(optional)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Online Presence <span className="font-normal text-gray-500">(optional)</span></h2>
         <div>
           <label className={labelClass}>Website</label>
           <input className={fieldClass} value={website} onChange={e => setWebsite(e.target.value)} placeholder="https://yourwebsite.com" type="url" />
@@ -190,7 +190,7 @@ export default function BusinessRegisterForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full rounded-xl bg-[#1C3A2A] py-4 text-sm font-black text-[#F5C842] disabled:opacity-50"
+        className="w-full rounded-xl bg-brand-forest py-4 text-sm font-black text-brand-gold disabled:opacity-50"
       >
         {submitting ? "Submitting..." : "Submit for Review →"}
       </button>

@@ -49,8 +49,8 @@ const INITIAL_FORM: WizardForm = {
 };
 
 const inputClass =
-  "w-full rounded-xl border border-[#1C3A2A]/20 bg-white px-4 py-3 text-[15px] text-[#1C3A2A] outline-none transition focus:border-[#F5C842]";
-const labelClass = "mb-1.5 block text-[13px] font-bold text-[#1C3A2A]";
+  "w-full rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-[15px] text-brand-forest outline-none transition focus:border-brand-gold";
+const labelClass = "mb-1.5 block text-[13px] font-bold text-brand-forest";
 
 export default function LaunchWizard() {
   const router = useRouter();
@@ -162,8 +162,8 @@ export default function LaunchWizard() {
             key={index}
             className={
               index < step
-                ? "h-1.5 flex-1 rounded-full bg-[#F5C842]"
-                : "h-1.5 flex-1 rounded-full bg-[#1C3A2A]/10"
+                ? "h-1.5 flex-1 rounded-full bg-brand-gold"
+                : "h-1.5 flex-1 rounded-full bg-brand-forest/10"
             }
           />
         ))}
@@ -171,7 +171,7 @@ export default function LaunchWizard() {
 
       {step === 1 && (
         <div className="space-y-5">
-          <h2 className="text-2xl font-black tracking-tight text-[#1C3A2A]">
+          <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             First, who are you?
           </h2>
           <div>
@@ -199,7 +199,7 @@ export default function LaunchWizard() {
 
       {step === 2 && (
         <div className="space-y-5">
-          <h2 className="text-2xl font-black tracking-tight text-[#1C3A2A]">
+          <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             What are you building?
           </h2>
           <div>
@@ -228,7 +228,7 @@ export default function LaunchWizard() {
 
       {step === 3 && (
         <div className="space-y-5">
-          <h2 className="text-2xl font-black tracking-tight text-[#1C3A2A]">
+          <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Who is it for, and where are you now?
           </h2>
           <div>
@@ -251,8 +251,8 @@ export default function LaunchWizard() {
                   onClick={() => updateField("stage", stage.value)}
                   className={
                     form.stage === stage.value
-                      ? "rounded-xl border-2 border-[#F5C842] bg-white px-4 py-3 text-left text-[15px] font-bold text-[#1C3A2A]"
-                      : "rounded-xl border border-[#1C3A2A]/20 bg-white px-4 py-3 text-left text-[15px] font-medium text-[#1C3A2A]/80 hover:border-[#1C3A2A]/40"
+                      ? "rounded-xl border-2 border-brand-gold bg-white px-4 py-3 text-left text-[15px] font-bold text-brand-forest"
+                      : "rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-left text-[15px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
                   }
                 >
                   {stage.label}
@@ -265,7 +265,7 @@ export default function LaunchWizard() {
 
       {step === 4 && (
         <div className="space-y-5">
-          <h2 className="text-2xl font-black tracking-tight text-[#1C3A2A]">
+          <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Budget, goals, and where you want help
           </h2>
           <div>
@@ -299,8 +299,8 @@ export default function LaunchWizard() {
                   onClick={() => toggleHelp(option)}
                   className={
                     form.helpNeeded.includes(option)
-                      ? "rounded-full border-2 border-[#F5C842] bg-[#F5C842]/20 px-4 py-2 text-[13px] font-bold text-[#1C3A2A]"
-                      : "rounded-full border border-[#1C3A2A]/20 bg-white px-4 py-2 text-[13px] font-medium text-[#1C3A2A]/80 hover:border-[#1C3A2A]/40"
+                      ? "rounded-full border-2 border-brand-gold bg-brand-gold/20 px-4 py-2 text-[13px] font-bold text-brand-forest"
+                      : "rounded-full border border-brand-forest/20 bg-white px-4 py-2 text-[13px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
                   }
                 >
                   {HELP_LABELS[option]}
@@ -313,10 +313,10 @@ export default function LaunchWizard() {
 
       {step === 5 && (
         <div className="space-y-5">
-          <h2 className="text-2xl font-black tracking-tight text-[#1C3A2A]">
+          <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Last step — secure your plan
           </h2>
-          <p className="text-[14px] leading-relaxed text-[#1C3A2A]/70">
+          <p className="text-[14px] leading-relaxed text-brand-forest/70">
             Your account keeps your launch plan safe and unlocks your founder dashboard
             when it goes live.
           </p>
@@ -355,7 +355,7 @@ export default function LaunchWizard() {
           <button
             type="button"
             onClick={() => setStep(step - 1)}
-            className="text-[13px] font-bold text-[#1C3A2A]/60 hover:text-[#1C3A2A]"
+            className="text-[13px] font-bold text-brand-forest/60 hover:text-brand-forest"
           >
             ← Back
           </button>
@@ -366,7 +366,7 @@ export default function LaunchWizard() {
           type="button"
           onClick={handleNext}
           disabled={saving}
-          className="rounded-xl bg-[#1C3A2A] px-7 py-3 text-[15px] font-black text-[#F5C842] shadow-md transition hover:opacity-90 disabled:opacity-50"
+          className="rounded-xl bg-brand-forest px-7 py-3 text-[15px] font-black text-brand-gold shadow-md transition hover:opacity-90 disabled:opacity-50"
         >
           {saving ? "Saving…" : step === TOTAL_STEPS ? "Get my launch plan →" : "Continue →"}
         </button>

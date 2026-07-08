@@ -67,16 +67,16 @@ export default async function PlanPage({ params }: PlanPageProps) {
   });
 
   return (
-    <main className="min-h-screen bg-[#FBF8F1] text-[#1C3A2A]">
+    <main className="min-h-screen bg-brand-surface text-brand-forest">
       <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <header className="mb-10 flex items-center justify-between">
           <Link href="/launch" className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1C3A2A] text-[11px] font-black text-[#F5C842]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-forest text-[11px] font-black text-brand-gold">
               FO
             </div>
             <span className="text-[15px] font-bold">Founder OS</span>
           </Link>
-          <span className="rounded-full bg-[#F5C842]/25 px-3 py-1 text-[11px] font-black uppercase tracking-wide">
+          <span className="rounded-full bg-brand-gold/25 px-3 py-1 text-[11px] font-black uppercase tracking-wide">
             Your launch plan
           </span>
         </header>
@@ -85,20 +85,20 @@ export default async function PlanPage({ params }: PlanPageProps) {
           <h1 className="text-2xl font-black tracking-tight sm:text-3xl">
             Your readiness snapshot
           </h1>
-          <p className="mt-4 text-[15px] leading-relaxed text-[#1C3A2A]/80">
+          <p className="mt-4 text-[15px] leading-relaxed text-brand-forest/80">
             {plan.readiness_summary}
           </p>
         </section>
 
-        <section className="mt-6 rounded-2xl bg-[#1C3A2A] p-6 text-[#FBF8F1] shadow-md sm:p-8">
-          <h2 className="text-[13px] font-black uppercase tracking-wide text-[#F5C842]">
+        <section className="mt-6 rounded-2xl bg-brand-forest p-6 text-brand-surface shadow-md sm:p-8">
+          <h2 className="text-[13px] font-black uppercase tracking-wide text-brand-gold">
             Your one-sentence offer
           </h2>
           <p className="mt-3 text-xl font-bold leading-snug">{plan.offer_statement}</p>
-          <h2 className="mt-6 text-[13px] font-black uppercase tracking-wide text-[#F5C842]">
+          <h2 className="mt-6 text-[13px] font-black uppercase tracking-wide text-brand-gold">
             Your lead magnet
           </h2>
-          <p className="mt-2 text-[15px] leading-relaxed text-[#FBF8F1]/85">
+          <p className="mt-2 text-[15px] leading-relaxed text-brand-surface/85">
             {plan.lead_magnet_idea}
           </p>
         </section>
@@ -107,18 +107,18 @@ export default async function PlanPage({ params }: PlanPageProps) {
           <h2 className="text-2xl font-black tracking-tight">Your 30-day launch checklist</h2>
           {weeks.map((week) => (
             <div key={week.label} className="mt-6">
-              <h3 className="text-[13px] font-black uppercase tracking-wide text-[#1C3A2A]/50">
+              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest/50">
                 {week.label}
               </h3>
               <ul className="mt-3 space-y-3">
                 {week.items.map((task) => (
                   <li key={task.day_number} className="flex gap-4 rounded-xl bg-white p-4 shadow-sm">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F5C842]/25 text-[13px] font-black">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-gold/25 text-[13px] font-black">
                       {task.day_number}
                     </span>
                     <div>
                       <p className="text-[15px] font-bold">{task.title}</p>
-                      <p className="mt-1 text-[13.5px] leading-relaxed text-[#1C3A2A]/70">
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-brand-forest/70">
                         {task.detail}
                       </p>
                     </div>
@@ -133,14 +133,14 @@ export default async function PlanPage({ params }: PlanPageProps) {
           <h2 className="text-2xl font-black tracking-tight">Content starters</h2>
           {contentGroups.map((group) => (
             <div key={group.label} className="mt-6">
-              <h3 className="text-[13px] font-black uppercase tracking-wide text-[#1C3A2A]/50">
+              <h3 className="text-[13px] font-black uppercase tracking-wide text-brand-forest/50">
                 {group.label}
               </h3>
               <ul className="mt-3 space-y-3">
                 {group.items.map((item, index) => (
                   <li
                     key={`${group.label}-${index}`}
-                    className="whitespace-pre-line rounded-xl bg-white p-4 text-[14px] leading-relaxed text-[#1C3A2A]/85 shadow-sm"
+                    className="whitespace-pre-line rounded-xl bg-white p-4 text-[14px] leading-relaxed text-brand-forest/85 shadow-sm"
                   >
                     {item.body}
                   </li>
@@ -150,30 +150,30 @@ export default async function PlanPage({ params }: PlanPageProps) {
           ))}
         </section>
 
-        <section className="mt-12 rounded-3xl bg-[#1C3A2A] px-6 py-10 text-center">
-          <h2 className="text-xl font-black text-[#FBF8F1] sm:text-2xl">
+        <section className="mt-12 rounded-3xl bg-brand-forest px-6 py-10 text-center">
+          <h2 className="text-xl font-black text-brand-surface sm:text-2xl">
             Want an operator working this plan with you?
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-[14px] text-[#FBF8F1]/70">
+          <p className="mx-auto mt-2 max-w-md text-[14px] text-brand-surface/70">
             The Assisted Launch package pairs you with a real human until you launch.
             Reach us on any channel:
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a
               href={whatsAppUrl}
-              className="rounded-xl bg-[#F5C842] px-6 py-3 text-[14px] font-black text-[#1C3A2A]"
+              className="rounded-xl bg-brand-gold px-6 py-3 text-[14px] font-black text-brand-forest"
             >
               WhatsApp us
             </a>
             <a
               href="tel:+256781799221"
-              className="rounded-xl border border-[#FBF8F1]/30 px-6 py-3 text-[14px] font-bold text-[#FBF8F1]"
+              className="rounded-xl border border-brand-surface/30 px-6 py-3 text-[14px] font-bold text-brand-surface"
             >
               Call us
             </a>
             <a
               href="mailto:patricktwin1@gmail.com?subject=Assisted%20Launch"
-              className="rounded-xl border border-[#FBF8F1]/30 px-6 py-3 text-[14px] font-bold text-[#FBF8F1]"
+              className="rounded-xl border border-brand-surface/30 px-6 py-3 text-[14px] font-bold text-brand-surface"
             >
               Email us
             </a>

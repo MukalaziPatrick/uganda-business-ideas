@@ -162,19 +162,19 @@ export default async function BusinessProfilePage({
   ].filter(Boolean) as { label: string; href: string }[];
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    <div className="min-h-screen bg-brand-cream">
       <div className="flex gap-1 border-b border-gray-200 bg-white px-4 py-2 text-xs text-gray-500">
-        <Link href="/businesses" className="hover:text-[#1C3A2A]">
+        <Link href="/businesses" className="hover:text-brand-forest">
           Businesses
         </Link>
         <span>&gt;</span>
-        <span className="truncate font-semibold text-[#1C3A2A]">{business.name}</span>
+        <span className="truncate font-semibold text-brand-forest">{business.name}</span>
       </div>
 
-      <div className="bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] px-5 py-8 text-white">
+      <div className="bg-gradient-to-br from-brand-forest to-brand-green px-5 py-8 text-white">
         <p className="mb-3 text-3xl">{categoryEmoji(business.category)}</p>
         <h1
-          className="mb-1 text-2xl font-black text-[#F5C842]"
+          className="mb-1 text-2xl font-black text-brand-gold"
           style={{ fontFamily: "Georgia, serif" }}
         >
           {business.name}
@@ -219,7 +219,7 @@ export default async function BusinessProfilePage({
               href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25d366] py-4 text-sm font-black text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-500 py-4 text-sm font-black text-white"
             >
               Chat on WhatsApp
             </a>
@@ -227,7 +227,7 @@ export default async function BusinessProfilePage({
           {business.phone && (
             <a
               href={`tel:${business.phone}`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#1C3A2A] bg-white py-4 text-sm font-black text-[#1C3A2A]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-brand-forest bg-white py-4 text-sm font-black text-brand-forest"
             >
               Call {business.phone}
             </a>
@@ -255,7 +255,7 @@ export default async function BusinessProfilePage({
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-[#f5f0e8] px-3 py-2 text-xs font-semibold text-[#1C3A2A] transition-colors hover:bg-[#e8f5ee]"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-brand-cream px-3 py-2 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
           >
             Get Directions
           </a>
@@ -291,7 +291,7 @@ export default async function BusinessProfilePage({
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-gray-200 bg-[#f5f0e8] px-3 py-1.5 text-xs font-semibold text-[#1C3A2A] transition-colors hover:bg-[#e8f5ee]"
+                  className="rounded-full border border-gray-200 bg-brand-cream px-3 py-1.5 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
                 >
                   {social.label}
                 </a>
@@ -308,7 +308,7 @@ export default async function BusinessProfilePage({
 
         <Link
           href="/businesses"
-          className="block pb-4 text-center text-sm font-bold text-[#1C3A2A] underline underline-offset-2"
+          className="block pb-4 text-center text-sm font-bold text-brand-forest underline underline-offset-2"
         >
           Back to all businesses
         </Link>

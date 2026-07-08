@@ -9,7 +9,7 @@ export default function RequestToBookForm({ stayName, stayWhatsapp }: { stayName
   const [guests, setGuests] = useState("1");
   const [myWhatsapp, setMyWhatsapp] = useState("");
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white";
+  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
 
   const handleRequest = () => {
     const message = `Hi, I'd like to book ${stayName}. Name: ${guestName}. Check-in: ${checkin}. Check-out: ${checkout}. Guests: ${guests}. My WhatsApp: ${myWhatsapp}.`;
@@ -31,7 +31,7 @@ export default function RequestToBookForm({ stayName, stayWhatsapp }: { stayName
       <button
         onClick={handleRequest}
         disabled={!isValid}
-        className="w-full bg-[#1C3A2A] text-white font-black text-sm py-3 rounded-xl disabled:opacity-40"
+        className="w-full bg-brand-forest text-white font-black text-sm py-3 rounded-xl disabled:opacity-40"
       >
         Send Request via WhatsApp →
       </button>

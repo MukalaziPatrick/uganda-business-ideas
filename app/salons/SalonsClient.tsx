@@ -69,9 +69,9 @@ export default function SalonsClient({
   }, [offset]);
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
-      <div className="bg-[#1C3A2A] px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-[#F5C842] mb-1" style={{ fontFamily: "Georgia, serif" }}>
+    <div className="min-h-screen bg-brand-cream">
+      <div className="bg-brand-forest px-4 py-6 text-center text-white">
+        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
           ✂️ Find a Salon
         </h1>
         <p className="text-sm text-white/70">Salons & stylists across Uganda</p>
@@ -83,12 +83,12 @@ export default function SalonsClient({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, style or location..."
-          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1C3A2A]"
+          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
         />
         <select
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1C3A2A]"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
         >
           <option value="">All genders</option>
           <option value="men">👨 Men</option>
@@ -98,7 +98,7 @@ export default function SalonsClient({
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1C3A2A]"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
         >
           <option value="">All types</option>
           <option value="salon">🏠 Salon</option>
@@ -109,7 +109,7 @@ export default function SalonsClient({
       <div className="px-4 py-5 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-gray-500">{filtered.length} {filtered.length === 1 ? "salon" : "salons"}</p>
-          <Link href="/salons/register" className="text-xs font-bold text-[#1C3A2A] underline underline-offset-2">
+          <Link href="/salons/register" className="text-xs font-bold text-brand-forest underline underline-offset-2">
             + List your salon
           </Link>
         </div>
@@ -118,7 +118,7 @@ export default function SalonsClient({
           <div className="text-center py-16 text-gray-400">
             <p className="text-2xl mb-2">✂️</p>
             <p className="text-sm">No salons found.</p>
-            <Link href="/salons/register" className="mt-3 inline-block text-sm font-bold text-[#1C3A2A] underline">
+            <Link href="/salons/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
               Be the first to list one →
             </Link>
           </div>
@@ -129,30 +129,30 @@ export default function SalonsClient({
                 key={s.id}
                 href={`/salons/${s.id}`}
                 className={`block bg-white rounded-xl border transition-colors overflow-hidden ${
-                  s.status === "featured" ? "border-[#F5C842] border-2" : "border-gray-200 hover:border-[#1C3A2A]"
+                  s.status === "featured" ? "border-brand-gold border-2" : "border-gray-200 hover:border-brand-forest"
                 }`}
               >
                 {s.cover_photo_url ? (
                   <div className="relative h-32 w-full">
                     <Image src={s.cover_photo_url} alt={s.name} fill className="object-cover" />
                     {s.status === "featured" && (
-                      <span className="absolute top-2 left-2 bg-[#F5C842] text-[#1C3A2A] text-[10px] font-black px-2 py-0.5 rounded-full">
+                      <span className="absolute top-2 left-2 bg-brand-gold text-brand-forest text-[10px] font-black px-2 py-0.5 rounded-full">
                         ⭐ FEATURED
                       </span>
                     )}
                   </div>
                 ) : (
-                  <div className="h-20 bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] flex items-center justify-center">
+                  <div className="h-20 bg-gradient-to-br from-brand-forest to-brand-green flex items-center justify-center">
                     <span className="text-3xl">✂️</span>
                     {s.status === "featured" && (
-                      <span className="absolute top-2 left-2 bg-[#F5C842] text-[#1C3A2A] text-[10px] font-black px-2 py-0.5 rounded-full">
+                      <span className="absolute top-2 left-2 bg-brand-gold text-brand-forest text-[10px] font-black px-2 py-0.5 rounded-full">
                         ⭐ FEATURED
                       </span>
                     )}
                   </div>
                 )}
                 <div className="p-3">
-                  <p className="font-black text-[#1C3A2A] text-sm truncate">{s.name}</p>
+                  <p className="font-black text-brand-forest text-sm truncate">{s.name}</p>
                   <p className="text-xs text-gray-500 mt-0.5">
                     {SALON_GENDER_LABELS[s.gender]} · {SALON_TYPE_LABELS[s.type]}
                   </p>
@@ -165,7 +165,7 @@ export default function SalonsClient({
                         e.preventDefault();
                         window.open(`https://wa.me/${s.whatsapp.replace(/\D/g, "")}`, "_blank");
                       }}
-                      className="mt-2 w-full rounded-lg bg-[#25d366] py-1.5 text-center text-xs font-bold text-white"
+                      className="mt-2 w-full rounded-lg bg-brand-forest py-1.5 text-center text-xs font-bold text-white hover:bg-brand-green"
                     >
                       💬 WhatsApp
                     </div>
@@ -180,7 +180,7 @@ export default function SalonsClient({
           <button
             onClick={loadMore}
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-[#1C3A2A] py-3 text-sm font-bold text-white disabled:opacity-50"
+            className="mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white disabled:opacity-50"
           >
             {loading ? "Loading..." : "Load more salons →"}
           </button>

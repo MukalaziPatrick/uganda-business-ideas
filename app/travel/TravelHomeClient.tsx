@@ -5,12 +5,12 @@ import Link from "next/link";
 import type { TravelDestination } from "@/lib/supabase/travel-types";
 
 const DESTINATION_GRADIENTS = [
-  "from-[#1a3a1a] to-[#2d5a27]",
-  "from-[#1a4a6e] to-[#0d3a5c]",
-  "from-[#5a3a1a] to-[#3a2010]",
-  "from-[#1a5a3a] to-[#0d3a27]",
-  "from-[#3a1a5a] to-[#2a0d3a]",
-  "from-[#5a1a1a] to-[#3a0d0d]",
+  "from-brand-forest to-brand-green",
+  "from-brand-green to-brand-forest",
+  "from-brand-forest to-brand-green",
+  "from-brand-green to-brand-forest",
+  "from-brand-forest to-brand-green",
+  "from-brand-green to-brand-forest",
 ];
 
 export default function TravelHomeClient({ destinations }: { destinations: TravelDestination[] }) {
@@ -21,10 +21,10 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
   );
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
+    <div className="min-h-screen bg-brand-cream">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#1a3a5c] to-[#0d6e6e] px-4 pt-8 pb-6 text-center text-white">
-        <h1 className="text-3xl font-black text-[#F5C842] mb-1" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 pt-8 pb-6 text-center text-white">
+        <h1 className="text-3xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
           🇺🇬 ZuulaUganda
         </h1>
         <p className="text-sm text-white/80 mb-4">Discover where to stay across Uganda</p>
@@ -42,10 +42,10 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
 
       <div className="px-4 py-5 max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-bold text-[#1C3A2A] uppercase tracking-wide">
+          <p className="text-xs font-bold text-brand-forest uppercase tracking-wide">
             {search ? `${filtered.length} destinations found` : "Popular Destinations"}
           </p>
-          <Link href="/travel/destinations" className="text-xs font-bold text-[#1C3A2A] underline underline-offset-2">
+          <Link href="/travel/destinations" className="text-xs font-bold text-brand-forest underline underline-offset-2">
             View all →
           </Link>
         </div>
@@ -58,7 +58,7 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
               className={`relative rounded-xl bg-gradient-to-br ${DESTINATION_GRADIENTS[i % DESTINATION_GRADIENTS.length]} p-4 text-white min-h-[90px] flex flex-col justify-end`}
             >
               {d.is_featured && (
-                <span className="absolute top-2 right-2 bg-[#F5C842] text-[#1C3A2A] text-[9px] font-black px-2 py-0.5 rounded-full">
+                <span className="absolute top-2 right-2 bg-brand-gold text-brand-forest text-[9px] font-black px-2 py-0.5 rounded-full">
                   🔥 HOT
                 </span>
               )}

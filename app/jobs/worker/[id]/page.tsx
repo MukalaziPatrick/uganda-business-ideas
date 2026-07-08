@@ -24,11 +24,11 @@ type Worker = {
 function Breadcrumb() {
   return (
     <nav className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold mb-6">
-      <Link href="/" className="hover:text-[#1C3A2A] transition-colors">Home</Link>
+      <Link href="/" className="hover:text-brand-forest transition-colors">Home</Link>
       <span className="text-slate-300">›</span>
-      <Link href="/jobs" className="hover:text-[#1C3A2A] transition-colors">Jobs</Link>
+      <Link href="/jobs" className="hover:text-brand-forest transition-colors">Jobs</Link>
       <span className="text-slate-300">›</span>
-      <span className="text-[#1C3A2A]">Worker Profile</span>
+      <span className="text-brand-forest">Worker Profile</span>
     </nav>
   );
 }
@@ -65,20 +65,20 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa]">
+    <div className="min-h-screen bg-brand-cream">
       <div className="mx-auto max-w-lg px-4 py-10">
         <Breadcrumb />
         <div className="rounded-3xl border border-slate-200 bg-white shadow-sm p-6">
           <div className="flex items-start gap-4 mb-6">
-            <div className="h-14 w-14 shrink-0 rounded-full bg-violet-600 flex items-center justify-center text-2xl font-black text-white">
+            <div className="h-14 w-14 shrink-0 rounded-full bg-brand-forest flex items-center justify-center text-2xl font-black text-white">
               {initial}
             </div>
             <div className="flex-1">
-              <h1 className="text-xl font-black text-slate-900">{displayName}</h1>
-              <p className="text-sm font-semibold text-violet-700 mt-0.5">{allSkills.join(" · ")}</p>
+              <h1 className="text-xl font-black text-brand-forest">{displayName}</h1>
+              <p className="text-sm font-semibold text-brand-green mt-0.5">{allSkills.join(" · ")}</p>
               <p className="text-xs text-slate-500 mt-1">📍 {[worker.town, worker.district].filter(Boolean).join(", ")}</p>
             </div>
-            <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${worker.available ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"}`}>
+            <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-bold ${worker.available ? "bg-brand-gold/20 text-brand-forest" : "bg-slate-100 text-slate-500"}`}>
               {worker.available ? "Available" : "Not available"}
             </span>
           </div>
@@ -115,13 +115,13 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
           {(worker.languages?.length || worker.own_tools || worker.willing_to_travel) && (
             <div className="flex flex-wrap gap-2 mb-6">
               {worker.languages?.map(l => (
-                <span key={l} className="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700">{l}</span>
+                <span key={l} className="rounded-full border border-brand-beige bg-brand-cream px-3 py-1 text-xs font-semibold text-brand-forest">{l}</span>
               ))}
               {worker.own_tools && (
-                <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700">Own tools</span>
+                <span className="rounded-full border border-brand-beige bg-brand-cream px-3 py-1 text-xs font-semibold text-brand-forest">Own tools</span>
               )}
               {worker.willing_to_travel && (
-                <span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700">Can travel</span>
+                <span className="rounded-full border border-brand-beige bg-brand-cream px-3 py-1 text-xs font-semibold text-brand-forest">Can travel</span>
               )}
             </div>
           )}
@@ -136,7 +136,7 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
                 href={whatsappHref(worker.contact_whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full rounded-2xl bg-[#25D366] py-4 text-base font-black text-white shadow-md hover:opacity-90 transition-opacity"
+                className="flex items-center justify-center gap-2 w-full rounded-2xl bg-brand-forest py-4 text-base font-black text-white shadow-md hover:bg-brand-green transition-colors"
               >
                 📲 WhatsApp {worker.name.split(" ")[0]}
               </a>
@@ -144,7 +144,7 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
             {worker.contact_phone && (
               <a
                 href={`tel:${worker.contact_phone}`}
-                className="flex items-center justify-center gap-2 w-full rounded-2xl bg-[#f5f0e8] py-3 text-sm font-bold text-[#1C3A2A] hover:bg-[#e8e2d6] transition-colors"
+                className="flex items-center justify-center gap-2 w-full rounded-2xl bg-brand-cream py-3 text-sm font-bold text-brand-forest hover:bg-brand-beige/60 transition-colors"
               >
                 📞 Call {worker.name.split(" ")[0]}
               </a>
@@ -152,7 +152,7 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
             {!worker.contact_whatsapp && worker.contact_phone && (
               <a
                 href={`tel:${worker.contact_phone}`}
-                className="flex items-center justify-center gap-2 w-full rounded-2xl border-2 border-[#1C3A2A] py-4 text-base font-black text-[#1C3A2A] hover:bg-[#f5f0e8] transition-colors"
+                className="flex items-center justify-center gap-2 w-full rounded-2xl border-2 border-brand-forest py-4 text-base font-black text-brand-forest hover:bg-brand-cream transition-colors"
               >
                 📞 Call {worker.name.split(" ")[0]}
               </a>

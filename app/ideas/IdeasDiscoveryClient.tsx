@@ -136,8 +136,8 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             onClick={() => handleRegion(r)}
             className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
               region === r
-                ? "bg-[#F5C842] text-[#1C3A2A]"
-                : "bg-[#2D5A40] text-white hover:bg-[#1C3A2A]"
+                ? "bg-brand-gold text-brand-forest"
+                : "bg-brand-green text-white hover:bg-brand-forest"
             }`}
           >
             {r === "All" ? "All Regions" : r}
@@ -152,7 +152,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           value={search}
           onChange={e => handleSearch(e.target.value)}
           placeholder="Search poultry, soap, digital, food..."
-          className="w-full rounded-2xl border border-[#e0d8cc] bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-[#1C3A2A] focus:ring-2 focus:ring-[#1C3A2A]/10"
+          className="w-full rounded-2xl border border-brand-beige bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10"
         />
       </div>
 
@@ -164,8 +164,8 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             onClick={() => handleCategory(opt)}
             className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
               category === opt
-                ? "bg-[#1C3A2A] text-[#F5C842]"
-                : "bg-white border border-[#e0d8cc] text-[#1C3A2A] hover:border-[#1C3A2A]"
+                ? "bg-brand-forest text-brand-gold"
+                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
             }`}
           >
             {opt === "All" ? "All" : `${categoryEmoji(opt)} ${opt}`}
@@ -181,8 +181,8 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             onClick={() => handleBudget(opt)}
             className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
               budget === opt
-                ? "bg-[#1C3A2A] text-[#F5C842]"
-                : "bg-white border border-[#e0d8cc] text-[#1C3A2A] hover:border-[#1C3A2A]"
+                ? "bg-brand-forest text-brand-gold"
+                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
             }`}
           >
             {opt === "All" ? "All budgets" : budgetLabels[opt as IdeaBudgetBand]}
@@ -198,7 +198,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <select
             value={sort}
             onChange={e => handleSort(e.target.value as SortOption)}
-            className="rounded-lg border border-[#e0d8cc] bg-white px-2 py-1 text-xs outline-none focus:border-[#1C3A2A]"
+            className="rounded-lg border border-brand-beige bg-white px-2 py-1 text-xs outline-none focus:border-brand-forest"
           >
             {(Object.keys(sortLabels) as SortOption[]).map(s => (
               <option key={s} value={s}>{sortLabels[s]}</option>
@@ -209,13 +209,13 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
 
       {/* Empty state */}
       {filtered.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-[#e0d8cc] bg-white p-10 text-center">
+        <div className="rounded-2xl border border-dashed border-brand-beige bg-white p-10 text-center">
           <p className="text-2xl mb-3">🔍</p>
-          <p className="font-bold text-[#1C3A2A] mb-1">No ideas match your search</p>
+          <p className="font-bold text-brand-forest mb-1">No ideas match your search</p>
           <p className="text-sm text-slate-500">Try clearing a filter or using a broader term.</p>
           <button
             onClick={clearFilters}
-            className="mt-4 rounded-xl bg-[#1C3A2A] px-5 py-2 text-sm font-bold text-[#F5C842]"
+            className="mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold"
           >
             Clear filters
           </button>
@@ -226,17 +226,17 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
       {featured && (
         <Link
           href={`/ideas/${featured.slug}`}
-          className="block rounded-2xl bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] p-6 mb-4 hover:opacity-95 transition-opacity"
+          className="block rounded-2xl bg-gradient-to-br from-brand-forest to-brand-green p-6 mb-4 hover:opacity-95 transition-opacity"
         >
           <div className="flex flex-wrap gap-2 mb-3">
-            <span className="rounded-full bg-[#F5C842] text-[#1C3A2A] text-[10px] font-bold px-2 py-0.5">
+            <span className="rounded-full bg-brand-gold text-brand-forest text-[10px] font-bold px-2 py-0.5">
               ⭐ Top Result
             </span>
             <span className="rounded-full bg-white/15 text-white text-[10px] font-bold px-2 py-0.5">
               {featured.category}
             </span>
           </div>
-          <h2 className="text-xl font-black text-[#F5C842] leading-snug mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-gold leading-snug mb-2" style={{ fontFamily: "Georgia, serif" }}>
             {featured.title}
           </h2>
           <p className="text-sm text-white/75 leading-relaxed mb-5 line-clamp-3">{featured.description}</p>
@@ -255,7 +255,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
                 </div>
               )}
             </div>
-            <span className="rounded-xl bg-[#F5C842] px-4 py-2 text-sm font-bold text-[#1C3A2A]">
+            <span className="rounded-xl bg-brand-gold px-4 py-2 text-sm font-bold text-brand-forest">
               Read More →
             </span>
           </div>
@@ -269,34 +269,34 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             <Link
               key={idea.slug}
               href={`/ideas/${idea.slug}`}
-              className="flex flex-col rounded-2xl border border-[#e0d8cc] bg-white p-4 hover:border-[#1C3A2A] transition-colors"
+              className="flex flex-col rounded-2xl border border-brand-beige bg-white p-4 hover:border-brand-forest transition-colors"
             >
               <div className="text-2xl mb-2">{categoryEmoji(idea.category)}</div>
               <div className="flex gap-1 flex-wrap mb-2">
-                <span className="rounded-full bg-[#f5f0e8] text-[#1C3A2A] text-[10px] font-bold px-2 py-0.5">
+                <span className="rounded-full bg-brand-cream text-brand-forest text-[10px] font-bold px-2 py-0.5">
                   {idea.category}
                 </span>
                 {idea.budget_band && (
-                  <span className="rounded-full bg-[#f5f0e8] text-slate-500 text-[10px] font-semibold px-2 py-0.5">
+                  <span className="rounded-full bg-brand-cream text-slate-500 text-[10px] font-semibold px-2 py-0.5">
                     {budgetLabels[idea.budget_band]}
                   </span>
                 )}
               </div>
-              <h3 className="font-black text-[#1C3A2A] text-sm leading-snug mb-1 flex-1">{idea.title}</h3>
+              <h3 className="font-black text-brand-forest text-sm leading-snug mb-1 flex-1">{idea.title}</h3>
               <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">{idea.description}</p>
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-xs font-bold text-[#1C3A2A]">{idea.capital}</span>
+                <span className="text-xs font-bold text-brand-forest">{idea.capital}</span>
                 <div className="flex gap-2 text-xs text-center">
                   {idea.scoring_demand != null && (
-                    <div className="rounded-lg bg-[#f5f0e8] px-2 py-1">
+                    <div className="rounded-lg bg-brand-cream px-2 py-1">
                       <p className="text-[9px] text-slate-400 uppercase">D</p>
-                      <p className="font-black text-[#1C3A2A]">{idea.scoring_demand}</p>
+                      <p className="font-black text-brand-forest">{idea.scoring_demand}</p>
                     </div>
                   )}
                   {idea.scoring_ease != null && (
-                    <div className="rounded-lg bg-[#f5f0e8] px-2 py-1">
+                    <div className="rounded-lg bg-brand-cream px-2 py-1">
                       <p className="text-[9px] text-slate-400 uppercase">E</p>
-                      <p className="font-black text-[#1C3A2A]">{idea.scoring_ease}</p>
+                      <p className="font-black text-brand-forest">{idea.scoring_ease}</p>
                     </div>
                   )}
                 </div>

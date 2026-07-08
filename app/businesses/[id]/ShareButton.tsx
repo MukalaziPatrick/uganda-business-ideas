@@ -11,7 +11,7 @@ export default function ShareButton({ name }: { name: string }) {
           alert("Link copied!");
         }
       }}
-      className="w-full rounded-xl bg-[#f5f0e8] border border-gray-200 py-3 text-sm font-bold text-[#1C3A2A]"
+      className="w-full rounded-xl bg-brand-cream border border-gray-200 py-3 text-sm font-bold text-brand-forest"
     >
       🔗 Share this business
     </button>

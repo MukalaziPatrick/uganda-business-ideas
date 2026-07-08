@@ -22,9 +22,9 @@ function ProgressBar({ current, total, label }: { current: number; total: number
         <span>{label}</span>
         <span>Step {current} of {total}</span>
       </div>
-      <div className="h-1.5 rounded-full bg-[#e0d8cc] overflow-hidden">
+      <div className="h-1.5 rounded-full bg-brand-beige overflow-hidden">
         <div
-          className="h-full rounded-full bg-[#1C3A2A] transition-all duration-300"
+          className="h-full rounded-full bg-brand-forest transition-all duration-300"
           style={{ width: `${(current / total) * 100}%` }}
         />
       </div>
@@ -98,9 +98,9 @@ export default function PostJobForm() {
   if (step === "success") {
     return (
       <div className="mx-auto max-w-lg px-4 py-10">
-        <div className="rounded-2xl bg-white border border-[#e0d8cc] p-8 text-center shadow-sm">
+        <div className="rounded-2xl bg-white border border-brand-beige p-8 text-center shadow-sm">
           <div className="text-4xl mb-4">✅</div>
-          <h2 className="text-xl font-black text-[#1C3A2A] mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
             Job Posted!
           </h2>
           <p className="text-sm text-slate-500 mb-6 leading-relaxed">
@@ -111,13 +111,13 @@ export default function PostJobForm() {
               href={`https://wa.me/?text=${encodeURIComponent("I just posted a job on Uganda Business Hub! Find work here: https://ugandabiz.com/jobs")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl bg-[#25D366] py-3 text-sm font-bold text-white text-center"
+              className="rounded-xl bg-brand-forest py-3 text-sm font-bold text-white text-center hover:bg-brand-green"
             >
               📲 Share on WhatsApp
             </a>
             <button
               onClick={() => router.push("/jobs")}
-              className="rounded-xl border border-[#e0d8cc] py-3 text-sm font-bold text-[#1C3A2A]"
+              className="rounded-xl border border-brand-beige py-3 text-sm font-bold text-brand-forest"
             >
               View All Jobs →
             </button>
@@ -127,13 +127,13 @@ export default function PostJobForm() {
     );
   }
 
-  const inputCls = "w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-violet-400";
+  const inputCls = "w-full rounded-xl border border-brand-beige bg-white px-3.5 py-2.5 text-sm text-brand-forest focus:outline-none focus:ring-2 focus:ring-brand-gold/60";
   const labelCls = "block text-xs font-semibold text-slate-600 mb-1";
 
   return (
     <div className="mx-auto max-w-lg px-4 py-10">
-      <h1 className="text-2xl font-black text-slate-900 mb-1">Post a Job</h1>
-      <p className="text-sm text-slate-500 mb-8">Free to post. Goes live after review.</p>
+      <h1 className="text-2xl font-black text-brand-forest mb-1">Post a Job</h1>
+      <p className="text-sm text-brand-green/80 mb-8">Free to post. Goes live after review.</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <ProgressBar current={1} total={2} label="Job Details" />
         <div>
@@ -167,8 +167,8 @@ export default function PostJobForm() {
           <input required value={form.employer_name} onChange={e => set("employer_name", e.target.value)}
             placeholder="e.g. Mukalazi Hardware" className={inputCls} />
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <p className="text-xs font-semibold text-slate-600 mb-3">Contact Method * (at least one)</p>
+        <div className="rounded-2xl border border-brand-beige bg-brand-surface p-4">
+          <p className="text-xs font-semibold text-brand-forest mb-3">Contact Method * (at least one)</p>
           <div className="flex flex-col gap-3">
             <div>
               <label className={labelCls}>WhatsApp Number</label>
@@ -188,14 +188,14 @@ export default function PostJobForm() {
           </div>
         </div>
         <ProgressBar current={2} total={2} label="Optional Details" />
-        <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-          <p className="text-xs font-semibold text-violet-800 mb-3">Add optional details (tick what you want to show)</p>
+        <div className="rounded-2xl border border-brand-beige bg-brand-surface p-4">
+          <p className="text-xs font-semibold text-brand-forest mb-3">Add optional details (tick what you want to show)</p>
           <div className="flex flex-col gap-2">
             {OPTIONAL_FIELDS.map(f => (
               <label key={f.key} className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={enabledOptionals.includes(f.key)}
                   onChange={() => toggle(f.key)}
-                  className="h-4 w-4 rounded border-slate-300 accent-violet-600" />
+                  className="h-4 w-4 rounded border-brand-beige accent-brand-forest" />
                 <span className="text-sm text-slate-700">{f.label}</span>
               </label>
             ))}
@@ -276,7 +276,7 @@ export default function PostJobForm() {
                       ? form.languages.filter(l => l !== lang)
                       : [...form.languages, lang]
                     )}
-                    className="h-4 w-4 rounded border-slate-300 accent-violet-600" />
+                    className="h-4 w-4 rounded border-brand-beige accent-brand-forest" />
                   <span className="text-sm text-slate-700">{lang}</span>
                 </label>
               ))}
@@ -294,7 +294,7 @@ export default function PostJobForm() {
         )}
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button type="submit" disabled={submitting}
-          className="w-full rounded-2xl bg-violet-600 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-violet-700 active:scale-95 disabled:opacity-60">
+          className="w-full rounded-2xl bg-brand-gold py-3.5 text-sm font-bold text-brand-forest shadow-sm hover:bg-brand-gold/85 active:scale-95 disabled:opacity-60">
           {submitting ? "Submitting..." : "Submit Job →"}
         </button>
       </form>

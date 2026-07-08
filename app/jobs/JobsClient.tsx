@@ -89,21 +89,21 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa]">
+    <div className="min-h-screen bg-brand-cream">
       <div className="mx-auto max-w-2xl px-4 py-8">
-        <h1 className="text-2xl font-black text-slate-900 mb-1">Uganda Jobs</h1>
-        <p className="text-sm text-slate-500 mb-6">Find work or hire skilled workers across Uganda</p>
+        <h1 className="text-2xl font-black text-brand-forest mb-1">Uganda Jobs</h1>
+        <p className="text-sm text-brand-green/80 mb-6">Find work or hire skilled workers across Uganda</p>
 
         {/* Tabs */}
         <div className="flex gap-2 mb-5">
           {(["jobs", "workers"] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
-              className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${tab === t ? "bg-violet-600 text-white" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"}`}>
+              className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${tab === t ? "bg-brand-forest text-white" : "bg-white text-brand-forest border border-brand-beige hover:bg-brand-surface"}`}>
               {t === "jobs" ? `Jobs (${jobs.length})` : `Workers (${workers.length})`}
             </button>
           ))}
           <Link href="/jobs/post"
-            className="ml-auto rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white hover:bg-green-700">
+            className="ml-auto rounded-full bg-brand-gold px-4 py-2 text-sm font-bold text-brand-forest hover:bg-brand-gold/85">
             + Post Job
           </Link>
         </div>
@@ -112,9 +112,9 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         <div className="flex gap-2 mb-5">
           <input value={skill} onChange={e => setSkill(e.target.value)}
             placeholder={tab === "jobs" ? "Search skill or title..." : "Search skill..."}
-            className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400" />
+            className="flex-1 rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60" />
           <select value={district} onChange={e => setDistrict(e.target.value)}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-400">
+            className="rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60">
             <option value="">All districts</option>
             {UGANDA_DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
@@ -124,11 +124,11 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         {tab === "jobs" && (
           <div className="flex flex-col gap-3">
             {filteredJobs.length === 0 && (
-              <div className="rounded-2xl border border-dashed border-[#e0d8cc] bg-white p-10 text-center">
+              <div className="rounded-2xl border border-dashed border-brand-beige bg-white p-10 text-center">
                 <p className="text-3xl mb-3">💼</p>
-                <p className="font-bold text-[#1C3A2A] mb-1">No jobs found in this category</p>
-                <p className="text-sm text-slate-500 mb-4">Try a different district or skill, or be the first to post.</p>
-                <Link href="/jobs/post" className="rounded-xl bg-[#1C3A2A] px-5 py-2 text-sm font-bold text-[#F5C842]">
+                <p className="font-bold text-brand-forest mb-1">No jobs found in this category</p>
+                <p className="text-sm text-brand-green/80 mb-4">Try a different district or skill, or be the first to post.</p>
+                <Link href="/jobs/post" className="rounded-xl bg-brand-gold px-5 py-2 text-sm font-bold text-brand-forest">
                   Post a Job →
                 </Link>
               </div>
@@ -136,67 +136,67 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
             {filteredJobs.map(job => (
               <div
                 key={job.id}
-                className={`rounded-2xl border bg-white p-4 shadow-sm ${job.featured ? "border-[#F5C842]" : "border-[#e0d8cc]"}`}
+                className={`rounded-2xl border bg-white p-4 shadow-sm ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}
               >
                 {job.featured && (
-                  <span className="mb-2 inline-block rounded-full bg-[#FFF3CD] px-2 py-0.5 text-[10px] font-bold uppercase text-[#856404]">
+                  <span className="mb-2 inline-block rounded-full bg-brand-gold/25 px-2 py-0.5 text-[10px] font-bold uppercase text-brand-forest">
                     Featured
                   </span>
                 )}
                 <div className="flex items-start gap-3">
                   {/* Icon */}
-                  <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[#1C3A2A] to-[#2D5A40] flex items-center justify-center text-lg">
+                  <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-brand-forest to-brand-green flex items-center justify-center text-lg">
                     {skillEmoji(job.skill_category)}
                   </div>
 
                   {/* Body */}
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-[#1C3A2A] text-sm">{job.title}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="font-black text-brand-forest text-sm">{job.title}</p>
+                    <p className="text-xs text-brand-green/70 mt-0.5">
                       {job.employer_name} · {[job.town, job.district].filter(Boolean).join(", ")}
                     </p>
                     {job.pay_amount && (
-                      <p className="text-xs font-black text-[#1C3A2A] mt-1">
+                      <p className="text-xs font-black text-brand-forest mt-1">
                         UGX {job.pay_amount.toLocaleString()}{job.pay_period ? `/${job.pay_period}` : ""}
                       </p>
                     )}
                     <div className="flex flex-wrap gap-1 mt-2">
-                      <span className="rounded-full bg-[#f5f0e8] px-2 py-0.5 text-[10px] font-semibold text-slate-600">
+                      <span className="rounded-full bg-brand-cream px-2 py-0.5 text-[10px] font-semibold text-brand-forest">
                         {job.skill_category}
                       </span>
                       {job.job_type && (
-                        <span className="rounded-full bg-[#f5f0e8] px-2 py-0.5 text-[10px] font-semibold text-slate-600 capitalize">
+                        <span className="rounded-full bg-brand-cream px-2 py-0.5 text-[10px] font-semibold text-brand-forest capitalize">
                           {job.job_type}
                         </span>
                       )}
                       {job.accommodation === "yes" && (
-                        <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-600">
+                        <span className="rounded-full border border-brand-gold/40 bg-brand-gold/15 px-2 py-0.5 text-[10px] font-semibold text-brand-forest">
                           Accommodation
                         </span>
                       )}
                       {job.food_provided === "yes" && (
-                        <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-600">
+                        <span className="rounded-full border border-brand-gold/40 bg-brand-gold/15 px-2 py-0.5 text-[10px] font-semibold text-brand-forest">
                           Food
                         </span>
                       )}
                     </div>
                     {job.description && (
-                      <p className="text-xs text-slate-500 mt-2 line-clamp-2">{job.description}</p>
+                      <p className="text-xs text-brand-green/75 mt-2 line-clamp-2">{job.description}</p>
                     )}
                     <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <span className="text-[10px] text-slate-400">{timeAgo(job.created_at)}</span>
+                      <span className="text-[10px] text-brand-green/60">{timeAgo(job.created_at)}</span>
                       {job.source && job.source_url && (
                         <a
                           href={job.source_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[10px] font-semibold text-violet-500 hover:underline"
+                          className="text-[10px] font-semibold text-brand-green hover:underline"
                         >
                           {sourceLabel(job.source)} ↗
                         </a>
                       )}
                       {expiryLabel(job.expires_at) && (
-                        <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-700">
+                        <span className="rounded-full border border-brand-gold/40 bg-brand-gold/20 px-2 py-0.5 text-[10px] font-bold text-brand-forest">
                           {expiryLabel(job.expires_at)}
                         </span>
                       )}
@@ -210,7 +210,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                         href={whatsappHref(job.contact_whatsapp, job.employer_name)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-xl bg-[#1C3A2A] px-3 py-1.5 text-xs font-bold text-[#F5C842] hover:opacity-90"
+                        className="rounded-xl bg-brand-forest px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-green"
                       >
                         WhatsApp
                       </a>
@@ -218,13 +218,13 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     {job.contact_phone && (
                       <a
                         href={`tel:${job.contact_phone}`}
-                        className="rounded-xl bg-[#f5f0e8] px-3 py-1.5 text-xs font-bold text-[#1C3A2A] hover:bg-[#e8e2d6]"
+                        className="rounded-xl bg-brand-cream px-3 py-1.5 text-xs font-bold text-brand-forest hover:bg-brand-beige/60"
                       >
                         Call
                       </a>
                     )}
                     {job.contact_walkin && (
-                      <span className="rounded-xl bg-[#f5f0e8] px-3 py-1.5 text-xs font-semibold text-slate-600">
+                      <span className="rounded-xl bg-brand-cream px-3 py-1.5 text-xs font-semibold text-brand-forest">
                         Walk-in
                       </span>
                     )}
@@ -239,30 +239,30 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         {tab === "workers" && (
           <div className="flex flex-col gap-3">
             {filteredWorkers.length === 0 && (
-              <p className="text-center text-sm text-slate-400 py-12">No workers found. <Link href="/jobs/worker/new" className="text-violet-600 font-semibold">Register as a worker?</Link></p>
+              <p className="text-center text-sm text-brand-green/75 py-12">No workers found. <Link href="/jobs/worker/new" className="text-brand-forest font-semibold underline decoration-brand-gold decoration-2 underline-offset-4">Register as a worker?</Link></p>
             )}
             {filteredWorkers.map(w => (
               <Link key={w.id} href={`/jobs/worker/${w.id}`}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:border-violet-300 transition-colors block">
+                className="rounded-2xl border border-brand-beige bg-white p-4 shadow-sm hover:border-brand-gold transition-colors block">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 shrink-0 rounded-full bg-violet-600 flex items-center justify-center text-lg font-black text-white">
+                  <div className="h-10 w-10 shrink-0 rounded-full bg-brand-forest flex items-center justify-center text-lg font-black text-white">
                     {w.name[0].toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-slate-900">{w.name.split(" ").map((n, i) => i === 0 ? n : n[0] + ".").join(" ")}</p>
-                    <p className="text-xs text-violet-700 font-semibold">{[w.skill_primary, ...(w.skills_extra ?? [])].join(" · ")}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">📍 {[w.town, w.district].filter(Boolean).join(", ")}</p>
+                    <p className="font-black text-brand-forest">{w.name.split(" ").map((n, i) => i === 0 ? n : n[0] + ".").join(" ")}</p>
+                    <p className="text-xs text-brand-green font-semibold">{[w.skill_primary, ...(w.skills_extra ?? [])].join(" · ")}</p>
+                    <p className="text-xs text-brand-green/70 mt-0.5">📍 {[w.town, w.district].filter(Boolean).join(", ")}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${w.available ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"}`}>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${w.available ? "bg-brand-gold/20 text-brand-forest" : "bg-slate-100 text-slate-500"}`}>
                       {w.available ? "Available" : "Unavailable"}
                     </span>
                     {w.pay_expectation && (
-                      <span className="text-[10px] font-semibold text-slate-500">UGX {w.pay_expectation.toLocaleString()}{w.pay_period ? `/${w.pay_period}` : ""}</span>
+                      <span className="text-[10px] font-semibold text-brand-green/70">UGX {w.pay_expectation.toLocaleString()}{w.pay_period ? `/${w.pay_period}` : ""}</span>
                     )}
                   </div>
                 </div>
-                {w.bio && <p className="text-xs text-slate-500 italic mt-2 line-clamp-1">&ldquo;{w.bio}&rdquo;</p>}
+                {w.bio && <p className="text-xs text-brand-green/70 italic mt-2 line-clamp-1">&ldquo;{w.bio}&rdquo;</p>}
               </Link>
             ))}
           </div>
@@ -270,10 +270,10 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
 
         {/* Bottom CTAs */}
         <div className="mt-8 flex gap-3">
-          <Link href="/jobs/post" className="flex-1 rounded-2xl bg-violet-600 py-3 text-center text-sm font-bold text-white hover:bg-violet-700">
+          <Link href="/jobs/post" className="flex-1 rounded-2xl bg-brand-gold py-3 text-center text-sm font-bold text-brand-forest hover:bg-brand-gold/85">
             Post a Job
           </Link>
-          <Link href="/jobs/worker/new" className="flex-1 rounded-2xl border border-violet-300 py-3 text-center text-sm font-bold text-violet-700 hover:bg-violet-50">
+          <Link href="/jobs/worker/new" className="flex-1 rounded-2xl border border-brand-forest py-3 text-center text-sm font-bold text-brand-forest hover:bg-brand-surface">
             Register as Worker
           </Link>
         </div>

@@ -54,7 +54,7 @@ export default function SalonRegisterForm() {
   const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
   const [portfolioUrls, setPortfolioUrls] = useState<string[]>([""]);
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white";
+  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
   const labelClass = "block text-xs font-bold text-gray-600 mb-1";
 
   const addService = () => {
@@ -156,7 +156,7 @@ export default function SalonRegisterForm() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
-        <h2 className="text-xl font-black text-[#1C3A2A] mb-2" style={{ fontFamily: "Georgia, serif" }}>Listing submitted!</h2>
+        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>Listing submitted!</h2>
         <p className="text-sm text-gray-600 leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
       </div>
     );
@@ -167,7 +167,7 @@ export default function SalonRegisterForm() {
       {/* Step indicator */}
       <div className="flex gap-2">
         {[1, 2, 3, 4].map((s) => (
-          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-[#1C3A2A]" : "bg-gray-200"}`} />
+          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
         ))}
       </div>
       <p className="text-xs text-gray-500 text-center">Step {step} of 4</p>
@@ -176,7 +176,7 @@ export default function SalonRegisterForm() {
 
       {step === 1 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Basic Info</h2>
+          <h2 className="text-sm font-black text-brand-forest">Basic Info</h2>
           <div><label className={labelClass}>Salon name *</label><input className={fieldClass} value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Kampala Style Hub" /></div>
           <div>
             <label className={labelClass}>Type *</label>
@@ -215,7 +215,7 @@ export default function SalonRegisterForm() {
           <div><label className={labelClass}>Phone number</label><input className={fieldClass} type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+256 7XX XXX XXX" /></div>
           <div><label className={labelClass}>Opening hours *</label><input className={fieldClass} value={openingHours} onChange={e => setOpeningHours(e.target.value)} placeholder="e.g. Mon–Sat 8am–7pm" /></div>
           <label className="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" checked={walkin} onChange={e => setWalkin(e.target.checked)} className="w-4 h-4 accent-[#1C3A2A]" />
+            <input type="checkbox" checked={walkin} onChange={e => setWalkin(e.target.checked)} className="w-4 h-4 accent-brand-forest" />
             <span className="text-sm font-medium text-gray-700">Walk-ins welcome (no appointment needed)</span>
           </label>
           <div>
@@ -223,7 +223,7 @@ export default function SalonRegisterForm() {
             <textarea className={`${fieldClass} resize-none`} rows={3} value={about} onChange={e => setAbout(e.target.value)} maxLength={300} placeholder="What do you offer? What makes you special?" />
           </div>
           <button onClick={() => { const e = validateStep1(); if (e) { setError(e); return; } setError(""); setStep(2); }}
-            className="w-full rounded-xl bg-[#1C3A2A] py-4 text-sm font-black text-[#F5C842]">
+            className="w-full rounded-xl bg-brand-forest py-4 text-sm font-black text-brand-gold">
             Next: Add Services →
           </button>
         </div>
@@ -231,11 +231,11 @@ export default function SalonRegisterForm() {
 
       {step === 2 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Services & Prices</h2>
+          <h2 className="text-sm font-black text-brand-forest">Services & Prices</h2>
           {services.map((svc, i) => (
-            <div key={i} className="bg-[#f5f0e8] rounded-xl p-3 space-y-2">
+            <div key={i} className="bg-brand-cream rounded-xl p-3 space-y-2">
               <div className="flex justify-between items-center">
-                <p className="text-xs font-bold text-[#1C3A2A]">Service {i + 1}</p>
+                <p className="text-xs font-bold text-brand-forest">Service {i + 1}</p>
                 {services.length > 1 && <button onClick={() => removeService(i)} className="text-xs text-red-500">Remove</button>}
               </div>
               <input className={fieldClass} value={svc.name} onChange={e => updateService(i, "name", e.target.value)} placeholder="Service name (e.g. Box Braids)" />
@@ -252,20 +252,20 @@ export default function SalonRegisterForm() {
             </div>
           ))}
           {services.length < 20 && (
-            <button onClick={addService} className="w-full rounded-xl border-2 border-dashed border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">
+            <button onClick={addService} className="w-full rounded-xl border-2 border-dashed border-brand-forest py-3 text-sm font-bold text-brand-forest">
               + Add another service
             </button>
           )}
           <div className="flex gap-2">
-            <button onClick={() => setStep(1)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
-            <button onClick={() => { const e = validateStep2(); if (e) { setError(e); return; } setError(""); setStep(3); }} className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842]">Next: Photos →</button>
+            <button onClick={() => setStep(1)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
+            <button onClick={() => { const e = validateStep2(); if (e) { setError(e); return; } setError(""); setStep(3); }} className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold">Next: Photos →</button>
           </div>
         </div>
       )}
 
       {step === 3 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Photos</h2>
+          <h2 className="text-sm font-black text-brand-forest">Photos</h2>
           <p className="text-xs text-gray-500">Paste image URLs from your phone or social media. You can add up to 10 portfolio photos.</p>
           <div>
             <label className={labelClass}>Cover photo URL (main photo shown on the card)</label>
@@ -280,19 +280,19 @@ export default function SalonRegisterForm() {
               </div>
             ))}
             {portfolioUrls.length < 10 && (
-              <button onClick={() => setPortfolioUrls([...portfolioUrls, ""])} className="text-xs font-bold text-[#1C3A2A] underline">+ Add photo</button>
+              <button onClick={() => setPortfolioUrls([...portfolioUrls, ""])} className="text-xs font-bold text-brand-forest underline">+ Add photo</button>
             )}
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setStep(2)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
-            <button onClick={() => { setError(""); setStep(4); }} className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842]">Next: Review →</button>
+            <button onClick={() => setStep(2)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
+            <button onClick={() => { setError(""); setStep(4); }} className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold">Next: Review →</button>
           </div>
         </div>
       )}
 
       {step === 4 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Review & Submit</h2>
+          <h2 className="text-sm font-black text-brand-forest">Review & Submit</h2>
           <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2 text-sm">
             <p><span className="font-bold">Name:</span> {name}</p>
             <p><span className="font-bold">Type:</span> {type === "salon" ? "Salon" : "Mobile Stylist"}</p>
@@ -305,8 +305,8 @@ export default function SalonRegisterForm() {
             <p><span className="font-bold">Photos:</span> {portfolioUrls.filter(u => u.trim()).length} added</p>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setStep(3)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
-            <button onClick={handleSubmit} disabled={submitting} className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842] disabled:opacity-50">
+            <button onClick={() => setStep(3)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
+            <button onClick={handleSubmit} disabled={submitting} className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold disabled:opacity-50">
               {submitting ? "Submitting..." : "Submit for Review →"}
             </button>
           </div>

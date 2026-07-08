@@ -99,7 +99,7 @@ export default async function IdeaPage({
   const iconWrap    = "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-[17px]";
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-slate-900 antialiased">
+    <main className="min-h-screen bg-brand-cream text-slate-900 antialiased">
 
       {/* ── STICKY NAVBAR ─────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-xl">
@@ -131,7 +131,7 @@ export default async function IdeaPage({
       <div className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:px-6 sm:pb-24 sm:pt-8 md:px-10 md:pt-10">
 
         {/* ── HERO ──────────────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] shadow-2xl shadow-green-950/40">
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-forest via-brand-green to-brand-forest shadow-2xl shadow-green-950/40">
           <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-green-300/8 blur-2xl" />
           <div className="pointer-events-none absolute right-1/3 top-0 h-px w-1/2 bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
@@ -599,7 +599,7 @@ export default async function IdeaPage({
 
         {/* ── 10. STRONG CTA ──────────────────────────────────────────────── */}
         <section className="mt-8">
-          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-[#062b1a] via-[#0a3d26] to-[#0f5c3a] shadow-2xl shadow-green-950/30">
+          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-brand-forest via-brand-green to-brand-forest shadow-2xl shadow-green-950/30">
             <div className="relative px-6 py-10 sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/10 blur-2xl" />
 
@@ -810,7 +810,7 @@ export default async function IdeaPage({
                     className="flex flex-col rounded-xl border border-slate-200 bg-white p-4 hover:border-green-300 hover:shadow-sm transition-all"
                   >
                     <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 mb-1">{related.category}</p>
-                    <h3 className="font-black text-[#1C3A2A] text-sm leading-snug mb-3 flex-1">{related.title}</h3>
+                    <h3 className="font-black text-brand-forest text-sm leading-snug mb-3 flex-1">{related.title}</h3>
                     <p className="text-[11px] font-semibold text-slate-500 mt-auto">{related.capital}</p>
                   </Link>
                 ))}

@@ -99,9 +99,9 @@ export default function BusinessesClient({
   }, [offset, region, category]);
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
-      <div className="bg-[#1C3A2A] px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-[#F5C842] mb-1" style={{ fontFamily: "Georgia, serif" }}>
+    <div className="min-h-screen bg-brand-cream">
+      <div className="bg-brand-forest px-4 py-6 text-center text-white">
+        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
           📍 Find a Business
         </h1>
         <p className="text-sm text-white/70">Real businesses across Uganda</p>
@@ -113,12 +113,12 @@ export default function BusinessesClient({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search businesses..."
-          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1C3A2A]"
+          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
         />
         <select
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-[#1C3A2A]"
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
         >
           <option value="">All Categories</option>
           {BUSINESS_CATEGORIES.map((c) => (
@@ -127,8 +127,8 @@ export default function BusinessesClient({
         </select>
       </div>
 
-      <div className="bg-[#e8f5ee] px-4 py-4 border-b border-[#c0dcc8]">
-        <p className="text-xs font-semibold text-[#2d6a4f] text-center mb-3">
+      <div className="bg-brand-green/10 px-4 py-4 border-b border-brand-green/20">
+        <p className="text-xs font-semibold text-brand-green text-center mb-3">
           Browse by region — tap to filter
         </p>
         <div className="flex gap-2 overflow-x-auto pb-1 justify-center flex-wrap">
@@ -140,8 +140,8 @@ export default function BusinessesClient({
                 onClick={() => handleRegionClick(r)}
                 className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
                   region === r
-                    ? "bg-[#F5C842] text-[#1C3A2A]"
-                    : "bg-[#2D5A40] text-white hover:bg-[#1C3A2A]"
+                    ? "bg-brand-gold text-brand-forest"
+                    : "bg-brand-green text-white hover:bg-brand-forest"
                 }`}
               >
                 {r === "All" ? "All Regions" : r}
@@ -161,7 +161,7 @@ export default function BusinessesClient({
           </p>
           <Link
             href="/businesses/register"
-            className="text-xs font-bold text-[#1C3A2A] underline underline-offset-2"
+            className="text-xs font-bold text-brand-forest underline underline-offset-2"
           >
             + List your business
           </Link>
@@ -171,7 +171,7 @@ export default function BusinessesClient({
           <div className="text-center py-16 text-gray-400">
             <p className="text-2xl mb-2">🔍</p>
             <p className="text-sm">No businesses found.</p>
-            <Link href="/businesses/register" className="mt-3 inline-block text-sm font-bold text-[#1C3A2A] underline">
+            <Link href="/businesses/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
               Be the first to list one →
             </Link>
           </div>
@@ -181,11 +181,11 @@ export default function BusinessesClient({
               <Link
                 key={b.id}
                 href={`/businesses/${b.id}`}
-                className="block bg-white rounded-xl border border-gray-200 p-4 hover:border-[#1C3A2A] transition-colors"
+                className="block bg-white rounded-xl border border-gray-200 p-4 hover:border-brand-forest transition-colors"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="font-black text-[#1C3A2A] text-sm truncate">{b.name}</p>
+                    <p className="font-black text-brand-forest text-sm truncate">{b.name}</p>
                     <p className="text-xs text-gray-500 mt-0.5">
                       {categoryEmoji(b.category)} {b.category} · {b.town ? `${b.town}, ` : ""}{b.district}
                     </p>
@@ -195,7 +195,7 @@ export default function BusinessesClient({
                 {b.whatsapp && (
                   <div
                     onClick={(e) => { e.preventDefault(); window.open(`https://wa.me/${b.whatsapp!.replace(/\D/g, "")}`, "_blank"); }}
-                    className="mt-3 w-full rounded-lg bg-[#25d366] py-2 text-center text-xs font-bold text-white"
+                    className="mt-3 w-full rounded-lg bg-green-500 py-2 text-center text-xs font-bold text-white"
                   >
                     💬 WhatsApp
                   </div>
@@ -209,7 +209,7 @@ export default function BusinessesClient({
           <button
             onClick={loadMore}
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-[#1C3A2A] py-3 text-sm font-bold text-white disabled:opacity-50"
+            className="mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white disabled:opacity-50"
           >
             {loading ? "Loading..." : "Load more businesses →"}
           </button>

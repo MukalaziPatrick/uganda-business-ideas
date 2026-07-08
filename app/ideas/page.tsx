@@ -20,7 +20,7 @@ export default async function IdeasPage() {
   const ideas = await getPublishedIdeas();
 
   return (
-    <main className="min-h-screen bg-[#f5f7fa] text-slate-900">
+    <main className="min-h-screen bg-brand-cream text-slate-900">
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:px-10">
         <header className="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center gap-2.5">

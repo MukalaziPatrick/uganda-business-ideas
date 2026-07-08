@@ -25,9 +25,9 @@ export default async function EditBusinessPage({
   const business = data as Business;
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
-      <div className="bg-[#1C3A2A] px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-[#F5C842]" style={{ fontFamily: "Georgia, serif" }}>
+    <div className="min-h-screen bg-brand-cream">
+      <div className="bg-brand-forest px-4 py-6 text-center text-white">
+        <h1 className="text-2xl font-black text-brand-gold" style={{ fontFamily: "Georgia, serif" }}>
           Manage Your Listing
         </h1>
         <p className="text-sm text-white/70 mt-1">{business.name} · keep this link private</p>

@@ -42,7 +42,7 @@ export default function TravelRegisterForm() {
   const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
   const [photoUrls, setPhotoUrls] = useState<string[]>([""]);
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A] bg-white";
+  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
   const labelClass = "block text-xs font-bold text-gray-600 mb-1";
 
   const toggleAmenity = (a: string) => {
@@ -127,7 +127,7 @@ export default function TravelRegisterForm() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
-        <h2 className="text-xl font-black text-[#1C3A2A] mb-2">Listing submitted!</h2>
+        <h2 className="text-xl font-black text-brand-forest mb-2">Listing submitted!</h2>
         <p className="text-sm text-gray-600 leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
       </div>
     );
@@ -137,7 +137,7 @@ export default function TravelRegisterForm() {
     <div className="space-y-6">
       <div className="flex gap-2">
         {[1, 2, 3, 4].map((s) => (
-          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-[#1C3A2A]" : "bg-gray-200"}`} />
+          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
         ))}
       </div>
       <p className="text-xs text-gray-500 text-center">Step {step} of 4</p>
@@ -145,7 +145,7 @@ export default function TravelRegisterForm() {
 
       {step === 1 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Basic Info</h2>
+          <h2 className="text-sm font-black text-brand-forest">Basic Info</h2>
           <div><label className={labelClass}>Accommodation name *</label><input className={fieldClass} value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Bwindi Forest Guesthouse" /></div>
           <div>
             <label className={labelClass}>Type *</label>
@@ -175,36 +175,36 @@ export default function TravelRegisterForm() {
             <textarea className={`${fieldClass} resize-none`} rows={4} value={description} onChange={e => setDescription(e.target.value)} maxLength={500} placeholder="Describe your accommodation, location, and what makes it special." />
           </div>
           <button onClick={() => { const e = validateStep1(); if (e) { setError(e); return; } setError(""); setStep(2); }}
-            className="w-full rounded-xl bg-[#1C3A2A] py-4 text-sm font-black text-[#F5C842]">Next: Amenities →</button>
+            className="w-full rounded-xl bg-brand-forest py-4 text-sm font-black text-brand-gold">Next: Amenities →</button>
         </div>
       )}
 
       {step === 2 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Amenities</h2>
+          <h2 className="text-sm font-black text-brand-forest">Amenities</h2>
           <p className="text-xs text-gray-500">Select all that apply.</p>
           <div className="grid grid-cols-2 gap-2">
             {STAY_AMENITY_OPTIONS.map(a => (
               <button key={a} onClick={() => toggleAmenity(a)}
-                className={`text-left text-sm px-3 py-2.5 rounded-lg border transition-colors ${amenities.includes(a) ? "bg-[#1C3A2A] text-white border-[#1C3A2A]" : "bg-white text-gray-700 border-gray-300"}`}>
+                className={`text-left text-sm px-3 py-2.5 rounded-lg border transition-colors ${amenities.includes(a) ? "bg-brand-forest text-white border-brand-forest" : "bg-white text-gray-700 border-gray-300"}`}>
                 {amenities.includes(a) ? "✓ " : ""}{a}
               </button>
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setStep(1)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
-            <button onClick={() => { setError(""); setStep(3); }} className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842]">Next: Rooms →</button>
+            <button onClick={() => setStep(1)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
+            <button onClick={() => { setError(""); setStep(3); }} className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold">Next: Rooms →</button>
           </div>
         </div>
       )}
 
       {step === 3 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Room Types & Photos</h2>
+          <h2 className="text-sm font-black text-brand-forest">Room Types & Photos</h2>
           {rooms.map((r, i) => (
-            <div key={i} className="bg-[#f5f0e8] rounded-xl p-3 space-y-2">
+            <div key={i} className="bg-brand-cream rounded-xl p-3 space-y-2">
               <div className="flex justify-between">
-                <p className="text-xs font-bold text-[#1C3A2A]">Room Type {i + 1}</p>
+                <p className="text-xs font-bold text-brand-forest">Room Type {i + 1}</p>
                 {rooms.length > 1 && <button onClick={() => setRooms(rooms.filter((_, idx) => idx !== i))} className="text-xs text-red-500">Remove</button>}
               </div>
               <input className={fieldClass} value={r.name} onChange={e => setRooms(rooms.map((x, idx) => idx === i ? { ...x, name: e.target.value } : x))} placeholder="Room name (e.g. Standard Room, Family Cabin)" />
@@ -215,7 +215,7 @@ export default function TravelRegisterForm() {
             </div>
           ))}
           <button onClick={() => setRooms([...rooms, { name: "", capacity: "2", price_per_night: "" }])}
-            className="w-full rounded-xl border-2 border-dashed border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">
+            className="w-full rounded-xl border-2 border-dashed border-brand-forest py-3 text-sm font-bold text-brand-forest">
             + Add room type
           </button>
           <div>
@@ -230,19 +230,19 @@ export default function TravelRegisterForm() {
                 {photoUrls.length > 1 && <button onClick={() => setPhotoUrls(photoUrls.filter((_, idx) => idx !== i))} className="text-xs text-red-500 px-2">✕</button>}
               </div>
             ))}
-            {photoUrls.length < 10 && <button onClick={() => setPhotoUrls([...photoUrls, ""])} className="text-xs font-bold text-[#1C3A2A] underline">+ Add photo</button>}
+            {photoUrls.length < 10 && <button onClick={() => setPhotoUrls([...photoUrls, ""])} className="text-xs font-bold text-brand-forest underline">+ Add photo</button>}
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setStep(2)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
+            <button onClick={() => setStep(2)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
             <button onClick={() => { const e = validateStep3(); if (e) { setError(e); return; } setError(""); setStep(4); }}
-              className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842]">Next: Review →</button>
+              className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold">Next: Review →</button>
           </div>
         </div>
       )}
 
       {step === 4 && (
         <div className="space-y-4">
-          <h2 className="text-sm font-black text-[#1C3A2A]">Review & Submit</h2>
+          <h2 className="text-sm font-black text-brand-forest">Review & Submit</h2>
           <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2 text-sm">
             <p><span className="font-bold">Name:</span> {name}</p>
             <p><span className="font-bold">Type:</span> {STAY_TYPE_LABELS[type]}</p>
@@ -255,8 +255,8 @@ export default function TravelRegisterForm() {
             <p><span className="font-bold">Photos:</span> {photoUrls.filter(u => u.trim()).length} added</p>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setStep(3)} className="flex-1 rounded-xl border-2 border-[#1C3A2A] py-3 text-sm font-bold text-[#1C3A2A]">← Back</button>
-            <button onClick={handleSubmit} disabled={submitting} className="flex-1 rounded-xl bg-[#1C3A2A] py-3 text-sm font-black text-[#F5C842] disabled:opacity-50">
+            <button onClick={() => setStep(3)} className="flex-1 rounded-xl border-2 border-brand-forest py-3 text-sm font-bold text-brand-forest">← Back</button>
+            <button onClick={handleSubmit} disabled={submitting} className="flex-1 rounded-xl bg-brand-forest py-3 text-sm font-black text-brand-gold disabled:opacity-50">
               {submitting ? "Submitting..." : "Submit for Review →"}
             </button>
           </div>

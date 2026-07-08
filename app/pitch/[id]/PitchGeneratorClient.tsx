@@ -6,6 +6,9 @@ import type { Gatekeeper } from '@/app/data/gatekeepers';
 import { GATEKEEPER_TYPE_LABELS } from '@/app/data/gatekeepers';
 
 const FREE_LIMIT = 3;
+const inputClass =
+  'mt-1 w-full rounded-xl border border-brand-beige bg-brand-surface px-4 py-3 text-sm text-brand-forest outline-none placeholder:text-brand-green/45 focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10 disabled:opacity-60';
+const labelClass = 'block text-[13px] font-bold text-brand-forest';
 
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return '';
@@ -104,49 +107,47 @@ export default function PitchGeneratorClient({ gatekeeper }: { gatekeeper: Gatek
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const inputStyle = {
-    width: '100%', padding: '10px 14px', borderRadius: 8,
-    border: '1px solid #333', background: '#111', color: '#fff',
-    fontSize: 14, boxSizing: 'border-box' as const, marginTop: 4,
-  };
-
   const remainingPitches = Math.max(0, FREE_LIMIT - usage.count);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0f', color: '#fff', fontFamily: 'sans-serif' }}>
-      <div style={{ background: '#1a1a2e', padding: '24px', borderBottom: '1px solid #222' }}>
-        <div style={{ maxWidth: 700, margin: '0 auto' }}>
-          <Link href="/pitch" style={{ color: '#aaa', fontSize: 14, textDecoration: 'none' }}>← Back to Directory</Link>
-          <h1 style={{ fontSize: 22, fontWeight: 800, margin: '12px 0 4px', color: '#e94560' }}>
+    <div className="min-h-screen bg-brand-cream text-brand-forest">
+      <header className="border-b border-brand-forest/10 bg-brand-forest px-6 py-7 text-brand-cream">
+        <div className="mx-auto max-w-3xl">
+          <Link href="/pitch" className="text-sm font-semibold text-brand-cream/70 hover:text-brand-cream">
+            ← Back to Directory
+          </Link>
+          <h1 className="mt-3 text-2xl font-black tracking-tight text-brand-cream">
             Pitch to: {gatekeeper.name}
           </h1>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ background: '#0f3460', color: '#7eb8f7', fontSize: 11, padding: '2px 8px', borderRadius: 10 }}>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-brand-gold px-2.5 py-1 text-[11px] font-black text-brand-forest">
               {GATEKEEPER_TYPE_LABELS[gatekeeper.type]}
             </span>
-            <span style={{ color: '#666', fontSize: 13 }}>{gatekeeper.location}</span>
-            <span style={{ color: '#555', fontSize: 13 }}>· {gatekeeper.genres.join(', ')}</span>
+            <span className="text-[13px] text-brand-cream/70">{gatekeeper.location}</span>
+            <span className="text-[13px] text-brand-cream/60">· {gatekeeper.genres.join(', ')}</span>
           </div>
-          <p style={{ color: '#888', fontSize: 13, marginTop: 8 }}>{gatekeeper.description}</p>
+          <p className="mt-3 max-w-2xl text-[13px] leading-relaxed text-brand-cream/75">{gatekeeper.description}</p>
         </div>
-      </div>
+      </header>
 
-      <div style={{ maxWidth: 700, margin: '0 auto', padding: '24px' }}>
+      <main className="mx-auto max-w-3xl px-6 py-6">
         {usage.loaded && (
-          <div style={{
-            background: usage.isPro ? '#0f3460' : '#1a1a2e',
-            border: `1px solid ${usage.canGenerate ? '#333' : '#e94560'}`,
-            borderRadius: 8, padding: '10px 16px', marginBottom: 20, fontSize: 13,
-          }}>
+          <div
+            className={`mb-5 rounded-2xl border px-4 py-3 text-[13px] font-semibold ${
+              usage.canGenerate
+                ? 'border-brand-beige bg-brand-surface text-brand-green'
+                : 'border-red-200 bg-red-50 text-red-700'
+            }`}
+          >
             {usage.isPro
               ? '⭐ Pro Plan — Unlimited pitch letters'
               : usage.canGenerate
-              ? `🎁 Free plan: ${remainingPitches} of ${FREE_LIMIT} pitches remaining this month`
-              : '🔒 You\'ve used all 3 free pitches this month. Upgrade to Pro for UGX 30,000/mo for unlimited pitches.'}
+                ? `🎁 Free plan: ${remainingPitches} of ${FREE_LIMIT} pitches remaining this month`
+                : '🔒 You\'ve used all 3 free pitches this month. Upgrade to Pro for UGX 30,000/mo for unlimited pitches.'}
           </div>
         )}
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className="flex flex-col gap-4">
           {[
             { label: 'Song Title *', value: songTitle, onChange: setSongTitle, placeholder: 'e.g. Mukama Ayinza' },
             { label: 'Your Artist Name *', value: artistName, onChange: setArtistName, placeholder: 'e.g. Isaac Ssemwanga' },
@@ -154,98 +155,78 @@ export default function PitchGeneratorClient({ gatekeeper }: { gatekeeper: Gatek
             { label: 'Music Link (YouTube, Spotify, SoundCloud) *', value: musicLink, onChange: setMusicLink, placeholder: 'https://...' },
           ].map(({ label, value, onChange, placeholder }) => (
             <div key={label}>
-              <label style={{ fontSize: 13, color: '#aaa', display: 'block' }}>{label}</label>
+              <label className={labelClass}>{label}</label>
               <input
                 type="text"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                style={inputStyle}
+                className={inputClass}
                 disabled={!usage.canGenerate}
               />
             </div>
           ))}
 
           <div>
-            <label style={{ fontSize: 13, color: '#aaa', display: 'block' }}>
-              What is the song about? (2–3 sentences) *
-            </label>
+            <label className={labelClass}>What is the song about? (2–3 sentences) *</label>
             <textarea
               value={songDescription}
               onChange={(e) => setSongDescription(e.target.value)}
               placeholder="e.g. This is a Gospel song about trusting God during hard times. It was inspired by my personal journey through loss. The production blends Luganda lyrics with contemporary Afrobeats rhythms."
               rows={4}
-              style={{ ...inputStyle, resize: 'vertical' }}
+              className={`${inputClass} resize-y`}
               disabled={!usage.canGenerate}
             />
           </div>
 
-          {error && <p style={{ color: '#e94560', fontSize: 13, margin: 0 }}>{error}</p>}
+          {error && <p className="rounded-xl bg-red-50 px-4 py-3 text-[13px] font-semibold text-red-700">{error}</p>}
 
           <button
             onClick={handleGenerate}
             disabled={loading || !usage.canGenerate}
-            style={{
-              background: usage.canGenerate ? '#e94560' : '#333',
-              color: usage.canGenerate ? '#fff' : '#666',
-              border: 'none', borderRadius: 8, padding: '12px 24px',
-              fontSize: 15, fontWeight: 700, cursor: usage.canGenerate ? 'pointer' : 'not-allowed',
-              width: '100%',
-            }}
+            className="w-full rounded-xl bg-brand-gold px-6 py-3 text-[15px] font-black text-brand-forest transition hover:brightness-95 disabled:bg-brand-beige disabled:text-brand-green/60"
           >
             {loading ? '✨ Generating your pitch...' : '✨ Generate Pitch Letter'}
           </button>
         </div>
 
         {pitch && (
-          <div style={{ marginTop: 32 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <h2 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>Your Pitch — Ready to Send!</h2>
-              <div style={{ display: 'flex', gap: 8 }}>
+          <section className="mt-8">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-base font-black text-brand-forest">Your Pitch — Ready to Send!</h2>
+              <div className="flex gap-2">
                 <button
                   onClick={handleCopy}
-                  style={{
-                    background: copied ? '#22c55e' : '#e94560', color: '#fff',
-                    border: 'none', borderRadius: 6, padding: '6px 14px',
-                    fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                  }}
+                  className={`rounded-lg px-4 py-2 text-[13px] font-bold ${
+                    copied ? 'bg-brand-forest text-white' : 'bg-brand-gold text-brand-forest'
+                  }`}
                 >
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
                 <button
                   onClick={handleGenerate}
                   disabled={loading || !usage.canGenerate}
-                  style={{
-                    background: '#222', color: '#aaa',
-                    border: '1px solid #333', borderRadius: 6, padding: '6px 14px',
-                    fontSize: 13, cursor: 'pointer',
-                  }}
+                  className="rounded-lg border border-brand-beige bg-brand-surface px-4 py-2 text-[13px] font-bold text-brand-green disabled:opacity-50"
                 >
                   Regenerate
                 </button>
               </div>
             </div>
 
-            <div style={{
-              background: '#1a1a2e', border: '1px solid #333', borderRadius: 10,
-              padding: '20px', fontSize: 14, lineHeight: 1.7, color: '#ddd',
-              whiteSpace: 'pre-wrap',
-            }}>
+            <div className="whitespace-pre-wrap rounded-2xl border border-brand-beige bg-brand-surface p-5 text-sm leading-7 text-brand-forest shadow-sm">
               {pitch}
             </div>
 
-            <div style={{ marginTop: 16, padding: '12px 16px', background: '#111', borderRadius: 8, border: '1px solid #222' }}>
-              <p style={{ color: '#888', fontSize: 12, margin: '0 0 4px' }}>
-                <strong style={{ color: '#aaa' }}>How to send this:</strong>
-              </p>
-              <p style={{ color: '#666', fontSize: 12, margin: 0 }}>
+            <div className="mt-4 rounded-2xl border border-brand-beige bg-brand-surface p-4">
+              <p className="mb-1 text-xs font-black text-brand-forest">How to send this:</p>
+              <p className="text-xs leading-relaxed text-brand-green">
                 Copy the pitch above → Open your email or WhatsApp → Paste and send to {gatekeeper.name}.{' '}
-                <span style={{ color: '#888' }}>{gatekeeper.contactHint}</span>
+                <span>{gatekeeper.contactHint}</span>
               </p>
             </div>
-          </div>
+          </section>
         )}
-      </div>
+      </main>
     </div>
   );
 }

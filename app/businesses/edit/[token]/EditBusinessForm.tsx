@@ -23,7 +23,7 @@ export default function EditBusinessForm({
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
   const fieldClass =
-    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#1C3A2A]";
+    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest";
   const labelClass = "mb-1 block text-xs font-bold text-gray-600";
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -168,7 +168,7 @@ export default function EditBusinessForm({
       <button
         type="submit"
         disabled={saving}
-        className="w-full rounded-xl bg-[#1C3A2A] py-3.5 text-sm font-black text-[#F5C842] disabled:opacity-60"
+        className="w-full rounded-xl bg-brand-forest py-3.5 text-sm font-black text-brand-gold disabled:opacity-60"
       >
         {saving ? "Saving..." : "Save changes"}
       </button>
