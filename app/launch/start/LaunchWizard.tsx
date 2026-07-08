@@ -49,7 +49,7 @@ const INITIAL_FORM: WizardForm = {
 };
 
 const inputClass =
-  "w-full rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-[15px] text-brand-forest outline-none transition focus:border-brand-gold";
+  "w-full rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-[15px] text-brand-forest outline-none transition duration-200 ease-[var(--ease-out-strong)] focus:border-brand-gold focus:shadow-sm";
 const labelClass = "mb-1.5 block text-[13px] font-bold text-brand-forest";
 
 export default function LaunchWizard() {
@@ -162,15 +162,15 @@ export default function LaunchWizard() {
             key={index}
             className={
               index < step
-                ? "h-1.5 flex-1 rounded-full bg-brand-gold"
-                : "h-1.5 flex-1 rounded-full bg-brand-forest/10"
+                ? "h-1.5 flex-1 rounded-full bg-brand-gold transition-all duration-200 ease-[var(--ease-out-strong)]"
+                : "h-1.5 flex-1 rounded-full bg-brand-forest/10 transition-all duration-200 ease-[var(--ease-out-strong)]"
             }
           />
         ))}
       </div>
 
       {step === 1 && (
-        <div className="space-y-5">
+        <div className="motion-step space-y-5">
           <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             First, who are you?
           </h2>
@@ -198,7 +198,7 @@ export default function LaunchWizard() {
       )}
 
       {step === 2 && (
-        <div className="space-y-5">
+        <div className="motion-step space-y-5">
           <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             What are you building?
           </h2>
@@ -227,7 +227,7 @@ export default function LaunchWizard() {
       )}
 
       {step === 3 && (
-        <div className="space-y-5">
+        <div className="motion-step space-y-5">
           <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Who is it for, and where are you now?
           </h2>
@@ -251,8 +251,8 @@ export default function LaunchWizard() {
                   onClick={() => updateField("stage", stage.value)}
                   className={
                     form.stage === stage.value
-                      ? "rounded-xl border-2 border-brand-gold bg-white px-4 py-3 text-left text-[15px] font-bold text-brand-forest"
-                      : "rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-left text-[15px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
+                      ? "motion-press rounded-xl border-2 border-brand-gold bg-white px-4 py-3 text-left text-[15px] font-bold text-brand-forest"
+                      : "motion-press rounded-xl border border-brand-forest/20 bg-white px-4 py-3 text-left text-[15px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
                   }
                 >
                   {stage.label}
@@ -264,7 +264,7 @@ export default function LaunchWizard() {
       )}
 
       {step === 4 && (
-        <div className="space-y-5">
+        <div className="motion-step space-y-5">
           <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Budget, goals, and where you want help
           </h2>
@@ -299,8 +299,8 @@ export default function LaunchWizard() {
                   onClick={() => toggleHelp(option)}
                   className={
                     form.helpNeeded.includes(option)
-                      ? "rounded-full border-2 border-brand-gold bg-brand-gold/20 px-4 py-2 text-[13px] font-bold text-brand-forest"
-                      : "rounded-full border border-brand-forest/20 bg-white px-4 py-2 text-[13px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
+                      ? "motion-press rounded-full border-2 border-brand-gold bg-brand-gold/20 px-4 py-2 text-[13px] font-bold text-brand-forest"
+                      : "motion-press rounded-full border border-brand-forest/20 bg-white px-4 py-2 text-[13px] font-medium text-brand-forest/80 hover:border-brand-forest/40"
                   }
                 >
                   {HELP_LABELS[option]}
@@ -312,7 +312,7 @@ export default function LaunchWizard() {
       )}
 
       {step === 5 && (
-        <div className="space-y-5">
+        <div className="motion-step space-y-5">
           <h2 className="text-2xl font-black tracking-tight text-brand-forest">
             Last step — secure your plan
           </h2>
@@ -355,7 +355,7 @@ export default function LaunchWizard() {
           <button
             type="button"
             onClick={() => setStep(step - 1)}
-            className="text-[13px] font-bold text-brand-forest/60 hover:text-brand-forest"
+            className="motion-press text-[13px] font-bold text-brand-forest/60 hover:text-brand-forest"
           >
             ← Back
           </button>
@@ -366,7 +366,7 @@ export default function LaunchWizard() {
           type="button"
           onClick={handleNext}
           disabled={saving}
-          className="rounded-xl bg-brand-forest px-7 py-3 text-[15px] font-black text-brand-gold shadow-md transition hover:opacity-90 disabled:opacity-50"
+          className="motion-press rounded-xl bg-brand-forest px-7 py-3 text-[15px] font-black text-brand-gold shadow-md transition hover:opacity-90 disabled:opacity-50"
         >
           {saving ? "Saving…" : step === TOTAL_STEPS ? "Get my launch plan →" : "Continue →"}
         </button>

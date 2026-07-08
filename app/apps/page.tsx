@@ -71,7 +71,7 @@ export default async function AppsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-brand-cream text-brand-forest">
+    <main className="motion-page min-h-screen bg-brand-cream text-brand-forest">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
         <div className="mb-8 max-w-2xl">
           <div className="mb-4 inline-flex rounded-full bg-brand-gold px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-brand-forest">
@@ -86,7 +86,7 @@ export default async function AppsPage() {
           </p>
         </div>
 
-        <section className="mb-5 rounded-[2rem] border border-land-secondary/30 bg-land-cream p-5 shadow-sm shadow-land-forest/5 sm:p-6">
+        <section className="motion-card mb-5 rounded-[2rem] border border-land-secondary/30 bg-land-cream p-5 shadow-sm shadow-land-forest/5 sm:p-6">
           <div className="mb-4 flex items-start gap-3">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-land-primary text-2xl text-white">🏞</span>
             <div>
@@ -105,7 +105,7 @@ export default async function AppsPage() {
             />
             <button
               type="submit"
-              className="min-h-11 rounded-xl bg-land-primary px-5 py-2 text-sm font-black text-white transition-colors hover:bg-land-forest"
+              className="motion-press min-h-11 rounded-xl bg-land-primary px-5 py-2 text-sm font-black text-white transition-colors hover:bg-land-forest"
             >
               Search
             </button>
@@ -125,7 +125,7 @@ export default async function AppsPage() {
             <Link
               key={app.href}
               href={app.href}
-              className="group flex items-start gap-4 rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 transition-all hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10"
+              className="motion-card group flex items-start gap-4 rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 transition-all hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10"
             >
               <div
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${app.iconClass}`}

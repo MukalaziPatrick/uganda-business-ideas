@@ -108,7 +108,7 @@ export default function HomeClient({
     <div className="flex min-h-screen flex-col bg-brand-cream font-sans text-brand-forest">
 
       {/* ── Hero ── */}
-      <header className="relative overflow-hidden bg-brand-forest px-4 pb-16 pt-14 text-center">
+      <header className="motion-page relative overflow-hidden bg-brand-forest px-4 pb-16 pt-14 text-center">
         <div aria-hidden className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-brand-gold/15 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-brand-green/60 blur-3xl" />
         <div className="relative mx-auto max-w-2xl">
@@ -125,19 +125,19 @@ export default function HomeClient({
           <div className="mb-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/start"
-              className="w-full rounded-xl bg-brand-gold px-6 py-3.5 text-sm font-black text-brand-forest transition-colors hover:bg-brand-gold/90 sm:w-auto"
+              className="motion-press w-full rounded-xl bg-brand-gold px-6 py-3.5 text-sm font-black text-brand-forest transition-colors hover:bg-brand-gold/90 sm:w-auto"
             >
               Start a business
             </Link>
             <a
               href="#grow"
-              className="w-full rounded-xl border-2 border-brand-gold/60 px-6 py-3.5 text-sm font-bold text-brand-gold transition-colors hover:bg-brand-green sm:w-auto"
+              className="motion-press w-full rounded-xl border-2 border-brand-gold/60 px-6 py-3.5 text-sm font-bold text-brand-gold transition-colors hover:bg-brand-green sm:w-auto"
             >
               Grow my business
             </a>
             <Link
               href="/jobs"
-              className="w-full rounded-xl border-2 border-brand-green px-6 py-3.5 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-green sm:w-auto"
+              className="motion-press w-full rounded-xl border-2 border-brand-green px-6 py-3.5 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-green sm:w-auto"
             >
               Find work
             </Link>
@@ -149,7 +149,7 @@ export default function HomeClient({
       </header>
 
       {/* ── Service grid: every vertical, one screen ── */}
-      <section className="mx-auto w-full max-w-2xl px-4 py-10">
+      <section className="motion-page-delay mx-auto w-full max-w-2xl px-4 py-10">
         <h2 className="mb-1 text-xl font-black tracking-tight">Everything on Business Yoo</h2>
         <p className="mb-5 text-xs text-brand-green">Tap a service — it&apos;s all in one place.</p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -157,7 +157,7 @@ export default function HomeClient({
             <Link
               key={s.href}
               href={s.href}
-              className="group rounded-2xl border border-brand-beige bg-brand-surface p-4 transition-all hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-md"
+              className="motion-card group rounded-2xl border border-brand-beige bg-brand-surface p-4 shadow-sm transition-all hover:border-brand-gold hover:shadow-md"
             >
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-cream text-xl transition-colors group-hover:bg-brand-gold/25">
                 {s.emoji}
@@ -180,7 +180,7 @@ export default function HomeClient({
           />
           <button
             type="submit"
-            className="rounded-xl bg-brand-forest px-5 py-2.5 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-green"
+            className="motion-press rounded-xl bg-brand-forest px-5 py-2.5 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-green"
           >
             Search
           </button>
@@ -218,7 +218,7 @@ export default function HomeClient({
           <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <Link
               href="/contact"
-              className="rounded-2xl border border-brand-green bg-brand-green/40 p-5 transition-colors hover:border-brand-gold"
+              className="motion-card rounded-2xl border border-brand-green bg-brand-green/40 p-5 transition-colors hover:border-brand-gold"
             >
               <div className="mb-2 text-2xl">📍</div>
               <p className="mb-1 text-sm font-black text-brand-cream">Get found</p>
@@ -238,7 +238,7 @@ export default function HomeClient({
 
             <Link
               href="/advertise"
-              className="rounded-2xl border border-brand-green bg-brand-green/40 p-5 transition-colors hover:border-brand-gold"
+              className="motion-card rounded-2xl border border-brand-green bg-brand-green/40 p-5 transition-colors hover:border-brand-gold"
             >
               <div className="mb-2 text-2xl">📣</div>
               <p className="mb-1 text-sm font-black text-brand-cream">Advertise</p>
@@ -297,7 +297,7 @@ export default function HomeClient({
         {featuredIdeas[0] && (
           <Link
             href={`/ideas/${featuredIdeas[0].slug}`}
-            className="mb-4 block rounded-2xl bg-brand-forest p-6 shadow-lg transition-colors hover:bg-brand-green"
+            className="motion-card mb-4 block rounded-2xl bg-brand-forest p-6 shadow-lg transition-colors hover:bg-brand-green"
           >
             <span className="mb-3 inline-block rounded-full bg-brand-gold px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-brand-forest">
               ⭐ Editor&apos;s Pick
@@ -322,7 +322,7 @@ export default function HomeClient({
             <Link
               key={idea.slug}
               href={`/ideas/${idea.slug}`}
-              className="flex flex-col justify-between rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm transition-colors hover:border-brand-gold"
+              className="motion-card flex flex-col justify-between rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm transition-colors hover:border-brand-gold"
             >
               <div>
                 <div className="mb-3 text-xl">{categoryEmoji(idea.category)}</div>

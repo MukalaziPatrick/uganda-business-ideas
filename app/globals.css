@@ -54,3 +54,89 @@ p,
 li {
   text-wrap: pretty;
 }
+
+
+:root {
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@keyframes by-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes by-scale-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.motion-page {
+  animation: by-fade-up 280ms var(--ease-out-strong) both;
+}
+
+.motion-page-delay {
+  animation: by-fade-up 340ms var(--ease-out-strong) 80ms both;
+}
+
+.motion-step {
+  animation: by-scale-fade 220ms var(--ease-out-strong) both;
+}
+
+.motion-card {
+  transition-property: transform, box-shadow, border-color, background-color, color, opacity;
+  transition-duration: 220ms;
+  transition-timing-function: var(--ease-out-strong);
+  will-change: transform;
+}
+
+.motion-card:hover {
+  transform: translateY(-3px);
+}
+
+.motion-card:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: 120ms;
+}
+
+.motion-press {
+  transition-property: transform, background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out-strong);
+}
+
+.motion-press:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-page,
+  .motion-page-delay,
+  .motion-step {
+    animation: none;
+  }
+
+  .motion-card,
+  .motion-press {
+    transition-duration: 1ms;
+    will-change: auto;
+  }
+
+  .motion-card:hover,
+  .motion-card:active,
+  .motion-press:active {
+    transform: none;
+  }
+}

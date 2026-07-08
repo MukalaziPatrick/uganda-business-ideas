@@ -68,10 +68,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${businessSans.variable} ${businessSerif.variable}`}>
-        <nav className="bg-[#1C3A2A] px-4 py-3 sticky top-0 z-50 border-b border-[#F5C842]/20">
+        <nav className="sticky top-0 z-50 border-b border-brand-gold/20 bg-brand-forest px-4 py-3 shadow-sm shadow-brand-forest/10">
           <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link href="/" className="font-black text-[#f5f0e8] text-sm shrink-0 mr-3 whitespace-nowrap">
-              🇺🇬 Business <span className="text-[#F5C842]">Yoo</span>
+            <Link href="/" className="motion-press mr-3 shrink-0 whitespace-nowrap text-sm font-black text-brand-cream">
+              🇺🇬 Business <span className="text-brand-gold">Yoo</span>
             </Link>
             {[
               { href: '/ideas', label: 'Ideas' },
@@ -86,10 +86,10 @@ export default function RootLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`shrink-0 text-sm px-3 py-1.5 rounded-full transition-colors whitespace-nowrap ${
+                className={`motion-press shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
                   item.highlight
-                    ? 'bg-[#F5C842] text-[#1C3A2A] font-bold hover:bg-[#ffd95e]'
-                    : 'text-[#cfe0d5] hover:bg-[#2D5A40] hover:text-white'
+                    ? 'bg-brand-gold text-brand-forest font-bold hover:bg-brand-gold/90'
+                    : 'text-brand-cream/80 hover:bg-brand-green hover:text-white'
                 }`}
               >
                 {item.label}
