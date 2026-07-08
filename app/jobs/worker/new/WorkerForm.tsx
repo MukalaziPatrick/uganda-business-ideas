@@ -39,7 +39,6 @@ export default function WorkerForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [enabledOptionals, setEnabledOptionals] = useState<string[]>([]);
-  const [profileId, setProfileId] = useState("");
   const router = useRouter();
 
   const [form, setForm] = useState<{
@@ -113,8 +112,7 @@ export default function WorkerForm() {
       setError(data.error ?? "Something went wrong. Please try again.");
       return;
     }
-    const data = await res.json();
-    setProfileId(data.id);
+    await res.json();
     setStep("success");
   }
 

@@ -65,6 +65,7 @@ export default async function BusinessesPage({
 
   return (
     <BusinessesClient
+      key={`${region}:${category}`}
       initialBusinesses={businesses}
       initialQuery={params.q ?? ""}
       initialRegion={(region as Business["region"]) ?? ""}

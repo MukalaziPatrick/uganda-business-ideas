@@ -50,6 +50,10 @@ scraper/.env
 .claude/worktrees/
 # superpowers scratch/brainstorm temp
 .superpowers/
+
+# generated repo graph output
+graphify-out/
+
 # python bytecode
 __pycache__/
 *.pyc

@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import mapboxgl from 'mapbox-gl';
-// @ts-ignore
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
@@ -42,7 +41,6 @@ export function LandDrawSearch({ onClose }: { onClose: () => void }) {
     const data = draw.current?.getAll();
     if (!data?.features?.length) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const geom = data.features[0].geometry as unknown as { coordinates: [number, number][][] };
     const coords = geom.coordinates[0];
     const lngs = coords.map(c => c[0]);

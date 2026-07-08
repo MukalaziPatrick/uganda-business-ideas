@@ -35,7 +35,7 @@ export default function DashboardPage() {
           Good morning, {user.name}!
         </h1>
         <p className="mt-1 text-[15px] text-slate-600">
-          Let's build your <span className="font-semibold text-slate-800">{user.interest}</span> business.
+          Let&apos;s build your <span className="font-semibold text-slate-800">{user.interest}</span> business.
         </p>
       </section>
 
@@ -182,7 +182,7 @@ export default function DashboardPage() {
               2 Government Tenders matching {user.interest} in {user.location}.
             </p>
             <p className="text-[13px] text-indigo-700">
-              Soon, you'll be able to see real contracts and leads here.
+              Soon, you&apos;ll be able to see real contracts and leads here.
             </p>
           </div>
           <div className="absolute right-0 bottom-0 opacity-10">

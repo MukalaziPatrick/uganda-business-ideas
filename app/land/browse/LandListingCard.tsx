@@ -1,5 +1,6 @@
 // app/land/browse/LandListingCard.tsx
 import Link from 'next/link';
+import Image from 'next/image';
 import type { LandListing } from '@/lib/supabase/land-types';
 
 function formatPrice(ugx: number | null): string {
@@ -36,7 +37,7 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
       {/* Photo */}
       <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
         {photo ? (
-          <img src={photo} alt={listing.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Image src={photo} alt={listing.title} width={600} height={450} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-4xl bg-[#f0faf4]">🏞</div>
         )}

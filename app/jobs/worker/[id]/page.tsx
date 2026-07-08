@@ -21,6 +21,18 @@ type Worker = {
   available: boolean; created_at: string;
 };
 
+function Breadcrumb() {
+  return (
+    <nav className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold mb-6">
+      <Link href="/" className="hover:text-[#1C3A2A] transition-colors">Home</Link>
+      <span className="text-slate-300">›</span>
+      <Link href="/jobs" className="hover:text-[#1C3A2A] transition-colors">Jobs</Link>
+      <span className="text-slate-300">›</span>
+      <span className="text-[#1C3A2A]">Worker Profile</span>
+    </nav>
+  );
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const { data } = await getSupabase().from("worker_profiles").select("name,skill_primary,district").eq("id", id).single();
@@ -50,18 +62,6 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
     const clean = phone.replace(/\D/g, "");
     const num = clean.startsWith("0") ? "256" + clean.slice(1) : clean;
     return `https://wa.me/${num}?text=Hi%20${encodeURIComponent(worker?.name ?? '')}%2C%20I%20found%20your%20profile%20on%20Uganda%20Business%20Hub`;
-  }
-
-  function Breadcrumb() {
-    return (
-      <nav className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold mb-6">
-        <Link href="/" className="hover:text-[#1C3A2A] transition-colors">Home</Link>
-        <span className="text-slate-300">›</span>
-        <Link href="/jobs" className="hover:text-[#1C3A2A] transition-colors">Jobs</Link>
-        <span className="text-slate-300">›</span>
-        <span className="text-[#1C3A2A]">Worker Profile</span>
-      </nav>
-    );
   }
 
   return (
@@ -127,7 +127,7 @@ export default async function WorkerProfilePage({ params }: { params: Promise<{ 
           )}
 
           {worker.bio && (
-            <p className="text-sm text-slate-600 italic mb-6">"{worker.bio}"</p>
+            <p className="text-sm text-slate-600 italic mb-6">&ldquo;{worker.bio}&rdquo;</p>
           )}
 
           <div className="flex flex-col gap-3">

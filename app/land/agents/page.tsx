@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { getLandAgents } from '@/lib/land/queries';
-import Link from 'next/link';
 
 export const revalidate = 3600;
 
@@ -35,7 +35,7 @@ export default async function LandAgentsPage() {
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-[#f0faf4] flex items-center justify-center text-2xl flex-shrink-0">
                     {agent.photo ? (
-                      <img src={agent.photo} alt={agent.name} className="w-12 h-12 rounded-full object-cover" />
+                      <Image src={agent.photo} alt={agent.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
                     ) : '👤'}
                   </div>
                   <div>

@@ -5,6 +5,7 @@
 // without needing to add it to each page manually.
 
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import WhatsAppFloat from "../components/WhatsAppFloat";
@@ -56,9 +57,9 @@ export default function RootLayout({
       <body>
         <nav className="bg-[#1C3A2A] px-4 py-3 sticky top-0 z-50 border-b border-[#F5C842]/20">
           <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <a href="/" className="font-black text-[#f5f0e8] text-sm shrink-0 mr-3 whitespace-nowrap">
+            <Link href="/" className="font-black text-[#f5f0e8] text-sm shrink-0 mr-3 whitespace-nowrap">
               🇺🇬 Business <span className="text-[#F5C842]">Yoo</span>
-            </a>
+            </Link>
             {[
               { href: '/ideas', label: 'Ideas' },
               { href: '/businesses', label: 'Businesses' },
@@ -69,7 +70,7 @@ export default function RootLayout({
               { href: '/travel', label: 'Travel' },
               { href: '/apps', label: 'More' },
             ].map(item => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className={`shrink-0 text-sm px-3 py-1.5 rounded-full transition-colors whitespace-nowrap ${
@@ -79,7 +80,7 @@ export default function RootLayout({
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
         </nav>

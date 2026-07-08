@@ -1,11 +1,9 @@
 // app/api/whatsapp/_lib/state-machine.ts
 import type { Conversation, ConversationUpdate } from '@/lib/supabase/whatsapp';
 import {
-  greetingMessage,
   budgetMessage,
   locationMessage,
   challengeMessage,
-  pitchMessage,
   paymentMessage,
   generatingMessage,
 } from './messages';

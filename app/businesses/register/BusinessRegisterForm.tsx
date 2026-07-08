@@ -85,7 +85,7 @@ export default function BusinessRegisterForm() {
           Listing submitted!
         </h2>
         <p className="text-sm text-gray-600 leading-relaxed">
-          Thanks! We'll review and publish your listing within 24 hours.
+          Thanks! We&apos;ll review and publish your listing within 24 hours.
         </p>
       </div>
     );

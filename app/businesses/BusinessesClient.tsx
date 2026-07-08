@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
@@ -47,12 +47,6 @@ export default function BusinessesClient({
   const [offset, setOffset] = useState(PAGE_SIZE);
   const [hasMore, setHasMore] = useState(initialBusinesses.length === PAGE_SIZE);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setBusinesses(initialBusinesses);
-    setOffset(PAGE_SIZE);
-    setHasMore(initialBusinesses.length === PAGE_SIZE);
-  }, [initialBusinesses]);
 
   function navigate(newRegion: string, newCategory: string) {
     const params = new URLSearchParams(searchParams.toString());

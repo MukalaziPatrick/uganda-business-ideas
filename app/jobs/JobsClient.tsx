@@ -30,6 +30,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   const [tab, setTab] = useState<"jobs" | "workers">("jobs");
   const [district, setDistrict] = useState("");
   const [skill, setSkill] = useState("");
+  const [now] = useState(() => Date.now());
 
   const filteredJobs = jobs.filter(j =>
     (!district || j.district === district) &&
@@ -48,7 +49,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   }
 
   function timeAgo(dateStr: string): string {
-    const diff = Date.now() - new Date(dateStr).getTime();
+    const diff = now - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 60) return mins <= 1 ? "Just now" : `${mins}m ago`;
     const hours = Math.floor(mins / 60);
@@ -61,7 +62,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
 
   function expiryLabel(expiresAt: string | null): string | null {
     if (!expiresAt) return null;
-    const diff = new Date(expiresAt).getTime() - Date.now();
+    const diff = new Date(expiresAt).getTime() - now;
     const days = Math.ceil(diff / 86400000);
     if (days <= 0) return "Closes today";
     if (days <= 5) return `Closes in ${days}d`;
@@ -261,7 +262,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     )}
                   </div>
                 </div>
-                {w.bio && <p className="text-xs text-slate-500 italic mt-2 line-clamp-1">"{w.bio}"</p>}
+                {w.bio && <p className="text-xs text-slate-500 italic mt-2 line-clamp-1">&ldquo;{w.bio}&rdquo;</p>}
               </Link>
             ))}
           </div>

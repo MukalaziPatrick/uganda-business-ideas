@@ -5,6 +5,7 @@ import { LandTrustPanel } from './LandTrustPanel';
 import { LandDetailMap } from './LandDetailMap';
 import { LandChatBubble } from './LandChatBubble';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const revalidate = 60;
 
@@ -45,7 +46,7 @@ export default async function LandListingDetailPage({
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white rounded-2xl overflow-hidden border border-gray-200">
             {listing.photos?.[0] ? (
-              <img src={listing.photos[0]} alt={listing.title} className="w-full aspect-video object-cover" />
+              <Image src={listing.photos[0]} alt={listing.title} width={1200} height={675} className="w-full aspect-video object-cover" />
             ) : (
               <div className="w-full aspect-video bg-[#f0faf4] flex items-center justify-center text-6xl">🏞</div>
             )}

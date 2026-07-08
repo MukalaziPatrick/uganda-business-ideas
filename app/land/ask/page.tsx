@@ -42,7 +42,6 @@ export default function LandAskPage() {
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
-    let assistantContent = '';
     setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
 
     while (true) {
@@ -56,10 +55,12 @@ export default function LandAskPage() {
         try {
           const parsed = JSON.parse(json);
           const delta = parsed.choices?.[0]?.delta?.content ?? '';
-          assistantContent += delta;
           setMessages(prev => {
             const updated = [...prev];
-            updated[updated.length - 1] = { role: 'assistant', content: assistantContent };
+            const last = updated[updated.length - 1];
+            if (last?.role === 'assistant') {
+              updated[updated.length - 1] = { ...last, content: last.content + delta };
+            }
             return updated;
           });
         } catch {}
