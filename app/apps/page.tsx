@@ -60,6 +60,20 @@ const BASE_APPS = [
     tagline: "Licensed pharmacies near you",
     iconClass: "bg-brand-green text-brand-gold",
   },
+  {
+    href: "/pitch",
+    emoji: "🎵",
+    name: "Pitch Your Music",
+    tagline: "Get your music heard by radios & blogs",
+    iconClass: "bg-brand-gold text-brand-forest",
+  },
+  {
+    href: "/launch",
+    emoji: "🚀",
+    name: "Launch Your Business",
+    tagline: "Step-by-step plan to launch in 30 days",
+    iconClass: "bg-brand-forest text-brand-cream",
+  },
 ];
 
 export default async function AppsPage() {
