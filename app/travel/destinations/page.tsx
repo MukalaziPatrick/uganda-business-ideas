@@ -28,10 +28,10 @@ export default async function DestinationsPage() {
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 py-6 text-center text-white">
+      <div className="motion-page relative overflow-hidden bg-gradient-to-br from-brand-forest to-brand-green px-4 py-8 text-center text-white">
         <Link href="/travel" className="text-xs text-brand-cream/85 mb-2 block">← ZuulaUganda</Link>
-        <h1 className="text-2xl font-black text-brand-gold" style={{ fontFamily: "Georgia, serif" }}>All Destinations</h1>
-        <p className="text-sm text-white/70 mt-1">{destinations.length} destinations across Uganda</p>
+        <h1 className="text-2xl font-black text-brand-gold" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>All Destinations</h1>
+        <p className="text-sm text-brand-cream/80 mt-1">{destinations.length} destinations across Uganda</p>
       </div>
       <div className="px-4 py-5 max-w-2xl mx-auto grid grid-cols-2 gap-3">
         {destinations.map((d, i) => (

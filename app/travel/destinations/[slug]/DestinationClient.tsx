@@ -61,7 +61,7 @@ export default function DestinationClient({
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-brand-green flex gap-1">
+      <div className="bg-white border-b border-brand-beige px-4 py-2 text-xs text-brand-green flex gap-1">
         <Link href="/travel" className="hover:text-brand-forest">ZuulaUganda</Link>
         <span>›</span>
         <Link href="/travel/destinations" className="hover:text-brand-forest">Destinations</Link>
@@ -72,7 +72,7 @@ export default function DestinationClient({
       {/* Hero */}
       <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 py-6 text-white">
         <p className="text-xs text-brand-cream/85 mb-1">🇺🇬 {destination.region}</p>
-        <h1 className="text-2xl font-black text-brand-gold mb-2" style={{ fontFamily: "Georgia, serif" }}>{destination.name}</h1>
+        <h1 className="text-2xl font-black text-brand-gold mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>{destination.name}</h1>
         <p className="text-sm text-white/80 leading-relaxed mb-3">{destination.description}</p>
         <div className="flex gap-2 flex-wrap">
           {destination.activities.map((a) => (
@@ -82,14 +82,14 @@ export default function DestinationClient({
       </div>
 
       {/* Filters */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap">
+      <div className="bg-white border-b border-brand-beige px-4 py-3 flex gap-2 flex-wrap">
         <select aria-label="Filter stays by type" value={type} onChange={(e) => setType(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
+          className="border border-brand-beige rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
           <option value="">All types</option>
           {Object.entries(STAY_TYPE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
         <select aria-label="Filter stays by budget" value={budgetIdx.toString()} onChange={(e) => setBudgetIdx(parseInt(e.target.value))}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
+          className="border border-brand-beige rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest">
           {BUDGET_RANGES.map((b, i) => <option key={i} value={i}>{b.label}</option>)}
         </select>
       </div>
@@ -110,7 +110,7 @@ export default function DestinationClient({
           <div className="space-y-3">
             {filtered.map((stay) => (
               <Link key={stay.id} href={`/travel/stays/${stay.id}`}
-                className={`block bg-white rounded-xl border overflow-hidden transition-colors ${stay.status === "featured" ? "border-brand-gold border-2" : "border-gray-200 hover:border-brand-forest"}`}>
+                className={`block bg-white rounded-xl border overflow-hidden transition-colors ${stay.status === "featured" ? "border-brand-gold border-2" : "border-brand-beige hover:border-brand-forest"}`}>
                 {stay.cover_photo_url ? (
                   <div className="relative h-36 w-full">
                     <Image src={stay.cover_photo_url} alt={stay.name} fill className="object-cover" />
