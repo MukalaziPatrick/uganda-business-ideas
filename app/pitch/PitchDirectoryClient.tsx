@@ -24,8 +24,9 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
 
   return (
     <div className="min-h-screen bg-brand-cream text-brand-forest">
-      <header className="border-b border-brand-forest/10 bg-brand-forest px-6 py-8 text-brand-cream">
-        <div className="mx-auto max-w-3xl">
+      <header className="motion-page relative overflow-hidden border-b border-brand-forest/10 bg-brand-forest px-6 py-8 text-brand-cream">
+        <div aria-hidden className="pointer-events-none absolute -right-14 -top-20 h-56 w-56 rounded-full bg-brand-gold/15 blur-3xl" />
+        <div className="relative mx-auto max-w-3xl">
           <Link href="/" className="text-sm font-semibold text-brand-cream/70 hover:text-brand-cream">
             ← Business Yoo
           </Link>
@@ -48,9 +49,9 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
               <button
                 key={type}
                 onClick={() => setActiveFilter(type)}
-                className={`rounded-full px-4 py-2 text-[13px] font-bold transition ${
+                className={`motion-press rounded-full px-4 py-2 text-[13px] font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   activeFilter === type
-                    ? 'bg-brand-gold text-brand-forest'
+                    ? 'bg-brand-gold text-brand-forest shadow-sm'
                     : 'border border-brand-cream/20 bg-brand-cream/10 text-brand-cream hover:bg-brand-cream/15'
                 }`}
               >
@@ -70,7 +71,7 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
           {filtered.map((g) => (
             <div
               key={g.id}
-              className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm"
+              className="motion-card flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-brand-beige bg-brand-surface p-5 shadow-sm hover:border-brand-gold"
             >
               <div className="min-w-0 flex-1">
                 <div className="mb-1 flex flex-wrap items-center gap-2">
@@ -84,7 +85,7 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
               </div>
               <Link
                 href={`/pitch/${g.id}`}
-                className="whitespace-nowrap rounded-xl bg-brand-gold px-5 py-2.5 text-sm font-black text-brand-forest transition hover:brightness-95"
+                className="motion-press whitespace-nowrap rounded-xl bg-brand-gold px-5 py-2.5 text-sm font-black text-brand-forest transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-forest"
               >
                 Pitch Now →
               </Link>
@@ -93,8 +94,10 @@ export default function PitchDirectoryClient({ gatekeepers }: { gatekeepers: Gat
         </div>
 
         {filtered.length === 0 && (
-          <div className="py-16 text-center text-sm font-medium text-brand-green/70">
-            No contacts match your search. Try a different filter.
+          <div className="rounded-2xl border border-dashed border-brand-beige bg-brand-surface px-4 py-14 text-center">
+            <p className="mb-3 text-3xl">🎵</p>
+            <p className="text-sm font-semibold text-brand-forest">No contacts match your search.</p>
+            <p className="mt-1 text-xs text-brand-green">Try a different name, genre, or filter.</p>
           </div>
         )}
 
