@@ -36,16 +36,16 @@ export default async function LandBrowsePage({
   });
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-land-cream/30">
       <LandBrowseHeader />
 
       {/* Results */}
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <p className="text-sm text-gray-500 mb-1">
+        <p className="text-sm text-land-forest/75 mb-1">
           {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
           {params.district ? ` in ${params.district}` : ' across Uganda'}
         </p>
-        <p className="text-xs text-gray-400 italic mb-4">
+        <p className="text-xs text-land-forest/60 italic mb-4">
           Self-listed plots have not been checked by SafeLands. Verify before paying.
         </p>
 
@@ -53,23 +53,23 @@ export default async function LandBrowsePage({
           <LandSaveSearch />
         </Suspense>
 
-        <details className="mb-4 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
-          <summary className="cursor-pointer font-medium text-gray-800 select-none">
+        <details className="mb-4 rounded-lg border border-land-mint/50 bg-land-cream/30 px-4 py-3 text-sm text-land-forest/85">
+          <summary className="cursor-pointer font-medium text-land-ink select-none">
             How trust works here
           </summary>
           <ul className="mt-3 space-y-2 list-none">
             <li><span className="font-medium text-land-primary">Verified</span> — SafeLands and a licensed agent reviewed the title and documents at the Ministry of Lands portal.</li>
             <li><span className="font-medium text-land-secondary">Partially checked</span> — Physically inspected by a licensed agent, but full document review pending.</li>
-            <li><span className="font-medium text-gray-500">Self-listed</span> — Submitted by the seller. Not yet checked by SafeLands.</li>
+            <li><span className="font-medium text-land-forest/75">Self-listed</span> — Submitted by the seller. Not yet checked by SafeLands.</li>
           </ul>
-          <p className="mt-3 italic text-xs text-gray-400">Always conduct your own search and a physical site visit before any payment.</p>
+          <p className="mt-3 italic text-xs text-land-forest/60">Always conduct your own search and a physical site visit before any payment.</p>
         </details>
 
         {listings.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-4xl mb-4">🔍</div>
-            <h3 className="font-semibold text-gray-900 mb-2">No listings found in this area yet.</h3>
-            <p className="text-gray-500 text-sm mb-6">Save your search and we&apos;ll WhatsApp you when something matches.</p>
+            <h3 className="font-semibold text-land-ink mb-2">No listings found in this area yet.</h3>
+            <p className="text-land-forest/75 text-sm mb-6">Save your search and we&apos;ll WhatsApp you when something matches.</p>
             <Link
               href="/land/browse"
               className="text-land-primary font-medium text-sm hover:underline"

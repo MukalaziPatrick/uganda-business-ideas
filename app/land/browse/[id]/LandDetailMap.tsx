@@ -77,7 +77,7 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
   }
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-gray-200" style={{ height: 360 }}>
+    <div className="relative rounded-2xl overflow-hidden border border-land-mint/50" style={{ height: 360 }}>
       <div ref={mapContainer} className="w-full h-full" />
 
       {/* Mode selector — top left */}
@@ -89,7 +89,7 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
             className={`px-3 py-1.5 rounded-full text-xs font-medium shadow transition-colors ${
               mode === m
                 ? 'bg-land-primary text-white'
-                : 'bg-white text-gray-700 hover:bg-gray-50'
+                : 'bg-white text-land-ink/85 hover:bg-land-cream/30'
             }`}
           >
             {m.charAt(0).toUpperCase() + m.slice(1)}
@@ -100,15 +100,15 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
       {/* Layer toggle button — bottom right */}
       <button
         onClick={() => setShowLayerPanel(!showLayerPanel)}
-        className="absolute bottom-3 right-3 z-10 bg-white shadow rounded-full px-3 py-2 text-xs font-medium text-gray-700 flex items-center gap-1 hover:bg-gray-50"
+        className="absolute bottom-3 right-3 z-10 bg-white shadow rounded-full px-3 py-2 text-xs font-medium text-land-ink/85 flex items-center gap-1 hover:bg-land-cream/30"
       >
         🗂 Layers {mode === 'custom' && `(${customLayers.size})`}
       </button>
 
       {/* Layer panel — bottom sheet style */}
       {showLayerPanel && (
-        <div className="absolute bottom-12 right-3 z-10 bg-white rounded-2xl shadow-lg border border-gray-200 p-3 min-w-[180px]">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Toggle layers</p>
+        <div className="absolute bottom-12 right-3 z-10 bg-white rounded-2xl shadow-lg border border-land-mint/50 p-3 min-w-[180px]">
+          <p className="text-xs font-semibold text-land-forest/75 uppercase tracking-wide mb-2">Toggle layers</p>
           {(Object.keys(LAYER_LABELS) as LayerKey[]).map((layer) => (
             <label key={layer} className="flex items-center gap-2 py-1 cursor-pointer">
               <input
@@ -117,7 +117,7 @@ export function LandDetailMap({ lat, lng, title }: { lat: number; lng: number; t
                 onChange={() => toggleCustomLayer(layer)}
                 className="accent-land-primary"
               />
-              <span className="text-sm text-gray-700">{LAYER_LABELS[layer]}</span>
+              <span className="text-sm text-land-ink/85">{LAYER_LABELS[layer]}</span>
             </label>
           ))}
         </div>

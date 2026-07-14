@@ -43,7 +43,7 @@ export function LandFilterChips() {
           className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
             activeVerified === 'verified'
               ? 'bg-land-primary text-white border-land-primary'
-              : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
+              : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
           }`}
         >
           ✅ Verified only
@@ -57,7 +57,7 @@ export function LandFilterChips() {
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeDistrict === d
                 ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
+                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
             }`}
           >
             {d}
@@ -72,7 +72,7 @@ export function LandFilterChips() {
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeType === t.value
                 ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
+                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
             }`}
           >
             {t.label}
@@ -87,7 +87,7 @@ export function LandFilterChips() {
             className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
               activeUse === u.value
                 ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-land-primary'
+                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
             }`}
           >
             {u.label}

@@ -38,16 +38,16 @@ function CheckForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Your mobile money number</label>
+        <label className="block text-sm font-medium text-land-ink/85 mb-1">Your mobile money number</label>
         <input
           type="tel"
           value={phone}
           onChange={e => setPhone(e.target.value)}
           placeholder="e.g. 0772000000"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-land-primary"
+          className="w-full border border-land-mint/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-land-primary"
           required
         />
-        <p className="text-xs text-gray-400 mt-1">MTN or Airtel — choose on the next screen</p>
+        <p className="text-xs text-land-forest/60 mt-1">MTN or Airtel — choose on the next screen</p>
       </div>
 
       {error && (
@@ -77,15 +77,15 @@ function CheckForm() {
 
 export default function LandCheckPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-land-cream/30">
       <div className="max-w-md mx-auto px-4 py-12">
         <Link href="/land" className="text-sm text-land-primary hover:underline">← Back to Land</Link>
 
-        <div className="bg-white rounded-3xl border border-gray-200 p-6 mt-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <div className="bg-white rounded-3xl border border-land-mint/50 p-6 mt-6">
+          <h1 className="text-2xl font-bold text-land-ink mb-1" style={{ fontFamily: 'var(--font-business-serif), Georgia, serif' }}>
             Assisted Land Check
           </h1>
-          <p className="text-gray-500 text-sm mb-6">
+          <p className="text-land-forest/75 text-sm mb-6">
             A certified agent will verify this property and contact you within 24 hours.
           </p>
 
@@ -98,16 +98,16 @@ export default function LandCheckPage() {
               '📲 WhatsApp updates from agent',
               '⏰ 24-hour access window',
             ].map(item => (
-              <p key={item} className="text-sm text-gray-700">{item}</p>
+              <p key={item} className="text-sm text-land-ink/85">{item}</p>
             ))}
           </div>
 
           <div className="text-center mb-6">
             <span className="text-3xl font-bold text-land-primary">UGX 10,000</span>
-            <span className="text-gray-500 text-sm ml-2">/ 24 hours</span>
+            <span className="text-land-forest/75 text-sm ml-2">/ 24 hours</span>
           </div>
 
-          <Suspense fallback={<div className="text-center text-gray-400 text-sm">Loading...</div>}>
+          <Suspense fallback={<div className="text-center text-land-forest/60 text-sm">Loading...</div>}>
             <CheckForm />
           </Suspense>
         </div>

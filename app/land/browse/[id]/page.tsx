@@ -36,7 +36,7 @@ export default async function LandListingDetailPage({
   if (!listing) notFound();
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-land-cream/30">
       <div className="max-w-5xl mx-auto px-4 pt-4">
         <Link href="/land/browse" className="text-sm text-land-primary hover:underline">← Back to listings</Link>
       </div>
@@ -44,7 +44,7 @@ export default async function LandListingDetailPage({
       <div className="max-w-5xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main content */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div className="bg-white rounded-2xl overflow-hidden border border-land-mint/50">
             {listing.photos?.[0] ? (
               <Image src={listing.photos[0]} alt={listing.title} width={1200} height={675} className="w-full aspect-video object-cover" />
             ) : (
@@ -53,10 +53,10 @@ export default async function LandListingDetailPage({
           </div>
 
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <h1 className="text-2xl font-bold text-land-ink mb-1" style={{ fontFamily: 'var(--font-business-serif), Georgia, serif' }}>
               {listing.title}
             </h1>
-            <p className="text-gray-500 text-sm mb-2">
+            <p className="text-land-forest/75 text-sm mb-2">
               {listing.district}{listing.parish ? `, ${listing.parish}` : ''}
               {listing.size_acres ? ` · ${listing.size_acres} acres` : ''}
             </p>
@@ -66,7 +66,7 @@ export default async function LandListingDetailPage({
           {listing.lat && listing.lng ? (
             <LandDetailMap lat={listing.lat} lng={listing.lng} title={listing.title} />
           ) : (
-            <div className="bg-gray-100 rounded-2xl h-64 flex items-center justify-center text-gray-400 text-sm border border-gray-200">
+            <div className="bg-land-cream/60 rounded-2xl h-64 flex items-center justify-center text-land-forest/60 text-sm border border-land-mint/50">
               🗺 No coordinates for this listing yet
             </div>
           )}
@@ -76,28 +76,28 @@ export default async function LandListingDetailPage({
               <h3 className="font-bold text-land-primary mb-3">🤖 Land Intelligence</h3>
               {listing.insight.farming_suitability && (
                 <div className="mb-2">
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Farming suitability</span>
-                  <p className="text-sm text-gray-800 mt-0.5">{listing.insight.farming_suitability}</p>
+                  <span className="text-xs font-medium text-land-forest/75 uppercase tracking-wide">Farming suitability</span>
+                  <p className="text-sm text-land-ink mt-0.5">{listing.insight.farming_suitability}</p>
                 </div>
               )}
               {listing.insight.access_road_quality && (
                 <div className="mb-2">
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Access road</span>
-                  <p className="text-sm text-gray-800 mt-0.5">{listing.insight.access_road_quality}</p>
+                  <span className="text-xs font-medium text-land-forest/75 uppercase tracking-wide">Access road</span>
+                  <p className="text-sm text-land-ink mt-0.5">{listing.insight.access_road_quality}</p>
                 </div>
               )}
               {listing.insight.risk_notes && (
                 <div className="mb-2">
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Risk notes</span>
-                  <p className="text-sm text-gray-800 mt-0.5">{listing.insight.risk_notes}</p>
+                  <span className="text-xs font-medium text-land-forest/75 uppercase tracking-wide">Risk notes</span>
+                  <p className="text-sm text-land-ink mt-0.5">{listing.insight.risk_notes}</p>
                 </div>
               )}
             </div>
           )}
 
-          <div className="bg-white rounded-2xl p-5 border border-gray-200 text-center">
-            <h3 className="font-bold text-gray-900 mb-1">Want expert verification?</h3>
-            <p className="text-sm text-gray-500 mb-4">Get a full land check — UGX 10,000 for 24-hour expert access</p>
+          <div className="bg-white rounded-2xl p-5 border border-land-mint/50 text-center">
+            <h3 className="font-bold text-land-ink mb-1">Want expert verification?</h3>
+            <p className="text-sm text-land-forest/75 mb-4">Get a full land check — UGX 10,000 for 24-hour expert access</p>
             <Link
               href={`/land/check?listing=${listing.id}`}
               className="inline-block bg-land-primary text-white font-semibold px-6 py-3 rounded-full hover:bg-land-forest transition-colors"
@@ -112,13 +112,13 @@ export default async function LandListingDetailPage({
           <LandTrustPanel listing={listing} />
 
           {listing.agent && (
-            <div className="bg-white rounded-2xl border border-gray-200 p-5">
-              <h3 className="font-bold text-gray-900 mb-3">Listed by</h3>
+            <div className="bg-white rounded-2xl border border-land-mint/50 p-5">
+              <h3 className="font-bold text-land-ink mb-3">Listed by</h3>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-land-cream/60 flex items-center justify-center text-lg">👤</div>
                 <div>
-                  <p className="font-medium text-sm text-gray-900">{listing.agent.name}</p>
-                  <p className="text-xs text-gray-500">{listing.agent.district}</p>
+                  <p className="font-medium text-sm text-land-ink">{listing.agent.name}</p>
+                  <p className="text-xs text-land-forest/75">{listing.agent.district}</p>
                 </div>
               </div>
             </div>

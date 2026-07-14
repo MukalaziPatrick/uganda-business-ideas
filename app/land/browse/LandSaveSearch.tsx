@@ -62,7 +62,7 @@ export function LandSaveSearch() {
             value={phone}
             onChange={e => setPhone(e.target.value)}
             placeholder="Your WhatsApp number"
-            className="flex-1 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-land-primary"
+            className="flex-1 border border-land-mint/50 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-land-primary"
             required
           />
           <button
@@ -72,7 +72,7 @@ export function LandSaveSearch() {
           >
             {loading ? '...' : 'Save'}
           </button>
-          <button type="button" onClick={() => setOpen(false)} className="text-gray-400 text-sm">✕</button>
+          <button type="button" onClick={() => setOpen(false)} className="text-land-forest/60 text-sm">✕</button>
         </form>
       )}
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}

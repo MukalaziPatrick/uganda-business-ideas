@@ -33,9 +33,9 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
   const photo = listing.photos?.[0];
 
   return (
-    <Link href={`/land/browse/${listing.id}`} className="group block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+    <Link href={`/land/browse/${listing.id}`} className="group block bg-white rounded-2xl border border-land-mint/50 overflow-hidden hover:shadow-md transition-shadow">
       {/* Photo */}
-      <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
+      <div className="aspect-[4/3] bg-land-cream/60 overflow-hidden">
         {photo ? (
           <Image src={photo} alt={listing.title} width={600} height={450} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
@@ -48,8 +48,8 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
         <div className="mb-2">
           <TrustBadge stage={listing.verification_stage} />
         </div>
-        <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">{listing.title}</h3>
-        <p className="text-xs text-gray-500 mb-3">
+        <h3 className="font-semibold text-land-ink text-sm line-clamp-2 mb-1">{listing.title}</h3>
+        <p className="text-xs text-land-forest/75 mb-3">
           {listing.district}{listing.parish ? `, ${listing.parish}` : ''} ·
           {listing.size_acres ? ` ${listing.size_acres} acres` : ''}
         </p>
