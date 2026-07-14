@@ -91,19 +91,21 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   return (
     <div className="min-h-screen bg-brand-cream">
       <div className="mx-auto max-w-2xl px-4 py-8">
-        <h1 className="text-2xl font-black text-brand-forest mb-1">Uganda Jobs</h1>
-        <p className="text-sm text-brand-green/80 mb-6">Find work or hire skilled workers across Uganda</p>
+        <header className="motion-page mb-6">
+          <h1 className="text-2xl font-black tracking-tight text-brand-forest sm:text-3xl">👷 Uganda Jobs</h1>
+          <p className="mt-1 text-sm text-brand-green">Find work or hire skilled workers across Uganda</p>
+        </header>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-5">
+        <div className="mb-5 flex gap-2" role="tablist" aria-label="Jobs or workers">
           {(["jobs", "workers"] as const).map(t => (
-            <button key={t} onClick={() => setTab(t)}
-              className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${tab === t ? "bg-brand-forest text-white" : "bg-white text-brand-forest border border-brand-beige hover:bg-brand-surface"}`}>
+            <button key={t} onClick={() => setTab(t)} role="tab" aria-selected={tab === t}
+              className={`motion-press rounded-full px-5 py-2 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${tab === t ? "bg-brand-forest text-white shadow-sm" : "bg-brand-surface text-brand-forest border border-brand-beige hover:border-brand-gold"}`}>
               {t === "jobs" ? `Jobs (${jobs.length})` : `Workers (${workers.length})`}
             </button>
           ))}
           <Link href="/jobs/post"
-            className="ml-auto rounded-full bg-brand-gold px-4 py-2 text-sm font-bold text-brand-forest hover:bg-brand-gold/85">
+            className="motion-press ml-auto rounded-full bg-brand-gold px-4 py-2 text-sm font-bold text-brand-forest transition-colors hover:bg-brand-gold/85">
             + Post Job
           </Link>
         </div>
@@ -113,10 +115,10 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
           <input value={skill} onChange={e => setSkill(e.target.value)}
             aria-label={tab === "jobs" ? "Search jobs by skill or title" : "Search workers by skill"}
             placeholder={tab === "jobs" ? "Search skill or title..." : "Search skill..."}
-            className="flex-1 rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60" />
+            className="flex-1 rounded-xl border border-brand-beige bg-white px-3.5 py-2 text-sm placeholder:text-brand-green/70 focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60" />
           <select value={district} onChange={e => setDistrict(e.target.value)}
             aria-label="Filter by district"
-            className="rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold/60">
+            className="rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
             <option value="">All districts</option>
             {UGANDA_DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
@@ -138,7 +140,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
             {filteredJobs.map(job => (
               <div
                 key={job.id}
-                className={`rounded-2xl border bg-white p-4 shadow-sm ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}
+                className={`motion-card rounded-2xl border bg-brand-surface p-4 shadow-sm ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}
               >
                 {job.featured && (
                   <span className="mb-2 inline-block rounded-full bg-brand-gold/25 px-2 py-0.5 text-[10px] font-bold uppercase text-brand-forest">
@@ -212,7 +214,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                         href={whatsappHref(job.contact_whatsapp, job.employer_name)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-xl bg-brand-forest px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-green"
+                        className="motion-press rounded-xl bg-brand-forest px-3 py-1.5 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green"
                       >
                         WhatsApp
                       </a>
@@ -220,7 +222,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     {job.contact_phone && (
                       <a
                         href={`tel:${job.contact_phone}`}
-                        className="rounded-xl bg-brand-cream px-3 py-1.5 text-xs font-bold text-brand-forest hover:bg-brand-beige/60"
+                        className="motion-press rounded-xl bg-brand-cream px-3 py-1.5 text-center text-xs font-bold text-brand-forest transition-colors hover:bg-brand-beige/60"
                       >
                         Call
                       </a>
@@ -245,7 +247,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
             )}
             {filteredWorkers.map(w => (
               <Link key={w.id} href={`/jobs/worker/${w.id}`}
-                className="rounded-2xl border border-brand-beige bg-white p-4 shadow-sm hover:border-brand-gold transition-colors block">
+                className="motion-card rounded-2xl border border-brand-beige bg-brand-surface p-4 shadow-sm hover:border-brand-gold block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 shrink-0 rounded-full bg-brand-forest flex items-center justify-center text-lg font-black text-white">
                     {w.name[0].toUpperCase()}
@@ -272,10 +274,10 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
 
         {/* Bottom CTAs */}
         <div className="mt-8 flex gap-3">
-          <Link href="/jobs/post" className="flex-1 rounded-2xl bg-brand-gold py-3 text-center text-sm font-bold text-brand-forest hover:bg-brand-gold/85">
+          <Link href="/jobs/post" className="motion-press flex-1 rounded-2xl bg-brand-gold py-3 text-center text-sm font-bold text-brand-forest transition-colors hover:bg-brand-gold/85">
             Post a Job
           </Link>
-          <Link href="/jobs/worker/new" className="flex-1 rounded-2xl border border-brand-forest py-3 text-center text-sm font-bold text-brand-forest hover:bg-brand-surface">
+          <Link href="/jobs/worker/new" className="motion-press flex-1 rounded-2xl border border-brand-forest py-3 text-center text-sm font-bold text-brand-forest transition-colors hover:bg-brand-surface">
             Register as Worker
           </Link>
         </div>

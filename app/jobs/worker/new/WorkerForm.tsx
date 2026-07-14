@@ -121,7 +121,7 @@ export default function WorkerForm() {
       <div className="mx-auto max-w-lg px-4 py-10">
         <div className="rounded-2xl bg-white border border-brand-beige p-8 text-center shadow-sm">
           <div className="text-4xl mb-4">🎉</div>
-          <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
             Profile Created!
           </h2>
           <p className="text-sm text-brand-green mb-6 leading-relaxed">
