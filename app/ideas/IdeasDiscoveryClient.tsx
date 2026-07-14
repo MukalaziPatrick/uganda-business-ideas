@@ -134,9 +134,9 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <button
             key={r}
             onClick={() => handleRegion(r)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+            className={`motion-press shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
               region === r
-                ? "bg-brand-gold text-brand-forest"
+                ? "bg-brand-gold text-brand-forest shadow-sm"
                 : "bg-brand-green text-white hover:bg-brand-forest"
             }`}
           >
@@ -153,7 +153,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           value={search}
           onChange={e => handleSearch(e.target.value)}
           placeholder="Search poultry, soap, digital, food..."
-          className="w-full rounded-2xl border border-brand-beige bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10"
+          className="w-full rounded-2xl border border-brand-beige bg-brand-surface py-3 pl-10 pr-4 text-sm shadow-sm outline-none placeholder:text-brand-green/70 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40"
         />
       </div>
 
@@ -163,10 +163,10 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <button
             key={opt}
             onClick={() => handleCategory(opt)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+            className={`motion-press shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
               category === opt
-                ? "bg-brand-forest text-brand-gold"
-                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
+                ? "bg-brand-forest text-brand-gold shadow-sm"
+                : "bg-brand-surface border border-brand-beige text-brand-forest hover:border-brand-forest"
             }`}
           >
             {opt === "All" ? "All" : `${categoryEmoji(opt)} ${opt}`}
@@ -180,10 +180,10 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <button
             key={opt}
             onClick={() => handleBudget(opt)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+            className={`motion-press shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
               budget === opt
-                ? "bg-brand-forest text-brand-gold"
-                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
+                ? "bg-brand-forest text-brand-gold shadow-sm"
+                : "bg-brand-surface border border-brand-beige text-brand-forest hover:border-brand-forest"
             }`}
           >
             {opt === "All" ? "All budgets" : budgetLabels[opt as IdeaBudgetBand]}
@@ -216,7 +216,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <p className="text-sm text-brand-green">Try clearing a filter or using a broader term.</p>
           <button
             onClick={clearFilters}
-            className="mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold"
+            className="motion-press mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold transition-colors hover:bg-brand-green"
           >
             Clear filters
           </button>
@@ -227,7 +227,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
       {featured && (
         <Link
           href={`/ideas/${featured.slug}`}
-          className="block rounded-2xl bg-gradient-to-br from-brand-forest to-brand-green p-6 mb-4 hover:opacity-95 transition-opacity"
+          className="motion-card block rounded-2xl bg-gradient-to-br from-brand-forest to-brand-green p-6 mb-4 shadow-lg shadow-brand-forest/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
         >
           <div className="flex flex-wrap gap-2 mb-3">
             <span className="rounded-full bg-brand-gold text-brand-forest text-[10px] font-bold px-2 py-0.5">
@@ -237,7 +237,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
               {featured.category}
             </span>
           </div>
-          <h2 className="text-xl font-black text-brand-gold leading-snug mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-gold leading-snug mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
             {featured.title}
           </h2>
           <p className="text-sm text-white/75 leading-relaxed mb-5 line-clamp-3">{featured.description}</p>
@@ -270,7 +270,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
             <Link
               key={idea.slug}
               href={`/ideas/${idea.slug}`}
-              className="flex flex-col rounded-2xl border border-brand-beige bg-white p-4 hover:border-brand-forest transition-colors"
+              className="motion-card flex flex-col rounded-2xl border border-brand-beige bg-brand-surface p-4 shadow-sm hover:border-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
             >
               <div className="text-2xl mb-2">{categoryEmoji(idea.category)}</div>
               <div className="flex gap-1 flex-wrap mb-2">
