@@ -54,8 +54,8 @@ export default function SalonRegisterForm() {
   const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
   const [portfolioUrls, setPortfolioUrls] = useState<string[]>([""]);
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
-  const labelClass = "block text-xs font-bold text-gray-600 mb-1";
+  const fieldClass = "w-full border border-brand-beige rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
+  const labelClass = "block text-xs font-bold text-brand-green mb-1";
 
   const addService = () => {
     if (services.length < 20) {
@@ -156,8 +156,8 @@ export default function SalonRegisterForm() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
-        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>Listing submitted!</h2>
-        <p className="text-sm text-gray-600 leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
+        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>Listing submitted!</h2>
+        <p className="text-sm text-brand-green leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
       </div>
     );
   }
@@ -167,7 +167,7 @@ export default function SalonRegisterForm() {
       {/* Step indicator */}
       <div className="flex gap-2">
         {[1, 2, 3, 4].map((s) => (
-          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
+          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-brand-beige"}`} />
         ))}
       </div>
       <p className="text-xs text-brand-green text-center">Step {step} of 4</p>
@@ -216,7 +216,7 @@ export default function SalonRegisterForm() {
           <div><label className={labelClass}>Opening hours *</label><input className={fieldClass} value={openingHours} onChange={e => setOpeningHours(e.target.value)} placeholder="e.g. Mon–Sat 8am–7pm" /></div>
           <label className="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" checked={walkin} onChange={e => setWalkin(e.target.checked)} className="w-4 h-4 accent-brand-forest" />
-            <span className="text-sm font-medium text-gray-700">Walk-ins welcome (no appointment needed)</span>
+            <span className="text-sm font-medium text-brand-forest/90">Walk-ins welcome (no appointment needed)</span>
           </label>
           <div>
             <label className={labelClass}>About your salon <span className="text-brand-green font-normal">({about.length}/300)</span></label>
@@ -293,7 +293,7 @@ export default function SalonRegisterForm() {
       {step === 4 && (
         <div className="space-y-4">
           <h2 className="text-sm font-black text-brand-forest">Review & Submit</h2>
-          <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2 text-sm">
+          <div className="bg-white rounded-xl border border-brand-beige p-4 space-y-2 text-sm">
             <p><span className="font-bold">Name:</span> {name}</p>
             <p><span className="font-bold">Type:</span> {type === "salon" ? "Salon" : "Mobile Stylist"}</p>
             <p><span className="font-bold">Gender:</span> {gender}</p>

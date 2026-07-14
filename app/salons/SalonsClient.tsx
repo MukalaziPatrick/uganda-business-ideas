@@ -70,27 +70,28 @@ export default function SalonsClient({
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="bg-brand-forest px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="motion-page relative overflow-hidden bg-brand-forest px-4 py-8 text-center text-white">
+        <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-brand-gold/15 blur-3xl" />
+        <h1 className="relative text-2xl font-black text-brand-gold mb-1 sm:text-3xl" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
           ✂️ Find a Salon
         </h1>
-        <p className="text-sm text-white/70">Salons & stylists across Uganda</p>
+        <p className="relative text-sm text-brand-cream/80">Salons &amp; stylists across Uganda</p>
       </div>
 
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10">
+      <div className="bg-brand-surface border-b border-brand-beige px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10 shadow-sm shadow-brand-forest/5">
         <input
           type="search"
           aria-label="Search salons"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, style or location..."
-          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
+          className="flex-1 min-w-0 border border-brand-beige bg-white rounded-xl px-3.5 py-2 text-sm outline-none placeholder:text-brand-green/70 focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         />
         <select
           aria-label="Filter salons by gender"
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
+          className="border border-brand-beige rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         >
           <option value="">All genders</option>
           <option value="men">👨 Men</option>
@@ -101,7 +102,7 @@ export default function SalonsClient({
           aria-label="Filter salons by type"
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
+          className="border border-brand-beige rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         >
           <option value="">All types</option>
           <option value="salon">🏠 Salon</option>
@@ -118,10 +119,11 @@ export default function SalonsClient({
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-brand-green">
-            <p className="text-2xl mb-2">✂️</p>
-            <p className="text-sm">No salons found.</p>
-            <Link href="/salons/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
+          <div className="rounded-2xl border border-dashed border-brand-beige bg-brand-surface px-4 py-14 text-center text-brand-green">
+            <p className="text-3xl mb-3">✂️</p>
+            <p className="text-sm font-semibold text-brand-forest">No salons found.</p>
+            <p className="mt-1 text-xs">Try a different name or district.</p>
+            <Link href="/salons/register" className="mt-4 inline-block rounded-xl bg-brand-forest px-4 py-2 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green">
               Be the first to list one →
             </Link>
           </div>
@@ -131,8 +133,8 @@ export default function SalonsClient({
               <Link
                 key={s.id}
                 href={`/salons/${s.id}`}
-                className={`block bg-white rounded-xl border transition-colors overflow-hidden ${
-                  s.status === "featured" ? "border-brand-gold border-2" : "border-gray-200 hover:border-brand-forest"
+                className={`motion-card block bg-brand-surface rounded-2xl border overflow-hidden shadow-sm shadow-brand-forest/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 ${
+                  s.status === "featured" ? "border-brand-gold border-2" : "border-brand-beige hover:border-brand-forest"
                 }`}
               >
                 {s.cover_photo_url ? (
@@ -145,7 +147,7 @@ export default function SalonsClient({
                     )}
                   </div>
                 ) : (
-                  <div className="h-20 bg-gradient-to-br from-brand-forest to-brand-green flex items-center justify-center">
+                  <div className="relative h-20 bg-gradient-to-br from-brand-forest to-brand-green flex items-center justify-center">
                     <span className="text-3xl">✂️</span>
                     {s.status === "featured" && (
                       <span className="absolute top-2 left-2 bg-brand-gold text-brand-forest text-[10px] font-black px-2 py-0.5 rounded-full">
@@ -168,7 +170,7 @@ export default function SalonsClient({
                         e.preventDefault();
                         window.open(`https://wa.me/${s.whatsapp.replace(/\D/g, "")}`, "_blank");
                       }}
-                      className="mt-2 w-full rounded-lg bg-brand-forest py-1.5 text-center text-xs font-bold text-white hover:bg-brand-green"
+                      className="motion-press mt-2.5 w-full rounded-lg bg-brand-forest py-2 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green"
                     >
                       💬 WhatsApp
                     </div>
@@ -183,9 +185,9 @@ export default function SalonsClient({
           <button
             onClick={loadMore}
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white disabled:opacity-50"
+            className="motion-press mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white transition-colors hover:bg-brand-green disabled:opacity-50"
           >
-            {loading ? "Loading..." : "Load more salons →"}
+            {loading ? "Loading…" : "Load more salons →"}
           </button>
         )}
       </div>
