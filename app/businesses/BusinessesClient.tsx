@@ -100,27 +100,28 @@ export default function BusinessesClient({
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="bg-brand-forest px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="motion-page relative overflow-hidden bg-brand-forest px-4 py-8 text-center text-white">
+        <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-brand-gold/15 blur-3xl" />
+        <h1 className="relative text-2xl font-black text-brand-gold mb-1 sm:text-3xl" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
           📍 Find a Business
         </h1>
-        <p className="text-sm text-white/70">Real businesses across Uganda</p>
+        <p className="relative text-sm text-brand-cream/80">Real businesses across Uganda</p>
       </div>
 
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10">
+      <div className="bg-brand-surface border-b border-brand-beige px-4 py-3 flex gap-2 flex-wrap sticky top-0 z-10 shadow-sm shadow-brand-forest/5">
         <input
           type="search"
           aria-label="Search businesses"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search businesses..."
-          className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-brand-forest"
+          className="flex-1 min-w-0 border border-brand-beige bg-white rounded-xl px-3.5 py-2 text-sm outline-none placeholder:text-brand-green/70 focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         />
         <select
           aria-label="Filter businesses by category"
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest"
+          className="border border-brand-beige rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         >
           <option value="">All Categories</option>
           {BUSINESS_CATEGORIES.map((c) => (
@@ -140,9 +141,9 @@ export default function BusinessesClient({
               <button
                 key={r}
                 onClick={() => handleRegionClick(r)}
-                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
+                className={`motion-press shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   region === r
-                    ? "bg-brand-gold text-brand-forest"
+                    ? "bg-brand-gold text-brand-forest shadow-sm"
                     : "bg-brand-green text-white hover:bg-brand-forest"
                 }`}
               >
@@ -170,10 +171,11 @@ export default function BusinessesClient({
         </div>
 
         {filtered.length === 0 ? (
-          <div className="text-center py-16 text-brand-green">
-            <p className="text-2xl mb-2">🔍</p>
-            <p className="text-sm">No businesses found.</p>
-            <Link href="/businesses/register" className="mt-3 inline-block text-sm font-bold text-brand-forest underline">
+          <div className="rounded-2xl border border-dashed border-brand-beige bg-brand-surface px-4 py-14 text-center text-brand-green">
+            <p className="text-3xl mb-3">🔍</p>
+            <p className="text-sm font-semibold text-brand-forest">No businesses found.</p>
+            <p className="mt-1 text-xs">Try a different name, category or region.</p>
+            <Link href="/businesses/register" className="mt-4 inline-block rounded-xl bg-brand-forest px-4 py-2 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green">
               Be the first to list one →
             </Link>
           </div>
@@ -183,7 +185,7 @@ export default function BusinessesClient({
               <Link
                 key={b.id}
                 href={`/businesses/${b.id}`}
-                className="block bg-white rounded-xl border border-gray-200 p-4 hover:border-brand-forest transition-colors"
+                className="motion-card block bg-brand-surface rounded-2xl border border-brand-beige p-4 shadow-sm shadow-brand-forest/5 hover:border-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -197,7 +199,7 @@ export default function BusinessesClient({
                 {b.whatsapp && (
                   <div
                     onClick={(e) => { e.preventDefault(); window.open(`https://wa.me/${b.whatsapp!.replace(/\D/g, "")}`, "_blank"); }}
-                    className="mt-3 w-full rounded-lg bg-green-500 py-2 text-center text-xs font-bold text-white"
+                    className="motion-press mt-3 w-full rounded-lg bg-brand-green py-2 text-center text-xs font-bold text-white transition-colors hover:bg-brand-forest"
                   >
                     💬 WhatsApp
                   </div>
@@ -211,9 +213,9 @@ export default function BusinessesClient({
           <button
             onClick={loadMore}
             disabled={loading}
-            className="mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white disabled:opacity-50"
+            className="motion-press mt-6 w-full rounded-xl bg-brand-forest py-3 text-sm font-bold text-white transition-colors hover:bg-brand-green disabled:opacity-50"
           >
-            {loading ? "Loading..." : "Load more businesses →"}
+            {loading ? "Loading…" : "Load more businesses →"}
           </button>
         )}
       </div>

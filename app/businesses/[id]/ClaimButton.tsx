@@ -62,17 +62,17 @@ export default function ClaimButton({
   }
 
   return (
-    <div className="space-y-3 rounded-xl border border-gray-200 bg-white p-4">
+    <div className="space-y-3 rounded-xl border border-brand-beige bg-white p-4">
       {submitted ? (
         <div className="py-4 text-center">
           <p className="mb-2 text-3xl">OK</p>
           <h3
             className="mb-1 text-base font-black text-brand-forest"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}
           >
             Claim submitted!
           </h3>
-          <p className="text-xs leading-relaxed text-gray-600">
+          <p className="text-xs leading-relaxed text-brand-green">
             We&apos;ll reach out to you on WhatsApp or by phone within 24-48 hours to verify
             and hand over {businessName}. After approval, you can confirm or correct the
             public contact numbers yourself.
@@ -90,34 +90,34 @@ export default function ClaimButton({
           </div>
           {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{error}</p>}
           <div>
-            <label className="mb-1 block text-xs font-bold text-gray-600">Your name</label>
+            <label className="mb-1 block text-xs font-bold text-brand-green">Your name</label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
+              className="w-full rounded-lg border border-brand-beige bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. Sarah Nakato"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-bold text-gray-600">
+            <label className="mb-1 block text-xs font-bold text-brand-green">
               Phone or WhatsApp number we should verify
             </label>
             <input
               value={contact}
               onChange={(e) => setContact(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
+              className="w-full rounded-lg border border-brand-beige bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. 0772 123 456"
               inputMode="tel"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-bold text-gray-600">
+            <label className="mb-1 block text-xs font-bold text-brand-green">
               Your role (optional)
             </label>
             <input
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
+              className="w-full rounded-lg border border-brand-beige bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest"
               placeholder="e.g. Owner, Manager"
             />
           </div>
@@ -125,7 +125,7 @@ export default function ClaimButton({
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="flex-1 rounded-xl border border-gray-300 py-2.5 text-sm font-bold text-gray-600"
+              className="flex-1 rounded-xl border border-brand-beige py-2.5 text-sm font-bold text-brand-green"
             >
               Cancel
             </button>
