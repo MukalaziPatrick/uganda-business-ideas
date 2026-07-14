@@ -19,54 +19,63 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
 
   const message = errorMessage(error);
 
+  const inputClass =
+    "w-full rounded-xl border border-brand-beige bg-white px-3.5 py-2.5 text-sm text-brand-forest outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40";
+
   return (
-    <main style={{ maxWidth: 360, margin: "80px auto", padding: "0 16px" }}>
-      <h1 style={{ marginBottom: 24 }}>Admin Login</h1>
-      {message && (
-        <p style={{ color: "red", marginBottom: 16 }}>{message}</p>
-      )}
-      <form method="POST" action="/api/auth/login">
-        <input type="hidden" name="next" value={next} />
-        <div style={{ marginBottom: 12 }}>
-          <label htmlFor="email" style={{ display: "block", marginBottom: 4 }}>
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            required
-            autoComplete="email"
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-          />
+    <main className="flex min-h-screen items-center justify-center bg-brand-cream px-4 py-16">
+      <div className="motion-page w-full max-w-sm">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-forest text-sm font-black text-brand-gold">
+            UBI
+          </div>
+          <h1 className="text-xl font-black tracking-tight text-brand-forest">Admin Login</h1>
+          <p className="mt-1 text-xs text-brand-green">Business Yoo administration</p>
         </div>
-        <div style={{ marginBottom: 20 }}>
-          <label htmlFor="password" style={{ display: "block", marginBottom: 4 }}>
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            required
-            autoComplete="current-password"
-            style={{ width: "100%", padding: "8px", boxSizing: "border-box" }}
-          />
+
+        <div className="rounded-2xl border border-brand-beige bg-brand-surface p-6 shadow-sm shadow-brand-forest/5">
+          {message && (
+            <p className="mb-4 rounded-xl border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm font-semibold text-red-700">
+              {message}
+            </p>
+          )}
+          <form method="POST" action="/api/auth/login">
+            <input type="hidden" name="next" value={next} />
+            <div className="mb-4">
+              <label htmlFor="email" className="mb-1.5 block text-xs font-bold text-brand-forest">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+                className={inputClass}
+              />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="password" className="mb-1.5 block text-xs font-bold text-brand-forest">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                required
+                autoComplete="current-password"
+                className={inputClass}
+              />
+            </div>
+            <button
+              type="submit"
+              className="motion-press w-full rounded-xl bg-brand-forest py-2.5 text-sm font-bold text-brand-cream transition-colors hover:bg-brand-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
+            >
+              Sign in
+            </button>
+          </form>
         </div>
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#1a1a1a",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Sign in
-        </button>
-      </form>
+      </div>
     </main>
   );
 }

@@ -96,13 +96,13 @@ export default async function AdminClaimsPage() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-black text-[#1C3A2A]">Pending Business Claims ({claims.length})</h1>
       </div>
-      <p className="text-xs text-gray-500 mb-4">
+      <p className="text-xs text-brand-green mb-4">
         Verify each claimant by phone/WhatsApp before approving — approving generates a private edit link for the owner.
       </p>
       {claims.length === 0 ? (
-        <p className="text-gray-500 text-sm">No pending claims. All clear!</p>
+        <p className="text-brand-green text-sm">No pending claims. All clear!</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl border border-brand-beige bg-brand-surface shadow-sm">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr className="bg-[#1C3A2A] text-white">
@@ -118,10 +118,10 @@ export default async function AdminClaimsPage() {
               {claims.map((c) => {
                 const contact = c.claimant_whatsapp || c.claimant_phone || "";
                 return (
-                  <tr key={c.id} className="border-b border-gray-200 hover:bg-gray-50">
+                  <tr key={c.id} className="border-b border-brand-beige hover:bg-brand-cream/60">
                     <td className="p-3">
                       <p className="font-semibold">{c.businesses?.name ?? "—"}</p>
-                      <p className="text-xs text-gray-500">{c.businesses?.category} · {c.businesses?.district}</p>
+                      <p className="text-xs text-brand-green">{c.businesses?.category} · {c.businesses?.district}</p>
                     </td>
                     <td className="p-3 font-semibold">{c.claimant_name}</td>
                     <td className="p-3">{c.role || "—"}</td>
@@ -140,7 +140,7 @@ export default async function AdminClaimsPage() {
                           <input type="hidden" name="businessId" value={c.business_id} />
                           <input type="hidden" name="claimantName" value={c.claimant_name} />
                           <input type="hidden" name="claimantContact" value={contact} />
-                          <button type="submit" className="rounded bg-green-600 px-3 py-1 text-xs font-bold text-white hover:bg-green-700">
+                          <button type="submit" className="rounded bg-brand-green px-3 py-1 text-xs font-bold text-white hover:bg-brand-forest">
                             Approve
                           </button>
                         </form>

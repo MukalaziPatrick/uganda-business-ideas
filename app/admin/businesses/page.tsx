@@ -53,9 +53,9 @@ export default async function AdminBusinessesPage() {
         </a>
       </div>
       {businesses.length === 0 ? (
-        <p className="text-gray-500 text-sm">No pending businesses. All clear!</p>
+        <p className="text-brand-green text-sm">No pending businesses. All clear!</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl border border-brand-beige bg-brand-surface shadow-sm">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr className="bg-[#1C3A2A] text-white">
@@ -70,7 +70,7 @@ export default async function AdminBusinessesPage() {
             </thead>
             <tbody>
               {businesses.map((b) => (
-                <tr key={b.id} className="border-b border-gray-200 hover:bg-gray-50">
+                <tr key={b.id} className="border-b border-brand-beige hover:bg-brand-cream/60">
                   <td className="p-3 font-semibold">{b.name}</td>
                   <td className="p-3">{b.category}</td>
                   <td className="p-3">{b.district}</td>
@@ -81,7 +81,7 @@ export default async function AdminBusinessesPage() {
                     <div className="flex gap-2">
                       <form action={approveBusiness}>
                         <input type="hidden" name="id" value={b.id} />
-                        <button type="submit" className="rounded bg-green-600 px-3 py-1 text-xs font-bold text-white hover:bg-green-700">
+                        <button type="submit" className="rounded bg-brand-green px-3 py-1 text-xs font-bold text-white hover:bg-brand-forest">
                           Approve
                         </button>
                       </form>

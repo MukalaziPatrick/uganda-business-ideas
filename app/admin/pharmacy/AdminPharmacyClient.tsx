@@ -165,7 +165,7 @@ export default function AdminPharmacyClient({
   return (
     <div className="min-h-screen bg-[#f5f0e8] p-4">
       <h1 className="mb-4 text-xl font-black text-[#1C3A2A]">Pharmacy Admin</h1>
-      <p className="mb-4 text-sm text-gray-600">
+      <p className="mb-4 text-sm text-brand-green">
         Review imported pharmacy rows before they appear publicly. Keep licence fields
         null until independently verified.
       </p>
@@ -176,12 +176,12 @@ export default function AdminPharmacyClient({
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search name, district, service area, or phone"
-          className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 outline-none ring-0 placeholder:text-gray-400"
+          className="rounded-lg border border-brand-beige bg-white px-3 py-2 text-sm text-brand-forest/90 outline-none ring-0 placeholder:text-brand-green/60"
         />
         <select
           value={district}
           onChange={(event) => setDistrict(event.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 outline-none ring-0"
+          className="rounded-lg border border-brand-beige bg-white px-3 py-2 text-sm text-brand-forest/90 outline-none ring-0"
         >
           <option value="">All districts</option>
           {districts.map((value) => (
@@ -214,18 +214,18 @@ export default function AdminPharmacyClient({
       {tab === "pending" && (
         <div className="space-y-3">
           {filteredPending.length === 0 && (
-            <p className="py-8 text-center text-sm text-gray-500">
+            <p className="py-8 text-center text-sm text-brand-green">
               No pending pharmacies match the current filters.
             </p>
           )}
           {filteredPending.map((pharmacy) => (
-            <div key={pharmacy.id} className="rounded-xl border border-gray-200 bg-white p-4">
+            <div key={pharmacy.id} className="rounded-xl border border-brand-beige bg-white p-4">
               <p className="font-black text-[#1C3A2A]">{pharmacy.name}</p>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-brand-green">
                 {[pharmacy.district, pharmacy.service_area].filter(Boolean).join(" - ") ||
                   "Location not set"}
               </p>
-              <div className="mt-2 space-y-1 text-xs text-gray-500">
+              <div className="mt-2 space-y-1 text-xs text-brand-green">
                 <p>Call: {pharmacy.phone || "Not listed"}</p>
                 <p>WhatsApp: {pharmacy.whatsapp || "Not listed"}</p>
               </div>
@@ -253,16 +253,16 @@ export default function AdminPharmacyClient({
       {tab === "active" && (
         <div className="space-y-3">
           {filteredActive.length === 0 && (
-            <p className="py-8 text-center text-sm text-gray-500">
+            <p className="py-8 text-center text-sm text-brand-green">
               No active pharmacies match the current filters.
             </p>
           )}
           {sortedFilteredActive.map((pharmacy) => (
-            <div key={pharmacy.id} className="rounded-xl border border-gray-200 bg-white p-4">
+            <div key={pharmacy.id} className="rounded-xl border border-brand-beige bg-white p-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="font-black text-[#1C3A2A]">{pharmacy.name}</p>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-brand-green">
                     {[pharmacy.district, pharmacy.service_area].filter(Boolean).join(" - ") ||
                       "Location not set"}
                   </p>
@@ -273,7 +273,7 @@ export default function AdminPharmacyClient({
                   </span>
                 )}
               </div>
-              <div className="mt-2 space-y-1 text-xs text-gray-500">
+              <div className="mt-2 space-y-1 text-xs text-brand-green">
                 <p>Call: {pharmacy.phone || "Not listed"}</p>
                 <p>WhatsApp: {pharmacy.whatsapp || "Not listed"}</p>
               </div>
@@ -290,7 +290,7 @@ export default function AdminPharmacyClient({
                   </span>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2">
-                  <label className="text-xs font-semibold text-gray-600">
+                  <label className="text-xs font-semibold text-brand-green">
                     Google rating
                     <input
                       name="googleRating"
@@ -299,10 +299,10 @@ export default function AdminPharmacyClient({
                       max="5"
                       step="0.1"
                       defaultValue={pharmacy.google_rating ?? ""}
-                      className="mt-1 w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-700"
+                      className="mt-1 w-full rounded-md border border-brand-beige bg-white px-2 py-1.5 text-sm text-brand-forest/90"
                     />
                   </label>
-                  <label className="text-xs font-semibold text-gray-600">
+                  <label className="text-xs font-semibold text-brand-green">
                     Google reviews
                     <input
                       name="googleReviewCount"
@@ -310,11 +310,11 @@ export default function AdminPharmacyClient({
                       min="0"
                       step="1"
                       defaultValue={pharmacy.google_review_count ?? ""}
-                      className="mt-1 w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-700"
+                      className="mt-1 w-full rounded-md border border-brand-beige bg-white px-2 py-1.5 text-sm text-brand-forest/90"
                     />
                   </label>
                 </div>
-                <div className="mt-3 grid gap-2 text-xs font-semibold text-gray-600 sm:grid-cols-3">
+                <div className="mt-3 grid gap-2 text-xs font-semibold text-brand-green sm:grid-cols-3">
                   <label className="flex items-center gap-2">
                     <input
                       name="phoneVerified"
@@ -340,13 +340,13 @@ export default function AdminPharmacyClient({
                     Licence checked
                   </label>
                 </div>
-                <label className="mt-3 block text-xs font-semibold text-gray-600">
+                <label className="mt-3 block text-xs font-semibold text-brand-green">
                   Private notes
                   <textarea
                     name="rankingNotes"
                     defaultValue={pharmacy.ranking_notes ?? ""}
                     rows={2}
-                    className="mt-1 w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-700"
+                    className="mt-1 w-full rounded-md border border-brand-beige bg-white px-2 py-1.5 text-sm text-brand-forest/90"
                   />
                 </label>
                 <button
@@ -362,7 +362,7 @@ export default function AdminPharmacyClient({
                 disabled={loading === pharmacy.id}
                 className={`mt-3 w-full rounded-lg py-2 text-sm font-bold disabled:opacity-50 ${
                   pharmacy.status === "featured"
-                    ? "bg-gray-100 text-gray-600"
+                    ? "bg-brand-cream text-brand-green"
                     : "bg-[#F5C842] text-[#1C3A2A]"
                 }`}
               >
