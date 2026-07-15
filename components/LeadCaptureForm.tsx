@@ -82,28 +82,28 @@ export default function LeadCaptureForm({
   }
 
   const inputClass =
-    "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[14px] text-slate-800 outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-100";
-  const labelClass = "text-[12px] font-bold uppercase tracking-[0.12em] text-slate-500";
+    "w-full rounded-xl border border-brand-beige bg-white px-4 py-3 text-[14px] text-brand-ink outline-none transition focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/30";
+  const labelClass = "text-[12px] font-bold uppercase tracking-[0.12em] text-brand-green/80";
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <form onSubmit={handleSubmit} className="rounded-2xl border border-brand-beige bg-white p-5 shadow-sm sm:p-6">
       {LEAD_FORM_URL && (
-        <div className="mb-5 rounded-xl border border-green-100 bg-green-50 px-4 py-3">
-          <p className="text-[13px] font-semibold text-green-900">
+        <div className="mb-5 rounded-xl border border-brand-green/20 bg-brand-cream px-4 py-3">
+          <p className="text-[13px] font-semibold text-brand-ink">
             Lead collection is connected to an external form.
           </p>
-          <p className="mt-1 text-[12.5px] text-green-700">
+          <p className="mt-1 text-[12.5px] text-brand-forest">
             Submit below to continue to the configured form.
           </p>
         </div>
       )}
 
       {submitStatus === "saved" && (
-        <div className="mb-5 rounded-xl border border-green-100 bg-green-50 px-4 py-3">
-          <p className="text-[13px] font-semibold text-green-900">
+        <div className="mb-5 rounded-xl border border-brand-green/20 bg-brand-cream px-4 py-3">
+          <p className="text-[13px] font-semibold text-brand-ink">
             Your request has been received.
           </p>
-          <p className="mt-1 text-[12.5px] text-green-700">
+          <p className="mt-1 text-[12.5px] text-brand-forest">
             UBI will use your details to understand the help you need before replying.
           </p>
         </div>
@@ -194,7 +194,7 @@ export default function LeadCaptureForm({
       <button
         type="submit"
         disabled={submitStatus === "submitting" || submitStatus === "saved"}
-        className="mt-5 inline-flex w-full justify-center rounded-xl bg-green-600 px-5 py-3 text-[14px] font-black text-white shadow-sm shadow-green-200 transition hover:bg-green-700 active:scale-95 sm:w-auto"
+        className="mt-5 inline-flex w-full justify-center rounded-xl bg-brand-green px-5 py-3 text-[14px] font-black text-white shadow-sm shadow-brand-green/20 transition hover:bg-brand-forest active:scale-95 sm:w-auto"
       >
         {submitStatus === "submitting"
           ? "Sending request..."

@@ -27,13 +27,13 @@ export default function WhatsAppFloat() {
       {/* Tooltip label — slides in on hover */}
       <div
         className={`
-          pointer-events-none max-w-[200px] rounded-2xl border border-slate-200
+          pointer-events-none max-w-[200px] rounded-2xl border border-brand-beige
           bg-white px-4 py-2.5 shadow-lg transition-all duration-300
           ${hovered ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}
         `}
       >
-        <p className="text-[13px] font-semibold text-slate-800">Chat with a business advisor</p>
-        <p className="mt-0.5 text-[11.5px] text-slate-400">Free first chat · Reply in minutes</p>
+        <p className="text-[13px] font-semibold text-brand-ink">Chat with a business advisor</p>
+        <p className="mt-0.5 text-[11.5px] text-brand-green/70">Free first chat · Reply in minutes</p>
       </div>
 
       {/* The button itself */}
