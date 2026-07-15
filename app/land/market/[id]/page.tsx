@@ -35,7 +35,7 @@ function TrustDots({ score }: { score: number | null }) {
     <div className="flex items-center gap-1.5">
       <div className="flex gap-0.5">
         {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className={`w-3 h-3 rounded-full ${i <= s ? 'bg-land-cream/450' : 'bg-land-cream'}`} />
+          <div key={i} className={`w-3 h-3 rounded-full ${i <= s ? 'bg-land-primary' : 'bg-land-cream'}`} />
         ))}
       </div>
       <span className="text-sm text-land-forest/75">{s}/5 trust score</span>

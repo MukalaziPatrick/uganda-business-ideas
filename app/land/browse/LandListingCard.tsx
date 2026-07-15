@@ -56,15 +56,21 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
         <div className="flex items-center justify-between">
           <span className="font-bold text-land-primary text-sm">{formatPrice(listing.price_ugx)}</span>
           {listing.agent?.whatsapp && (
-            <a
-              href={`https://wa.me/${listing.agent.whatsapp.replace(/\D/g, '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/45 transition-colors"
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(
+                  `https://wa.me/${listing.agent!.whatsapp!.replace(/\D/g, '')}`,
+                  '_blank',
+                  'noopener,noreferrer'
+                );
+              }}
+              className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/50 transition-colors"
             >
               📲 WhatsApp
-            </a>
+            </button>
           )}
         </div>
       </div>

@@ -39,7 +39,7 @@ function TrustDots({ score }: { score: number | null }) {
       {[1,2,3,4,5].map(i => (
         <div
           key={i}
-          className={`w-2 h-2 rounded-full ${i <= s ? 'bg-land-cream/450' : 'bg-land-cream'}`}
+          className={`w-2 h-2 rounded-full ${i <= s ? 'bg-land-primary' : 'bg-land-cream'}`}
         />
       ))}
     </div>
@@ -79,15 +79,17 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
       <div className="flex items-center justify-between mt-auto pt-2 border-t border-land-mint/30">
         <span className="font-bold text-land-primary text-sm">{formatPrice(listing.price_ugx)}</span>
         {whatsappHref ? (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/45 transition-colors"
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.open(whatsappHref, '_blank', 'noopener,noreferrer');
+            }}
+            className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/50 transition-colors"
           >
             📲 WhatsApp
-          </a>
+          </button>
         ) : (
           <span className="text-xs text-land-forest/60">View details →</span>
         )}
