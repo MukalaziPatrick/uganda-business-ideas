@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { deriveJobFilterOptions, deriveDistricts, filterJobs } from "@/lib/jobs/filtering";
+import { decodeEntities, sourceLabel } from "@/lib/jobs/format";
 
 type Job = {
   id: string; title: string; skill_category: string; district: string; town: string | null;
@@ -72,12 +73,6 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
     const days = Math.ceil(diff / 86400000);
     if (days <= 0) return "Closes today";
     if (days <= 5) return `Closes in ${days}d`;
-    return null;
-  }
-
-  function sourceLabel(source: string | null): string | null {
-    if (source === "brightermonday") return "Via BrighterMonday";
-    if (source === "psc") return "Via PSC Uganda";
     return null;
   }
 
@@ -215,9 +210,9 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
 
                   {/* Body */}
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-brand-forest text-sm">{job.title}</p>
+                    <p className="font-black text-brand-forest text-sm">{decodeEntities(job.title)}</p>
                     <p className="text-xs text-brand-green/70 mt-0.5">
-                      {job.employer_name} · {[job.town, job.district].filter(Boolean).join(", ")}
+                      {decodeEntities(job.employer_name)} · {[job.town, job.district].filter(Boolean).join(", ")}
                     </p>
                     {job.pay_amount && (
                       <p className="text-xs font-black text-brand-forest mt-1">
@@ -248,7 +243,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                       )}
                     </div>
                     {job.description && (
-                      <p className="text-xs text-brand-green/75 mt-2 line-clamp-2">{job.description}</p>
+                      <p className="text-xs text-brand-green/75 mt-2 line-clamp-2">{decodeEntities(job.description)}</p>
                     )}
                     <div className="flex flex-wrap items-center gap-2 mt-2">
                       <span className="text-[10px] text-brand-green">{timeAgo(job.created_at)}</span>
@@ -294,6 +289,16 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                       <span className="rounded-xl bg-brand-cream px-3 py-1.5 text-xs font-semibold text-brand-forest">
                         Walk-in
                       </span>
+                    )}
+                    {!job.contact_whatsapp && !job.contact_phone && !job.contact_walkin && job.source_url && (
+                      <a
+                        href={job.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="motion-press rounded-xl bg-brand-forest px-3 py-1.5 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green"
+                      >
+                        View job <span aria-hidden>↗</span>
+                      </a>
                     )}
                   </div>
                 </div>
