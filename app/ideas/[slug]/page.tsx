@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AnalyticsLink from "@/components/AnalyticsLink";
+import EstimateDisclaimer from "@/app/components/EstimateDisclaimer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { SITE_URL } from "@/lib/site";
 import { buildIdeaHelpMessage } from "@/lib/whatsapp";
@@ -299,6 +300,8 @@ export default async function IdeaPage({
                 {idea.capital} — exact costs depend on your location and choices.
               </p>
             </div>
+
+            <EstimateDisclaimer className="mx-6 mb-5 sm:mx-8" />
           </div>
         </section>
 

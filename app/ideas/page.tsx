@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import IdeasDiscoveryClient from "./IdeasDiscoveryClient";
+import EstimateDisclaimer from "@/app/components/EstimateDisclaimer";
 import { getPublishedIdeas } from "@/lib/ideas/queries";
 import { SITE_URL } from "@/lib/site";
 
@@ -66,6 +67,8 @@ export default async function IdeasPage() {
             potential.
           </p>
         </section>
+
+        <EstimateDisclaimer className="mb-6" />
 
         <Suspense fallback={<div className="py-10 text-center text-brand-green">Loading ideas…</div>}>
           <IdeasDiscoveryClient ideas={ideas} />
