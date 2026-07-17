@@ -158,10 +158,12 @@ export default function BusinessesClient({
                 className="motion-press flex min-h-11 items-center gap-2 rounded-xl border border-brand-beige bg-brand-surface px-3 py-2 text-left text-xs font-bold text-brand-forest transition-colors hover:border-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
               >
                 <span aria-hidden>{categoryEmoji(c)}</span>
-                <span className="min-w-0 flex-1 truncate">{c}</span>
-                {categoryCounts[c] != null && (
-                  <span className="shrink-0 text-[10px] font-semibold text-brand-green">({categoryCounts[c]})</span>
-                )}
+                <span className="min-w-0 flex-1 break-words leading-tight">
+                  {c}
+                  {categoryCounts[c] != null && (
+                    <span className="ml-1 text-[10px] font-semibold text-brand-green">({categoryCounts[c]})</span>
+                  )}
+                </span>
               </button>
             ))}
           </div>
