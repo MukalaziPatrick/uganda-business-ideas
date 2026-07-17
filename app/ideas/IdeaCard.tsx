@@ -60,7 +60,7 @@ export default function IdeaCard({ idea }: { idea: BusinessIdea }) {
           onClick={() => setOpen(v => !v)}
           aria-expanded={open}
           aria-controls={panelId}
-          className="motion-press mt-3 min-h-9 w-full rounded-lg bg-brand-cream py-2 text-xs font-bold text-brand-forest transition-colors hover:bg-brand-beige/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+          className="motion-press mt-3 min-h-11 w-full rounded-lg bg-brand-cream py-2 text-xs font-bold text-brand-forest transition-colors hover:bg-brand-beige/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
         >
           What you need ({requirements.length}) {open ? "▴" : "▾"}
         </button>
