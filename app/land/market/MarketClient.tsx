@@ -147,7 +147,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
       <div className="bg-land-primary text-white py-8 px-4 text-center">
         <p className="font-medium mb-2">Want a surveyor-verified listing?</p>
         <Link href="/land/browse" className="inline-block bg-white text-land-primary font-semibold px-6 py-2 rounded-full hover:bg-land-cream/45 transition-colors text-sm">
-          Browse SafeLands ↗
+          Browse SafeLands verified listings →
         </Link>
       </div>
     </div>

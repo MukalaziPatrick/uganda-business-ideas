@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getFeaturedLandListings } from '@/lib/land/queries';
 import { LandListingCard } from './browse/LandListingCard';
+import SafeLandsAppActions from './SafeLandsAppActions';
 
 export const revalidate = 60;
 
@@ -37,7 +38,7 @@ export default async function LandHomePage() {
               href="/land/browse"
               className="motion-press bg-white text-land-primary font-semibold px-8 py-3 rounded-full shadow-lg shadow-land-forest/20 hover:bg-land-cream transition-colors"
             >
-              Browse Land
+              Browse SafeLands listings
             </Link>
             <Link
               href="/land/ask"
@@ -46,6 +47,7 @@ export default async function LandHomePage() {
               Ask about land
             </Link>
           </div>
+          <SafeLandsAppActions />
         </div>
       </section>
 

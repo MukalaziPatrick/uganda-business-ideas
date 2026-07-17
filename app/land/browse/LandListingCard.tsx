@@ -25,8 +25,12 @@ function TrustBadge({ stage }: { stage: string }) {
       </span>
     );
   }
-  // self_listed — no badge
-  return null;
+  // self_listed — neutral badge so the state is visible, not hidden
+  return (
+    <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-land-cream/80 text-land-forest">
+      📋 Self-listed
+    </span>
+  );
 }
 
 export function LandListingCard({ listing }: { listing: LandListing }) {

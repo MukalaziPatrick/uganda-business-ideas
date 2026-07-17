@@ -22,7 +22,7 @@ const SERVICES = [
   { href: "/ideas", emoji: "💡", name: "Business Ideas", tagline: "Proven ideas with real UGX costs" },
   { href: "/businesses", emoji: "💼", name: "Find Businesses", tagline: "Directory across all districts" },
   { href: "/jobs", emoji: "👷", name: "Jobs", tagline: "Find work or hire near you" },
-  { href: "/land", emoji: "🏞️", name: "Land", tagline: "Verified plots + market radar" },
+  { href: "/land", emoji: "🏞️", name: "Land", tagline: "SafeLands verified plots + market radar" },
   { href: "/laundry", emoji: "🧺", name: "Laundry", tagline: "Doorstep pickup & delivery" },
   { href: "/salons", emoji: "✂️", name: "Salons", tagline: "Book your next visit nearby" },
   { href: "/travel", emoji: "✈️", name: "Travel", tagline: "Stays & destinations in Uganda" },
