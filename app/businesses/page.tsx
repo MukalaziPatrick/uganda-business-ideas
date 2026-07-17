@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import type { Business } from "@/lib/supabase/types";
 import BusinessesClient from "./BusinessesClient";
+import { tallyByField } from "@/lib/businesses/counts";
 import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 60;
@@ -37,7 +38,7 @@ export default async function BusinessesPage({
 
   let query = supabase
     .from("businesses")
-    .select("id,name,category,region,district,town,whatsapp,phone,status")
+    .select("id,name,category,region,district,town,whatsapp,phone,status,claimed_at,source")
     .eq("status", "active")
     .order("created_at", { ascending: false })
     .limit(20);
@@ -47,20 +48,18 @@ export default async function BusinessesPage({
 
   const { data } = await query;
 
-  // Fetch per-region counts for the map (unfiltered)
-  const { data: regionRows } = await supabase
+  // Fetch per-region and per-category counts (unfiltered)
+  const { data: countRows } = await supabase
     .from("businesses")
-    .select("region")
+    .select("region,category")
     .eq("status", "active");
 
-  const regionCounts: Partial<Record<string, number>> = {};
-  for (const row of regionRows ?? []) {
-    regionCounts[row.region] = (regionCounts[row.region] ?? 0) + 1;
-  }
+  const regionCounts = tallyByField(countRows ?? [], "region");
+  const categoryCounts = tallyByField(countRows ?? [], "category");
 
   const businesses = (data ?? []) as Pick<
     Business,
-    "id" | "name" | "category" | "region" | "district" | "town" | "whatsapp" | "phone" | "status"
+    "id" | "name" | "category" | "region" | "district" | "town" | "whatsapp" | "phone" | "status" | "claimed_at" | "source"
   >[];
 
   return (
@@ -71,6 +70,7 @@ export default async function BusinessesPage({
       initialRegion={(region as Business["region"]) ?? ""}
       initialCategory={category}
       regionCounts={regionCounts}
+      categoryCounts={categoryCounts}
     />
   );
 }

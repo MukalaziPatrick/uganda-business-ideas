@@ -8,7 +8,7 @@ import { BUSINESS_CATEGORIES, categoryEmoji, UGANDA_REGIONS } from "@/app/data/b
 import type { UgandaRegion } from "@/app/data/businesses";
 import type { Business } from "@/lib/supabase/types";
 
-type BusinessCard = Pick<Business, "id" | "name" | "category" | "region" | "district" | "town" | "whatsapp" | "phone" | "status">;
+type BusinessCard = Pick<Business, "id" | "name" | "category" | "region" | "district" | "town" | "whatsapp" | "phone" | "status" | "claimed_at" | "source">;
 
 type Props = {
   initialBusinesses: BusinessCard[];
@@ -16,6 +16,7 @@ type Props = {
   initialRegion: string;
   initialCategory: string;
   regionCounts: Partial<Record<string, number>>;
+  categoryCounts: Partial<Record<string, number>>;
 };
 
 const PAGE_SIZE = 20;
@@ -33,6 +34,7 @@ export default function BusinessesClient({
   initialRegion,
   initialCategory,
   regionCounts,
+  categoryCounts,
 }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -84,7 +86,7 @@ export default function BusinessesClient({
     const supabase = getSupabase();
     let q = supabase
       .from("businesses")
-      .select("id,name,category,region,district,town,whatsapp,phone,status")
+      .select("id,name,category,region,district,town,whatsapp,phone,status,claimed_at,source")
       .eq("status", "active")
       .order("created_at", { ascending: false })
       .range(offset, offset + PAGE_SIZE - 1);
@@ -117,17 +119,6 @@ export default function BusinessesClient({
           placeholder="Search businesses..."
           className="flex-1 min-w-0 border border-brand-beige bg-white rounded-xl px-3.5 py-2 text-sm outline-none placeholder:text-brand-green/70 focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         />
-        <select
-          aria-label="Filter businesses by category"
-          value={category}
-          onChange={(e) => handleCategoryChange(e.target.value)}
-          className="border border-brand-beige rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
-        >
-          <option value="">All Categories</option>
-          {BUSINESS_CATEGORIES.map((c) => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
       </div>
 
       <div className="bg-brand-green/10 px-4 py-4 border-b border-brand-green/20">
@@ -155,7 +146,43 @@ export default function BusinessesClient({
         </div>
       </div>
 
+      {category === "" ? (
+        <div className="px-4 pt-5 max-w-2xl mx-auto">
+          <h2 className="mb-2 text-sm font-black text-brand-forest">Browse by category</h2>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {BUSINESS_CATEGORIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => handleCategoryChange(c)}
+                className="motion-press flex min-h-11 items-center gap-2 rounded-xl border border-brand-beige bg-brand-surface px-3 py-2 text-left text-xs font-bold text-brand-forest transition-colors hover:border-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+              >
+                <span aria-hidden>{categoryEmoji(c)}</span>
+                <span className="min-w-0 flex-1 truncate">{c}</span>
+                {categoryCounts[c] != null && (
+                  <span className="shrink-0 text-[10px] font-semibold text-brand-green">({categoryCounts[c]})</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="px-4 pt-4 max-w-2xl mx-auto">
+          <button
+            type="button"
+            onClick={() => handleCategoryChange("")}
+            aria-label={`Clear category filter ${category}`}
+            className="motion-press inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-forest px-4 text-xs font-bold text-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+          >
+            {categoryEmoji(category)} {category} ✕
+          </button>
+        </div>
+      )}
+
       <div className="px-4 py-5 max-w-2xl mx-auto">
+        <h2 className="mb-2 text-sm font-black text-brand-forest">
+          {category ? `${category} listings` : "Newest listings"}
+        </h2>
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-brand-green">
             {filtered.length} {filtered.length === 1 ? "business" : "businesses"}
@@ -173,7 +200,9 @@ export default function BusinessesClient({
         {filtered.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-brand-beige bg-brand-surface px-4 py-14 text-center text-brand-green">
             <p className="text-3xl mb-3">🔍</p>
-            <p className="text-sm font-semibold text-brand-forest">No businesses found.</p>
+            <p className="text-sm font-semibold text-brand-forest">
+              {category ? `No ${category} businesses listed yet.` : "No businesses found."}
+            </p>
             <p className="mt-1 text-xs">Try a different name, category or region.</p>
             <Link href="/businesses/register" className="mt-4 inline-block rounded-xl bg-brand-forest px-4 py-2 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green">
               Be the first to list one →
@@ -192,6 +221,9 @@ export default function BusinessesClient({
                     <p className="font-black text-brand-forest text-sm truncate">{b.name}</p>
                     <p className="text-xs text-brand-green mt-0.5">
                       {categoryEmoji(b.category)} {b.category} · {b.town ? `${b.town}, ` : ""}{b.district}
+                    </p>
+                    <p className="mt-1 text-[10px] font-semibold text-brand-green">
+                      {b.claimed_at ? "✓ Owner-managed" : b.source ? "Directory listing — details unverified" : "Self-listed"}
                     </p>
                   </div>
                   <span className="shrink-0 text-lg">{categoryEmoji(b.category)}</span>
