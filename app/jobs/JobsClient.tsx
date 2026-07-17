@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { UGANDA_DISTRICTS } from "@/lib/constants/skills";
+import { deriveJobFilterOptions, deriveDistricts, filterJobs } from "@/lib/jobs/filtering";
 
 type Job = {
   id: string; title: string; skill_category: string; district: string; town: string | null;
@@ -29,18 +29,24 @@ type Worker = {
 export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Worker[] }) {
   const [tab, setTab] = useState<"jobs" | "workers">("jobs");
   const [district, setDistrict] = useState("");
-  const [skill, setSkill] = useState("");
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [payStatedOnly, setPayStatedOnly] = useState(false);
   const [now] = useState(() => Date.now());
 
-  const filteredJobs = jobs.filter(j =>
-    (!district || j.district === district) &&
-    (!skill || j.skill_category.toLowerCase().includes(skill.toLowerCase()) || j.title.toLowerCase().includes(skill.toLowerCase()))
-  );
+  const { categories, jobTypes } = useMemo(() => deriveJobFilterOptions(jobs), [jobs]);
+  const jobDistricts = useMemo(() => deriveDistricts(jobs), [jobs]);
+  const workerDistricts = useMemo(() => deriveDistricts(workers), [workers]);
+
+  const filteredJobs = filterJobs(jobs, { category, district, jobType, payStatedOnly, search });
 
   const filteredWorkers = workers.filter(w =>
     (!district || w.district === district) &&
-    (!skill || w.skill_primary.toLowerCase().includes(skill.toLowerCase()))
+    (!search || w.skill_primary.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const anyJobFilterActive = Boolean(category || district || jobType || payStatedOnly || search);
 
   function whatsappHref(phone: string, name: string) {
     const clean = phone.replace(/\D/g, "");
@@ -111,18 +117,63 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         </div>
 
         {/* Filters */}
-        <div className="flex gap-2 mb-5">
-          <input value={skill} onChange={e => setSkill(e.target.value)}
-            aria-label={tab === "jobs" ? "Search jobs by skill or title" : "Search workers by skill"}
-            placeholder={tab === "jobs" ? "Search skill or title..." : "Search skill..."}
-            className="flex-1 rounded-xl border border-brand-beige bg-white px-3.5 py-2 text-sm placeholder:text-brand-green/70 focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60" />
-          <select value={district} onChange={e => setDistrict(e.target.value)}
-            aria-label="Filter by district"
-            className="rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
-            <option value="">All districts</option>
-            {UGANDA_DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
-          </select>
-        </div>
+        {tab === "jobs" ? (
+          <div className="mb-5 flex flex-col gap-2">
+            <input value={search} onChange={e => setSearch(e.target.value)}
+              aria-label="Search jobs by title or category"
+              placeholder="Search jobs..."
+              className="w-full min-h-11 rounded-xl border border-brand-beige bg-white px-3.5 text-sm placeholder:text-brand-green/70 focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60" />
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+              <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
+                Category
+                <select value={category} onChange={e => setCategory(e.target.value)}
+                  className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
+                  <option value="">All categories</option>
+                  {categories.map(c => <option key={c.value} value={c.value}>{c.value} ({c.count})</option>)}
+                </select>
+              </label>
+              <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
+                District
+                <select value={district} onChange={e => setDistrict(e.target.value)}
+                  className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
+                  <option value="">All districts</option>
+                  {jobDistricts.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </label>
+              {jobTypes.length > 0 && (
+                <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
+                  Job type
+                  <select value={jobType} onChange={e => setJobType(e.target.value)}
+                    className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
+                    <option value="">All types</option>
+                    {jobTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </label>
+              )}
+              <label className="flex min-h-11 items-center gap-2 self-end rounded-xl border border-brand-beige bg-white px-3 text-xs font-bold text-brand-forest">
+                <input type="checkbox" checked={payStatedOnly} onChange={e => setPayStatedOnly(e.target.checked)}
+                  className="accent-brand-forest" />
+                Stated pay only
+              </label>
+            </div>
+            <p aria-live="polite" className="text-xs font-semibold text-brand-green">
+              {filteredJobs.length} of {jobs.length} jobs
+            </p>
+          </div>
+        ) : (
+          <div className="flex gap-2 mb-5">
+            <input value={search} onChange={e => setSearch(e.target.value)}
+              aria-label="Search workers by skill"
+              placeholder="Search skill..."
+              className="flex-1 min-h-11 rounded-xl border border-brand-beige bg-white px-3.5 py-2 text-sm placeholder:text-brand-green/70 focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60" />
+            <select value={district} onChange={e => setDistrict(e.target.value)}
+              aria-label="Filter by district"
+              className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 py-2 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
+              <option value="">All districts</option>
+              {workerDistricts.map(d => <option key={d} value={d}>{d}</option>)}
+            </select>
+          </div>
+        )}
 
         {/* Jobs list */}
         {tab === "jobs" && (
@@ -135,6 +186,15 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                 <Link href="/jobs/post" className="rounded-xl bg-brand-gold px-5 py-2 text-sm font-bold text-brand-forest">
                   Post a Job →
                 </Link>
+                {anyJobFilterActive && (
+                  <div>
+                    <button type="button"
+                      onClick={() => { setCategory(""); setDistrict(""); setJobType(""); setPayStatedOnly(false); setSearch(""); }}
+                      className="motion-press mt-3 rounded-xl border border-brand-forest px-5 py-2 text-sm font-bold text-brand-forest">
+                      Clear filters
+                    </button>
+                  </div>
+                )}
               </div>
             )}
             {filteredJobs.map(job => (
@@ -163,6 +223,9 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                       <p className="text-xs font-black text-brand-forest mt-1">
                         UGX {job.pay_amount.toLocaleString()}{job.pay_period ? `/${job.pay_period}` : ""}
                       </p>
+                    )}
+                    {!job.pay_amount && (
+                      <p className="text-xs text-brand-green/60 mt-1">Pay not stated</p>
                     )}
                     <div className="flex flex-wrap gap-1 mt-2">
                       <span className="rounded-full bg-brand-cream px-2 py-0.5 text-[10px] font-semibold text-brand-forest">
