@@ -14,6 +14,9 @@ const USES = [
   { value: 'commercial', label: '🏢 Commercial' },
 ];
 
+const selectClass =
+  'min-h-11 w-full rounded-xl border border-land-mint/50 bg-white px-3 text-sm text-land-ink focus:outline-none focus:border-land-primary focus:ring-2 focus:ring-land-mint/60';
+
 export function LandFilterChips() {
   const router = useRouter();
   const pathname = usePathname();
@@ -21,7 +24,7 @@ export function LandFilterChips() {
 
   function setFilter(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (params.get(key) === value) {
+    if (!value || params.get(key) === value) {
       params.delete(key);
     } else {
       params.set(key, value);
@@ -29,70 +32,64 @@ export function LandFilterChips() {
     router.push(`${pathname}?${params.toString()}`);
   }
 
-  const activeDistrict = searchParams.get('district');
-  const activeType = searchParams.get('land_type');
-  const activeUse = searchParams.get('intended_use');
-  const activeVerified = searchParams.get('verification_stage');
+  const activeDistrict = searchParams.get('district') ?? '';
+  const activeType = searchParams.get('land_type') ?? '';
+  const activeUse = searchParams.get('intended_use') ?? '';
+  const verifiedOnly = searchParams.get('verification_stage') === 'verified';
+  const activeCount =
+    Number(Boolean(activeDistrict)) + Number(Boolean(activeType)) +
+    Number(Boolean(activeUse)) + Number(verifiedOnly) +
+    Number(Boolean(searchParams.get('q')));
+
+  function clearAll() {
+    router.push(pathname);
+  }
 
   return (
-    <div className="overflow-x-auto pb-2">
-      <div className="flex gap-2 min-w-max px-4">
-        {/* Verified filter */}
+    <div className="px-4 pb-3">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-end">
+        <label className="flex flex-col gap-1 text-[11px] font-bold text-land-forest/85">
+          District
+          <select value={activeDistrict} onChange={(e) => setFilter('district', e.target.value)} className={selectClass}>
+            <option value="">All districts</option>
+            {DISTRICTS.map((d) => <option key={d} value={d}>{d}</option>)}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1 text-[11px] font-bold text-land-forest/85">
+          Land type
+          <select value={activeType} onChange={(e) => setFilter('land_type', e.target.value)} className={selectClass}>
+            <option value="">All types</option>
+            {LAND_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1 text-[11px] font-bold text-land-forest/85">
+          Use
+          <select value={activeUse} onChange={(e) => setFilter('intended_use', e.target.value)} className={selectClass}>
+            <option value="">Any use</option>
+            {USES.map((u) => <option key={u.value} value={u.value}>{u.label}</option>)}
+          </select>
+        </label>
         <button
+          type="button"
           onClick={() => setFilter('verification_stage', 'verified')}
-          className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
-            activeVerified === 'verified'
-              ? 'bg-land-primary text-white border-land-primary'
-              : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
+          aria-pressed={verifiedOnly}
+          className={`motion-press min-h-11 rounded-xl border px-3 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-mint ${
+            verifiedOnly
+              ? 'border-land-primary bg-land-primary text-white'
+              : 'border-land-mint/50 bg-white text-land-ink/85 hover:border-land-primary'
           }`}
         >
           ✅ Verified only
         </button>
-
-        {/* District chips */}
-        {DISTRICTS.map((d) => (
+        {activeCount > 0 && (
           <button
-            key={d}
-            onClick={() => setFilter('district', d)}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
-              activeDistrict === d
-                ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
-            }`}
+            type="button"
+            onClick={clearAll}
+            className="motion-press min-h-11 px-2 text-xs font-bold text-land-primary underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-mint"
           >
-            {d}
+            Clear filters ({activeCount})
           </button>
-        ))}
-
-        {/* Type chips */}
-        {LAND_TYPES.map((t) => (
-          <button
-            key={t.value}
-            onClick={() => setFilter('land_type', t.value)}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
-              activeType === t.value
-                ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-
-        {/* Use chips */}
-        {USES.map((u) => (
-          <button
-            key={u.value}
-            onClick={() => setFilter('intended_use', u.value)}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
-              activeUse === u.value
-                ? 'bg-land-primary text-white border-land-primary'
-                : 'bg-white text-land-ink/85 border-land-mint/50 hover:border-land-primary'
-            }`}
-          >
-            {u.label}
-          </button>
-        ))}
+        )}
       </div>
     </div>
   );
