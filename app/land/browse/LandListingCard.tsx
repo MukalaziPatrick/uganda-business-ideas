@@ -35,24 +35,36 @@ function TrustBadge({ stage }: { stage: string }) {
 
 export function LandListingCard({ listing }: { listing: LandListing }) {
   const photo = listing.photos?.[0];
+  const listingHref = `/land/browse/${listing.id}`;
 
   return (
-    <Link href={`/land/browse/${listing.id}`} className="group block bg-white rounded-2xl border border-land-mint/50 overflow-hidden hover:shadow-md transition-shadow">
+    <article className="group overflow-hidden rounded-2xl border border-land-mint/50 bg-white transition-shadow hover:shadow-md">
       {/* Photo */}
-      <div className="aspect-[4/3] bg-land-cream/60 overflow-hidden">
+      <Link
+        href={listingHref}
+        aria-label={`View ${listing.title}`}
+        className="block aspect-[4/3] overflow-hidden bg-land-cream/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary focus-visible:ring-inset"
+      >
         {photo ? (
-          <Image src={photo} alt={listing.title} width={600} height={450} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Image src={photo} alt="" width={600} height={450} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl bg-land-cream/60">🏞</div>
+          <span className="flex h-full w-full items-center justify-center bg-land-cream/60 text-4xl" aria-hidden>🏞</span>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-4 pr-16 sm:pr-4">
         <div className="mb-2">
           <TrustBadge stage={listing.verification_stage} />
         </div>
-        <h3 className="font-semibold text-land-ink text-sm line-clamp-2 mb-1">{listing.title}</h3>
+        <h3 className="mb-1 line-clamp-2 text-sm font-semibold text-land-ink">
+          <Link
+            href={listingHref}
+            className="inline-flex min-h-11 items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
+          >
+            {listing.title}
+          </Link>
+        </h3>
         <p className="text-xs text-land-forest/75 mb-3">
           {listing.district}{listing.parish ? `, ${listing.parish}` : ''} ·
           {listing.size_acres ? ` ${listing.size_acres} acres` : ''}
@@ -60,24 +72,18 @@ export function LandListingCard({ listing }: { listing: LandListing }) {
         <div className="flex items-center justify-between">
           <span className="font-bold text-land-primary text-sm">{formatPrice(listing.price_ugx)}</span>
           {listing.agent?.whatsapp && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open(
-                  `https://wa.me/${listing.agent!.whatsapp!.replace(/\D/g, '')}`,
-                  '_blank',
-                  'noopener,noreferrer'
-                );
-              }}
-              className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/50 transition-colors"
+            <a
+              href={`https://wa.me/${listing.agent.whatsapp.replace(/\D/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Contact the agent about ${listing.title} on WhatsApp (opens in a new tab)`}
+              className="inline-flex min-h-11 items-center rounded-full border border-land-mint/50 px-3 text-xs text-land-primary transition-colors hover:bg-land-cream/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
             >
               📲 WhatsApp
-            </button>
+            </a>
           )}
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

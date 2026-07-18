@@ -39,7 +39,7 @@ export default function IdeaCard({ idea }: { idea: BusinessIdea }) {
       <h3 className="mb-1 text-sm font-black leading-snug text-brand-forest">
         <Link
           href={`/ideas/${idea.slug}`}
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+          className="inline-flex min-h-11 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
         >
           {idea.title}
         </Link>
@@ -80,7 +80,7 @@ export default function IdeaCard({ idea }: { idea: BusinessIdea }) {
           </p>
           <Link
             href={`/ideas/${idea.slug}`}
-            className="mt-2 inline-block text-xs font-bold text-brand-forest underline decoration-brand-gold decoration-2 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+            className="mt-2 inline-flex min-h-11 items-center text-xs font-bold text-brand-forest underline decoration-brand-gold decoration-2 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
           >
             View full guide →
           </Link>

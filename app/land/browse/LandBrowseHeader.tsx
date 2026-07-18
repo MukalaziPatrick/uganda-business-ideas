@@ -39,7 +39,7 @@ export function LandBrowseHeader() {
     <>
       <div className="bg-white border-b border-land-mint/50 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <Link href="/land" className="text-land-primary font-bold text-lg shrink-0">🏞 Land</Link>
+          <Link href="/land" className="inline-flex min-h-11 shrink-0 items-center rounded-lg text-lg font-bold text-land-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-mint">🏞 Land</Link>
           <Suspense>
             <LandSearchForm />
           </Suspense>

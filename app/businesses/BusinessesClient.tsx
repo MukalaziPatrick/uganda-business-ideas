@@ -117,7 +117,7 @@ export default function BusinessesClient({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search businesses..."
-          className="flex-1 min-w-0 border border-brand-beige bg-white rounded-xl px-3.5 py-2 text-sm outline-none placeholder:text-brand-green/70 focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
+          className="min-h-11 min-w-0 flex-1 rounded-xl border border-brand-beige bg-white px-3.5 text-sm outline-none placeholder:text-brand-green/70 focus:border-brand-forest focus:ring-2 focus:ring-brand-gold/40"
         />
       </div>
 
@@ -132,7 +132,7 @@ export default function BusinessesClient({
               <button
                 key={r}
                 onClick={() => handleRegionClick(r)}
-                className={`motion-press shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
+                className={`motion-press min-h-11 shrink-0 rounded-full px-4 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   region === r
                     ? "bg-brand-gold text-brand-forest shadow-sm"
                     : "bg-brand-green text-white hover:bg-brand-forest"
@@ -193,7 +193,7 @@ export default function BusinessesClient({
           </p>
           <Link
             href="/businesses/register"
-            className="text-xs font-bold text-brand-forest underline underline-offset-2"
+            className="inline-flex min-h-11 items-center text-xs font-bold text-brand-forest underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
           >
             + List your business
           </Link>
@@ -206,39 +206,46 @@ export default function BusinessesClient({
               {category ? `No ${category} businesses listed yet.` : "No businesses found."}
             </p>
             <p className="mt-1 text-xs">Try a different name, category or region.</p>
-            <Link href="/businesses/register" className="mt-4 inline-block rounded-xl bg-brand-forest px-4 py-2 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green">
+            <Link href="/businesses/register" className="mt-4 inline-flex min-h-11 items-center rounded-xl bg-brand-forest px-4 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
               Be the first to list one →
             </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {filtered.map((b) => (
-              <Link
+              <article
                 key={b.id}
-                href={`/businesses/${b.id}`}
-                className="motion-card block bg-brand-surface rounded-2xl border border-brand-beige p-4 shadow-sm shadow-brand-forest/5 hover:border-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
+                className="motion-card rounded-2xl border border-brand-beige bg-brand-surface p-4 shadow-sm shadow-brand-forest/5 hover:border-brand-gold"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="font-black text-brand-forest text-sm truncate">{b.name}</p>
-                    <p className="text-xs text-brand-green mt-0.5">
-                      {categoryEmoji(b.category)} {b.category} · {b.town ? `${b.town}, ` : ""}{b.district}
-                    </p>
-                    <p className="mt-1 text-[10px] font-semibold text-brand-green">
-                      {b.claimed_at ? "✓ Owner-managed" : b.source ? "Directory listing — details unverified" : "Self-listed"}
-                    </p>
+                <Link
+                  href={`/businesses/${b.id}`}
+                  className="block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-black text-brand-forest">{b.name}</p>
+                      <p className="mt-0.5 text-xs text-brand-green">
+                        {categoryEmoji(b.category)} {b.category} · {b.town ? `${b.town}, ` : ""}{b.district}
+                      </p>
+                      <p className="mt-1 text-[10px] font-semibold text-brand-green">
+                        {b.claimed_at ? "✓ Owner-managed" : b.source ? "Directory listing — details unverified" : "Self-listed"}
+                      </p>
+                    </div>
+                    <span className="shrink-0 text-lg">{categoryEmoji(b.category)}</span>
                   </div>
-                  <span className="shrink-0 text-lg">{categoryEmoji(b.category)}</span>
-                </div>
+                </Link>
                 {b.whatsapp && (
-                  <div
-                    onClick={(e) => { e.preventDefault(); window.open(`https://wa.me/${b.whatsapp!.replace(/\D/g, "")}`, "_blank"); }}
-                    className="motion-press mt-3 w-full rounded-lg bg-brand-green py-2 text-center text-xs font-bold text-white transition-colors hover:bg-brand-forest"
+                  <a
+                    href={`https://wa.me/${b.whatsapp.replace(/\D/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Contact ${b.name} on WhatsApp (opens in a new tab)`}
+                    className="motion-press mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-brand-green px-4 text-center text-xs font-bold text-white transition-colors hover:bg-brand-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                   >
                     💬 WhatsApp
-                  </div>
+                  </a>
                 )}
-              </Link>
+              </article>
             ))}
           </div>
         )}

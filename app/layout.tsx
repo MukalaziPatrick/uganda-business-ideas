@@ -70,7 +70,7 @@ export default function RootLayout({
       <body className={`${businessSans.variable} ${businessSerif.variable}`}>
         <nav className="sticky top-0 z-50 border-b border-brand-gold/20 bg-brand-forest px-4 py-3 shadow-sm shadow-brand-forest/10">
           <div className="max-w-5xl mx-auto flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link href="/" className="motion-press mr-3 shrink-0 whitespace-nowrap text-sm font-black text-brand-cream">
+            <Link href="/" className="motion-press mr-3 inline-flex min-h-11 shrink-0 items-center whitespace-nowrap text-sm font-black text-brand-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
               🇺🇬 Business <span className="text-brand-gold">Yoo</span>
             </Link>
             {[
@@ -86,7 +86,7 @@ export default function RootLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`motion-press shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
+                className={`motion-press inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-full px-3 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${
                   item.highlight
                     ? 'bg-brand-gold text-brand-forest font-bold hover:bg-brand-gold/90'
                     : 'text-brand-cream/80 hover:bg-brand-green hover:text-white'

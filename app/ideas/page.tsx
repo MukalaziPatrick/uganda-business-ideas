@@ -24,7 +24,7 @@ export default async function IdeasPage() {
     <main className="min-h-screen bg-brand-cream text-brand-forest">
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:px-10">
         <header className="flex flex-col gap-4 border-b border-brand-beige pb-6 sm:flex-row sm:items-center sm:justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href="/" className="flex min-h-11 items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-forest text-[11px] font-black text-brand-gold">
               UBI
             </div>
@@ -35,19 +35,19 @@ export default async function IdeasPage() {
           <div className="flex flex-wrap gap-2">
             <Link
               href="/start"
-              className="motion-press rounded-xl bg-brand-forest px-4 py-2 text-[13px] font-bold text-brand-cream shadow-sm transition-colors hover:bg-brand-green"
+              className="motion-press inline-flex min-h-11 items-center rounded-xl bg-brand-forest px-4 text-[13px] font-bold text-brand-cream shadow-sm transition-colors hover:bg-brand-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
             >
               Get help starting
             </Link>
             <Link
               href="/guides"
-              className="rounded-xl border border-brand-beige bg-white px-4 py-2 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-cream/60"
+              className="inline-flex min-h-11 items-center rounded-xl border border-brand-beige bg-white px-4 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-cream/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
             >
               Guides
             </Link>
             <Link
               href="/advertise"
-              className="rounded-xl border border-brand-beige bg-white px-4 py-2 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-cream/60"
+              className="inline-flex min-h-11 items-center rounded-xl border border-brand-beige bg-white px-4 text-[13px] font-semibold text-brand-green shadow-sm hover:bg-brand-cream/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
             >
               Advertise
             </Link>

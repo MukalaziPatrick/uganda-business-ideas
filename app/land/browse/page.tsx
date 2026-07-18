@@ -54,7 +54,7 @@ export default async function LandBrowsePage({
         </Suspense>
 
         <details className="mb-4 rounded-lg border border-land-mint/50 bg-land-cream/30 px-4 py-3 text-sm text-land-forest/85">
-          <summary className="cursor-pointer font-medium text-land-ink select-none">
+          <summary className="min-h-11 cursor-pointer py-3 font-medium text-land-ink select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary">
             How trust works here
           </summary>
           <ul className="mt-3 space-y-2 list-none">
@@ -72,7 +72,7 @@ export default async function LandBrowsePage({
             <p className="text-land-forest/75 text-sm mb-6">Save your search and we&apos;ll WhatsApp you when something matches.</p>
             <Link
               href="/land/browse"
-              className="text-land-primary font-medium text-sm hover:underline"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-land-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
             >
               Clear filters
             </Link>
