@@ -81,18 +81,18 @@ export default function BusinessRegisterForm() {
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
-        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
+        <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
           Listing submitted!
         </h2>
-        <p className="text-sm text-gray-600 leading-relaxed">
+        <p className="text-sm text-brand-green leading-relaxed">
           Thanks! We&apos;ll review and publish your listing within 24 hours.
         </p>
       </div>
     );
   }
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
-  const labelClass = "block text-xs font-bold text-gray-600 mb-1";
+  const fieldClass = "w-full border border-brand-beige rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
+  const labelClass = "block text-xs font-bold text-brand-green mb-1";
   const sectionClass = "space-y-3";
 
   return (
@@ -104,7 +104,7 @@ export default function BusinessRegisterForm() {
       )}
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Business Details</h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-brand-beige pb-1">Business Details</h2>
         <div>
           <label className={labelClass}>Business name *</label>
           <input className={fieldClass} value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Mama's Kitchen" />
@@ -134,7 +134,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Location *</h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-brand-beige pb-1">Location *</h2>
         <div>
           <label className={labelClass}>Region *</label>
           <select className={fieldClass} value={region} onChange={e => { setRegion(e.target.value as UgandaRegion); setDistrict(""); }}>
@@ -156,7 +156,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Contact <span className="font-normal text-brand-green">(at least one required)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-brand-beige pb-1">Contact <span className="font-normal text-brand-green">(at least one required)</span></h2>
         <div>
           <label className={labelClass}>WhatsApp number</label>
           <input className={fieldClass} value={whatsapp} onChange={e => setWhatsapp(e.target.value)} placeholder="+256 7XX XXX XXX" type="tel" />
@@ -168,7 +168,7 @@ export default function BusinessRegisterForm() {
       </div>
 
       <div className={sectionClass}>
-        <h2 className="text-sm font-black text-brand-forest border-b border-gray-200 pb-1">Online Presence <span className="font-normal text-brand-green">(optional)</span></h2>
+        <h2 className="text-sm font-black text-brand-forest border-b border-brand-beige pb-1">Online Presence <span className="font-normal text-brand-green">(optional)</span></h2>
         <div>
           <label className={labelClass}>Website</label>
           <input className={fieldClass} value={website} onChange={e => setWebsite(e.target.value)} placeholder="https://yourwebsite.com" type="url" />

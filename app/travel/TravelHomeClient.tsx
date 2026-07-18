@@ -23,12 +23,13 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Hero */}
-      <div className="bg-gradient-to-br from-brand-forest to-brand-green px-4 pt-8 pb-6 text-center text-white">
-        <h1 className="text-3xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="motion-page relative overflow-hidden bg-gradient-to-br from-brand-forest to-brand-green px-4 pt-10 pb-8 text-center text-white">
+        <div aria-hidden className="pointer-events-none absolute -right-14 -top-20 h-56 w-56 rounded-full bg-brand-gold/15 blur-3xl" />
+        <h1 className="relative text-3xl font-black text-brand-gold mb-1 sm:text-4xl" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
           🇺🇬 ZuulaUganda
         </h1>
-        <p className="text-sm text-white/80 mb-4">Discover where to stay across Uganda</p>
-        <div className="max-w-md mx-auto bg-white rounded-xl px-4 py-2.5 flex items-center gap-2 shadow-sm">
+        <p className="relative text-sm text-brand-cream/85 mb-5">Discover where to stay across Uganda</p>
+        <div className="relative max-w-md mx-auto bg-white rounded-xl px-4 py-2.5 flex items-center gap-2 shadow-lg shadow-brand-forest/10 focus-within:ring-2 focus-within:ring-brand-gold">
           <span className="text-brand-green">🔍</span>
           <input
             type="search"
@@ -36,7 +37,7 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search destination..."
-            className="flex-1 text-sm text-gray-700 outline-none bg-transparent"
+            className="flex-1 text-sm text-brand-forest/90 outline-none bg-transparent"
           />
         </div>
       </div>
@@ -56,7 +57,7 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
             <Link
               key={d.id}
               href={`/travel/destinations/${d.slug}`}
-              className={`relative rounded-xl bg-gradient-to-br ${DESTINATION_GRADIENTS[i % DESTINATION_GRADIENTS.length]} p-4 text-white min-h-[90px] flex flex-col justify-end`}
+              className={`motion-card relative overflow-hidden rounded-2xl bg-gradient-to-br ${DESTINATION_GRADIENTS[i % DESTINATION_GRADIENTS.length]} p-4 text-white min-h-[100px] flex flex-col justify-end shadow-sm shadow-brand-forest/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2`}
             >
               {d.is_featured && (
                 <span className="absolute top-2 right-2 bg-brand-gold text-brand-forest text-[9px] font-black px-2 py-0.5 rounded-full">
@@ -73,9 +74,10 @@ export default function TravelHomeClient({ destinations }: { destinations: Trave
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-brand-green">
-            <p className="text-2xl mb-2">🗺️</p>
-            <p className="text-sm">No destinations found for &ldquo;{search}&rdquo;</p>
+          <div className="rounded-2xl border border-dashed border-brand-beige bg-brand-surface px-4 py-12 text-center text-brand-green">
+            <p className="text-3xl mb-3">🗺️</p>
+            <p className="text-sm font-semibold text-brand-forest">No destinations found for &ldquo;{search}&rdquo;</p>
+            <p className="mt-1 text-xs">Try another destination or region name.</p>
           </div>
         )}
       </div>

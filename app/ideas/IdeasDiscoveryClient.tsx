@@ -4,14 +4,24 @@ import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { BusinessIdea, IdeaCategory, IdeaBudgetBand, IdeaRegion } from "@/lib/supabase/ideas-types";
+import {
+  filterAndSortIdeas,
+  countActiveFilters,
+  validCategory,
+  validBudget,
+  validRegion,
+  validSort,
+  type SortOption,
+} from "@/lib/ideas/filtering";
+import IdeaCard from "./IdeaCard";
 
 type IdeasDiscoveryClientProps = { ideas: BusinessIdea[] };
-
-type SortOption = "demandScore" | "startupEaseScore" | "supplierPotentialScore" | "title";
 
 const categoryOptions: Array<"All" | IdeaCategory> = ["All", "Agriculture", "Food", "Retail", "Services", "Digital"];
 
 const budgetOptions: Array<"All" | IdeaBudgetBand> = ["All", "under_200k", "200k_500k", "500k_2m", "above_2m"];
+
+const regionOptions: Array<"All" | IdeaRegion> = ["All", "Central", "Eastern", "Northern", "Western"];
 
 const budgetLabels: Record<IdeaBudgetBand, string> = {
   under_200k: "Under 200k",
@@ -27,41 +37,8 @@ const sortLabels: Record<SortOption, string> = {
   title: "A–Z",
 };
 
-function categoryEmoji(category: string): string {
-  const map: Record<string, string> = {
-    Agriculture: "🌾", Food: "🍽️", Retail: "🛒", Services: "🔧", Digital: "💻",
-  };
-  return map[category] ?? "💡";
-}
-
-function getSortScore(idea: BusinessIdea, sort: SortOption) {
-  if (sort === "demandScore") return idea.scoring_demand ?? 0;
-  if (sort === "startupEaseScore") return idea.scoring_ease ?? 0;
-  if (sort === "supplierPotentialScore") return idea.scoring_supplier ?? 0;
-  return 0;
-}
-
-function validCategory(v: string | null): "All" | IdeaCategory {
-  if (v && (categoryOptions as string[]).includes(v)) return v as IdeaCategory;
-  return "All";
-}
-
-function validBudget(v: string | null): "All" | IdeaBudgetBand {
-  if (v && (budgetOptions as string[]).includes(v)) return v as IdeaBudgetBand;
-  return "All";
-}
-
-function validRegion(v: string | null): "All" | IdeaRegion {
-  const regions: Array<"All" | IdeaRegion> = ["All", "Central", "Eastern", "Northern", "Western"];
-  if (v && (regions as string[]).includes(v)) return v as IdeaRegion;
-  return "All";
-}
-
-function validSort(v: string | null): SortOption {
-  const sorts: SortOption[] = ["demandScore", "startupEaseScore", "supplierPotentialScore", "title"];
-  if (v && (sorts as string[]).includes(v)) return v as SortOption;
-  return "demandScore";
-}
+const selectClass =
+  "min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm text-brand-forest outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40";
 
 export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProps) {
   const router = useRouter();
@@ -108,104 +85,93 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
     router.replace("?", { scroll: false });
   }
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return ideas
-      .filter(idea => {
-        const matchSearch = !q || idea.title.toLowerCase().includes(q) || idea.description.toLowerCase().includes(q);
-        const matchCat = category === "All" || idea.category === category;
-        const matchBudget = budget === "All" || idea.budget_band === budget;
-        const matchRegion = region === "All" || idea.regions.includes(region);
-        return matchSearch && matchCat && matchBudget && matchRegion;
-      })
-      .sort((a, b) => {
-        if (sort === "title") return a.title.localeCompare(b.title);
-        return getSortScore(b, sort) - getSortScore(a, sort);
-      });
-  }, [ideas, search, category, budget, sort, region]);
+  const filtered = useMemo(
+    () => filterAndSortIdeas(ideas, { q: search, category, budget, region, sort }),
+    [ideas, search, category, budget, sort, region]
+  );
+
+  const activeFilters = countActiveFilters({ q: search, category, budget, region });
 
   const [featured, ...rest] = filtered;
 
   return (
     <div>
-      {/* Region filter */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-hide">
-        {(["All", "Central", "Eastern", "Northern", "Western"] as Array<"All" | IdeaRegion>).map((r) => (
-          <button
-            key={r}
-            onClick={() => handleRegion(r)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
-              region === r
-                ? "bg-brand-gold text-brand-forest"
-                : "bg-brand-green text-white hover:bg-brand-forest"
-            }`}
-          >
-            {r === "All" ? "All Regions" : r}
-          </button>
-        ))}
-      </div>
-
       {/* Search bar */}
-      <div className="relative mb-4">
+      <div className="relative mb-3">
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-green">🔍</span>
         <input
           aria-label="Search business ideas"
           value={search}
           onChange={e => handleSearch(e.target.value)}
           placeholder="Search poultry, soap, digital, food..."
-          className="w-full rounded-2xl border border-brand-beige bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-brand-forest focus:ring-2 focus:ring-brand-forest/10"
+          className="w-full rounded-2xl border border-brand-beige bg-brand-surface py-3 pl-10 pr-4 text-sm shadow-sm outline-none placeholder:text-brand-green/70 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40"
         />
       </div>
 
-      {/* Category chips */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-2 scrollbar-hide">
-        {categoryOptions.map(opt => (
-          <button
-            key={opt}
-            onClick={() => handleCategory(opt)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
-              category === opt
-                ? "bg-brand-forest text-brand-gold"
-                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
-            }`}
+      {/* Filter selects: 2×2 on phones, one row on desktop */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        <label className="flex basis-[calc(50%-0.25rem)] flex-col gap-1 text-[11px] font-bold text-brand-green sm:basis-auto">
+          Category
+          <select
+            value={category}
+            onChange={e => handleCategory(e.target.value as "All" | IdeaCategory)}
+            className={selectClass}
           >
-            {opt === "All" ? "All" : `${categoryEmoji(opt)} ${opt}`}
-          </button>
-        ))}
-      </div>
-
-      {/* Budget chips */}
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide">
-        {budgetOptions.map(opt => (
-          <button
-            key={opt}
-            onClick={() => handleBudget(opt)}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${
-              budget === opt
-                ? "bg-brand-forest text-brand-gold"
-                : "bg-white border border-brand-beige text-brand-forest hover:border-brand-forest"
-            }`}
+            {categoryOptions.map(opt => (
+              <option key={opt} value={opt}>{opt === "All" ? "All categories" : opt}</option>
+            ))}
+          </select>
+        </label>
+        <label className="flex basis-[calc(50%-0.25rem)] flex-col gap-1 text-[11px] font-bold text-brand-green sm:basis-auto">
+          Budget
+          <select
+            value={budget}
+            onChange={e => handleBudget(e.target.value as "All" | IdeaBudgetBand)}
+            className={selectClass}
           >
-            {opt === "All" ? "All budgets" : budgetLabels[opt as IdeaBudgetBand]}
-          </button>
-        ))}
-      </div>
-
-      {/* Sort + count */}
-      <div className="flex items-center justify-between mb-5 text-xs text-brand-green font-semibold">
-        <span>Showing {filtered.length} of {ideas.length} ideas{region !== "All" ? ` · ${region} Region` : ""}</span>
-        <label className="flex items-center gap-1.5">
-          Sort:
+            {budgetOptions.map(opt => (
+              <option key={opt} value={opt}>{opt === "All" ? "All budgets" : budgetLabels[opt as IdeaBudgetBand]}</option>
+            ))}
+          </select>
+        </label>
+        <label className="flex basis-[calc(50%-0.25rem)] flex-col gap-1 text-[11px] font-bold text-brand-green sm:basis-auto">
+          Region
+          <select
+            value={region}
+            onChange={e => handleRegion(e.target.value as "All" | IdeaRegion)}
+            className={selectClass}
+          >
+            {regionOptions.map(opt => (
+              <option key={opt} value={opt}>{opt === "All" ? "All regions" : opt}</option>
+            ))}
+          </select>
+        </label>
+        <label className="flex basis-[calc(50%-0.25rem)] flex-col gap-1 text-[11px] font-bold text-brand-green sm:basis-auto">
+          Sort by
           <select
             value={sort}
             onChange={e => handleSort(e.target.value as SortOption)}
-            className="rounded-lg border border-brand-beige bg-white px-2 py-1 text-xs outline-none focus:border-brand-forest"
+            className={selectClass}
           >
             {(Object.keys(sortLabels) as SortOption[]).map(s => (
               <option key={s} value={s}>{sortLabels[s]}</option>
             ))}
           </select>
         </label>
+      </div>
+
+      {/* Result count + clear */}
+      <div className="mb-5 flex items-center justify-between text-xs font-semibold text-brand-green">
+        <span>Showing {filtered.length} of {ideas.length} ideas{region !== "All" ? ` · ${region} Region` : ""}</span>
+        {activeFilters > 0 && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="motion-press font-bold text-brand-forest underline decoration-brand-gold decoration-2 underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+          >
+            Clear filters ({activeFilters})
+          </button>
+        )}
       </div>
 
       {/* Empty state */}
@@ -216,7 +182,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
           <p className="text-sm text-brand-green">Try clearing a filter or using a broader term.</p>
           <button
             onClick={clearFilters}
-            className="mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold"
+            className="motion-press mt-4 rounded-xl bg-brand-forest px-5 py-2 text-sm font-bold text-brand-gold transition-colors hover:bg-brand-green"
           >
             Clear filters
           </button>
@@ -227,7 +193,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
       {featured && (
         <Link
           href={`/ideas/${featured.slug}`}
-          className="block rounded-2xl bg-gradient-to-br from-brand-forest to-brand-green p-6 mb-4 hover:opacity-95 transition-opacity"
+          className="motion-card block rounded-2xl bg-gradient-to-br from-brand-forest to-brand-green p-6 mb-4 shadow-lg shadow-brand-forest/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
         >
           <div className="flex flex-wrap gap-2 mb-3">
             <span className="rounded-full bg-brand-gold text-brand-forest text-[10px] font-bold px-2 py-0.5">
@@ -237,7 +203,7 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
               {featured.category}
             </span>
           </div>
-          <h2 className="text-xl font-black text-brand-gold leading-snug mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-gold leading-snug mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
             {featured.title}
           </h2>
           <p className="text-sm text-white/75 leading-relaxed mb-5 line-clamp-3">{featured.description}</p>
@@ -263,46 +229,11 @@ export default function IdeasDiscoveryClient({ ideas }: IdeasDiscoveryClientProp
         </Link>
       )}
 
-      {/* 2-col grid for remaining ideas */}
+      {/* Grid for remaining ideas */}
       {rest.length > 0 && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:grid-cols-3">
           {rest.map(idea => (
-            <Link
-              key={idea.slug}
-              href={`/ideas/${idea.slug}`}
-              className="flex flex-col rounded-2xl border border-brand-beige bg-white p-4 hover:border-brand-forest transition-colors"
-            >
-              <div className="text-2xl mb-2">{categoryEmoji(idea.category)}</div>
-              <div className="flex gap-1 flex-wrap mb-2">
-                <span className="rounded-full bg-brand-cream text-brand-forest text-[10px] font-bold px-2 py-0.5">
-                  {idea.category}
-                </span>
-                {idea.budget_band && (
-                  <span className="rounded-full bg-brand-cream text-brand-green text-[10px] font-semibold px-2 py-0.5">
-                    {budgetLabels[idea.budget_band]}
-                  </span>
-                )}
-              </div>
-              <h3 className="font-black text-brand-forest text-sm leading-snug mb-1 flex-1">{idea.title}</h3>
-              <p className="text-xs text-brand-green line-clamp-2 leading-relaxed mb-3">{idea.description}</p>
-              <div className="flex items-center justify-between mt-auto">
-                <span className="text-xs font-bold text-brand-forest">{idea.capital}</span>
-                <div className="flex gap-2 text-xs text-center">
-                  {idea.scoring_demand != null && (
-                    <div className="rounded-lg bg-brand-cream px-2 py-1">
-                      <p className="text-[9px] text-brand-green uppercase">D</p>
-                      <p className="font-black text-brand-forest">{idea.scoring_demand}</p>
-                    </div>
-                  )}
-                  {idea.scoring_ease != null && (
-                    <div className="rounded-lg bg-brand-cream px-2 py-1">
-                      <p className="text-[9px] text-brand-green uppercase">E</p>
-                      <p className="font-black text-brand-forest">{idea.scoring_ease}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </Link>
+            <IdeaCard key={idea.slug} idea={idea} />
           ))}
         </div>
       )}

@@ -46,12 +46,12 @@ export default function AdminSalonsClient({ pending, active }: { pending: SalonR
 
       {tab === "pending" && (
         <div className="space-y-3">
-          {pendingList.length === 0 && <p className="text-sm text-gray-500 text-center py-8">No pending salons.</p>}
+          {pendingList.length === 0 && <p className="text-sm text-brand-green text-center py-8">No pending salons.</p>}
           {pendingList.map(s => (
-            <div key={s.id} className="bg-white rounded-xl p-4 border border-gray-200">
+            <div key={s.id} className="bg-white rounded-xl p-4 border border-brand-beige">
               <p className="font-black text-[#1C3A2A]">{s.name}</p>
-              <p className="text-xs text-gray-500 mt-1">{s.type} · {s.gender} · {s.district}</p>
-              {s.whatsapp && <p className="text-xs text-gray-500">📱 {s.whatsapp}</p>}
+              <p className="text-xs text-brand-green mt-1">{s.type} · {s.gender} · {s.district}</p>
+              {s.whatsapp && <p className="text-xs text-brand-green">📱 {s.whatsapp}</p>}
               <div className="flex gap-2 mt-3">
                 <button onClick={() => approve(s.id)} disabled={loading === s.id} className="flex-1 bg-[#1C3A2A] text-white rounded-lg py-2 text-sm font-bold disabled:opacity-50">✅ Approve</button>
                 <button onClick={() => reject(s.id)} disabled={loading === s.id} className="flex-1 bg-red-50 text-red-600 border border-red-200 rounded-lg py-2 text-sm font-bold disabled:opacity-50">❌ Reject</button>
@@ -64,16 +64,16 @@ export default function AdminSalonsClient({ pending, active }: { pending: SalonR
       {tab === "active" && (
         <div className="space-y-3">
           {activeList.map(s => (
-            <div key={s.id} className="bg-white rounded-xl p-4 border border-gray-200">
+            <div key={s.id} className="bg-white rounded-xl p-4 border border-brand-beige">
               <div className="flex justify-between items-start">
                 <div>
                   <p className="font-black text-[#1C3A2A]">{s.name}</p>
-                  <p className="text-xs text-gray-500 mt-1">{s.type} · {s.gender} · {s.district}</p>
+                  <p className="text-xs text-brand-green mt-1">{s.type} · {s.gender} · {s.district}</p>
                 </div>
                 {s.status === "featured" && <span className="bg-[#F5C842] text-[#1C3A2A] text-[10px] font-black px-2 py-0.5 rounded-full">⭐ FEATURED</span>}
               </div>
               <button onClick={() => toggleFeatured(s.id, s.status!)} disabled={loading === s.id}
-                className={`mt-3 w-full rounded-lg py-2 text-sm font-bold disabled:opacity-50 ${s.status === "featured" ? "bg-gray-100 text-gray-600" : "bg-[#F5C842] text-[#1C3A2A]"}`}>
+                className={`mt-3 w-full rounded-lg py-2 text-sm font-bold disabled:opacity-50 ${s.status === "featured" ? "bg-brand-cream text-brand-green" : "bg-[#F5C842] text-[#1C3A2A]"}`}>
                 {s.status === "featured" ? "Remove Featured" : "⭐ Make Featured"}
               </button>
             </div>

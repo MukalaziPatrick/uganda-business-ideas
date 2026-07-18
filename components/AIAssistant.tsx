@@ -77,27 +77,27 @@ export default function AIAssistant() {
 
   return (
     <section className="mt-12 sm:mt-16 md:mt-20">
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-3xl border border-brand-beige bg-white shadow-sm">
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
-        <div className="border-b border-slate-100 bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-5 sm:px-8">
+        <div className="border-b border-brand-beige/60 bg-brand-cream px-6 py-5 sm:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-emerald-500 text-lg shadow-md shadow-green-200">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-green to-brand-forest text-lg shadow-md shadow-brand-green/20">
               🤖
             </div>
             <div>
-              <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-green-600">
+              <p className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-green">
                 Powered by Claude AI
               </p>
-              <h2 className="text-[15px] font-bold text-slate-900">
+              <h2 className="text-[15px] font-bold text-brand-ink">
                 Ask the Uganda Business Advisor
               </h2>
             </div>
-            <span className="ml-auto hidden rounded-full border border-green-200 bg-white px-3 py-1 text-[11px] font-semibold text-green-700 sm:block">
+            <span className="ml-auto hidden rounded-full border border-brand-green/30 bg-white px-3 py-1 text-[11px] font-semibold text-brand-forest sm:block">
               Free · No sign-up
             </span>
           </div>
-          <p className="mt-3 text-[13.5px] leading-relaxed text-slate-500">
+          <p className="mt-3 text-[13.5px] leading-relaxed text-brand-green/80">
             Describe your situation — budget, skills, location — and get a practical recommendation for Uganda.
           </p>
         </div>
@@ -107,7 +107,7 @@ export default function AIAssistant() {
           {/* ── Suggestion chips ─────────────────────────────────────────── */}
           {!asked && (
             <div className="mb-4">
-              <p className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <p className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-green/70">
                 Try asking:
               </p>
               <div className="flex flex-wrap gap-2">
@@ -115,7 +115,7 @@ export default function AIAssistant() {
                   <button
                     key={s}
                     onClick={() => handleSuggestion(s)}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-[12.5px] font-medium text-slate-600 transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700 active:scale-95"
+                    className="rounded-full border border-brand-beige bg-brand-cream px-3.5 py-1.5 text-[12.5px] font-medium text-brand-forest transition-all hover:border-brand-gold hover:bg-brand-cream hover:text-brand-forest active:scale-95"
                   >
                     {s}
                   </button>
@@ -133,7 +133,7 @@ export default function AIAssistant() {
               onKeyDown={handleKeyDown}
               placeholder="e.g. I have UGX 500,000 and live near Kampala. I want to start a small food business. What do you recommend?"
               disabled={loading}
-              className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 pr-24 text-[14px] leading-relaxed text-slate-800 placeholder-slate-400 outline-none transition-all focus:border-green-400 focus:bg-white focus:ring-2 focus:ring-green-100"
+              className="w-full resize-none rounded-2xl border border-brand-beige bg-brand-cream px-4 py-3.5 pr-24 text-[14px] leading-relaxed text-brand-ink placeholder-brand-green/50 outline-none transition-all focus:border-brand-gold focus:bg-white focus:ring-2 focus:ring-brand-gold/30"
             />
 
             <button
@@ -142,8 +142,8 @@ export default function AIAssistant() {
               className={[
                 "absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-[12.5px] font-bold transition-all active:scale-95",
                 loading || !question.trim()
-                  ? "cursor-not-allowed bg-slate-100 text-slate-400"
-                  : "bg-green-600 text-white shadow-md shadow-green-200 hover:-translate-y-0.5 hover:bg-green-700",
+                  ? "cursor-not-allowed bg-brand-beige/50 text-brand-green/70"
+                  : "bg-brand-green text-white shadow-md shadow-brand-green/20 hover:-translate-y-0.5 hover:bg-brand-forest",
               ].join(" ")}
             >
               {loading ? (
@@ -165,9 +165,9 @@ export default function AIAssistant() {
             </button>
           </div>
 
-          <p className="mt-2 text-[11.5px] text-slate-400">
+          <p className="mt-2 text-[11.5px] text-brand-green/70">
             Press{" "}
-            <kbd className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px]">
+            <kbd className="rounded border border-brand-beige bg-brand-beige/50 px-1.5 py-0.5 font-mono text-[10px]">
               Enter
             </kbd>{" "}
             to send
@@ -186,19 +186,19 @@ export default function AIAssistant() {
 
           {/* ── Loading skeleton ──────────────────────────────────────────── */}
           {loading && (
-            <div className="mt-5 space-y-3 rounded-2xl border border-slate-100 bg-slate-50 p-5">
+            <div className="mt-5 space-y-3 rounded-2xl border border-brand-beige/60 bg-brand-cream p-5">
               <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-green-600 to-emerald-500 text-xs">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-green to-brand-forest text-xs">
                   🤖
                 </div>
-                <p className="text-[12.5px] font-semibold text-slate-500">
+                <p className="text-[12.5px] font-semibold text-brand-green/80">
                   Uganda Business Advisor is thinking…
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="h-3 w-full animate-pulse rounded-full bg-slate-200" />
-                <div className="h-3 w-4/5 animate-pulse rounded-full bg-slate-200" />
-                <div className="h-3 w-3/5 animate-pulse rounded-full bg-slate-200" />
+                <div className="h-3 w-full animate-pulse rounded-full bg-brand-beige" />
+                <div className="h-3 w-4/5 animate-pulse rounded-full bg-brand-beige" />
+                <div className="h-3 w-3/5 animate-pulse rounded-full bg-brand-beige" />
               </div>
             </div>
           )}
@@ -206,14 +206,14 @@ export default function AIAssistant() {
           {/* ── Answer ────────────────────────────────────────────────────── */}
           {answer && !loading && (
             <div ref={answerRef} className="mt-5">
-              <div className="rounded-2xl border border-green-100 bg-gradient-to-br from-green-50 to-emerald-50">
+              <div className="rounded-2xl border border-brand-green/20 bg-brand-cream">
 
-                <div className="flex items-center gap-2.5 border-b border-green-100 px-5 py-3.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-green-600 to-emerald-500 text-xs">
+                <div className="flex items-center gap-2.5 border-b border-brand-green/20 px-5 py-3.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-green to-brand-forest text-xs">
                     🤖
                   </div>
-                  <p className="text-[12.5px] font-bold text-green-900">Uganda Business Advisor</p>
-                  <span className="ml-auto rounded-full bg-green-100 px-2.5 py-0.5 text-[10.5px] font-semibold text-green-700">
+                  <p className="text-[12.5px] font-bold text-brand-ink">Uganda Business Advisor</p>
+                  <span className="ml-auto rounded-full bg-brand-beige/50 px-2.5 py-0.5 text-[10.5px] font-semibold text-brand-forest">
                     Answer ready
                   </span>
                 </div>
@@ -224,7 +224,7 @@ export default function AIAssistant() {
                       line.trim() === "" ? (
                         <div key={i} className="h-1" />
                       ) : (
-                        <p key={i} className="text-[14px] leading-relaxed text-slate-700">
+                        <p key={i} className="text-[14px] leading-relaxed text-brand-forest">
                           {line}
                         </p>
                       )
@@ -232,20 +232,20 @@ export default function AIAssistant() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3 border-t border-green-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-[12px] text-slate-400">
+                <div className="flex flex-col gap-3 border-t border-brand-green/20 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-[12px] text-brand-green/70">
                     AI answers are suggestions — always research before investing.
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={handleReset}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-[12.5px] font-semibold text-slate-600 shadow-sm transition-all hover:border-green-300 hover:bg-green-50 hover:text-green-700 active:scale-95"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-brand-beige bg-white px-4 py-2 text-[12.5px] font-semibold text-brand-forest shadow-sm transition-all hover:border-brand-gold hover:bg-brand-cream hover:text-brand-forest active:scale-95"
                     >
                       Ask another
                     </button>
                     <a
                       href="#ideas"
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-green-600 px-4 py-2 text-[12.5px] font-bold text-white shadow-sm shadow-green-200 transition-all hover:bg-green-700 active:scale-95"
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-brand-green px-4 py-2 text-[12.5px] font-bold text-white shadow-sm shadow-brand-green/20 transition-all hover:bg-brand-forest active:scale-95"
                     >
                       Browse ideas
                     </a>
@@ -258,8 +258,8 @@ export default function AIAssistant() {
         </div>
 
         {/* ── Disclaimer ───────────────────────────────────────────────────── */}
-        <div className="border-t border-slate-100 bg-slate-50/60 px-6 py-3 sm:px-8">
-          <p className="text-[11.5px] text-slate-400">
+        <div className="border-t border-brand-beige/60 bg-brand-cream/60 px-6 py-3 sm:px-8">
+          <p className="text-[11.5px] text-brand-green/70">
             🇺🇬 Advice tailored for the Ugandan market · Powered by Anthropic Claude · Free to use
           </p>
         </div>

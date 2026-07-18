@@ -73,7 +73,7 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-200 flex flex-col overflow-hidden" style={{ maxHeight: '60vh' }}>
+        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-land-mint/50 flex flex-col overflow-hidden" style={{ maxHeight: '60vh' }}>
           <div className="bg-land-primary text-white px-4 py-3">
             <p className="font-semibold text-sm">🏞 Land Assistant</p>
             <p className="text-xs text-land-cream/90">Ask about this land</p>
@@ -85,7 +85,7 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
                 <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
                   msg.role === 'user'
                     ? 'bg-land-primary text-white'
-                    : 'bg-gray-100 text-gray-800'
+                    : 'bg-land-cream/60 text-land-ink'
                 }`}>
                   {msg.content || (loading && msg.role === 'assistant' ? '...' : '')}
                 </div>
@@ -94,13 +94,13 @@ export function LandChatBubble({ listingId }: { listingId: string }) {
             <div ref={bottomRef} />
           </div>
 
-          <div className="border-t border-gray-200 p-3 flex gap-2">
+          <div className="border-t border-land-mint/50 p-3 flex gap-2">
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Ask a question..."
-              className="flex-1 text-sm border border-gray-200 rounded-full px-3 py-2 focus:outline-none focus:border-land-primary"
+              className="flex-1 text-sm border border-land-mint/50 rounded-full px-3 py-2 focus:outline-none focus:border-land-primary"
             />
             <button
               onClick={sendMessage}

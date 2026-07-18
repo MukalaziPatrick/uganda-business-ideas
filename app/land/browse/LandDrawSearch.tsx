@@ -58,13 +58,13 @@ export function LandDrawSearch({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl overflow-hidden w-full max-w-2xl">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <p className="font-semibold text-gray-900 text-sm">Draw your search area</p>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">✕</button>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-land-mint/50">
+          <p className="font-semibold text-land-ink text-sm">Draw your search area</p>
+          <button onClick={onClose} className="text-land-forest/60 hover:text-land-forest/85">✕</button>
         </div>
         <div ref={mapContainer} style={{ height: 400 }} />
         <div className="px-4 py-3 flex gap-3">
-          <p className="text-xs text-gray-500 flex-1">Click points on the map to draw a polygon. Click the first point to close the shape.</p>
+          <p className="text-xs text-land-forest/75 flex-1">Click points on the map to draw a polygon. Click the first point to close the shape.</p>
           <button
             onClick={applySearch}
             disabled={!hasDrawn}

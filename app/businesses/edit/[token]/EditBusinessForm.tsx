@@ -23,8 +23,8 @@ export default function EditBusinessForm({
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
 
   const fieldClass =
-    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest";
-  const labelClass = "mb-1 block text-xs font-bold text-gray-600";
+    "w-full rounded-lg border border-brand-beige bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-forest";
+  const labelClass = "mb-1 block text-xs font-bold text-brand-green";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ export default function EditBusinessForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <div className="rounded-xl border border-brand-beige bg-white p-4">
         <p className="mb-3 text-xs font-bold uppercase tracking-wide text-brand-green">
           {business.category} - {business.district}
         </p>
@@ -106,7 +106,7 @@ export default function EditBusinessForm({
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <div className="rounded-xl border border-brand-beige bg-white p-4">
         <p className="mb-3 text-xs font-bold uppercase tracking-wide text-brand-green">
           Online presence (optional)
         </p>
@@ -153,7 +153,7 @@ export default function EditBusinessForm({
       {message && (
         <p
           className={`rounded-lg px-3 py-2 text-sm ${
-            message.ok ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
+            message.ok ? "bg-brand-green/10 text-brand-green" : "bg-red-50 text-red-600"
           }`}
         >
           {message.text}

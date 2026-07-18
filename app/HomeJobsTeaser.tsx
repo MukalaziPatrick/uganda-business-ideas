@@ -39,15 +39,15 @@ export default async function HomeJobsTeaser() {
             <p className={eyebrow}>💼 Work Near You</p>
             <h2 className="mt-1 text-xl font-black text-brand-forest">Latest Jobs</h2>
           </div>
-          <Link href="/jobs" className="rounded-xl border border-brand-green/30 bg-white px-4 py-2 text-xs font-bold text-brand-green hover:bg-brand-cream">
+          <Link href="/jobs" className="motion-press rounded-xl border border-brand-green/30 bg-brand-surface px-4 py-2 text-xs font-bold text-brand-green transition-colors hover:border-brand-gold hover:bg-brand-cream">
             View all →
           </Link>
         </div>
 
         {(!jobs || jobs.length === 0) ? (
-          <div className="rounded-2xl border border-brand-beige bg-white p-4 text-center text-sm text-brand-green">
+          <div className="rounded-2xl border border-brand-beige bg-brand-surface p-5 text-center text-sm text-brand-green shadow-sm">
             <p className="mb-3">No jobs posted yet — be the first!</p>
-            <Link href="/jobs/post" className="rounded-xl bg-brand-green px-4 py-2 text-xs font-bold text-white hover:bg-brand-forest">
+            <Link href="/jobs/post" className="motion-press inline-block rounded-xl bg-brand-green px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-forest">
               Post a Job (Free)
             </Link>
           </div>
@@ -58,10 +58,10 @@ export default async function HomeJobsTeaser() {
                 ? whatsappHref(job.contact_whatsapp, job.title)
                 : job.contact_phone ? `tel:${job.contact_phone}` : "/jobs";
               return (
-                <div key={job.id} className={`flex items-center justify-between gap-3 rounded-2xl border bg-white p-4 ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}>
+                <div key={job.id} className={`motion-card flex items-center justify-between gap-3 rounded-2xl border bg-brand-surface p-4 shadow-sm ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      {job.featured && <span className="text-[10px] font-bold text-brand-forest">⭐</span>}
+                      {job.featured && <span aria-label="Featured" className="text-[10px] font-bold text-brand-forest">⭐</span>}
                       <p className="truncate text-sm font-black text-brand-forest">{job.title}</p>
                     </div>
                     <p className="text-xs text-brand-green mt-0.5">
@@ -70,14 +70,14 @@ export default async function HomeJobsTeaser() {
                     </p>
                   </div>
                   <a href={applyHref} target="_blank" rel="noopener noreferrer"
-                    className="shrink-0 rounded-xl bg-brand-green px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-forest">
+                    className="motion-press shrink-0 rounded-xl bg-brand-green px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-brand-forest">
                     Apply
                   </a>
                 </div>
               );
             })}
             <Link href="/jobs/post"
-              className="block rounded-2xl border border-brand-beige bg-white p-3 text-center text-xs font-semibold text-brand-green hover:bg-brand-cream">
+              className="motion-press block rounded-2xl border border-dashed border-brand-beige bg-brand-surface/70 p-3 text-center text-xs font-semibold text-brand-green transition-colors hover:border-brand-gold hover:bg-brand-cream">
               + Post a Job (Free)
             </Link>
           </div>

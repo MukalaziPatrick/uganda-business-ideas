@@ -55,42 +55,43 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-200 px-4 py-2 text-xs text-brand-green flex gap-1">
+      <div className="bg-white border-b border-brand-beige px-4 py-2 text-xs text-brand-green flex gap-1">
         <Link href="/salons" className="hover:text-brand-forest">Salons</Link>
         <span>›</span>
         <span className="text-brand-forest font-semibold truncate">{s.name}</span>
       </div>
 
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-brand-forest to-brand-green px-5 py-8 text-white">
+      <div className="motion-page relative overflow-hidden bg-gradient-to-br from-brand-forest to-brand-green px-5 py-9 text-white">
+        <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-brand-gold/15 blur-3xl" />
         {s.status === "featured" && (
           <span className="absolute top-3 right-3 bg-brand-gold text-brand-forest text-[10px] font-black px-2 py-1 rounded-full">
             ⭐ FEATURED
           </span>
         )}
         <p className="text-3xl mb-2">✂️</p>
-        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>{s.name}</h1>
+        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>{s.name}</h1>
         <p className="text-sm text-white/70">
           {SALON_GENDER_LABELS[s.gender]} · {SALON_TYPE_LABELS[s.type]} · {s.town ? `${s.town}, ` : ""}{s.district}
         </p>
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-white border-b border-gray-200">
+      <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-white border-b border-brand-beige">
         {s.whatsapp && (
           <a href={`https://wa.me/${s.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-1 bg-brand-forest text-white rounded-xl py-3 text-xs font-bold hover:bg-brand-green">
+            className="motion-press flex flex-col items-center justify-center gap-1 bg-brand-forest text-white rounded-xl py-3 text-xs font-bold transition-colors hover:bg-brand-green">
             💬 WhatsApp
           </a>
         )}
         {s.phone && (
           <a href={`tel:${s.phone}`}
-            className="flex flex-col items-center justify-center gap-1 bg-brand-forest text-white rounded-xl py-3 text-xs font-bold">
+            className="motion-press flex flex-col items-center justify-center gap-1 bg-brand-forest text-white rounded-xl py-3 text-xs font-bold transition-colors hover:bg-brand-green">
             📞 Call
           </a>
         )}
         <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 bg-brand-surface border border-brand-beige text-brand-forest rounded-xl py-3 text-xs font-bold">
+          className="motion-press flex flex-col items-center justify-center gap-1 bg-brand-surface border border-brand-beige text-brand-forest rounded-xl py-3 text-xs font-bold transition-colors hover:border-brand-gold hover:bg-brand-cream">
           📍 Directions
         </a>
       </div>
@@ -105,7 +106,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
       <div className="px-4 py-5 max-w-lg mx-auto space-y-5">
         {/* Services */}
         {svcList.length > 0 && (
-          <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <div className="bg-brand-surface rounded-2xl border border-brand-beige p-4 shadow-sm shadow-brand-forest/5">
             <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">✂️ Services & Prices</p>
             <div className="space-y-3">
               {svcList.map((svc) => (
@@ -132,7 +133,7 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
 
         {/* Portfolio */}
         {photos.length > 0 && (
-          <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <div className="bg-brand-surface rounded-2xl border border-brand-beige p-4 shadow-sm shadow-brand-forest/5">
             <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-3">📸 Our Work</p>
             <div className="grid grid-cols-3 gap-2">
               {photos.slice(0, 6).map((p, i) => (
@@ -151,9 +152,9 @@ export default async function SalonProfilePage({ params }: { params: Promise<{ i
 
         {/* About */}
         {s.about && (
-          <div className="bg-white rounded-xl border border-gray-200 p-4">
+          <div className="bg-brand-surface rounded-2xl border border-brand-beige p-4 shadow-sm shadow-brand-forest/5">
             <p className="text-xs font-bold text-brand-green uppercase tracking-wide mb-1">About</p>
-            <p className="text-sm text-gray-700 leading-relaxed">{s.about}</p>
+            <p className="text-sm text-brand-forest/90 leading-relaxed">{s.about}</p>
           </div>
         )}
 

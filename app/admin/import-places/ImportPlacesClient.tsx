@@ -73,7 +73,7 @@ export default function ImportPlacesClient() {
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-xs font-bold text-gray-600 mb-1">
+        <label className="block text-xs font-bold text-brand-green mb-1">
           Upload scraper JSON file
         </label>
         <input
@@ -81,7 +81,7 @@ export default function ImportPlacesClient() {
           type="file"
           accept=".json"
           onChange={handleFile}
-          className="block border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+          className="block border border-brand-beige rounded-lg px-3 py-2 text-sm bg-white"
         />
       </div>
 
@@ -92,7 +92,7 @@ export default function ImportPlacesClient() {
       )}
 
       {result && (
-        <div className="rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800">
+        <div className="rounded-lg bg-brand-green/10 border border-brand-green/30 px-4 py-3 text-sm text-brand-forest">
           Done! {result.imported} imported, {result.skipped} skipped (already existed).{" "}
           <a href="/admin/businesses" className="font-bold underline">
             Review pending businesses →
@@ -103,7 +103,7 @@ export default function ImportPlacesClient() {
       {rows.length > 0 && (
         <>
           <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-gray-700">
+            <p className="text-sm font-semibold text-brand-forest/90">
               {rows.length} businesses found · {selectedRows.length} selected
             </p>
             <div className="flex gap-2">
@@ -115,14 +115,14 @@ export default function ImportPlacesClient() {
               </button>
               <button
                 onClick={() => toggleAll(false)}
-                className="text-xs font-bold text-gray-400 underline"
+                className="text-xs font-bold text-brand-green/60 underline"
               >
                 Deselect all
               </button>
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-gray-200">
+          <div className="overflow-x-auto rounded-xl border border-brand-beige">
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-[#1C3A2A] text-white">
@@ -138,7 +138,7 @@ export default function ImportPlacesClient() {
                 {rows.map((r, idx) => (
                   <tr
                     key={r.external_id}
-                    className={`border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
+                    className={`border-b border-brand-beige/60 cursor-pointer hover:bg-brand-cream/60 ${
                       !r.selected ? "opacity-40" : ""
                     }`}
                     onClick={() => toggleRow(idx)}
@@ -152,10 +152,10 @@ export default function ImportPlacesClient() {
                       />
                     </td>
                     <td className="p-3 font-medium">{r.name}</td>
-                    <td className="p-3 text-gray-600">{r.category}</td>
-                    <td className="p-3 text-gray-600">{r.district}</td>
-                    <td className="p-3 text-gray-600">{r.region}</td>
-                    <td className="p-3 text-gray-400 text-xs">{r.source}</td>
+                    <td className="p-3 text-brand-green">{r.category}</td>
+                    <td className="p-3 text-brand-green">{r.district}</td>
+                    <td className="p-3 text-brand-green">{r.region}</td>
+                    <td className="p-3 text-brand-green/60 text-xs">{r.source}</td>
                   </tr>
                 ))}
               </tbody>

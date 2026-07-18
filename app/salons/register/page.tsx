@@ -11,13 +11,14 @@ export const metadata: Metadata = {
 export default function SalonRegisterPage() {
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="bg-brand-forest px-4 py-6 text-center text-white">
-        <h1 className="text-2xl font-black text-brand-gold mb-1" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="motion-page relative overflow-hidden bg-brand-forest px-4 py-8 text-center text-white">
+        <div aria-hidden className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full bg-brand-gold/15 blur-3xl" />
+        <h1 className="relative text-2xl font-black text-brand-gold mb-1 sm:text-3xl" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
           ✂️ List Your Salon
         </h1>
-        <p className="text-sm text-white/70">Free to list. Reach customers across Uganda.</p>
+        <p className="relative text-sm text-brand-cream/80">Free to list. Reach customers across Uganda.</p>
       </div>
-      <div className="px-4 py-6 max-w-lg mx-auto">
+      <div className="motion-page-delay px-4 py-6 max-w-lg mx-auto">
         <SalonRegisterForm />
       </div>
     </div>

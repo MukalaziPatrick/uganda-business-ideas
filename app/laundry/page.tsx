@@ -44,26 +44,36 @@ export default async function LaundryPage() {
   return (
     <main className="min-h-screen bg-brand-cream text-brand-forest">
       <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
-        <section className="overflow-hidden rounded-[2rem] bg-brand-forest p-6 text-brand-cream shadow-xl shadow-brand-forest/10 sm:p-8">
-          <div className="mb-5 inline-flex rounded-full bg-brand-gold px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-brand-forest">
+        <section className="motion-page relative overflow-hidden rounded-[2rem] bg-brand-forest p-6 text-brand-cream shadow-xl shadow-brand-forest/10 sm:p-8">
+          <div aria-hidden className="pointer-events-none absolute -right-14 -top-20 h-56 w-56 rounded-full bg-brand-gold/15 blur-3xl" />
+          <div aria-hidden className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-brand-green/60 blur-3xl" />
+          <div className="relative mb-5 inline-flex rounded-full bg-brand-gold px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-brand-forest">
             Kampala pickup network
           </div>
-          <h1 className="max-w-xl text-3xl font-black leading-tight tracking-tight sm:text-5xl">
+          <h1 className="relative max-w-xl text-3xl font-black leading-tight tracking-tight sm:text-5xl">
             <span className="block">Laundry Pickup</span>
-            <span className="block">&amp; Delivery</span>
+            <span className="block">&amp; <span className="text-brand-gold">Delivery</span></span>
           </h1>
-          <p className="mt-4 max-w-lg text-sm leading-7 text-brand-cream/80 text-pretty sm:text-base">
+          <p className="relative mt-4 max-w-lg text-sm leading-7 text-brand-cream/85 text-pretty sm:text-base">
             Doorstep pickup and delivery across Kampala. Pay with MoMo or cash, then track the order by WhatsApp.
           </p>
+          <div className="relative mt-6 flex flex-wrap gap-x-5 gap-y-1.5 text-[11px] font-semibold text-brand-cream/75">
+            <span>🧺 Wash &amp; fold</span>
+            <span>👔 Ironing</span>
+            <span>✨ Dry cleaning</span>
+            <span>📲 Order by WhatsApp</span>
+          </div>
         </section>
 
         {providers.length === 0 && (
-          <div className="mt-6 rounded-2xl border border-brand-beige bg-brand-surface p-5 text-sm font-semibold text-brand-green">
-            No laundry services listed yet. Check back soon.
+          <div className="mt-6 rounded-2xl border border-dashed border-brand-beige bg-brand-surface p-8 text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-cream text-2xl">🧺</div>
+            <p className="text-sm font-semibold text-brand-forest">No laundry services listed yet.</p>
+            <p className="mt-1 text-xs text-brand-green">New pickup providers are joining — check back soon.</p>
           </div>
         )}
 
-        <div className="mt-6 grid grid-cols-1 gap-4">
+        <div className="motion-page-delay mt-6 grid grid-cols-1 gap-4">
           {providers.map((p) => {
             const cta = p.app_url
               ? `${p.app_url}?ref=businessyoo`
@@ -72,7 +82,7 @@ export default async function LaundryPage() {
               <a
                 key={p.id}
                 href={cta}
-                className="group block rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 transition-all hover:-translate-y-0.5 hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10"
+                className="motion-card group block rounded-3xl border border-brand-beige bg-brand-surface p-5 shadow-sm shadow-brand-forest/5 hover:border-brand-gold hover:shadow-lg hover:shadow-brand-forest/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>

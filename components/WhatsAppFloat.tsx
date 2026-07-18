@@ -27,13 +27,13 @@ export default function WhatsAppFloat() {
       {/* Tooltip label — slides in on hover */}
       <div
         className={`
-          pointer-events-none max-w-[200px] rounded-2xl border border-slate-200
+          pointer-events-none max-w-[200px] rounded-2xl border border-brand-beige
           bg-white px-4 py-2.5 shadow-lg transition-all duration-300
           ${hovered ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}
         `}
       >
-        <p className="text-[13px] font-semibold text-slate-800">Chat with a business advisor</p>
-        <p className="mt-0.5 text-[11.5px] text-slate-400">Free first chat · Reply in minutes</p>
+        <p className="text-[13px] font-semibold text-brand-ink">Chat with a business advisor</p>
+        <p className="mt-0.5 text-[11.5px] text-brand-green/70">Free first chat · Reply in minutes</p>
       </div>
 
       {/* The button itself */}
@@ -44,7 +44,7 @@ export default function WhatsAppFloat() {
         aria-label="Chat with us on WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-xl shadow-green-400/40 transition-all duration-200 hover:scale-110 hover:shadow-2xl hover:shadow-green-400/50 active:scale-95 sm:h-16 sm:w-16"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-xl shadow-green-400/40 transition-all duration-200 hover:scale-110 hover:shadow-2xl hover:shadow-green-400/50 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 sm:h-16 sm:w-16"
       >
         {/* Pulse ring — draws the eye without flashing */}
         <span className="absolute inset-0 animate-ping rounded-full bg-[#25D366] opacity-20" />

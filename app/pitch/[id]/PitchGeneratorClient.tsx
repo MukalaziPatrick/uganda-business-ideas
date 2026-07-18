@@ -184,7 +184,7 @@ export default function PitchGeneratorClient({ gatekeeper }: { gatekeeper: Gatek
           <button
             onClick={handleGenerate}
             disabled={loading || !usage.canGenerate}
-            className="w-full rounded-xl bg-brand-gold px-6 py-3 text-[15px] font-black text-brand-forest transition hover:brightness-95 disabled:bg-brand-beige disabled:text-brand-green"
+            className="motion-press w-full rounded-xl bg-brand-gold px-6 py-3 text-[15px] font-black text-brand-forest transition hover:brightness-95 disabled:bg-brand-beige disabled:text-brand-green"
           >
             {loading ? '✨ Generating your pitch...' : '✨ Generate Pitch Letter'}
           </button>

@@ -42,8 +42,8 @@ export default function TravelRegisterForm() {
   const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
   const [photoUrls, setPhotoUrls] = useState<string[]>([""]);
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
-  const labelClass = "block text-xs font-bold text-gray-600 mb-1";
+  const fieldClass = "w-full border border-brand-beige rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
+  const labelClass = "block text-xs font-bold text-brand-green mb-1";
 
   const toggleAmenity = (a: string) => {
     setAmenities(prev => prev.includes(a) ? prev.filter(x => x !== a) : [...prev, a]);
@@ -128,7 +128,7 @@ export default function TravelRegisterForm() {
       <div className="text-center py-12">
         <p className="text-4xl mb-4">🎉</p>
         <h2 className="text-xl font-black text-brand-forest mb-2">Listing submitted!</h2>
-        <p className="text-sm text-gray-600 leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
+        <p className="text-sm text-brand-green leading-relaxed">Your listing is under review. We&apos;ll contact you on WhatsApp once approved.</p>
       </div>
     );
   }
@@ -137,7 +137,7 @@ export default function TravelRegisterForm() {
     <div className="space-y-6">
       <div className="flex gap-2">
         {[1, 2, 3, 4].map((s) => (
-          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-gray-200"}`} />
+          <div key={s} className={`flex-1 h-1.5 rounded-full ${step >= s ? "bg-brand-forest" : "bg-brand-beige"}`} />
         ))}
       </div>
       <p className="text-xs text-brand-green text-center">Step {step} of 4</p>
@@ -186,7 +186,7 @@ export default function TravelRegisterForm() {
           <div className="grid grid-cols-2 gap-2">
             {STAY_AMENITY_OPTIONS.map(a => (
               <button key={a} onClick={() => toggleAmenity(a)}
-                className={`text-left text-sm px-3 py-2.5 rounded-lg border transition-colors ${amenities.includes(a) ? "bg-brand-forest text-white border-brand-forest" : "bg-white text-gray-700 border-gray-300"}`}>
+                className={`text-left text-sm px-3 py-2.5 rounded-lg border transition-colors ${amenities.includes(a) ? "bg-brand-forest text-white border-brand-forest" : "bg-white text-brand-forest/90 border-brand-beige"}`}>
                 {amenities.includes(a) ? "✓ " : ""}{a}
               </button>
             ))}
@@ -243,7 +243,7 @@ export default function TravelRegisterForm() {
       {step === 4 && (
         <div className="space-y-4">
           <h2 className="text-sm font-black text-brand-forest">Review & Submit</h2>
-          <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-2 text-sm">
+          <div className="bg-white rounded-xl border border-brand-beige p-4 space-y-2 text-sm">
             <p><span className="font-bold">Name:</span> {name}</p>
             <p><span className="font-bold">Type:</span> {STAY_TYPE_LABELS[type]}</p>
             <p><span className="font-bold">Destination:</span> {destinationSlug}</p>

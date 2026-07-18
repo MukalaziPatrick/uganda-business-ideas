@@ -67,7 +67,7 @@ export default function AdminTravelClient({
     setLoading(null);
   };
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1C3A2A] bg-white";
+  const fieldClass = "w-full border border-brand-beige rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1C3A2A] bg-white";
 
   return (
     <div className="min-h-screen bg-[#f5f0e8] p-4">
@@ -80,12 +80,12 @@ export default function AdminTravelClient({
 
       {tab === "pending" && (
         <div className="space-y-3">
-          {pendingList.length === 0 && <p className="text-sm text-gray-500 text-center py-8">No pending stays.</p>}
+          {pendingList.length === 0 && <p className="text-sm text-brand-green text-center py-8">No pending stays.</p>}
           {pendingList.map(s => (
-            <div key={s.id} className="bg-white rounded-xl p-4 border border-gray-200">
+            <div key={s.id} className="bg-white rounded-xl p-4 border border-brand-beige">
               <p className="font-black text-[#1C3A2A]">{s.name}</p>
-              <p className="text-xs text-gray-500 mt-1">{s.type} · {s.town}</p>
-              {s.whatsapp && <p className="text-xs text-gray-500">📱 {s.whatsapp}</p>}
+              <p className="text-xs text-brand-green mt-1">{s.type} · {s.town}</p>
+              {s.whatsapp && <p className="text-xs text-brand-green">📱 {s.whatsapp}</p>}
               <div className="flex gap-2 mt-3">
                 <button onClick={() => approve(s.id)} disabled={loading === s.id} className="flex-1 bg-[#1C3A2A] text-white rounded-lg py-2 text-sm font-bold disabled:opacity-50">✅ Approve</button>
                 <button onClick={() => reject(s.id)} disabled={loading === s.id} className="flex-1 bg-red-50 text-red-600 border border-red-200 rounded-lg py-2 text-sm font-bold disabled:opacity-50">❌ Reject</button>
@@ -97,15 +97,15 @@ export default function AdminTravelClient({
 
       {tab === "active" && (
         <div className="space-y-3">
-          {activeList.length === 0 && <p className="text-sm text-gray-500 text-center py-8">No active stays yet.</p>}
+          {activeList.length === 0 && <p className="text-sm text-brand-green text-center py-8">No active stays yet.</p>}
           {activeList.map(s => (
-            <div key={s.id} className="bg-white rounded-xl p-4 border border-gray-200">
+            <div key={s.id} className="bg-white rounded-xl p-4 border border-brand-beige">
               <div className="flex justify-between items-start">
-                <div><p className="font-black text-[#1C3A2A]">{s.name}</p><p className="text-xs text-gray-500 mt-1">{s.type} · {s.town}</p></div>
+                <div><p className="font-black text-[#1C3A2A]">{s.name}</p><p className="text-xs text-brand-green mt-1">{s.type} · {s.town}</p></div>
                 {s.status === "featured" && <span className="bg-[#F5C842] text-[#1C3A2A] text-[10px] font-black px-2 py-0.5 rounded-full">⭐ FEATURED</span>}
               </div>
               <button onClick={() => toggleFeatured(s.id, s.status!)} disabled={loading === s.id}
-                className={`mt-3 w-full rounded-lg py-2 text-sm font-bold disabled:opacity-50 ${s.status === "featured" ? "bg-gray-100 text-gray-600" : "bg-[#F5C842] text-[#1C3A2A]"}`}>
+                className={`mt-3 w-full rounded-lg py-2 text-sm font-bold disabled:opacity-50 ${s.status === "featured" ? "bg-brand-cream text-brand-green" : "bg-[#F5C842] text-[#1C3A2A]"}`}>
                 {s.status === "featured" ? "Remove Featured" : "⭐ Make Featured"}
               </button>
             </div>
@@ -116,11 +116,11 @@ export default function AdminTravelClient({
       {tab === "destinations" && (
         <div className="space-y-3">
           {destList.map(d => (
-            <div key={d.id} className="bg-white rounded-xl p-4 border border-gray-200">
+            <div key={d.id} className="bg-white rounded-xl p-4 border border-brand-beige">
               <div className="flex justify-between items-center mb-2">
                 <div>
                   <p className="font-black text-[#1C3A2A]">{d.name}</p>
-                  <p className="text-xs text-gray-400">/{d.slug} · order {d.sort_order}</p>
+                  <p className="text-xs text-brand-green/60">/{d.slug} · order {d.sort_order}</p>
                 </div>
                 {d.is_featured && <span className="bg-[#F5C842] text-[#1C3A2A] text-[10px] font-black px-2 py-0.5 rounded-full">🔥 HOT</span>}
               </div>
@@ -128,32 +128,32 @@ export default function AdminTravelClient({
               {editingId === d.id ? (
                 <div className="space-y-3 mt-3">
                   <div>
-                    <label className="text-xs font-bold text-gray-500 block mb-1">Description</label>
+                    <label className="text-xs font-bold text-brand-green block mb-1">Description</label>
                     <textarea className={`${fieldClass} resize-none`} rows={3} value={editForm.description ?? ""} onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))} />
                   </div>
                   <div>
-                    <label className="text-xs font-bold text-gray-500 block mb-1">Cover photo URL</label>
+                    <label className="text-xs font-bold text-brand-green block mb-1">Cover photo URL</label>
                     <input className={fieldClass} value={editForm.cover_photo_url ?? ""} onChange={e => setEditForm(f => ({ ...f, cover_photo_url: e.target.value }))} placeholder="https://..." />
                   </div>
                   <div>
-                    <label className="text-xs font-bold text-gray-500 block mb-1">Activities (comma-separated)</label>
+                    <label className="text-xs font-bold text-brand-green block mb-1">Activities (comma-separated)</label>
                     <input className={fieldClass} value={(editForm.activities ?? []).join(", ")}
                       onChange={e => setEditForm(f => ({ ...f, activities: e.target.value.split(",").map(s => s.trim()).filter(Boolean) }))} />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="text-xs font-bold text-gray-500 block mb-1">Sort order</label>
+                      <label className="text-xs font-bold text-brand-green block mb-1">Sort order</label>
                       <input className={fieldClass} type="number" value={editForm.sort_order ?? 0} onChange={e => setEditForm(f => ({ ...f, sort_order: parseInt(e.target.value) || 0 }))} />
                     </div>
                     <div className="flex items-end pb-1">
                       <label className="flex items-center gap-2 text-sm cursor-pointer">
                         <input type="checkbox" checked={editForm.is_featured ?? false} onChange={e => setEditForm(f => ({ ...f, is_featured: e.target.checked }))} className="w-4 h-4" />
-                        <span className="text-xs font-bold text-gray-600">🔥 Featured (HOT badge)</span>
+                        <span className="text-xs font-bold text-brand-green">🔥 Featured (HOT badge)</span>
                       </label>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setEditingId(null)} className="flex-1 border border-gray-300 rounded-lg py-2 text-sm font-bold text-gray-600">Cancel</button>
+                    <button onClick={() => setEditingId(null)} className="flex-1 border border-brand-beige rounded-lg py-2 text-sm font-bold text-brand-green">Cancel</button>
                     <button onClick={() => saveDestination(d.id)} disabled={loading === d.id}
                       className="flex-1 bg-[#1C3A2A] text-white rounded-lg py-2 text-sm font-bold disabled:opacity-50">
                       {loading === d.id ? "Saving..." : "Save Changes"}
@@ -162,7 +162,7 @@ export default function AdminTravelClient({
                 </div>
               ) : (
                 <div>
-                  <p className="text-xs text-gray-600 mt-1 line-clamp-2">{d.description}</p>
+                  <p className="text-xs text-brand-green mt-1 line-clamp-2">{d.description}</p>
                   <div className="flex gap-1 flex-wrap mt-1">
                     {d.activities.slice(0, 3).map(a => <span key={a} className="bg-[#f0f7f0] text-[#2d6a4f] text-[10px] px-2 py-0.5 rounded-full">{a}</span>)}
                   </div>

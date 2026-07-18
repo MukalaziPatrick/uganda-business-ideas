@@ -21,10 +21,10 @@ export default async function LandGuidesPage() {
   const articles = await getLandContent(12);
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-land-cream/30">
       <div className="bg-land-primary text-white px-4 py-12">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+          <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-business-serif), Georgia, serif' }}>
             Land Guides
           </h1>
           <p className="text-land-cream/90">Everything you need to know about buying land safely in Uganda.</p>
@@ -33,7 +33,7 @@ export default async function LandGuidesPage() {
 
       <div className="max-w-3xl mx-auto px-4 py-10">
         {articles.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-land-forest/60">
             <p>Guides are being generated. Check back soon.</p>
           </div>
         ) : (
@@ -42,14 +42,14 @@ export default async function LandGuidesPage() {
               <Link
                 key={article.id}
                 href={`/land/guides/${article.slug}`}
-                className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md transition-shadow block"
+                className="bg-white rounded-2xl border border-land-mint/50 p-5 hover:shadow-md transition-shadow block"
               >
-                <span className="text-xs font-medium text-gray-500 mb-2 block">
+                <span className="text-xs font-medium text-land-forest/75 mb-2 block">
                   {TYPE_LABELS[article.content_type ?? ''] ?? '📄 Article'}
                   {article.district ? ` · ${article.district}` : ''}
                 </span>
-                <h2 className="font-semibold text-gray-900 text-sm leading-snug">{article.title}</h2>
-                <p className="text-xs text-gray-400 mt-2">
+                <h2 className="font-semibold text-land-ink text-sm leading-snug">{article.title}</h2>
+                <p className="text-xs text-land-forest/60 mt-2">
                   {new Date(article.published_at).toLocaleDateString('en-UG', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
               </Link>

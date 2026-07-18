@@ -111,26 +111,37 @@ export default async function AdminLeadsPage({
   const leads = (data || []) as LeadRow[];
 
   return (
-    <main>
-      <form method="POST" action="/api/auth/logout" style={{ textAlign: "right", marginBottom: 16 }}>
-        <button type="submit" style={{ padding: "6px 14px", cursor: "pointer" }}>
-          Sign out
-        </button>
-      </form>
-      <h1>Leads</h1>
-      <form method="get">
-        <label>
+    <main className="p-6 text-brand-forest">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <h1 className="text-xl font-black text-brand-forest">Leads ({leads.length})</h1>
+        <form method="POST" action="/api/auth/logout">
+          <button
+            type="submit"
+            className="rounded-lg border border-brand-beige bg-brand-surface px-4 py-1.5 text-xs font-bold text-brand-forest transition-colors hover:border-brand-gold hover:bg-brand-cream"
+          >
+            Sign out
+          </button>
+        </form>
+      </div>
+
+      <form method="get" className="mb-5 flex flex-wrap items-end gap-3">
+        <label className="flex flex-col gap-1 text-xs font-bold text-brand-forest">
           Search
           <input
             type="search"
             name="q"
             defaultValue={search}
             placeholder="Name, phone, or interest"
+            className="w-56 rounded-lg border border-brand-beige bg-white px-3 py-2 text-sm font-normal outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40"
           />
         </label>
-        <label>
+        <label className="flex flex-col gap-1 text-xs font-bold text-brand-forest">
           Interest
-          <select name="interest" defaultValue={selectedInterest}>
+          <select
+            name="interest"
+            defaultValue={selectedInterest}
+            className="rounded-lg border border-brand-beige bg-white px-3 py-2 text-sm font-normal outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/40"
+          >
             <option value="">All interests</option>
             {interests.map((interest) => (
               <option key={interest} value={interest}>
@@ -139,41 +150,70 @@ export default async function AdminLeadsPage({
             ))}
           </select>
         </label>
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="rounded-lg bg-brand-forest px-4 py-2 text-xs font-bold text-brand-cream transition-colors hover:bg-brand-green"
+        >
+          Search
+        </button>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Interest</th>
-            <th>Status</th>
-            <th>Created at</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leads.map((lead) => (
-            <tr key={lead.id}>
-              <td>{lead.name || ""}</td>
-              <td>{lead.phone || ""}</td>
-              <td>{lead.business_interest || ""}</td>
-              <td>{formatLeadStatus(lead.status)}</td>
-              <td>{lead.created_at}</td>
-              <td>
-                {lead.status === "contacted" ? (
-                  "Contacted"
-                ) : (
-                  <form action={markLeadContacted}>
-                    <input type="hidden" name="id" value={lead.id} />
-                    <button type="submit">Mark contacted</button>
-                  </form>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      {leads.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-brand-beige bg-brand-surface p-6 text-center text-sm text-brand-green">
+          No leads found.
+        </p>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-brand-beige bg-brand-surface shadow-sm">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-brand-forest text-left text-white">
+                <th className="p-3 font-bold">Name</th>
+                <th className="p-3 font-bold">Phone</th>
+                <th className="p-3 font-bold">Interest</th>
+                <th className="p-3 font-bold">Status</th>
+                <th className="p-3 font-bold">Created at</th>
+                <th className="p-3 font-bold">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leads.map((lead) => (
+                <tr key={lead.id} className="border-b border-brand-beige last:border-b-0 hover:bg-brand-cream/60">
+                  <td className="p-3 font-semibold">{lead.name || "—"}</td>
+                  <td className="p-3">{lead.phone || "—"}</td>
+                  <td className="p-3">{lead.business_interest || "—"}</td>
+                  <td className="p-3">
+                    <span
+                      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-bold capitalize ${
+                        lead.status === "contacted"
+                          ? "bg-brand-green/10 text-brand-green"
+                          : "bg-brand-gold/20 text-brand-forest"
+                      }`}
+                    >
+                      {formatLeadStatus(lead.status)}
+                    </span>
+                  </td>
+                  <td className="p-3 text-brand-green">{new Date(lead.created_at).toLocaleString()}</td>
+                  <td className="p-3">
+                    {lead.status === "contacted" ? (
+                      <span className="text-xs font-semibold text-brand-green">Contacted ✓</span>
+                    ) : (
+                      <form action={markLeadContacted}>
+                        <input type="hidden" name="id" value={lead.id} />
+                        <button
+                          type="submit"
+                          className="rounded bg-brand-green px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-brand-forest"
+                        >
+                          Mark contacted
+                        </button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </main>
   );
 }

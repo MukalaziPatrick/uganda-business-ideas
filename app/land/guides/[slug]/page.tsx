@@ -23,19 +23,19 @@ export default async function LandGuideArticlePage({
   if (!article) notFound();
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-land-cream/30">
       <div className="max-w-2xl mx-auto px-4 py-10">
         <Link href="/land/guides" className="text-sm text-land-primary hover:underline">← All Guides</Link>
 
-        <h1 className="text-3xl font-bold text-gray-900 mt-6 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+        <h1 className="text-3xl font-bold text-land-ink mt-6 mb-2" style={{ fontFamily: 'var(--font-business-serif), Georgia, serif' }}>
           {article.title}
         </h1>
-        <p className="text-sm text-gray-400 mb-8">
+        <p className="text-sm text-land-forest/60 mb-8">
           {new Date(article.published_at).toLocaleDateString('en-UG', { day: 'numeric', month: 'long', year: 'numeric' })}
           {article.district ? ` · ${article.district}` : ''}
         </p>
 
-        <div className="prose prose-sm max-w-none text-gray-800 whitespace-pre-wrap">
+        <div className="prose prose-sm max-w-none text-land-ink whitespace-pre-wrap">
           {article.body}
         </div>
 

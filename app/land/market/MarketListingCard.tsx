@@ -19,7 +19,7 @@ function daysSince(iso: string): string {
 const TRUST_BADGE: Record<'high' | 'medium' | 'low', { label: string; className: string }> = {
   high:   { label: 'High trust',   className: 'bg-land-cream/80 text-land-forest border border-land-mint/50' },
   medium: { label: 'Partially checked', className: 'bg-land-mint/25 text-land-forest border border-land-mint/40' },
-  low:    { label: 'Self-listed',  className: 'bg-gray-100 text-gray-500 border border-gray-200' },
+  low:    { label: 'Self-listed',  className: 'bg-land-cream/60 text-land-forest/75 border border-land-mint/50' },
 };
 
 function TrustBadge({ score }: { score: number | null }) {
@@ -39,7 +39,7 @@ function TrustDots({ score }: { score: number | null }) {
       {[1,2,3,4,5].map(i => (
         <div
           key={i}
-          className={`w-2 h-2 rounded-full ${i <= s ? 'bg-land-cream/450' : 'bg-gray-200'}`}
+          className={`w-2 h-2 rounded-full ${i <= s ? 'bg-land-primary' : 'bg-land-cream'}`}
         />
       ))}
     </div>
@@ -53,7 +53,7 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
 
   return (
     <Link href={`/land/market/${listing.id}`} className="block group">
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition-shadow flex flex-col gap-2 h-full">
+    <div className="bg-white rounded-2xl border border-land-mint/50 p-4 hover:shadow-md transition-shadow flex flex-col gap-2 h-full">
       {/* Trust badge */}
       <div className="flex items-center justify-between">
         <TrustBadge score={listing.trust_score} />
@@ -61,10 +61,10 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
       </div>
 
       {/* Title */}
-      <h3 className="font-semibold text-gray-900 text-sm line-clamp-2">{listing.title}</h3>
+      <h3 className="font-semibold text-land-ink text-sm line-clamp-2">{listing.title}</h3>
 
       {/* Meta */}
-      <div className="text-xs text-gray-500 space-y-0.5">
+      <div className="text-xs text-land-forest/75 space-y-0.5">
         {listing.district && <div>📍 {listing.district}{listing.road_area ? `, ${listing.road_area}` : ''}</div>}
         {listing.size_acres && <div>📐 {listing.size_acres} acres</div>}
         {listing.land_type && <div>🏷 {listing.land_type}</div>}
@@ -76,20 +76,22 @@ export function MarketListingCard({ listing }: { listing: MarketListing }) {
       </div>
 
       {/* Price + CTA */}
-      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
+      <div className="flex items-center justify-between mt-auto pt-2 border-t border-land-mint/30">
         <span className="font-bold text-land-primary text-sm">{formatPrice(listing.price_ugx)}</span>
         {whatsappHref ? (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/45 transition-colors"
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.open(whatsappHref, '_blank', 'noopener,noreferrer');
+            }}
+            className="text-xs text-land-primary border border-land-mint/50 rounded-full px-3 py-1 hover:bg-land-cream/50 transition-colors"
           >
             📲 WhatsApp
-          </a>
+          </button>
         ) : (
-          <span className="text-xs text-gray-400">View details →</span>
+          <span className="text-xs text-land-forest/60">View details →</span>
         )}
       </div>
     </div>

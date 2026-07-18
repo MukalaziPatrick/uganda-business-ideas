@@ -9,7 +9,7 @@ export default function RequestToBookForm({ stayName, stayWhatsapp }: { stayName
   const [guests, setGuests] = useState("1");
   const [myWhatsapp, setMyWhatsapp] = useState("");
 
-  const fieldClass = "w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
+  const fieldClass = "w-full border border-brand-beige rounded-lg px-3 py-2.5 text-sm outline-none focus:border-brand-forest bg-white";
 
   const handleRequest = () => {
     const message = `Hi, I'd like to book ${stayName}. Name: ${guestName}. Check-in: ${checkin}. Check-out: ${checkout}. Guests: ${guests}. My WhatsApp: ${myWhatsapp}.`;

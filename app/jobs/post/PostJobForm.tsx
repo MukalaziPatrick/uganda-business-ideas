@@ -100,7 +100,7 @@ export default function PostJobForm() {
       <div className="mx-auto max-w-lg px-4 py-10">
         <div className="rounded-2xl bg-white border border-brand-beige p-8 text-center shadow-sm">
           <div className="text-4xl mb-4">✅</div>
-          <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "Georgia, serif" }}>
+          <h2 className="text-xl font-black text-brand-forest mb-2" style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}>
             Job Posted!
           </h2>
           <p className="text-sm text-brand-green mb-6 leading-relaxed">
@@ -128,7 +128,7 @@ export default function PostJobForm() {
   }
 
   const inputCls = "w-full rounded-xl border border-brand-beige bg-white px-3.5 py-2.5 text-sm text-brand-forest focus:outline-none focus:ring-2 focus:ring-brand-gold/60";
-  const labelCls = "block text-xs font-semibold text-slate-600 mb-1";
+  const labelCls = "block text-xs font-semibold text-brand-forest mb-1";
 
   return (
     <div className="mx-auto max-w-lg px-4 py-10">
@@ -196,7 +196,7 @@ export default function PostJobForm() {
                 <input type="checkbox" checked={enabledOptionals.includes(f.key)}
                   onChange={() => toggle(f.key)}
                   className="h-4 w-4 rounded border-brand-beige accent-brand-forest" />
-                <span className="text-sm text-slate-700">{f.label}</span>
+                <span className="text-sm text-brand-forest">{f.label}</span>
               </label>
             ))}
           </div>
@@ -277,7 +277,7 @@ export default function PostJobForm() {
                       : [...form.languages, lang]
                     )}
                     className="h-4 w-4 rounded border-brand-beige accent-brand-forest" />
-                  <span className="text-sm text-slate-700">{lang}</span>
+                  <span className="text-sm text-brand-forest">{lang}</span>
                 </label>
               ))}
             </div>

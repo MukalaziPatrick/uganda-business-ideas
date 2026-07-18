@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getFeaturedLandListings } from '@/lib/land/queries';
 import { LandListingCard } from './browse/LandListingCard';
+import SafeLandsAppActions from './SafeLandsAppActions';
 
 export const revalidate = 60;
 
@@ -22,28 +23,31 @@ export default async function LandHomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero */}
-      <section className="relative bg-land-primary text-white py-20 px-4 overflow-hidden">
+      <section className="motion-page relative bg-land-primary text-white py-20 px-4 overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute -top-24 -right-16 h-72 w-72 rounded-full bg-land-mint/25 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-land-forest/70 blur-3xl" />
         <div className="max-w-2xl mx-auto text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight" style={{ fontFamily: 'var(--font-business-serif), Georgia, serif' }}>
             Discover land you can trust.
           </h1>
-          <p className="text-lg text-land-cream/90 mb-8">
+          <p className="text-lg text-land-cream/90 mb-9 max-w-xl mx-auto">
             Browse verified plots across Uganda — inspect visually, check the title, and connect with a certified agent.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/land/browse"
-              className="bg-white text-land-primary font-semibold px-8 py-3 rounded-full hover:bg-land-cream/45 transition-colors"
+              className="motion-press bg-white text-land-primary font-semibold px-8 py-3 rounded-full shadow-lg shadow-land-forest/20 hover:bg-land-cream transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
             >
-              Browse Land
+              Browse SafeLands listings
             </Link>
             <Link
               href="/land/ask"
-              className="border border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition-colors"
+              className="motion-press border border-white/60 text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 hover:border-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
             >
               Ask about land
             </Link>
           </div>
+          <SafeLandsAppActions />
         </div>
       </section>
 
@@ -58,13 +62,13 @@ export default async function LandHomePage() {
 
       {/* Browse by district */}
       <section className="max-w-4xl mx-auto px-4 py-12">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Browse by district</h2>
+        <h2 className="text-xl font-bold text-land-ink mb-4">Browse by district</h2>
         <div className="flex flex-wrap gap-2">
           {DISTRICTS.map((d) => (
             <Link
               key={d}
               href={`/land/browse?district=${encodeURIComponent(d)}`}
-              className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm text-gray-700 hover:border-land-primary hover:text-land-primary transition-colors"
+              className="motion-press inline-flex min-h-11 items-center rounded-full border border-land-mint/50 bg-white px-4 text-sm font-medium text-land-ink/85 transition-colors hover:border-land-primary hover:text-land-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
             >
               {d}
             </Link>
@@ -76,8 +80,8 @@ export default async function LandHomePage() {
       {featured.length > 0 && (
         <section className="max-w-4xl mx-auto px-4 pb-16">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900">Verified listings</h2>
-            <Link href="/land/browse" className="text-sm text-land-primary font-medium hover:underline">
+            <h2 className="text-xl font-bold text-land-ink">Verified listings</h2>
+            <Link href="/land/browse" className="inline-flex min-h-11 items-center text-sm font-medium text-land-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary">
               View all →
             </Link>
           </div>
@@ -95,7 +99,7 @@ export default async function LandHomePage() {
         <p className="text-land-cream/90 mb-6">Get a full land check — UGX 10,000 for 24-hour expert access</p>
         <Link
           href="/land/check"
-          className="bg-white text-land-primary font-semibold px-8 py-3 rounded-full hover:bg-land-cream/45 transition-colors inline-block"
+          className="inline-flex min-h-11 items-center rounded-full bg-white px-8 font-semibold text-land-primary transition-colors hover:bg-land-cream/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-land-secondary"
         >
           Request Assisted Check
         </Link>

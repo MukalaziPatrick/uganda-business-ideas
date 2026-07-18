@@ -75,7 +75,7 @@ function getContactStatus(business: Business) {
       ownerConfirmed,
       title: "WhatsApp confirmed by owner",
       body: "This listing has been claimed, and the business can keep this WhatsApp number up to date from their private edit link.",
-      tone: "border-green-200 bg-green-50 text-green-800",
+      tone: "border-brand-green/30 bg-brand-green/10 text-brand-forest",
     };
   }
 
@@ -93,7 +93,7 @@ function getContactStatus(business: Business) {
       ownerConfirmed,
       title: "Call number confirmed by owner",
       body: "This business has a confirmed call number, but no WhatsApp number has been added yet.",
-      tone: "border-blue-200 bg-blue-50 text-blue-800",
+      tone: "border-brand-gold/40 bg-brand-gold/10 text-brand-forest",
     };
   }
 
@@ -110,7 +110,7 @@ function getContactStatus(business: Business) {
     ownerConfirmed,
     title: "Contact not confirmed yet",
     body: "We do not have a working WhatsApp or call number on this listing yet. Owners can claim the business to add the right contact details.",
-    tone: "border-gray-200 bg-gray-50 text-gray-700",
+    tone: "border-brand-beige bg-brand-cream/60 text-brand-forest/90",
   };
 }
 
@@ -163,7 +163,7 @@ export default async function BusinessProfilePage({
 
   return (
     <div className="min-h-screen bg-brand-cream">
-      <div className="flex gap-1 border-b border-gray-200 bg-white px-4 py-2 text-xs text-brand-green">
+      <div className="flex gap-1 border-b border-brand-beige bg-white px-4 py-2 text-xs text-brand-green">
         <Link href="/businesses" className="hover:text-brand-forest">
           Businesses
         </Link>
@@ -175,7 +175,7 @@ export default async function BusinessProfilePage({
         <p className="mb-3 text-3xl">{categoryEmoji(business.category)}</p>
         <h1
           className="mb-1 text-2xl font-black text-brand-gold"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}
         >
           {business.name}
         </h1>
@@ -198,18 +198,18 @@ export default async function BusinessProfilePage({
         </div>
 
         {business.description && (
-          <div className="rounded-xl border border-gray-200 bg-white p-4">
+          <div className="rounded-xl border border-brand-beige bg-white p-4">
             <p className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-green">About</p>
-            <p className="text-sm leading-relaxed text-gray-700">{business.description}</p>
+            <p className="text-sm leading-relaxed text-brand-forest/90">{business.description}</p>
           </div>
         )}
 
         {business.hours && (
-          <div className="rounded-xl border border-gray-200 bg-white p-4">
+          <div className="rounded-xl border border-brand-beige bg-white p-4">
             <p className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-green">
               Opening Hours
             </p>
-            <p className="text-sm text-gray-700">{business.hours}</p>
+            <p className="text-sm text-brand-forest/90">{business.hours}</p>
           </div>
         )}
 
@@ -219,7 +219,7 @@ export default async function BusinessProfilePage({
               href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-500 py-4 text-sm font-black text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-green py-4 text-sm font-black text-white"
             >
               Chat on WhatsApp
             </a>
@@ -233,17 +233,17 @@ export default async function BusinessProfilePage({
             </a>
           )}
           {!hasWhatsApp && !hasPhone && (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-brand-green">
+            <div className="rounded-xl border border-dashed border-brand-beige bg-white px-4 py-3 text-sm text-brand-green">
               No public phone or WhatsApp contact has been confirmed for this listing yet.
             </div>
           )}
         </div>
 
-        <div className="rounded-xl border border-gray-200 bg-white p-4">
+        <div className="rounded-xl border border-brand-beige bg-white p-4">
           <p className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-green">
             Location
           </p>
-          <p className="mb-3 text-sm text-gray-700">
+          <p className="mb-3 text-sm text-brand-forest/90">
             {business.address ??
               [business.town, business.district, business.region, "Uganda"]
                 .filter(Boolean)
@@ -255,13 +255,13 @@ export default async function BusinessProfilePage({
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-brand-cream px-3 py-2 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-brand-beige bg-brand-cream px-3 py-2 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
           >
             Get Directions
           </a>
         </div>
 
-        <div className="h-48 overflow-hidden rounded-xl border border-gray-200">
+        <div className="h-48 overflow-hidden rounded-xl border border-brand-beige">
           <iframe
             title="Map"
             width="100%"
@@ -280,7 +280,7 @@ export default async function BusinessProfilePage({
         </div>
 
         {socials.length > 0 && (
-          <div className="rounded-xl border border-gray-200 bg-white p-4">
+          <div className="rounded-xl border border-brand-beige bg-white p-4">
             <p className="mb-2 text-xs font-bold uppercase tracking-wide text-brand-green">
               Find us online
             </p>
@@ -291,7 +291,7 @@ export default async function BusinessProfilePage({
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-gray-200 bg-brand-cream px-3 py-1.5 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
+                  className="rounded-full border border-brand-beige bg-brand-cream px-3 py-1.5 text-xs font-semibold text-brand-forest transition-colors hover:bg-brand-green/10"
                 >
                   {social.label}
                 </a>

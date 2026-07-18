@@ -28,10 +28,10 @@ export default async function LandVerifyPage({
   const isVerified = listing.verification_stage === 'verified';
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+    <main className="min-h-screen bg-land-cream/30 flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-sm border border-land-mint/50 overflow-hidden">
         {/* Header */}
-        <div className={`px-6 py-8 text-center ${isVerified ? 'bg-land-primary' : 'bg-gray-700'}`}>
+        <div className={`px-6 py-8 text-center ${isVerified ? 'bg-land-primary' : 'bg-land-ink'}`}>
           <div className="text-5xl mb-3">{isVerified ? '✅' : '⚠️'}</div>
           <h1 className="text-xl font-bold text-white mb-1">
             {isVerified ? 'This listing has been verified.' : 'Verification in progress.'}
@@ -46,14 +46,14 @@ export default async function LandVerifyPage({
         {/* Details */}
         <div className="px-6 py-6 space-y-4">
           <div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Property</p>
-            <p className="font-semibold text-gray-900">{listing.title}</p>
-            <p className="text-sm text-gray-500">{listing.district}{listing.parish ? `, ${listing.parish}` : ''}</p>
+            <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Property</p>
+            <p className="font-semibold text-land-ink">{listing.title}</p>
+            <p className="text-sm text-land-forest/75">{listing.district}{listing.parish ? `, ${listing.parish}` : ''}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Title status</p>
+              <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Title status</p>
               <p className="font-medium text-sm capitalize">
                 {listing.title_status === 'clean' ? '✅ Clean' :
                  listing.title_status === 'caution' ? '⚠️ Caution' :
@@ -61,36 +61,36 @@ export default async function LandVerifyPage({
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Land type</p>
+              <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Land type</p>
               <p className="font-medium text-sm capitalize">{listing.land_type ?? '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Size</p>
+              <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Size</p>
               <p className="font-medium text-sm">{listing.size_acres ? `${listing.size_acres} acres` : '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Trust score</p>
+              <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Trust score</p>
               <p className="font-medium text-sm text-land-primary">{listing.trust_score}/100</p>
             </div>
           </div>
 
           {listing.verified_at && (
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Verified on</p>
-              <p className="text-sm text-gray-700">{new Date(listing.verified_at).toLocaleDateString('en-UG', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              <p className="text-xs text-land-forest/75 uppercase tracking-wide font-medium mb-1">Verified on</p>
+              <p className="text-sm text-land-ink/85">{new Date(listing.verified_at).toLocaleDateString('en-UG', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex flex-col gap-3">
+        <div className="px-6 py-4 bg-land-cream/30 border-t border-land-mint/30 flex flex-col gap-3">
           <Link
             href={`/land/browse/${listing.id}`}
             className="block w-full text-center py-3 rounded-xl bg-land-primary text-white font-semibold text-sm hover:bg-land-forest transition-colors"
           >
             View Full Listing
           </Link>
-          <p className="text-xs text-center text-gray-400">
+          <p className="text-xs text-center text-land-forest/60">
             Issued by SafeLands UG · Business Yoo · Certificate ID: {listing.qr_token}
           </p>
         </div>

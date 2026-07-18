@@ -33,12 +33,12 @@ export default function MarketClient({ listings, total }: { listings: MarketList
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-land-cream/30">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-6">
+      <div className="bg-white border-b border-land-mint/50 px-4 py-6">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Open Market Land Radar</h1>
-          <p className="text-sm text-gray-500 mb-4">Scraped daily from OLX and Lamudi · {total} listings · Not verified by surveyors</p>
+          <h1 className="text-2xl font-bold text-land-ink mb-1">Open Market Land Radar</h1>
+          <p className="text-sm text-land-forest/75 mb-4">Scraped daily from OLX and Lamudi · {total} listings · Not verified by surveyors</p>
 
           {/* Search bar */}
           <input
@@ -46,7 +46,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             defaultValue={q}
             placeholder="Search by location, road, or keyword..."
             onKeyDown={(e) => { if (e.key === 'Enter') setParam('q', (e.target as HTMLInputElement).value); }}
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-land-primary mb-3"
+            className="w-full border border-land-secondary/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-land-primary mb-3"
           />
 
           {/* Disclaimer */}
@@ -59,7 +59,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             <select
               value={district}
               onChange={(e) => setParam('district', e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white"
+              className="border border-land-mint/50 rounded-lg px-3 py-1.5 text-sm bg-white"
             >
               <option value="">All districts</option>
               {DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -68,7 +68,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             <select
               value={land_type}
               onChange={(e) => setParam('land_type', e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white"
+              className="border border-land-mint/50 rounded-lg px-3 py-1.5 text-sm bg-white"
             >
               <option value="">All types</option>
               {LAND_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -77,7 +77,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             <select
               value={has_title}
               onChange={(e) => setParam('has_title', e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white"
+              className="border border-land-mint/50 rounded-lg px-3 py-1.5 text-sm bg-white"
             >
               <option value="">Title: any</option>
               <option value="true">Has title</option>
@@ -87,7 +87,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
             <select
               value={source_site}
               onChange={(e) => setParam('source_site', e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm bg-white"
+              className="border border-land-mint/50 rounded-lg px-3 py-1.5 text-sm bg-white"
             >
               <option value="">All sources</option>
               {SOURCES.map(s => <option key={s} value={s}>{s.toUpperCase()}</option>)}
@@ -101,7 +101,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
                 onChange={(e) => setHighTrustOnly(e.target.checked)}
                 className="accent-land-primary"
               />
-              <span className={highTrustOnly ? 'text-land-forest font-medium' : 'text-gray-600'}>Show high trust only</span>
+              <span className={highTrustOnly ? 'text-land-forest font-medium' : 'text-land-forest/85'}>Show high trust only</span>
             </label>
 
             {(q || district || land_type || has_title || source_site) && (
@@ -119,7 +119,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
       {/* Listings grid */}
       <div className="max-w-5xl mx-auto px-4 py-8">
         {visibleListings.length === 0 ? (
-          <div className="text-center py-20 text-gray-500">
+          <div className="text-center py-20 text-land-forest/75">
             <div className="text-4xl mb-3">🔍</div>
             <p className="font-medium mb-1">
               {highTrustOnly && listings.length > 0
@@ -147,7 +147,7 @@ export default function MarketClient({ listings, total }: { listings: MarketList
       <div className="bg-land-primary text-white py-8 px-4 text-center">
         <p className="font-medium mb-2">Want a surveyor-verified listing?</p>
         <Link href="/land/browse" className="inline-block bg-white text-land-primary font-semibold px-6 py-2 rounded-full hover:bg-land-cream/45 transition-colors text-sm">
-          Browse SafeLands ↗
+          Browse SafeLands verified listings →
         </Link>
       </div>
     </div>

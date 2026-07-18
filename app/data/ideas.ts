@@ -500,13 +500,13 @@ export const ideas: Idea[] = [
     regions: ["Central", "Eastern", "Northern", "Western"],
   },
 
-  // ─── 11. MITUMBA (NEW) ─────────────────────────────────────────────────────
+  // ─── 11. MIVUMBA (NEW) ─────────────────────────────────────────────────────
   {
     slug: "mitumba-clothes-business",
-    title: "Mitumba (Second-hand Clothes)",
+    title: "Mivumba (Second-hand Clothes)",
     category: "Retail",
     capital: "UGX 200,000 – 1,500,000",
-    desc: "Buy second-hand imported clothing in bulk bales and resell individual pieces for profit. Mitumba is one of Uganda's most accessible and high-margin retail businesses — a single bale costing UGX 150,000–400,000 can contain 50–100 pieces that sell for UGX 3,000–15,000 each.",
+    desc: "Buy second-hand imported clothing in bulk bales and resell individual pieces for profit. Mivumba is one of Uganda's most accessible and high-margin retail businesses — a single bale costing UGX 150,000–400,000 can contain 50–100 pieces that sell for UGX 3,000–15,000 each.",
     skills: [
       "Bale sorting and grading — identifying Grade A, B, and C pieces and pricing them correctly",
       "Customer negotiation — understanding how to hold your price while still making a sale",

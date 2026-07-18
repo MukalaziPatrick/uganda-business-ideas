@@ -3,11 +3,11 @@ export function CheckSuccess({ phone, listingTitle }: { phone: string; listingTi
   return (
     <div className="text-center py-12">
       <div className="text-5xl mb-4">✅</div>
-      <h2 className="text-xl font-bold text-gray-900 mb-2">Payment received!</h2>
-      <p className="text-gray-600 mb-4">
+      <h2 className="text-xl font-bold text-land-ink mb-2">Payment received!</h2>
+      <p className="text-land-forest/85 mb-4">
         Your 24-hour assisted check for{listingTitle ? ` "${listingTitle}"` : ' this land'} is now active.
       </p>
-      <p className="text-gray-500 text-sm mb-6">
+      <p className="text-land-forest/75 text-sm mb-6">
         An agent will contact you on <strong>{phone}</strong> via WhatsApp shortly.
       </p>
       <a
