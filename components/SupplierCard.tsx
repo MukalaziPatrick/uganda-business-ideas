@@ -1,10 +1,12 @@
 import type { Supplier } from "@/app/data/suppliers";
 import WhatsAppCTA from "./WhatsAppCTA";
 import { buildSupplierLeadMessage } from "@/lib/whatsapp";
+import { canShowSupplierContact } from "@/lib/suppliers/filtering";
 
 type SupplierCardProps = {
   supplier: Supplier;
-  ideaTitle: string;
+  contextLabel: string;
+  source?: string;
 };
 
 const statusLabels: Record<Supplier["contactStatus"], string> = {
@@ -19,9 +21,12 @@ const statusStyles: Record<Supplier["contactStatus"], string> = {
   placeholder: "border-brand-beige bg-brand-cream text-brand-green/80",
 };
 
-export default function SupplierCard({ supplier, ideaTitle }: SupplierCardProps) {
-  const canShowContact = supplier.contactStatus === "verified";
-  const source = "idea_detail_supplier_card";
+export default function SupplierCard({
+  supplier,
+  contextLabel,
+  source = "supplier_network_card",
+}: SupplierCardProps) {
+  const canShowContact = canShowSupplierContact(supplier.contactStatus);
 
   return (
     <article className="rounded-2xl border border-brand-beige bg-white p-5 shadow-sm">
@@ -82,7 +87,7 @@ export default function SupplierCard({ supplier, ideaTitle }: SupplierCardProps)
             supplierName: supplier.name,
             supplierSlug: supplier.slug,
             supplierCategory: supplier.category,
-            ideaTitle,
+            ideaTitle: contextLabel,
             source,
             leadRoutingTag: supplier.leadRoutingTag,
           })}
@@ -91,7 +96,7 @@ export default function SupplierCard({ supplier, ideaTitle }: SupplierCardProps)
             supplier_slug: supplier.slug,
             supplier_category: supplier.category,
             supplier_routing_tag: supplier.leadRoutingTag,
-            idea_title: ideaTitle,
+            context_label: contextLabel,
             source,
           }}
           className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-brand-green/30 bg-brand-cream px-4 py-2 text-[12.5px] font-bold text-brand-forest transition-all hover:border-brand-gold hover:bg-brand-beige/50 active:scale-95"
