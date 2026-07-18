@@ -26,6 +26,20 @@ const BASE_APPS = [
     iconClass: "bg-brand-forest text-brand-cream",
   },
   {
+    href: "/east-africa",
+    emoji: "🌍",
+    name: "East Africa Opportunities",
+    tagline: "Compare researched signals across Uganda, Kenya, Tanzania, and Rwanda",
+    iconClass: "bg-brand-gold text-brand-forest",
+  },
+  {
+    href: "/suppliers",
+    emoji: "📦",
+    name: "Suppliers & Wholesale",
+    tagline: "See the supplier categories Business Yoo is verifying",
+    iconClass: "bg-brand-green text-brand-gold",
+  },
+  {
     href: "/salons",
     emoji: "✂️",
     name: "Find Salons",
@@ -99,6 +113,53 @@ export default async function AppsPage() {
             Explore land, jobs, business ideas, salons, travel, and more - all in one place.
           </p>
         </div>
+
+        <section className="motion-card mb-6 overflow-hidden rounded-[2rem] border border-brand-gold/40 bg-brand-forest text-brand-cream shadow-sm shadow-brand-forest/10">
+          <div className="grid gap-5 p-5 sm:grid-cols-[1fr_auto] sm:items-center sm:p-7">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-gold">
+                East Africa coverage
+              </p>
+              <h2
+                className="mt-2 text-xl font-black text-white sm:text-2xl"
+                style={{ fontFamily: "var(--font-business-serif), Georgia, serif" }}
+              >
+                One home market. Three honest research previews.
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-brand-cream/75">
+                Uganda has Business Yoo&apos;s live product verticals. Kenya,
+                Tanzania, and Rwanda currently show checked-in planning signals—not
+                live listings or verified providers.
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+                {[
+                  ["🇺🇬", "Uganda", "Home market"],
+                  ["🇰🇪", "Kenya", "Research preview"],
+                  ["🇹🇿", "Tanzania", "Research preview"],
+                  ["🇷🇼", "Rwanda", "Research preview"],
+                ].map(([flag, country, status]) => (
+                  <div
+                    key={country}
+                    className="rounded-xl border border-white/10 bg-white/5 px-3 py-2"
+                  >
+                    <p className="text-xs font-black text-white">
+                      <span aria-hidden>{flag}</span> {country}
+                    </p>
+                    <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-brand-gold">
+                      {status}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <Link
+              href="/east-africa"
+              className="motion-press inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-gold px-5 text-sm font-black text-brand-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-forest"
+            >
+              Explore the atlas →
+            </Link>
+          </div>
+        </section>
 
         <section className="motion-card mb-6 rounded-[2rem] border border-land-secondary/30 bg-land-cream p-5 shadow-sm shadow-land-forest/5 sm:p-7">
           <div className="mb-4 flex items-start gap-3">
