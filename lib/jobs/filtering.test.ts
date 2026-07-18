@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { deriveJobFilterOptions, deriveDistricts, filterJobs } from './filtering';
+import { deriveJobFilterOptions, deriveDistricts, filterJobs, paginateJobs } from './filtering';
 
 const jobs = [
   { title: 'Farm hand', skill_category: 'Agriculture / Farming', district: 'Wakiso', job_type: 'Full Time', pay_amount: 300000 },
@@ -54,5 +54,19 @@ describe('filterJobs', () => {
   it('combines all filters', () => {
     const out = filterJobs(jobs, { category: 'Agriculture / Farming', district: 'Wakiso', jobType: '', payStatedOnly: true, search: '' });
     expect(out.map(j => j.title)).toEqual(['Farm hand']);
+  });
+});
+
+describe('paginateJobs', () => {
+  it('returns only the requested number of jobs and reports more results', () => {
+    expect(paginateJobs(jobs, 2)).toEqual({
+      visibleJobs: jobs.slice(0, 2),
+      hasMore: true,
+    });
+  });
+
+  it('clamps invalid counts and reports when every result is visible', () => {
+    expect(paginateJobs(jobs, 99)).toEqual({ visibleJobs: jobs, hasMore: false });
+    expect(paginateJobs(jobs, -1)).toEqual({ visibleJobs: [], hasMore: true });
   });
 });

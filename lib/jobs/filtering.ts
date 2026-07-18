@@ -63,3 +63,14 @@ export function filterJobs<T extends FilterableJob>(jobs: T[], f: JobFilters): T
     (!q || job.title.toLowerCase().includes(q) || job.skill_category.toLowerCase().includes(q))
   );
 }
+
+export function paginateJobs<T>(jobs: T[], visibleCount: number): {
+  visibleJobs: T[];
+  hasMore: boolean;
+} {
+  const safeCount = Math.max(0, Math.floor(visibleCount));
+  return {
+    visibleJobs: jobs.slice(0, safeCount),
+    hasMore: safeCount < jobs.length,
+  };
+}

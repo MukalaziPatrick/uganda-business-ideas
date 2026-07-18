@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { deriveJobFilterOptions, deriveDistricts, filterJobs } from "@/lib/jobs/filtering";
+import { deriveJobFilterOptions, deriveDistricts, filterJobs, paginateJobs } from "@/lib/jobs/filtering";
 import { decodeEntities, sourceLabel } from "@/lib/jobs/format";
 
 type Job = {
@@ -27,6 +27,8 @@ type Worker = {
   willing_to_travel: boolean | null; bio: string | null; available: boolean;
 };
 
+const JOB_PAGE_SIZE = 20;
+
 export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Worker[] }) {
   const [tab, setTab] = useState<"jobs" | "workers">("jobs");
   const [district, setDistrict] = useState("");
@@ -34,6 +36,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   const [category, setCategory] = useState("");
   const [jobType, setJobType] = useState("");
   const [payStatedOnly, setPayStatedOnly] = useState(false);
+  const [visibleJobCount, setVisibleJobCount] = useState(JOB_PAGE_SIZE);
   const [now] = useState(() => Date.now());
 
   const { categories, jobTypes } = useMemo(() => deriveJobFilterOptions(jobs), [jobs]);
@@ -41,6 +44,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
   const workerDistricts = useMemo(() => deriveDistricts(workers), [workers]);
 
   const filteredJobs = filterJobs(jobs, { category, district, jobType, payStatedOnly, search });
+  const { visibleJobs, hasMore: hasMoreJobs } = paginateJobs(filteredJobs, visibleJobCount);
 
   const filteredWorkers = workers.filter(w =>
     (!district || w.district === district) &&
@@ -101,12 +105,12 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         <div className="mb-5 flex gap-2" role="tablist" aria-label="Jobs or workers">
           {(["jobs", "workers"] as const).map(t => (
             <button key={t} onClick={() => setTab(t)} role="tab" aria-selected={tab === t}
-              className={`motion-press rounded-full px-5 py-2 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${tab === t ? "bg-brand-forest text-white shadow-sm" : "bg-brand-surface text-brand-forest border border-brand-beige hover:border-brand-gold"}`}>
+              className={`motion-press min-h-11 rounded-full px-5 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold ${tab === t ? "bg-brand-forest text-white shadow-sm" : "bg-brand-surface text-brand-forest border border-brand-beige hover:border-brand-gold"}`}>
               {t === "jobs" ? `Jobs (${jobs.length})` : `Workers (${workers.length})`}
             </button>
           ))}
           <Link href="/jobs/post"
-            className="motion-press ml-auto rounded-full bg-brand-gold px-4 py-2 text-sm font-bold text-brand-forest transition-colors hover:bg-brand-gold/85">
+            className="motion-press ml-auto inline-flex min-h-11 items-center rounded-full bg-brand-gold px-4 text-sm font-bold text-brand-forest transition-colors hover:bg-brand-gold/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
             + Post Job
           </Link>
         </div>
@@ -114,14 +118,14 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
         {/* Filters */}
         {tab === "jobs" ? (
           <div className="mb-5 flex flex-col gap-2">
-            <input value={search} onChange={e => setSearch(e.target.value)}
+            <input value={search} onChange={e => { setSearch(e.target.value); setVisibleJobCount(JOB_PAGE_SIZE); }}
               aria-label="Search jobs by title or category"
               placeholder="Search jobs..."
               className="w-full min-h-11 rounded-xl border border-brand-beige bg-white px-3.5 text-sm placeholder:text-brand-green/70 focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60" />
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
               <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
                 Category
-                <select value={category} onChange={e => setCategory(e.target.value)}
+                <select value={category} onChange={e => { setCategory(e.target.value); setVisibleJobCount(JOB_PAGE_SIZE); }}
                   className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
                   <option value="">All categories</option>
                   {categories.map(c => <option key={c.value} value={c.value}>{c.value} ({c.count})</option>)}
@@ -129,7 +133,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
               </label>
               <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
                 District
-                <select value={district} onChange={e => setDistrict(e.target.value)}
+                <select value={district} onChange={e => { setDistrict(e.target.value); setVisibleJobCount(JOB_PAGE_SIZE); }}
                   className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
                   <option value="">All districts</option>
                   {jobDistricts.map(d => <option key={d} value={d}>{d}</option>)}
@@ -138,7 +142,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
               {jobTypes.length > 0 && (
                 <label className="flex flex-col gap-1 text-[11px] font-bold text-brand-green">
                   Job type
-                  <select value={jobType} onChange={e => setJobType(e.target.value)}
+                  <select value={jobType} onChange={e => { setJobType(e.target.value); setVisibleJobCount(JOB_PAGE_SIZE); }}
                     className="min-h-11 rounded-xl border border-brand-beige bg-white px-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/60">
                     <option value="">All types</option>
                     {jobTypes.map(t => <option key={t} value={t}>{t}</option>)}
@@ -146,13 +150,13 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                 </label>
               )}
               <label className="flex min-h-11 items-center gap-2 self-end rounded-xl border border-brand-beige bg-white px-3 text-xs font-bold text-brand-forest">
-                <input type="checkbox" checked={payStatedOnly} onChange={e => setPayStatedOnly(e.target.checked)}
+                <input type="checkbox" checked={payStatedOnly} onChange={e => { setPayStatedOnly(e.target.checked); setVisibleJobCount(JOB_PAGE_SIZE); }}
                   className="accent-brand-forest" />
                 Stated pay only
               </label>
             </div>
             <p aria-live="polite" className="text-xs font-semibold text-brand-green">
-              {filteredJobs.length} of {jobs.length} jobs
+              Showing {visibleJobs.length} of {filteredJobs.length} matching jobs
             </p>
           </div>
         ) : (
@@ -178,21 +182,21 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                 <p className="text-3xl mb-3">💼</p>
                 <p className="font-bold text-brand-forest mb-1">No jobs found in this category</p>
                 <p className="text-sm text-brand-green/80 mb-4">Try a different district or skill, or be the first to post.</p>
-                <Link href="/jobs/post" className="rounded-xl bg-brand-gold px-5 py-2 text-sm font-bold text-brand-forest">
+                <Link href="/jobs/post" className="inline-flex min-h-11 items-center rounded-xl bg-brand-gold px-5 text-sm font-bold text-brand-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
                   Post a Job →
                 </Link>
                 {anyJobFilterActive && (
                   <div>
                     <button type="button"
-                      onClick={() => { setCategory(""); setDistrict(""); setJobType(""); setPayStatedOnly(false); setSearch(""); }}
-                      className="motion-press mt-3 rounded-xl border border-brand-forest px-5 py-2 text-sm font-bold text-brand-forest">
+                      onClick={() => { setCategory(""); setDistrict(""); setJobType(""); setPayStatedOnly(false); setSearch(""); setVisibleJobCount(JOB_PAGE_SIZE); }}
+                      className="motion-press mt-3 min-h-11 rounded-xl border border-brand-forest px-5 text-sm font-bold text-brand-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold">
                       Clear filters
                     </button>
                   </div>
                 )}
               </div>
             )}
-            {filteredJobs.map(job => (
+            {visibleJobs.map(job => (
               <div
                 key={job.id}
                 className={`motion-card rounded-2xl border bg-brand-surface p-4 shadow-sm ${job.featured ? "border-brand-gold" : "border-brand-beige"}`}
@@ -252,7 +256,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                           href={job.source_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[10px] font-semibold text-brand-green hover:underline"
+                          className="inline-flex min-h-11 items-center text-[10px] font-semibold text-brand-green hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                         >
                           {sourceLabel(job.source)} ↗
                         </a>
@@ -272,7 +276,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                         href={whatsappHref(job.contact_whatsapp, job.employer_name)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="motion-press rounded-xl bg-brand-forest px-3 py-1.5 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green"
+                        className="motion-press inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-forest px-3 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                       >
                         WhatsApp
                       </a>
@@ -280,7 +284,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                     {job.contact_phone && (
                       <a
                         href={`tel:${job.contact_phone}`}
-                        className="motion-press rounded-xl bg-brand-cream px-3 py-1.5 text-center text-xs font-bold text-brand-forest transition-colors hover:bg-brand-beige/60"
+                        className="motion-press inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-cream px-3 text-center text-xs font-bold text-brand-forest transition-colors hover:bg-brand-beige/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                       >
                         Call
                       </a>
@@ -295,7 +299,7 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                         href={job.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="motion-press rounded-xl bg-brand-forest px-3 py-1.5 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green"
+                        className="motion-press inline-flex min-h-11 items-center justify-center rounded-xl bg-brand-forest px-3 text-center text-xs font-bold text-white transition-colors hover:bg-brand-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
                       >
                         View job <span aria-hidden>↗</span>
                       </a>
@@ -304,6 +308,15 @@ export default function JobsClient({ jobs, workers }: { jobs: Job[]; workers: Wo
                 </div>
               </div>
             ))}
+            {hasMoreJobs && (
+              <button
+                type="button"
+                onClick={() => setVisibleJobCount(count => count + JOB_PAGE_SIZE)}
+                className="motion-press mt-2 min-h-11 w-full rounded-xl border border-brand-forest bg-brand-surface px-5 text-sm font-bold text-brand-forest transition-colors hover:bg-brand-beige/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold"
+              >
+                Show {Math.min(JOB_PAGE_SIZE, filteredJobs.length - visibleJobs.length)} more jobs
+              </button>
+            )}
           </div>
         )}
 
